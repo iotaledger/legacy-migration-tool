@@ -63,29 +63,10 @@ export class AppRouter extends Router<AppRoute> {
                 nextRoute = AppRoute.CrashReporting
                 break
             case AppRoute.CrashReporting:
-                nextRoute = AppRoute.Appearance
-                break
-            case AppRoute.Appearance:
-                nextRoute = AppRoute.Profile
-                break
-            case AppRoute.Profile:
                 nextRoute = AppRoute.Setup
                 break
             case AppRoute.Setup: {
-                const { setupType } = params
-                if (setupType) {
-                    walletSetupType.set(setupType)
-                    if (setupType === SetupType.New) {
-                        if (get(mobile)) {
-                            setProfileType(ProfileType.Software)
-                            nextRoute = AppRoute.Secure
-                        } else {
-                            nextRoute = AppRoute.Create
-                        }
-                    } else if (setupType === SetupType.Import) {
-                        nextRoute = AppRoute.Import
-                    }
-                }
+                nextRoute = AppRoute.Import
                 break
             }
             case AppRoute.Create: {
@@ -134,11 +115,7 @@ export class AppRouter extends Router<AppRoute> {
                 const { importType } = params
                 walletSetupType.set(importType as unknown as SetupType)
                 nextRoute = AppRoute.Congratulations
-                if (importType === ImportType.Mnemonic) {
-                    nextRoute = AppRoute.Secure
-                } else if (
-                    [ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)
-                ) {
+                if ([ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)) {
                     nextRoute = AppRoute.Protect
                 } else if (importType === ImportType.Seed || importType === ImportType.SeedVault) {
                     nextRoute = AppRoute.Balance

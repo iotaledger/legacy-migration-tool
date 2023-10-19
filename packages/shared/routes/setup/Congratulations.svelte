@@ -13,14 +13,7 @@
         resetMigrationState,
         totalMigratedBalance,
     } from 'shared/lib/migration'
-    import {
-        activeProfile,
-        newProfile,
-        profileInProgress,
-        saveProfile,
-        setActiveProfile,
-        updateProfile,
-    } from 'shared/lib/profile'
+    import { activeProfile, newProfile, saveProfile, setActiveProfile, updateProfile } from 'shared/lib/profile'
     import { appRouter, ledgerRouter } from '@core/router'
     import { LedgerAppName } from 'shared/lib/typings/ledger'
     import { formatUnitBestMatch } from 'shared/lib/units'
@@ -46,10 +39,10 @@
             }
             // This is the last screen in onboarding for all flows i.e., if you create a new wallet or import stronghold
             // When this component mounts, ensure that the profile is persisted in the local storage.
+            $newProfile = { ...$newProfile, name: $newProfile.id }
             saveProfile($newProfile)
             setActiveProfile($newProfile.id)
 
-            profileInProgress.set(undefined)
             newProfile.set(null)
         } else {
             if ($walletSetupType === SetupType.TrinityLedger) {

@@ -11,10 +11,9 @@
     import { showAppNotification } from 'shared/lib/notifications'
     import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
-    import { cleanupEmptyProfiles, cleanupInProgressProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
+    import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
     import { AppRoute, DashboardRoute, dashboardRouter, accountRouter, initRouters, openSettings } from '@core/router'
     import {
-        Appearance,
         Backup,
         Balance,
         Congratulations,
@@ -114,8 +113,6 @@
             addError(err)
         })
 
-        cleanupInProgressProfiles()
-
         Electron.onEvent('deep-link-request', showDeepLinkNotification)
 
         await cleanupEmptyProfiles()
@@ -154,22 +151,19 @@
             />
         {/if}
         <Route route={AppRoute.Welcome}>
-            <Welcome locale={$_} />
+            <Welcome />
         </Route>
         <Route route={AppRoute.Legal}>
-            <Legal locale={$_} />
-        </Route>
-        <Route route={AppRoute.CrashReporting}>
-            <CrashReporting locale={$_} />
-        </Route>
-        <Route route={AppRoute.Appearance}>
-            <Appearance locale={$_} />
+            <Legal />
         </Route>
         <Route route={AppRoute.Profile}>
             <Profile locale={$_} />
         </Route>
+        <Route route={AppRoute.CrashReporting}>
+            <CrashReporting />
+        </Route>
         <Route route={AppRoute.Setup}>
-            <Setup locale={$_} />
+            <Setup />
         </Route>
         <!-- TODO: fix ledger -->
         <Route route={AppRoute.Create}>
