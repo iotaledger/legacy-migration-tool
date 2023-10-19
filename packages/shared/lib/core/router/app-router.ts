@@ -20,13 +20,7 @@ export class AppRouter extends Router<AppRoute> {
     }
 
     public init(): void {
-        const hasCompletedSetup = get(profiles).length > 0
-
-        if (hasCompletedSetup) {
-            this.routeStore.set(AppRoute.Login)
-        } else {
-            this.routeStore.set(AppRoute.Welcome)
-        }
+        this.routeStore.set(AppRoute.Welcome)
     }
 
     public reset(): void {
