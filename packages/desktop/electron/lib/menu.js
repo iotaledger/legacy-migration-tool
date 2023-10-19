@@ -77,11 +77,6 @@ const buildTemplate = () => {
                     enabled: state.enabled,
                 },
                 {
-                    label: `${state.strings.checkForUpdates}...`,
-                    click: () => getOrInitWindow('main').webContents.send('menu-check-for-update'),
-                    enabled: process.env.STAGE === 'prod' ? state.enabled : false,
-                },
-                {
                     type: 'separator',
                 },
 

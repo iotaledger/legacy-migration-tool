@@ -3,7 +3,6 @@
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
     import { stage, loggedIn } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
-    import { getVersionDetails, pollVersion, versionDetails } from 'shared/lib/appUpdater'
     import { addError } from 'shared/lib/errors'
     import { goto } from 'shared/lib/helpers'
     import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
@@ -37,7 +36,6 @@
     } from 'shared/routes'
     import { getLocalisedMenuItems } from './lib/helpers'
     import { Stage } from 'shared/lib/typings/stage'
-    import { get } from 'svelte/store'
 
     stage.set(Stage[process.env.STAGE.toUpperCase()] ?? Stage.ALPHA)
 
@@ -81,10 +79,6 @@
 
         // @ts-ignore: This value is replaced by Webpack DefinePlugin
         /* eslint-disable no-undef */
-        if (!devMode && get(stage) === Stage.PROD) {
-            await getVersionDetails()
-            pollVersion()
-        }
         Electron.onEvent('menu-navigate-wallet', (route) => {
             $dashboardRouter.goTo(DashboardRoute.Wallet)
             $accountRouter.goTo(route)
@@ -95,14 +89,6 @@
             } else {
                 settings = true
             }
-        })
-        Electron.onEvent('menu-check-for-update', () => {
-            openPopup({
-                type: 'version',
-                props: {
-                    currentVersion: $versionDetails.currentVersion,
-                },
-            })
         })
         Electron.onEvent('menu-error-log', () => {
             openPopup({ type: 'errorLog' })

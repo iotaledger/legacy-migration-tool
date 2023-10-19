@@ -246,38 +246,6 @@ const ElectronApi = {
      */
     getMachineId: () => ipcRenderer.invoke('get-machine-id'),
     /**
-     * Starts an update of the application
-     *
-     * @method updateDownload
-     *
-     * @returns void
-     */
-    updateDownload: () => ipcRenderer.invoke('update-download'),
-    /**
-     * Cancels an update of the application
-     *
-     * @method updateCancel
-     *
-     * @returns void
-     */
-    updateCancel: () => ipcRenderer.invoke('update-cancel'),
-    /**
-     * Install an update of the application
-     *
-     * @method updateInstall
-     *
-     * @returns void
-     */
-    updateInstall: () => ipcRenderer.invoke('update-install'),
-    /**
-     * Check for an update of the application
-     *
-     * @method updateCheck
-     *
-     * @returns void
-     */
-    updateCheck: () => ipcRenderer.invoke('update-check'),
-    /**
      * Get version details
      *
      * @method getVersionDetails
