@@ -1,8 +1,6 @@
 <script lang="typescript">
     import { Animation, Button, Dropzone, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { createEventDispatcher } from 'svelte'
-    import { Platform } from 'shared/lib/platform'
     import { Locale } from '@core/i18n'
 
     export let locale: Locale
@@ -13,12 +11,7 @@
     let filePath: string
     let dropping: boolean
 
-    const handleFileSelectMobile = async () => {
-        filePath = await Platform.getStrongholdBackupDestination(null)
-        fileName = filePath.split('/').pop()
-    }
-
-    const allowedExtensions = $mobile ? ['stronghold'] : ['kdbx', 'stronghold', 'txt']
+    const allowedExtensions = ['kdbx', 'stronghold', 'txt']
 
     const dispatch = createEventDispatcher()
 
@@ -73,29 +66,32 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">{locale('views.importFromFile.title')}</Text>
+        <Text type="h2">Restore your wallets using a backup file</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8">{locale('views.importFromFile.body')}</Text>
+        <Text type="p" secondary classes="mb-8"
+            >Import a backup file to restore your wallets. Backups can either be a Stronghold (.stronghold) or a Trinity
+            SeedVault (.kdbx).</Text
+        >
         <Dropzone
             {locale}
             {fileName}
             {allowedExtensions}
-            onDrop={$mobile ? handleFileSelectMobile : handleFileSelect}
+            onDrop={handleFileSelect}
             bind:dropping
-            extensionsLabel={locale('actions.importExtentions')}
+            extensionsLabel=".kdbx or .stronghold file"
         />
     </div>
     <div slot="leftpane__action" class="flex flex-row flex-wrap justify-between items-center space-x-4">
         <Button classes="flex-1" disabled={!fileName || busy} onClick={handleContinueClick}>
             {#if busy}
-                <Spinner busy message={locale('actions.importing')} classes="justify-center" />
+                <Spinner busy message="Importing" classes="justify-center" />
             {:else}
-                {locale('actions.continue')}
+                Continue
             {/if}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="import-from-file-desktop" />
     </div>
 </OnboardingLayout>
