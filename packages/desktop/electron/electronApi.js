@@ -2,7 +2,6 @@ const { ipcRenderer } = require('electron')
 
 const fs = require('fs')
 const PincodeManager = require('./lib/pincodeManager')
-const DeepLinkManager = require('./lib/deepLinkManager')
 const NotificationManager = require('./lib/notificationManager')
 const { menuState } = require('./lib/menuState')
 const kdbx = require('./lib/kdbx')
@@ -76,7 +75,6 @@ const ElectronApi = {
         return ipcRenderer.invoke('delete-file', source)
     },
     PincodeManager: PincodeManager,
-    DeepLinkManager: DeepLinkManager,
     NotificationManager: NotificationManager,
     getStrongholdBackupDestination: (defaultPath) =>
         ipcRenderer

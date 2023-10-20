@@ -517,11 +517,6 @@ ipcMain.handle('load-json-file', (_e, filepath) => loadJsonFile(path.resolve(__d
 ipcMain.handle('update-app-settings', (_e, settings) => updateSettings(settings))
 
 /**
- * Define deep link state
- */
-let deepLinkUrl = null
-
-/**
  * Create a single instance only
  */
 const isFirstInstance = app.requestSingleInstanceLock()
@@ -529,63 +524,6 @@ const isFirstInstance = app.requestSingleInstanceLock()
 if (!isFirstInstance) {
     app.quit()
 }
-
-app.on('second-instance', (_e, args) => {
-    if (windows.main) {
-        if (args.length > 1) {
-            const params = args.find((arg) => arg.startsWith('iota://'))
-
-            if (params) {
-                windows.main.webContents.send('deep-link-params', params)
-            }
-        }
-        if (windows.main.isMinimized()) {
-            windows.main.restore()
-        }
-        windows.main.focus()
-    }
-})
-
-/**
- * Register iota:// protocol for deep links
- * Set Firefly as the default handler for iota:// protocol
- */
-protocol.registerSchemesAsPrivileged([{ scheme: 'iota', privileges: { secure: true, standard: true } }])
-if (process.defaultApp) {
-    if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient('iota', process.execPath, [path.resolve(process.argv[1])])
-    }
-} else {
-    app.setAsDefaultProtocolClient('iota')
-}
-
-/**
- * Proxy deep link event to the wallet application
- */
-app.on('open-url', (event, url) => {
-    event.preventDefault()
-    deepLinkUrl = url
-    if (windows.main) {
-        windows.main.webContents.send('deep-link-params', deepLinkUrl)
-        windows.main.webContents.send('deep-link-request')
-    }
-})
-
-/**
- * Check if a deep link request/event currently exists and has not been cleared
- */
-ipcMain.on('check-deep-link-request-exists', () => {
-    if (deepLinkUrl) {
-        windows.main.webContents.send('deep-link-params', deepLinkUrl)
-    }
-})
-
-/**
- * Clear deep link request/event
- */
-ipcMain.on('clear-deep-link-request', () => {
-    deepLinkUrl = null
-})
 
 /**
  * Proxy notification activated to the wallet application
