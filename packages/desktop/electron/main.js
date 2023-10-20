@@ -548,7 +548,7 @@ app.on('second-instance', (_e, args) => {
 
 /**
  * Register iota:// protocol for deep links
- * Set Firefly as the default handler for iota:// protocol
+ * Set IOTA Legacy Migration Tool as the default handler for iota:// protocol
  */
 protocol.registerSchemesAsPrivileged([{ scheme: 'iota', privileges: { secure: true, standard: true } }])
 if (process.defaultApp) {

@@ -4,14 +4,14 @@
 </script>
 
 <div class="mb-8">
-    <Text type="h1" classes="mb-5">Conditions of Use for the Firefly App</Text>
+    <Text type="h1" classes="mb-5">Conditions of Use for the IOTA Legacy Migration Tool App</Text>
 
     <Text type="p" secondary classes="mb-4">
         These conditions of use (the "<strong>Conditions</strong>") apply to you (hereinafter, "<strong>User</strong>"
         or "<strong>you</strong>") and the IOTA Foundation, a non-profit foundation with its registered address at
         Pappelallee 78/79, 10437 Berlin (hereinafter, "<strong>IOTA</strong>" or "<strong>we/us</strong>"), regarding
-        your use of the "Firefly App" (the "<strong>App</strong>"). Use of the App is also governed by the App's Privacy
-        Policy (the "<strong>Privacy Policy</strong>").
+        your use of the "IOTA Legacy Migration Tool App" (the "<strong>App</strong>"). Use of the App is also governed
+        by the App's Privacy Policy (the "<strong>Privacy Policy</strong>").
     </Text>
     <Text type="p" secondary classes="mb-4">
         These Conditions and the Privacy Policy form a legally binding agreement between you and IOTA in relation to
@@ -101,9 +101,9 @@
 
     <Text type="h2" classes="mt-8 mb-5">2. Data Protection</Text>
     <Text type="p" secondary classes="mb-4">
-        IOTA does not collect any of your personal data through the App. Please refer to the Firefly Privacy Policy (
-        <Link onClick={() => Platform.openUrl('https://firefly.iota.org/privacy')}>
-            https://firefly.iota.org/privacy
+        IOTA does not collect any of your personal data through the App. Please refer to the IOTA Privacy Policy (
+        <Link onClick={() => Platform.openUrl('https://www.iota.org/privacy-policy')}>
+            https://www.iota.org/privacy-policy
         </Link>) for information on how we and our third-party service providers process data in relation to the App.
     </Text>
 

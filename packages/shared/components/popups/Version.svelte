@@ -45,14 +45,14 @@
 >
 <div class="flex w-full flex-row flex-wrap">
     <div class="w-full p-4 bg-gray-50 dark:bg-gray-800 flex justify-center content-center">
-        <Logo width="50%" logo="logo-firefly-full" />
+        <Logo width="50%" logo="logo-iota-full" />
     </div>
     {#if $versionDetails.upToDate}
         <div class="w-full text-center my-6 px-8">
             <Text type="h5" highlighted classes="mb-2">
                 {#if isPreRelease}
                     <!-- Capitalize first letter of stage name -->
-                    {`Firefly ${$stage.toString().replace(/^\w/, (c) => c.toUpperCase())}`}
+                    {`IOTA Legacy Migration Tool ${$stage.toString().replace(/^\w/, (c) => c.toUpperCase())}`}
                 {:else}
                     {locale('popups.version.upToDateTitle')}
                 {/if}

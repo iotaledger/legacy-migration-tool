@@ -9,13 +9,13 @@
         TransferFragmentedFunds,
     } from './views/'
     import { Locale } from '@core/i18n'
-    import { FireflyEvent, migrateRoute, MigrateRouter, MigrateRoute } from '@core/router'
+    import { LegacyMigrationEvent, migrateRoute, MigrateRouter, MigrateRoute } from '@core/router'
 
     export let locale: Locale
 
     const migrateRouter = new MigrateRouter()
 
-    const next = (event: CustomEvent<FireflyEvent>): void => migrateRouter.next(event.detail)
+    const next = (event: CustomEvent<LegacyMigrationEvent>): void => migrateRouter.next(event.detail)
     const previous = (): void => migrateRouter.previous()
 </script>
 

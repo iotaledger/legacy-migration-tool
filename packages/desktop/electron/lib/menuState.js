@@ -2,7 +2,7 @@ export const menuState = {
     loggedIn: false,
     enabled: true,
     strings: {
-        about: 'About Firefly',
+        about: 'About Legacy migration tool',
         checkForUpdates: 'Check for Updates',
         settings: 'Settings',
         generalSettings: 'General Settings',

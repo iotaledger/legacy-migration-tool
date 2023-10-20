@@ -19,7 +19,7 @@
         info: {
             backgroundColor: 'blue-500',
             iconBackgroundColor: 'white',
-            logo: 'logo-firefly',
+            logo: 'logo-iota',
             messageColor: 'white',
             subMessageColor: 'blue-300',
             buttonSecondary: 'white',

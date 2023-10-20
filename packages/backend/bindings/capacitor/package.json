@@ -27,10 +27,10 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iotaledger/firefly.git"
+    "url": "git+https://github.com/iotaledger/legacy-migration-tool.git"
   },
   "bugs": {
-    "url": "https://github.com/iotaledger/firefly/issues"
+    "url": "https://github.com/iotaledger/legacy-migration-tool/issues"
   },
   "author": "IOTA Stiftung",
   "license": "MIT",

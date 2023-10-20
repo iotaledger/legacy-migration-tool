@@ -24,7 +24,7 @@
     <div slot="leftpane__content">
         <div class="flex flex-col {$mobile && 'items-center text-center px-10'} space-y-4 mb-8">
             {#if !$mobile}
-                <Logo width="64px" logo="logo-firefly" classes="mb-6" />
+                <Logo width="64px" logo="logo-iota" classes="mb-6" />
             {/if}
             <Text type={$mobile ? 'h3' : 'h1'}>{locale('views.onboarding1.title')}</Text>
             <Text type="p" secondary>{locale('views.onboarding1.body')}</Text>

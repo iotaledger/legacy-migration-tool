@@ -42,7 +42,7 @@
 </script>
 
 <section class="flex flex-col justify-center items-center h-full bg-white dark:bg-gray-900 px-40 pt-48 pb-20">
-    <Logo width="64px" logo="logo-firefly" classes="absolute top-20" />
+    <Logo width="64px" logo="logo-iota" classes="absolute top-20" />
     <div
         class="profiles-wrapper h-auto items-start justify-center w-full {!$mobile &&
             'overflow-y-auto'} flex flex-row flex-wrap"

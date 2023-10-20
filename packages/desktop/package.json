@@ -1,10 +1,10 @@
 {
     "name": "desktop",
-    "productName": "Firefly",
+    "productName": "IOTA Legacy Migration Tool",
     "version": "1.7.5",
     "description": "Official IOTA wallet on desktop",
     "main": "public/build/main.js",
-    "repository": "git@github.com:iotaledger/firefly.git",
+    "repository": "git@github.com:iotaledger/legacy-migration-tool.git",
     "author": "IOTA Foundation <contact@iota.org>",
     "license": "Apache-2.0",
     "scripts": {

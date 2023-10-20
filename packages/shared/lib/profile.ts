@@ -132,7 +132,7 @@ export const storeProfile = (profileName: string, isDeveloperProfile: boolean): 
 
 /**
  * Migrates profile data in need of being modified to accommodate changes
- * in a newer Firefly version.
+ * in a newer IOTA Legacy Migration Tool version.
  *
  * @method migrateProfile
  *
