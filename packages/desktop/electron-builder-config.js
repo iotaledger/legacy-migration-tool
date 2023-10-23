@@ -92,7 +92,7 @@ const getAppName = (stage) =>
     stage === 'prod' ? 'Legacy Migration Tool' : `Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
 
 const getAppId = (stage) => {
-    const defaultAppId = 'org.iota.leagcy-migration-tool'
+    const defaultAppId = 'org.iota.legacy-migration-tool'
     if (stage === 'prod') {
         return defaultAppId
     }
