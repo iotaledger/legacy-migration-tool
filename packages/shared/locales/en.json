@@ -1,8 +1,8 @@
 {
     "views": {
         "onboarding1": {
-            "title": "Send, Receive & Manage your IOTA tokens",
-            "body": "Firefly is the official wallet software of IOTA."
+            "title": "Welcome to Legacy Migration Tool",
+            "body": "This tool will help you migrate your data to be compatible with the new protocol."
         },
         "legal": {
             "title": "Privacy Policy & Terms of Service",
@@ -34,9 +34,9 @@
             }
         },
         "setup": {
-            "title": "Set up a wallet",
-            "chrysalisTitle": "Chrysalis Network Update",
-            "chrysalisBody": "From April 21st 2021, users can migrate their tokens to the new Chrysalis network. We recommend you migrate your existing tokens as soon as possible.",
+            "title": "Migrate your wallet",
+            "chrysalisTitle": "Stardust Migration Update",
+            "chrysalisBody": "From October 4th 2023, users can migrate their tokens to the new Stardust network. We recommend you migrate your existing tokens as soon as possible.",
             "learnMore": "Learn about the migration"
         },
         "secure": {
@@ -134,9 +134,9 @@
         },
         "import": {
             "title": "Recover or migrate funds",
-            "body": "If you have an existing seed or wallet back up file, you can import it here. If you hold older network funds, you will be taken through the migration steps to move to the Chrysalis network.",
+            "body": "If you have an existing seed or wallet back up file, you can import it here. If you hold older network funds, you will be taken through the migration steps to move to the Stardust network.",
             "importSeed": "I have an 81 character seed",
-            "importSeedDescription": "Enter a seed and migrate funds to Chrysalis",
+            "importSeedDescription": "Enter a seed and migrate funds to Stardust",
             "importMnemonic": "I have a Firefly recovery phrase",
             "importMnemonicDescription": "Enter your recovery phrase to recover your wallets",
             "importFile": "I have a file backup",
@@ -164,8 +164,8 @@
             "body": "Import a backup file to restore your wallets. Backups can either be a Stronghold (.stronghold) or a Trinity SeedVault (.kdbx)."
         },
         "importFromLedger": {
-            "title": "Restore or Migrate your Ledger",
-            "body": "Restore an existing Firefly Ledger profile, or migrate your funds from Trinity.",
+            "title": "Migrate your Ledger",
+            "body": "Migrate your funds from Trinity.",
             "haveFireflyLedger": "I have a Firefly Ledger backup",
             "haveFireflyLedgerDescription": "Restore a Firefly profile",
             "haveTrinityLedger": "I have a Trinity Ledger backup",
@@ -418,9 +418,9 @@
             },
             "crashReporting": {
                 "title": "Crash reports",
-                "body": "Help the developers improve Firefly by automatically sending diagnostic data when an error or crash occurs",
+                "body": "Help the developers improve IOTA Legacy Migration Tool by automatically sending diagnostic data when an error or crash occurs",
                 "checkbox": "Send crash reports",
-                "advice": "Please restart the Firefly application to {sendCrashReports, select, true {start sharing crash reports} false {stop sharing crash reports} other {apply this change}}"
+                "advice": "Please restart the IOTA Legacy Migration Tool application to {sendCrashReports, select, true {start sharing crash reports} false {stop sharing crash reports} other {apply this change}}"
             },
             "diagnostics": {
                 "title": "Diagnostics",
@@ -969,8 +969,8 @@
         "save": "Save",
         "saving": "Saving",
         "importSeed": "Import an existing seed",
-        "restoreWallet": "Migrate or restore a wallet",
-        "restoreWalletDescription": "Migrate to Chrysalis or restore an existing wallet",
+        "restoreWallet": "Migrate a wallet",
+        "restoreWalletDescription": "Migrate to Stardust an existing wallet",
         "createWallet": "Create new wallet",
         "createWalletDescription": "Create a fresh wallet running on Chrysalis",
         "savePassword": "Save password",

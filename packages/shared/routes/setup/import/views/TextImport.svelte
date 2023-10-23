@@ -24,12 +24,10 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">Type your seed to commence migration</Text>
+        <Text type="h2">{locale(`views.importFromText.${$importType}.title`)}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8"
-            >A seed consists of 81 characters. This is used to recover from the older Trinity app.</Text
-        >
+        <Text type="p" secondary classes="mb-8">{locale(`views.importFromText.${$importType}.body`)}</Text>
         <Text type="h5" classes="mb-3">{locale(`views.importFromText.${$importType}.enter`)}</Text>
         <ImportTextfield disabled={$isGettingMigrationData} type={$importType} bind:value={input} {locale} />
     </div>
@@ -40,8 +38,12 @@
             onClick={() => handleContinueClick()}
         >
             {#if $isGettingMigrationData}
-                <Spinner busy={$isGettingMigrationData} message="Restoring wallet..." classes="justify-center" />
-            {:else}Continue{/if}
+                <Spinner
+                    busy={$isGettingMigrationData}
+                    message={locale('views.migrate.restoringWallet')}
+                    classes="justify-center"
+                />
+            {:else}{locale('actions.continue')}{/if}
         </Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">

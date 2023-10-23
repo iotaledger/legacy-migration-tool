@@ -21,26 +21,23 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">Recover or migrate funds</Text>
+        <Text type="h2">{locale('views.import.title')}s</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8"
-            >If you have an existing seed or wallet back up file, you can import it here. If you hold older network
-            funds, you will be taken through the migration steps to move to the Stardust network.</Text
-        >
+        <Text type="p" secondary classes="mb-8">{locale('views.import.body')}</Text>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-4">
         <Button icon="seed" classes="w-full" secondary onClick={() => handleContinueClick(ImportType.Seed)}>
-            I have an 81 character seed
-            <Text type="p" secondary smaller>Enter a seed and migrate funds to Stardust</Text>
+            {locale('views.import.importSeed')}
+            <Text type="p" secondary smaller>{locale('views.import.importSeedDescription')}</Text>
         </Button>
         <Button icon="doc" classes="w-full" secondary onClick={() => handleContinueClick(ImportType.File)}>
-            I have a file backup
-            <Text type="p" secondary smaller>Upload a Seedvault or Stronghold file</Text>
+            {locale('views.import.importFile')}
+            <Text type="p" secondary smaller>{locale('views.import.importFileDescription')}</Text>
         </Button>
         <Button icon="chip" classes="w-full mb-8" secondary onClick={() => handleContinueClick(ImportType.Ledger)}>
-            I have a Ledger backup
-            <Text type="p" secondary smaller>Restore or migrate a Ledger profile</Text>
+            {locale('views.import.importLedger')}
+            <Text type="p" secondary smaller>{locale('views.import.importLedgerDescription')}</Text>
         </Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-purple dark:bg-gray-900">

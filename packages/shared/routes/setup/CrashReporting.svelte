@@ -1,7 +1,10 @@
 <script lang="typescript">
     import { Animation, Button, Checkbox, OnboardingLayout, Text } from 'shared/components'
+    import { Locale } from '@core/i18n'
     import { appSettings, isAwareOfCrashReporting } from 'shared/lib/appSettings'
     import { appRouter } from '@core/router'
+
+    export let locale: Locale
 
     const busy = false
     let sendCrashReports = true
@@ -22,16 +25,14 @@
 
 <OnboardingLayout onBackClick={handleBackClick} {busy}>
     <div slot="title">
-        <Text type="h2" classes="mb-5">Crash Reporting</Text>
+        <Text type="h2" classes="mb-5">{locale('views.crashReporting.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8"
-            >Help the developers improve Firefly by automatically sending diagnostic data when an error or crash occurs.</Text
-        >
+        <Text type="p" secondary classes="mb-8">{locale('views.crashReporting.body')}</Text>
     </div>
     <div slot="leftpane__action">
-        <Checkbox label="Send crash reports to the IOTA Foundation" bind:checked={sendCrashReports} classes="mb-8" />
-        <Button classes="w-full" onClick={handleContinueClick}>Continue</Button>
+        <Checkbox label={locale('views.crashReporting.checkbox')} bind:checked={sendCrashReports} classes="mb-8" />
+        <Button classes="w-full" onClick={handleContinueClick}>{locale('actions.continue')}</Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-orange dark:bg-gray-900">
         <Animation animation="secure-desktop" />

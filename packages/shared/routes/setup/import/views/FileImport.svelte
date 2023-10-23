@@ -66,28 +66,25 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">Restore your wallets using a backup file</Text>
+        <Text type="h2">{locale('views.importFromFile.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8"
-            >Import a backup file to restore your wallets. Backups can either be a Stronghold (.stronghold) or a Trinity
-            SeedVault (.kdbx).</Text
-        >
+        <Text type="p" secondary classes="mb-8">{locale('views.importFromFile.body')}</Text>
         <Dropzone
             {locale}
             {fileName}
             {allowedExtensions}
             onDrop={handleFileSelect}
             bind:dropping
-            extensionsLabel=".kdbx or .stronghold file"
+            extensionsLabel={locale('actions.importExtentions')}
         />
     </div>
     <div slot="leftpane__action" class="flex flex-row flex-wrap justify-between items-center space-x-4">
         <Button classes="flex-1" disabled={!fileName || busy} onClick={handleContinueClick}>
             {#if busy}
-                <Spinner busy message="Importing" classes="justify-center" />
+                <Spinner busy message={locale('actions.importing')} classes="justify-center" />
             {:else}
-                Continue
+                {locale('actions.continue')}
             {/if}
         </Button>
     </div>

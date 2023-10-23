@@ -18,18 +18,18 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">Migrate your Ledger</Text>
+        <Text type="h2">{locale('views.importFromLedger.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8">Migrate your funds from Trinity.</Text>
+        <Text type="p" secondary classes="mb-8">{locale('views.importFromLedger.body')}</Text>
         <Button
             icon="settings"
             classes="w-full mb-8"
             secondary
             onClick={() => handleContinueClick(ImportType.TrinityLedger)}
         >
-            I have a Trinity Ledger backup
-            <Text type="p" secondary smaller>Migrate a Trinity profile</Text>
+            {locale('views.importFromLedger.haveTrinityLedger')}
+            <Text type="p" secondary smaller>{locale('views.importFromLedger.haveTrinityLedgerDescription')}</Text>
         </Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-purple dark:bg-gray-900">

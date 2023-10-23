@@ -151,19 +151,19 @@
             />
         {/if}
         <Route route={AppRoute.Welcome}>
-            <Welcome />
+            <Welcome locale={$_} />
         </Route>
         <Route route={AppRoute.Legal}>
-            <Legal />
+            <Legal locale={$_} />
         </Route>
         <Route route={AppRoute.Profile}>
             <Profile locale={$_} />
         </Route>
         <Route route={AppRoute.CrashReporting}>
-            <CrashReporting />
+            <CrashReporting locale={$_} />
         </Route>
         <Route route={AppRoute.Setup}>
-            <Setup />
+            <Setup locale={$_} />
         </Route>
         <!-- TODO: fix ledger -->
         <Route route={AppRoute.Create}>

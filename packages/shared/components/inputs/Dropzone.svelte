@@ -27,7 +27,7 @@
 >
     <content class:dropping class="flex flex-col items-center relative text-center">
         {#if dropping}
-            <Text type="p" secondary smaller>Drop your file here</Text>
+            <Text type="p" secondary smaller>{locale('actions.dropHere')}</Text>
         {:else if fileName}
             <Text type="p" secondary smaller>{fileName}</Text>
         {:else}
@@ -54,9 +54,9 @@
                 on:change={onDrop}
                 accept={allowedExtensions ? allowedExtensions.map((e) => `.${e}`).join(',') : '*'}
             />
-            <Text type="h4">Drag & Drop</Text>
+            <Text type="h4">{locale('actions.dragDrop')}</Text>
             <Text classes="mb-12" type="p" secondary smaller>{extensionsLabel}</Text>
-            <Button secondary onClick={onDrop}>Choose a File</Button>
+            <Button secondary onClick={onDrop}>{locale('actions.chooseFile')}</Button>
         {/if}
     </content>
 </dropzone>

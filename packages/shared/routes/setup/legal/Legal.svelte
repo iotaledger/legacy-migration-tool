@@ -4,6 +4,9 @@
     import { lastAcceptedTos, lastAcceptedPrivacyPolicy } from 'shared/lib/appSettings'
     import { TOS_VERSION, PRIVACY_POLICY_VERSION } from 'shared/lib/app'
     import { appRouter } from '@core/router'
+    import { Locale } from '@core/i18n'
+
+    export let locale: Locale
 
     let checked = false
     let termsAccepted = false
@@ -22,14 +25,16 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">Privacy Policy & Terms of Service</Text>
+        <Text type="h2">{locale('views.legal.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes="mb-8">Please review the Privacy Policy and Terms of Service.</Text>
+        <Text type="p" secondary classes="mb-8">{locale('views.legal.body')}</Text>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-8">
         <Checkbox label="I've read and I accept the Privacy Policy & Terms of Service" bind:checked />
-        <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}>Continue</Button>
+        <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}
+            >{locale('actions.continue')}</Button
+        >
     </div>
     <div slot="rightpane" class="w-full h-full flex items-center px-40 py-20">
         <div
