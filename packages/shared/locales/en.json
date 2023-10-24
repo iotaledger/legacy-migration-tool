@@ -2,7 +2,7 @@
     "views": {
         "onboarding1": {
             "title": "Welcome to Legacy Migration Tool",
-            "body": "This tool will help you migrate your data to be compatible with the new protocol."
+            "body": "This tool will help you migrate your data to be compatible with the Stardust protocol."
         },
         "legal": {
             "title": "Privacy Policy & Terms of Service",
