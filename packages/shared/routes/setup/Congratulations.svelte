@@ -4,20 +4,24 @@
     import { Platform } from 'shared/lib/platform'
     import { promptUserToConnectLedger } from 'shared/lib/ledger'
     import { LOG_FILE_NAME, migration, migrationLog, resetMigrationState } from 'shared/lib/migration'
-    import { activeProfile } from 'shared/lib/profile'
-    import { appRouter, ledgerRouter } from '@core/router'
-    import { getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
-    import { Locale } from '@core/i18n'
+    import { activeProfile, updateProfile } from 'shared/lib/profile'
+    import { AppRoute, appRouter, ledgerRouter } from '@core/router'
+    import { api, getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
+    import { Locale, localize } from '@core/i18n'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { showAppNotification } from '@lib/notifications'
+    import { openPopup } from '@lib/popup'
+    import { getDefaultStrongholdName } from '@lib/utils'
 
     export let locale: Locale
 
     const { didComplete } = $migration
-
     const wasMigrated = $didComplete
 
     let logExported = false
     let isNotALedgerProfile: boolean = false
+    let exportStrongholdBusy = false
+    let exportStrongholdMessage = ''
 
     onMount(() => {
         if (!wasMigrated) {
@@ -70,6 +74,77 @@
         }
     }
 
+    const migrateAnotherProfile = (): void => {
+        $appRouter.goTo(AppRoute.Welcome)
+    }
+
+    function handleExportClick() {
+        reset()
+
+        const _callback = (cancelled, err) => {
+            setTimeout(
+                () => {
+                    exportStrongholdMessage = ''
+                },
+                cancelled ? 0 : 2000
+            )
+            exportStrongholdBusy = false
+            if (!cancelled) {
+                if (err) {
+                    exportStrongholdMessage = localize('general.exportingStrongholdFailed')
+                    showAppNotification({
+                        type: 'error',
+                        message: localize(err),
+                    })
+                } else {
+                    exportStrongholdMessage = localize('general.exportingStrongholdSuccess')
+                }
+            }
+        }
+
+        openPopup({
+            type: 'password',
+            props: {
+                onSuccess: (password) => {
+                    exportStrongholdBusy = true
+                    exportStrongholdMessage = localize('general.exportingStronghold')
+                    exportStronghold(password, _callback)
+                },
+                returnPassword: true,
+                subtitle: localize('popups.password.backup'),
+            },
+        })
+    }
+
+    function reset() {
+        exportStrongholdBusy = false
+        exportStrongholdMessage = ''
+    }
+
+    function exportStronghold(password: string, callback?: (cancelled: boolean, err?: string) => void): void {
+        Platform.getStrongholdBackupDestination(getDefaultStrongholdName())
+            .then((result) => {
+                if (result) {
+                    Platform.saveStrongholdBackup({ allowAccess: true })
+                    api.backup(result, password, {
+                        onSuccess() {
+                            Platform.saveStrongholdBackup({ allowAccess: false })
+                            updateProfile('lastStrongholdBackupTime', new Date())
+                            callback(false)
+                        },
+                        onError(err) {
+                            callback(false, err.error)
+                        },
+                    })
+                } else {
+                    callback(true)
+                }
+            })
+            .catch((err) => {
+                callback(false, err.error)
+            })
+    }
+
     onDestroy(() => {
         if (wasMigrated) {
             resetMigrationState()
@@ -89,11 +164,11 @@
         </div>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-4">
-        <Button icon="profile" classes="w-full" secondary>
+        <Button icon="profile" classes="w-full" secondary onClick={migrateAnotherProfile}>
             {locale('views.congratulations.migrateAnotherProfile')}
         </Button>
         {#if isNotALedgerProfile}
-            <Button icon="export" classes="w-full" secondary>
+            <Button icon="export" classes="w-full" secondary onClick={handleExportClick}>
                 {locale('views.congratulations.exportStronghold')}
             </Button>
         {/if}
