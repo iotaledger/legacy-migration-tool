@@ -3,7 +3,6 @@ import { Capacitor } from '@capacitor/core'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { BarcodeManager } from './lib/barcodeManager'
 import { SecureFilesystemAccess } from 'capacitor-secure-filesystem-access'
-import { DeepLinkManager } from '../../mobile/capacitor/lib/deepLinkManager'
 import { NotificationManager } from '../../mobile/capacitor/lib/notificationManager'
 import { PincodeManager } from '../../mobile/capacitor/lib/pincodeManager'
 
@@ -49,8 +48,6 @@ export const CapacitorApi: IPlatform = {
     listProfileFolders: (profileStoragePath) => new Promise<string[]>((resolve, reject) => {}),
 
     PincodeManager: PincodeManager,
-
-    DeepLinkManager: DeepLinkManager,
 
     NotificationManager: NotificationManager,
 

@@ -6,7 +6,6 @@ import { Error } from '../../typings/error'
 
 const Platform: IPlatform = {
     BarcodeManager: undefined,
-    DeepLinkManager: undefined,
     NotificationManager: undefined,
     PincodeManager: undefined,
     ledger: undefined,
