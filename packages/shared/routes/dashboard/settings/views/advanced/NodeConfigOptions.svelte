@@ -2,7 +2,6 @@
     import { Button, HR, Text } from 'shared/components'
     import { clickOutside } from 'shared/lib/actions'
     import { localize } from '@core/i18n'
-    import { mobile } from 'shared/lib/app'
     import { getOfficialNodes, updateClientOptions } from 'shared/lib/network'
     import { openPopup } from 'shared/lib/popup'
     import { updateProfile } from 'shared/lib/profile'
@@ -80,42 +79,30 @@
 </script>
 
 <div
-    class={$mobile
-        ? 'flex flex-col flex-wrap space-y-4 p-8'
-        : 'fixed flex flex-col border border-solid bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 hover:border-gray-500 dark:hover:border-gray-700 rounded-lg overflow-hidden'}
+    class="fixed flex flex-col border border-solid bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 hover:border-gray-500 dark:hover:border-gray-700 rounded-lg overflow-hidden"
     use:clickOutside={{ includeScroll: true }}
-    on:clickOutside={() => {
-        if (!$mobile) nodeContextMenu = undefined
-    }}
-    style={!$mobile && `left: ${contextPosition.x - 10}px; top: ${contextPosition.y - 10}px`}
+    on:clickOutside={() => (nodeContextMenu = undefined)}
+    style={`left: ${contextPosition.x - 10}px; top: ${contextPosition.y - 10}px`}
 >
     {#if !nodeContextMenu?.isDisabled}
         <Button
             medium
-            unstyled={!$mobile}
+            unstyled
             onClick={() => handleSetPrimaryNode(nodeContextMenu)}
-            classes={!$mobile && 'flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20'}
+            classes="flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20"
         >
-            {#if $mobile}
-                {localize('views.settings.configureNodeList.setAsPrimary')}
-            {:else}
-                <Text smaller>{localize('views.settings.configureNodeList.setAsPrimary')}</Text>
-            {/if}
+            <Text smaller>{localize('views.settings.configureNodeList.setAsPrimary')}</Text>
         </Button>
         <Button
             medium
-            unstyled={!$mobile}
+            unstyled
             onClick={() => {
                 handleViewNodeInfoClick(nodeContextMenu)
                 nodeContextMenu = undefined
             }}
-            classes={!$mobile && 'flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20'}
+            classes="flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20"
         >
-            {#if $mobile}
-                {localize('views.settings.configureNodeList.viewInfo')}
-            {:else}
-                <Text smaller>{localize('views.settings.configureNodeList.viewInfo')}</Text>
-            {/if}
+            <Text smaller>{localize('views.settings.configureNodeList.viewInfo')}</Text>
         </Button>
     {/if}
     {#if !getOfficialNodes(networkConfig?.network.type)
@@ -123,24 +110,20 @@
         .includes(nodeContextMenu?.url)}
         <Button
             medium
-            unstyled={!$mobile}
+            unstyled
             onClick={() => {
                 handleEditNodeDetailsClick(nodeContextMenu)
                 nodeContextMenu = undefined
             }}
-            classes={!$mobile && 'flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20'}
+            classes="flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20"
         >
-            {#if $mobile}
-                {localize('views.settings.configureNodeList.editDetails')}
-            {:else}
-                <Text smaller>{localize('views.settings.configureNodeList.editDetails')}</Text>
-            {/if}
+            <Text smaller>{localize('views.settings.configureNodeList.editDetails')}</Text>
         </Button>
     {/if}
     {#if nodeContextMenu && nodeContextMenu.url !== networkConfig?.nodes?.find((n) => n.isPrimary)?.url}
         <Button
             medium
-            unstyled={!$mobile}
+            unstyled
             onClick={() => {
                 nodeContextMenu.isDisabled = !nodeContextMenu.isDisabled
                 networkConfig.nodes = networkConfig.nodes.map((n) => ({
@@ -149,23 +132,15 @@
                 }))
                 nodeContextMenu = undefined
             }}
-            classes={!$mobile && 'flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20'}
+            classes="flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20"
         >
-            {#if $mobile}
+            <Text smaller>
                 {localize(
                     nodeContextMenu.isDisabled
                         ? 'views.settings.configureNodeList.includeNode'
                         : 'views.settings.configureNodeList.excludeNode'
                 )}
-            {:else}
-                <Text smaller>
-                    {localize(
-                        nodeContextMenu.isDisabled
-                            ? 'views.settings.configureNodeList.includeNode'
-                            : 'views.settings.configureNodeList.excludeNode'
-                    )}
-                </Text>
-            {/if}
+            </Text>
         </Button>
     {/if}
     {#if !getOfficialNodes(networkConfig?.network?.type)
@@ -175,18 +150,14 @@
         <Button
             medium
             warning
-            unstyled={!$mobile}
+            unstyled
             onClick={() => {
                 handleRemoveNodeClick(nodeContextMenu)
                 nodeContextMenu = undefined
             }}
-            classes={!$mobile && 'flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20'}
+            classes="flex p-3 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:bg-opacity-20"
         >
-            {#if $mobile}
-                {localize('views.settings.configureNodeList.removeNode')}
-            {:else}
-                <Text smaller>{localize('views.settings.configureNodeList.removeNode')}</Text>
-            {/if}
+            <Text smaller>{localize('views.settings.configureNodeList.removeNode')}</Text>
         </Button>
     {/if}
 </div>

@@ -9,7 +9,6 @@ import { EventMap } from './events'
 import { IBarcodeManager } from './barcodeManager'
 
 export enum Platforms {
-    MOBILE = 'mobile',
     DESKTOP = 'desktop',
 }
 

@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { Platform } from 'shared/lib/platform'
     import { Animation, Button, Link, Logo, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { Locale } from '@core/i18n'
     import { SetupType } from 'shared/lib/typings/setup'
     import { appRouter } from '@core/router'
@@ -43,18 +42,14 @@
             onClick={() => handleContinueClick(SetupType.New)}
         >
             {locale('actions.createWallet')}
-            {#if !$mobile}
-                <Text type="p" secondary smaller>{locale('actions.createWalletDescription')}</Text>
-            {/if}
+            <Text type="p" secondary smaller>{locale('actions.createWalletDescription')}</Text>
         </Button>
         <Button icon="transfer" classes="w-full" secondary onClick={() => handleContinueClick(SetupType.Import)}>
             {locale('actions.restoreWallet')}
-            {#if !$mobile}
-                <Text type="p" secondary smaller>{locale('actions.restoreWalletDescription')}</Text>
-            {/if}
+            <Text type="p" secondary smaller>{locale('actions.restoreWalletDescription')}</Text>
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="setup-desktop" />
     </div>
 </OnboardingLayout>

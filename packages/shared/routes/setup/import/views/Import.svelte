@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { setProfileType } from 'shared/lib/profile'
     import { Locale } from '@core/i18n'
     import { ImportType, ProfileType } from 'shared/lib/typings/profile'
@@ -30,32 +29,27 @@
     <div slot="leftpane__action" class="flex flex-col space-y-4">
         <Button icon="seed" classes="w-full" secondary onClick={() => handleContinueClick(ImportType.Seed)}>
             {locale('views.import.importSeed')}
-            {#if !$mobile}
-                <Text type="p" secondary smaller>{locale('views.import.importSeedDescription')}</Text>
-            {/if}
+
+            <Text type="p" secondary smaller>{locale('views.import.importSeedDescription')}</Text>
         </Button>
         <Button icon="language" classes="w-full" secondary onClick={() => handleContinueClick(ImportType.Mnemonic)}>
             {locale('views.import.importMnemonic')}
-            {#if !$mobile}
-                <Text type="p" secondary smaller>{locale('views.import.importMnemonicDescription')}</Text>
-            {/if}
+
+            <Text type="p" secondary smaller>{locale('views.import.importMnemonicDescription')}</Text>
         </Button>
         <Button icon="doc" classes="w-full" secondary onClick={() => handleContinueClick(ImportType.File)}>
             {locale('views.import.importFile')}
-            {#if !$mobile}
-                <Text type="p" secondary smaller>{locale('views.import.importFileDescription')}</Text>
-            {/if}
+
+            <Text type="p" secondary smaller>{locale('views.import.importFileDescription')}</Text>
         </Button>
-        {#if !$mobile}
-            <Button icon="chip" classes="w-full mb-8" secondary onClick={() => handleContinueClick(ImportType.Ledger)}>
-                {locale('views.import.importLedger')}
-                {#if !$mobile}
-                    <Text type="p" secondary smaller>{locale('views.import.importLedgerDescription')}</Text>
-                {/if}
-            </Button>
-        {/if}
+
+        <Button icon="chip" classes="w-full mb-8" secondary onClick={() => handleContinueClick(ImportType.Ledger)}>
+            {locale('views.import.importLedger')}
+
+            <Text type="p" secondary smaller>{locale('views.import.importLedgerDescription')}</Text>
+        </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-purple dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-purple dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="import-desktop" />
     </div>
 </OnboardingLayout>

@@ -2,7 +2,6 @@
     import { createEventDispatcher, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
     import { Animation, Button, OnboardingLayout, Spinner, Text, TransactionItem } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { Platform } from 'shared/lib/platform'
     import {
         displayNotificationForLedgerProfile,
@@ -498,7 +497,7 @@
             </Button>
         {/if}
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" {animation} />
     </div>
 </OnboardingLayout>

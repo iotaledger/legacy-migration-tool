@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, Dropzone, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { createEventDispatcher } from 'svelte'
     import { Platform } from 'shared/lib/platform'
     import { Locale } from '@core/i18n'
@@ -13,12 +12,7 @@
     let filePath: string
     let dropping: boolean
 
-    const handleFileSelectMobile = async () => {
-        filePath = await Platform.getStrongholdBackupDestination(null)
-        fileName = filePath.split('/').pop()
-    }
-
-    const allowedExtensions = $mobile ? ['stronghold'] : ['kdbx', 'stronghold', 'txt']
+    const allowedExtensions = ['kdbx', 'stronghold', 'txt']
 
     const dispatch = createEventDispatcher()
 
@@ -81,7 +75,7 @@
             {locale}
             {fileName}
             {allowedExtensions}
-            onDrop={$mobile ? handleFileSelectMobile : handleFileSelect}
+            onDrop={handleFileSelect}
             bind:dropping
             extensionsLabel={locale('actions.importExtentions')}
         />
@@ -95,7 +89,7 @@
             {/if}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="import-from-file-desktop" />
     </div>
 </OnboardingLayout>

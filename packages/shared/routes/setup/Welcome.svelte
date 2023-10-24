@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { appRouter } from '@core/router'
     import { Animation, Button, Dropdown, Logo, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { appSettings } from 'shared/lib/appSettings'
     import { SUPPORTED_LOCALES, setLanguage, _ } from '@core/i18n'
     import { Locale } from '@core/i18n'
@@ -22,38 +21,22 @@
 
 <OnboardingLayout allowBack={false}>
     <div slot="leftpane__content">
-        <div class="flex flex-col {$mobile && 'items-center text-center px-10'} space-y-4 mb-8">
-            {#if !$mobile}
-                <Logo width="64px" logo="logo-firefly" classes="mb-6" />
-            {/if}
-            <Text type={$mobile ? 'h3' : 'h1'}>{locale('views.onboarding1.title')}</Text>
+        <div class="flex flex-col space-y-4 mb-8">
+            <Logo width="64px" logo="logo-firefly" classes="mb-6" />
+            <Text type="h1">{locale('views.onboarding1.title')}</Text>
             <Text type="p" secondary>{locale('views.onboarding1.body')}</Text>
         </div>
-        {#if $mobile}
-            <div class="languages flex flex-wrap space-y-2 overflow-y-auto">
-                {#each languageList as language}
-                    <button
-                        class="relative flex items-center p-2 w-full whitespace-nowrap rounded-md"
-                        on:click={() => handleLanguage(language)}
-                        class:active={language?.label === SUPPORTED_LOCALES[$appSettings.language]}
-                    >
-                        <Text type="p" smaller>{language?.label}</Text>
-                    </button>
-                {/each}
-            </div>
-        {:else}
-            <Dropdown
-                sortItems={true}
-                onSelect={handleLanguage}
-                value={SUPPORTED_LOCALES[$appSettings.language]}
-                items={languageList}
-            />
-        {/if}
+        <Dropdown
+            sortItems={true}
+            onSelect={handleLanguage}
+            value={SUPPORTED_LOCALES[$appSettings.language]}
+            items={languageList}
+        />
     </div>
     <div slot="leftpane__action">
         <Button onClick={() => handleContinueClick()} classes="w-full">{locale('actions.continue')}</Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="welcome-desktop" />
     </div>
 </OnboardingLayout>

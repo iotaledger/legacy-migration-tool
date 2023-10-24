@@ -1,9 +1,8 @@
 <script lang="typescript">
     import { HR } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { Platform } from 'shared/lib/platform'
     import { isSoftwareProfile, updateProfile } from 'shared/lib/profile'
-    import { SecuritySettings, settingsChildRoute } from '@core/router'
+    import { SecuritySettings } from '@core/router'
     import { getDefaultStrongholdName } from 'shared/lib/utils'
     import { api } from 'shared/lib/wallet'
     import { AppLock, ChangePassword, ChangePincode, DeleteProfile, ExportStronghold } from './'
@@ -52,7 +51,7 @@
 
 <div>
     {#each settings as { component, childRoute, requireSoftware }, index}
-        {#if (!requireSoftware || (requireSoftware && $isSoftwareProfile)) && (!$mobile || ($mobile && $settingsChildRoute === childRoute))}
+        {#if !requireSoftware || (requireSoftware && $isSoftwareProfile)}
             <section id={childRoute} class="w-full sm:w-3/4">
                 <svelte:component this={component} {...props[childRoute]} />
             </section>

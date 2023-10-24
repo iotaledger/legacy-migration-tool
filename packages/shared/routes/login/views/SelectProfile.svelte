@@ -1,7 +1,7 @@
 <script lang="typescript">
     import { createEventDispatcher } from 'svelte'
     import { Icon, Logo, Profile } from 'shared/components'
-    import { mobile, needsToAcceptLatestPrivacyPolicy, needsToAcceptLatestTos } from 'shared/lib/app'
+    import { needsToAcceptLatestPrivacyPolicy, needsToAcceptLatestTos } from 'shared/lib/app'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { profiles, setActiveProfile } from 'shared/lib/profile'
     import { ProfileType } from 'shared/lib/typings/profile'
@@ -28,11 +28,7 @@
         })
     }
 
-    /**
-     * NOTE: We check for mobile because it's only necessary
-     * for existing desktop installation.
-     */
-    $: if ($popupState?.type === null && !$popupState?.active && !$mobile && !$isAwareOfCrashReporting) {
+    $: if ($popupState?.type === null && !$popupState?.active && !$isAwareOfCrashReporting) {
         openPopup({
             type: 'crashReporting',
             hideClose: true,
@@ -43,10 +39,7 @@
 
 <section class="flex flex-col justify-center items-center h-full bg-white dark:bg-gray-900 px-40 pt-48 pb-20">
     <Logo width="64px" logo="logo-firefly" classes="absolute top-20" />
-    <div
-        class="profiles-wrapper h-auto items-start justify-center w-full {!$mobile &&
-            'overflow-y-auto'} flex flex-row flex-wrap"
-    >
+    <div class="profiles-wrapper h-auto items-start justify-center w-full overflow-y-auto flex flex-row flex-wrap">
         {#each $profiles as profile}
             <div class="mx-4 mb-8">
                 <Profile

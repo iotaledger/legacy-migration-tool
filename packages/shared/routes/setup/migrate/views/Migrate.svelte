@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
@@ -154,7 +153,7 @@
 
 <OnboardingLayout allowBack={false} {locale} showLedgerProgress={legacyLedger} showLedgerVideoButton={legacyLedger}>
     <div slot="title">
-        <Text on:click={() => !$mobile && learnAboutMigrationsClick()} type="h2">{locale('views.migrate.title')}</Text>
+        <Text on:click={() => learnAboutMigrationsClick()} type="h2">{locale('views.migrate.title')}</Text>
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
@@ -176,7 +175,7 @@
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" {animation} />
     </div>
 </OnboardingLayout>

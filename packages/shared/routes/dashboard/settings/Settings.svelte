@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Icon } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { isLocaleLoaded } from '@core/i18n'
     import { dashboardRouter, settingsRouter, settingsRoute, SettingsRoute } from '@core/router'
     import { onDestroy } from 'svelte'
@@ -23,13 +22,11 @@
 
 <div
     class="relative h-full w-full px-6 pb-10 md:px-16 md:py-12 md:bg-white md:dark:bg-gray-900 flex flex-1 {$settingsRoute !==
-        SettingsRoute.Init && 'md:pt-20'} {$mobile && 'overflow-y-auto'} "
+        SettingsRoute.Init && 'md:pt-20'}"
 >
-    {#if !$mobile}
-        <button on:click={handleClose || closeSettings} class="absolute top-8 right-8">
-            <Icon icon="close" classes="text-gray-800 dark:text-white" />
-        </button>
-    {/if}
+    <button on:click={handleClose || closeSettings} class="absolute top-8 right-8">
+        <Icon icon="close" classes="text-gray-800 dark:text-white" />
+    </button>
     {#if $settingsRoute === SettingsRoute.Init}
         <SettingsHome />
     {:else}

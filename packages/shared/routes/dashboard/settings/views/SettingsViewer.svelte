@@ -1,6 +1,6 @@
 <script lang="typescript">
     import { Scroller, SettingsNavigator, Text } from 'shared/components'
-    import { loggedIn, mobile } from 'shared/lib/app'
+    import { loggedIn } from 'shared/lib/app'
     import { localize, _ } from '@core/i18n'
     import { isLedgerProfile, isSoftwareProfile } from 'shared/lib/profile'
     import { SettingsIcons } from 'shared/lib/typings/icons'
@@ -65,39 +65,31 @@
     }
 
     onMount(() => {
-        if (!$mobile) {
-            const child = $settingsRouter.getChildRouteAndReset()
-            if (child) {
-                scrollIntoView(child, { behavior: 'auto' })
-            }
+        const child = $settingsRouter.getChildRouteAndReset()
+        if (child) {
+            scrollIntoView(child, { behavior: 'auto' })
         }
     })
 </script>
 
 {#key $_}
-    <div class="flex flex-1 flex-row items-start" in:fly={{ duration: $mobile ? 200 : 0, x: 200 }}>
-        {#if !$mobile}
-            <SettingsNavigator
-                {routes}
-                onSettingClick={(id) => scrollIntoView(id)}
-                icons={SettingsIcons}
-                {settings}
-                bind:route={$settingsRoute}
-            />
-        {/if}
+    <div class="flex flex-1 flex-row items-start" in:fly={{ duration: 0, x: 200 }}>
+        <SettingsNavigator
+            {routes}
+            onSettingClick={(id) => scrollIntoView(id)}
+            icons={SettingsIcons}
+            {settings}
+            bind:route={$settingsRoute}
+        />
         <div class="h-full w-full pb-10">
-            {#if !$mobile}
-                <Text type="p" secondary highlighted classes="mb-8">
-                    {localize('views.settings.settings')}
-                    /
-                    {localize(`views.settings.${$settingsRoute}.title`)}
-                </Text>
-            {/if}
+            <Text type="p" secondary highlighted classes="mb-8">
+                {localize('views.settings.settings')}
+                /
+                {localize(`views.settings.${$settingsRoute}.title`)}
+            </Text>
             <Scroller classes="w-full md:w-3/4 h-full md:pr-100" threshold={70}>
                 <div class="md:w-11/12">
-                    {#if !$mobile}
-                        <Text type="h2" classes="mb-7">{localize(`views.settings.${$settingsRoute}.title`)}</Text>
-                    {/if}
+                    <Text type="h2" classes="mb-7">{localize(`views.settings.${$settingsRoute}.title`)}</Text>
                     {#if $settingsRoute === SettingsRoute.GeneralSettings}
                         <General />
                     {:else if $settingsRoute === SettingsRoute.Security}

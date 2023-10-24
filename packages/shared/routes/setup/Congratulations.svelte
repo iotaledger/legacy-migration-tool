@@ -2,7 +2,6 @@
     import { get } from 'svelte/store'
     import { onDestroy, onMount } from 'svelte'
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { promptUserToConnectLedger } from 'shared/lib/ledger'
@@ -153,7 +152,7 @@
             {locale(`${wasMigrated && !logExported ? 'views.congratulations.exportMigration' : 'actions.finishSetup'}`)}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-yellow dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="congratulations-desktop" />
     </div>
 </OnboardingLayout>

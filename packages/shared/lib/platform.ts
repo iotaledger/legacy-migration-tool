@@ -1,5 +1,3 @@
-import { IPlatform, Platforms } from './typings/platform'
+import { IPlatform } from './typings/platform'
 
-const IS_MOBILE = process.env.PLATFORM === Platforms.MOBILE
-
-export const Platform: IPlatform = window[IS_MOBILE ? '__CAPACITOR__' : '__ELECTRON__']
+export const Platform: IPlatform = window['__ELECTRON__']

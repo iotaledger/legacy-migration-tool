@@ -1,6 +1,6 @@
 <script lang="typescript">
     import { Locale } from '@core/i18n'
-    import { mobile, needsToAcceptLatestPrivacyPolicy, needsToAcceptLatestTos } from '@lib/app'
+    import { needsToAcceptLatestPrivacyPolicy, needsToAcceptLatestTos } from '@lib/app'
     import { isStrongholdOutdated } from '@lib/stronghold'
     import { destroyActor } from '@lib/wallet'
     import { Icon, Pin, Profile, Text, TextHint } from 'shared/components'
@@ -39,11 +39,7 @@
         })
     }
 
-    /**
-     * NOTE: We check for mobile because it's only necessary
-     * for existing desktop installation.
-     */
-    $: if ($popupState?.type === null && !$popupState?.active && !$mobile && !$isAwareOfCrashReporting) {
+    $: if ($popupState?.type === null && !$popupState?.active && !$isAwareOfCrashReporting) {
         openPopup({
             type: 'crashReporting',
             hideClose: true,

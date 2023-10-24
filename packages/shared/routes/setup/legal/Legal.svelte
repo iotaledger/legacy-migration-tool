@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Button, Checkbox, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { Locale } from '@core/i18n'
     import Content from './Content.svelte'
     import { lastAcceptedTos, lastAcceptedPrivacyPolicy } from 'shared/lib/appSettings'
@@ -29,20 +28,17 @@
         <Text type="h2">{locale('views.legal.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        {#if !$mobile}
-            <Text type="p" secondary classes="mb-8">{locale('views.legal.body')}</Text>
-        {/if}
+        <Text type="p" secondary classes="mb-8">{locale('views.legal.body')}</Text>
     </div>
-    <div slot="leftpane__action" class="flex flex-col {$mobile ? 'space-y-4' : 'space-y-8'}">
+    <div slot="leftpane__action" class="flex flex-col space-y-8">
         <Checkbox label={locale('views.legal.checkbox')} bind:checked />
         <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}>
             {locale('actions.continue')}
         </Button>
     </div>
-    <div slot="rightpane" class={!$mobile && 'w-full h-full flex items-center px-40 py-20'}>
+    <div slot="rightpane" class="w-full h-full flex items-center px-40 py-20">
         <div
-            class="legal-content {!$mobile &&
-                'block relative max-h-full overflow-y-auto w-full text-justify pr-10 scroll-quaternary'}"
+            class="legal-content block relative max-h-full overflow-y-auto w-full text-justify pr-10 scroll-quaternary"
         >
             <Content />
         </div>

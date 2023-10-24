@@ -1,7 +1,7 @@
 import { get, writable } from 'svelte/store'
 
-import { cleanupSignup, login, mobile, strongholdPassword, walletPin } from '@lib/app'
-import { setProfileType, activeProfile, profiles } from '@lib/profile'
+import { cleanupSignup, login, strongholdPassword, walletPin } from '@lib/app'
+import { activeProfile } from '@lib/profile'
 import { ImportType, ProfileType } from '@lib/typings/profile'
 import { SetupType } from '@lib/typings/setup'
 import { walletSetupType } from '@lib/wallet'
@@ -70,12 +70,7 @@ export class AppRouter extends Router<AppRoute> {
                 if (setupType) {
                     walletSetupType.set(setupType)
                     if (setupType === SetupType.New) {
-                        if (get(mobile)) {
-                            setProfileType(ProfileType.Software)
-                            nextRoute = AppRoute.Secure
-                        } else {
-                            nextRoute = AppRoute.Create
-                        }
+                        nextRoute = AppRoute.Create
                     } else if (setupType === SetupType.Import) {
                         nextRoute = AppRoute.Import
                     }

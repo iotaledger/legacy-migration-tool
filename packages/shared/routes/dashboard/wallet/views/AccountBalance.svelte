@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { Unit } from '@iota/unit-converter'
     import { Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { localize } from '@core/i18n'
     import { accountRoute, accountRouter } from '@core/router'
     import { AccountRoute } from '@core/router/enums'
@@ -27,17 +26,13 @@
 </script>
 
 <div
-    class="bg-gradient-to-t from-gray-100 via-white to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-800 relative p-6 {$mobile
-        ? 'pb-0 bg-transparent'
-        : 'pb-12'} {classes}"
+    class="bg-gradient-to-t from-gray-100 via-white to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-800 relative p-6 pb-12 {classes}"
 >
     <!-- Balance -->
     <div data-label="total-balance" class="flex flex-col flex-wrap">
-        {#if !$mobile}
-            <Text type="p">
-                {localize('general.balance')}
-            </Text>
-        {/if}
+        <Text type="p">
+            {localize('general.balance')}
+        </Text>
         <div class="flex flex-col flex-wrap items-start mt-6">
             <div on:click={togglePreciseBalance}>
                 <h1 class="font-600 text-32 leading-120 text-gray-800 dark:text-white break-all">
@@ -51,7 +46,7 @@
             </Text>
         </div>
     </div>
-    {#if $accountRoute === AccountRoute.Init || $mobile}
+    {#if $accountRoute === AccountRoute.Init}
         <!-- Action Send / Receive -->
         <div class="flex flex-row justify-between space-x-4 mt-6">
             <button
