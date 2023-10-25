@@ -79,14 +79,6 @@ const buildTemplate = () => {
                 {
                     type: 'separator',
                 },
-
-                {
-                    label: state.strings.settings,
-                    click: () => getOrInitWindow('main').webContents.send('menu-navigate-settings'),
-                },
-                {
-                    type: 'separator',
-                },
                 {
                     label: state.strings.diagnostics,
                     click: () => getOrInitWindow('main').webContents.send('menu-diagnostics'),
@@ -106,9 +98,6 @@ const buildTemplate = () => {
         {
             label: state.strings.errorLog,
             click: () => getOrInitWindow('main').webContents.send('menu-error-log'),
-        },
-        {
-            type: 'separator',
         },
     ])
 
@@ -143,66 +132,8 @@ const buildTemplate = () => {
     ])
 
     template.push({
-        label: state.strings.edit,
-        submenu: [
-            { label: state.strings.undo, accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
-            { label: state.strings.redo, accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
-            { type: 'separator' },
-            { label: state.strings.cut, accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-            { label: state.strings.copy, accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-            { label: state.strings.paste, accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-            { label: state.strings.selectAll, accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
-        ],
-    })
-
-    if (state.loggedIn) {
-        template.push({
-            label: state.strings.wallet,
-            submenu: [
-                {
-                    label: state.strings.send,
-                    click: () => getOrInitWindow('main').webContents.send('menu-navigate-wallet', AccountRoute.Send),
-                    enabled: state.enabled,
-                },
-                {
-                    label: state.strings.receive,
-                    click: () => getOrInitWindow('main').webContents.send('menu-navigate-wallet', AccountRoute.Receive),
-                    enabled: state.enabled,
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: state.strings.logout,
-                    click: () => getOrInitWindow('main').webContents.send('menu-logout'),
-                    enabled: state.enabled,
-                },
-            ],
-        })
-    }
-
-    template.push({
         label: state.strings.help,
         submenu: [
-            // {
-            //     label: state.strings.troubleshoot,
-            //     click: function () {
-            //         // TODO: Replace with real help links
-            //         shell.openExternal('https://iota.org')
-            //     },
-            // },
-            {
-                label: state.strings.faq,
-                click: function () {
-                    shell.openExternal(ExternalRoute.FAQ)
-                },
-            },
-            {
-                label: state.strings.documentation,
-                click: function () {
-                    shell.openExternal(ExternalRoute.Documentation)
-                },
-            },
             {
                 label: state.strings.discord,
                 click: function () {
@@ -219,41 +150,3 @@ const buildTemplate = () => {
     })
     return template
 }
-
-/**
- * Creates context menu
- * @returns {Menu} Context menu
- */
-export const contextMenu = () =>
-    Menu.buildFromTemplate([
-        {
-            label: state.strings.undo,
-            role: 'undo',
-        },
-        {
-            label: state.strings.redo,
-            role: 'redo',
-        },
-        {
-            type: 'separator',
-        },
-        {
-            label: state.strings.cut,
-            role: 'cut',
-        },
-        {
-            label: state.strings.copy,
-            role: 'copy',
-        },
-        {
-            label: state.strings.paste,
-            role: 'paste',
-        },
-        {
-            type: 'separator',
-        },
-        {
-            label: state.strings.selectAll,
-            role: 'selectAll',
-        },
-    ])
