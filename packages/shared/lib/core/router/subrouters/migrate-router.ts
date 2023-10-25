@@ -5,7 +5,7 @@ import { hasBundlesWithSpentAddresses, hasSingleBundle } from '@lib/migration'
 import { appRouter } from '../app-router'
 import { MigrateRoute } from '../enums'
 import { Subrouter } from './subrouter'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 
 export const migrateRoute = writable<MigrateRoute>(null)
 
@@ -14,7 +14,7 @@ export class MigrateRouter extends Subrouter<MigrateRoute> {
         super(MigrateRoute.Init, migrateRoute)
     }
 
-    next(event: FireflyEvent): void {
+    next(event: LegacyMigrationEvent): void {
         let nextRoute: MigrateRoute
         const currentRoute = get(this.routeStore)
         switch (currentRoute) {

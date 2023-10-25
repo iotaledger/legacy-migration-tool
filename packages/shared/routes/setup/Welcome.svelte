@@ -87,7 +87,7 @@
 <OnboardingLayout allowBack={false}>
     <div slot="leftpane__content">
         <div class="flex flex-col space-y-4 mb-8">
-            <Logo width="64px" logo="logo-firefly" classes="mb-6" />
+            <Logo width="64px" logo="logo-iota" classes="mb-6" />
             <Text type="h1">{locale('views.onboarding1.title')}</Text>
             <Text type="p" secondary>
                 {locale('views.onboarding1.body')}

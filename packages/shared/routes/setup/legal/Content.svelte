@@ -4,14 +4,14 @@
 </script>
 
 <div class="mb-8">
-    <Text type="h1" classes="mb-5">Conditions of Use for the Firefly App</Text>
+    <Text type="h1" classes="mb-5">Conditions of Use for the IOTA Legacy Migration Tool App</Text>
 
     <Text type="p" secondary classes="mb-4">
         These conditions of use (the "<strong>Conditions</strong>") apply to you (hereinafter, "<strong>User</strong>"
         or "<strong>you</strong>") and the IOTA Foundation, a non-profit foundation with its registered address at
         Pappelallee 78/79, 10437 Berlin (hereinafter, "<strong>IOTA</strong>" or "<strong>we/us</strong>"), regarding
-        your use of the "Firefly App" (the "<strong>App</strong>"). Use of the App is also governed by the App's Privacy
-        Policy (the "<strong>Privacy Policy</strong>").
+        your use of the "IOTA Legacy Migration Tool App" (the "<strong>App</strong>"). Use of the App is also governed
+        by the App's Privacy Policy (the "<strong>Privacy Policy</strong>").
     </Text>
     <Text type="p" secondary classes="mb-4">
         These Conditions and the Privacy Policy form a legally binding agreement between you and IOTA in relation to
@@ -101,9 +101,9 @@
 
     <Text type="h2" classes="mt-8 mb-5">2. Data Protection</Text>
     <Text type="p" secondary classes="mb-4">
-        IOTA does not collect any of your personal data through the App. Please refer to the Firefly Privacy Policy (
-        <Link onClick={() => Platform.openUrl('https://firefly.iota.org/privacy')}>
-            https://firefly.iota.org/privacy
+        IOTA does not collect any of your personal data through the App. Please refer to the IOTA Privacy Policy (
+        <Link onClick={() => Platform.openUrl('https://www.iota.org/privacy-policy')}>
+            https://www.iota.org/privacy-policy
         </Link>) for information on how we and our third-party service providers process data in relation to the App.
     </Text>
 
@@ -280,8 +280,8 @@
 
     <Text type="h2" classes="mt-8 mb-5">10. Compliance by the user</Text>
     <Text type="p" secondary classes="mb-4">
-        The user is obligated to use the Firefly App exclusively for legal purposes. The following activities are
-        specifically prohibited in association with use of the App:
+        The user is obligated to use the IOTA Legacy Migration Tool App exclusively for legal purposes. The following
+        activities are specifically prohibited in association with use of the App:
     </Text>
     <Text type="p" secondary classes="mb-4">
         <ul>
@@ -325,8 +325,8 @@
             </li>
             <li>
                 <Text type="p" secondary classes="mb-4">
-                    Management of a Firefly Account associated with another E-Wallet involved with prohibited
-                    activities;
+                    Management of a IOTA Legacy Migration Tool Account associated with another E-Wallet involved with
+                    prohibited activities;
                 </Text>
             </li>
             <li>
@@ -347,7 +347,8 @@
             <li>
                 <Text type="p" secondary classes="mb-4">
                     Use of an automatic device (e.g. robot or spider) or a mechanical or manual method for monitoring or
-                    replicating the IOTA Foundation or Firefly App website(s) without our prior written permission.
+                    replicating the IOTA Foundation or Legacy Migration Tool App website(s) without our prior written
+                    permission.
                 </Text>
             </li>
         </ul>
@@ -368,8 +369,8 @@
 
     <Text type="h2" classes="mt-8 mb-5">13. Applicable law</Text>
     <Text type="p" secondary classes="mb-4">
-        These conditions as well as all disputes or legal issues resulting from operation or use of the Firefly App are
-        subject to German law.
+        These conditions as well as all disputes or legal issues resulting from operation or use of the IOTA Legacy
+        Migration Tool App are subject to German law.
     </Text>
 
     <Text type="h2" classes="mt-8 mb-5">14. Severability clause</Text>
@@ -388,12 +389,12 @@
 </div>
 
 <div class="mt-16">
-    <Text type="h1" classes="mb-5">Firefly Privacy Policy</Text>
+    <Text type="h1" classes="mb-5">IOTA Legacy Migration Tool Privacy Policy</Text>
 
     <Text type="h2" classes="mt-8 mb-5">General Information</Text>
     <Text type="p" secondary classes="mb-4">
-        This Firefly privacy policy (the "Privacy Policy") describes how your data is collected and processed in
-        connection with the Firefly App (the "App").
+        This IOTA Legacy Migration Tool privacy policy (the "Privacy Policy") describes how your data is collected and
+        processed in connection with the IOTA Legacy Migration Tool App (the "App").
     </Text>
     <Text type="p" secondary classes="mb-4">
         This Privacy Policy is dedicated to the users of the App. If you would like to know more about how the IOTA

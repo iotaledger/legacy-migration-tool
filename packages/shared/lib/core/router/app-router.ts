@@ -8,7 +8,7 @@ import { walletSetupType } from '@lib/wallet'
 
 import { AppRoute } from './enums'
 import { Router } from './router'
-import { FireflyEvent } from './types'
+import { LegacyMigrationEvent } from './types'
 
 export const appRoute = writable<AppRoute>(null)
 export const appRouter = writable<AppRouter>(null)
@@ -28,7 +28,7 @@ export class AppRouter extends Router<AppRoute> {
         this.init()
     }
 
-    public next(event?: FireflyEvent): void {
+    public next(event?: LegacyMigrationEvent): void {
         // TODO: only handle route changes, not app variables
         const params = event || {}
         const currentRoute = get(this.routeStore)

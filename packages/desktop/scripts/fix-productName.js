@@ -12,7 +12,10 @@ if (!process.env.CI) {
 }
 
 const stage = process.env.STAGE || 'alpha'
-const appName = stage === 'prod' ? 'Firefly' : `Firefly ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
+const appName =
+    stage === 'prod'
+        ? 'IOTA Legacy Migration Tool'
+        : `IOTA Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
 const packageJsonPath = path.resolve(__dirname, '../package.json')
 
 const packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf-8' }))

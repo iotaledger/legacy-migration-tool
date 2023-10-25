@@ -13,10 +13,13 @@ const hardcodeNodeEnv = typeof process.env.HARDCODE_NODE_ENV !== 'undefined'
 const SENTRY = process.env.SENTRY === 'true'
 const stage = process.env.STAGE || 'alpha'
 /**
- * If stage = 'prod' -> 'Firefly'
- * If stage = 'alpha' -> 'Firefly Alpha'
+ * If stage = 'prod' -> 'IOTA Legacy Migration Tool'
+ * If stage = 'alpha' -> 'IOTA Legacy Migration Tool Alpha'
  */
-const appName = stage === 'prod' ? 'Firefly' : `Firefly ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
+const appName =
+    stage === 'prod'
+        ? 'IOTA Legacy Migration Tool'
+        : `IOTA Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
 const appId = stage === 'prod' ? 'org.iota.firefly' : `org.iota.firefly.${stage}`
 
 // / ------------------------ Resolve ------------------------
@@ -175,7 +178,7 @@ const sentryPlugins = [
     new SentryWebpackPlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
         include: '.',
-        release: `Firefly@${version}`,
+        release: `IOTALegacyMigrationTool@${version}`,
         ignoreFile: '.sentrycliignore',
         org: 'iota-foundation-h4',
         project: 'firefly-desktop',

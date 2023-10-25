@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
     import { Transition } from 'shared/components'
     import { currentLedgerMigrationProgress } from 'shared/lib/migration'
-    import { FireflyEvent, ledgerRoute, ledgerRouter, LedgerRoute } from '@core/router'
+    import { LegacyMigrationEvent, ledgerRoute, ledgerRouter, LedgerRoute } from '@core/router'
     import {
         AccountIndex,
         Connect,
@@ -43,7 +43,7 @@
         }
     }
 
-    const next = (event: CustomEvent<FireflyEvent>): void => $ledgerRouter.next(event.detail)
+    const next = (event: CustomEvent<LegacyMigrationEvent>): void => $ledgerRouter.next(event.detail)
     const previous = (): void => $ledgerRouter.previous()
 </script>
 
