@@ -20,7 +20,7 @@
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
-    import { newProfile, profileInProgress, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { createEventDispatcher, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
@@ -91,7 +91,6 @@
                                 saveProfile($newProfile)
                                 setActiveProfile($newProfile.id)
 
-                                profileInProgress.set(undefined)
                                 newProfile.set(null)
                             }
                         })
@@ -119,7 +118,6 @@
                             saveProfile($newProfile)
                             setActiveProfile($newProfile.id)
 
-                            profileInProgress.set(undefined)
                             newProfile.set(null)
                         })
                     })
