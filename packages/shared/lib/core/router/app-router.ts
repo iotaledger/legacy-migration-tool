@@ -57,12 +57,8 @@ export class AppRouter extends Router<AppRoute> {
                 nextRoute = AppRoute.CrashReporting
                 break
             case AppRoute.CrashReporting:
-                nextRoute = AppRoute.Setup
-                break
-            case AppRoute.Setup: {
                 nextRoute = AppRoute.Import
                 break
-            }
             case AppRoute.Create: {
                 const profileType = get(activeProfile)?.type
                 if (profileType === ProfileType.Software) {
