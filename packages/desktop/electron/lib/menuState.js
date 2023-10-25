@@ -2,7 +2,7 @@ export const menuState = {
     loggedIn: false,
     enabled: true,
     strings: {
-        about: 'About Legacy migration tool',
+        about: 'About',
         errorLog: 'Error Log',
         diagnostics: 'Diagnostics',
         quit: 'Quit',
