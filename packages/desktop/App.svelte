@@ -3,7 +3,6 @@
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
     import { stage, loggedIn } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
-    import { getVersionDetails, pollVersion, versionDetails } from 'shared/lib/appUpdater'
     import { addError } from 'shared/lib/errors'
     import { goto } from 'shared/lib/helpers'
     import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
@@ -11,10 +10,9 @@
     import { showAppNotification } from 'shared/lib/notifications'
     import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
-    import { cleanupEmptyProfiles, cleanupInProgressProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
+    import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
     import { AppRoute, DashboardRoute, dashboardRouter, accountRouter, initRouters, openSettings } from '@core/router'
     import {
-        Appearance,
         Backup,
         Balance,
         Congratulations,
@@ -37,7 +35,6 @@
     } from 'shared/routes'
     import { getLocalisedMenuItems } from './lib/helpers'
     import { Stage } from 'shared/lib/typings/stage'
-    import { get } from 'svelte/store'
 
     stage.set(Stage[process.env.STAGE.toUpperCase()] ?? Stage.ALPHA)
 
@@ -81,10 +78,6 @@
 
         // @ts-ignore: This value is replaced by Webpack DefinePlugin
         /* eslint-disable no-undef */
-        if (!devMode && get(stage) === Stage.PROD) {
-            await getVersionDetails()
-            pollVersion()
-        }
         Electron.onEvent('menu-navigate-wallet', (route) => {
             $dashboardRouter.goTo(DashboardRoute.Wallet)
             $accountRouter.goTo(route)
@@ -96,14 +89,6 @@
                 settings = true
             }
         })
-        Electron.onEvent('menu-check-for-update', () => {
-            openPopup({
-                type: 'version',
-                props: {
-                    currentVersion: $versionDetails.currentVersion,
-                },
-            })
-        })
         Electron.onEvent('menu-error-log', () => {
             openPopup({ type: 'errorLog' })
         })
@@ -113,8 +98,6 @@
         Electron.hookErrorLogger((err) => {
             addError(err)
         })
-
-        cleanupInProgressProfiles()
 
         Electron.onEvent('deep-link-request', showDeepLinkNotification)
 
@@ -159,14 +142,11 @@
         <Route route={AppRoute.Legal}>
             <Legal locale={$_} />
         </Route>
-        <Route route={AppRoute.CrashReporting}>
-            <CrashReporting locale={$_} />
-        </Route>
-        <Route route={AppRoute.Appearance}>
-            <Appearance locale={$_} />
-        </Route>
         <Route route={AppRoute.Profile}>
             <Profile locale={$_} />
+        </Route>
+        <Route route={AppRoute.CrashReporting}>
+            <CrashReporting locale={$_} />
         </Route>
         <Route route={AppRoute.Setup}>
             <Setup locale={$_} />
