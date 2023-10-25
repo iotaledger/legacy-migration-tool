@@ -1,4 +1,3 @@
-import { initAutoUpdate } from './lib/appUpdater'
 import { shouldReportError } from './lib/errorHandling'
 const { app, dialog, ipcMain, protocol, shell, BrowserWindow, session } = require('electron')
 const path = require('path')
@@ -135,13 +134,7 @@ const paths = {
     errorPreload: '',
 }
 
-let versionDetails = {
-    upToDate: true,
-    currentVersion: app.getVersion(),
-    newVersion: '',
-    newVersionReleaseDate: new Date(),
-    changelog: '',
-}
+let currentVersion = app.getVersion()
 
 /**
  * Default web preferences (see https://www.electronjs.org/docs/tutorial/security)
@@ -276,9 +269,6 @@ function createWindow() {
 
         windows.main.loadURL('http://localhost:8080')
     } else {
-        if (process.env.STAGE === 'prod') {
-            initAutoUpdate()
-        }
         // load the index.html of the app.
         windows.main.loadFile(paths.html)
     }
@@ -309,7 +299,7 @@ function createWindow() {
     })
 
     windows.main.webContents.on('did-finish-load', () => {
-        windows.main.webContents.send('version-details', versionDetails)
+        windows.main.webContents.send('version-details', currentVersion)
     })
 
     /**
@@ -424,7 +414,7 @@ ipcMain.handle('get-path', (_e, path) => {
     }
     return app.getPath(path)
 })
-ipcMain.handle('get-version-details', (_e) => versionDetails)
+ipcMain.handle('get-version-details', (_e) => currentVersion)
 
 function ensureDirectoryExistence(filePath) {
     const dirname = path.dirname(filePath)
@@ -517,11 +507,6 @@ ipcMain.handle('load-json-file', (_e, filepath) => loadJsonFile(path.resolve(__d
 ipcMain.handle('update-app-settings', (_e, settings) => updateSettings(settings))
 
 /**
- * Define deep link state
- */
-let deepLinkUrl = null
-
-/**
  * Create a single instance only
  */
 const isFirstInstance = app.requestSingleInstanceLock()
@@ -529,63 +514,6 @@ const isFirstInstance = app.requestSingleInstanceLock()
 if (!isFirstInstance) {
     app.quit()
 }
-
-app.on('second-instance', (_e, args) => {
-    if (windows.main) {
-        if (args.length > 1) {
-            const params = args.find((arg) => arg.startsWith('iota://'))
-
-            if (params) {
-                windows.main.webContents.send('deep-link-params', params)
-            }
-        }
-        if (windows.main.isMinimized()) {
-            windows.main.restore()
-        }
-        windows.main.focus()
-    }
-})
-
-/**
- * Register iota:// protocol for deep links
- * Set IOTA Legacy Migration Tool as the default handler for iota:// protocol
- */
-protocol.registerSchemesAsPrivileged([{ scheme: 'iota', privileges: { secure: true, standard: true } }])
-if (process.defaultApp) {
-    if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient('iota', process.execPath, [path.resolve(process.argv[1])])
-    }
-} else {
-    app.setAsDefaultProtocolClient('iota')
-}
-
-/**
- * Proxy deep link event to the wallet application
- */
-app.on('open-url', (event, url) => {
-    event.preventDefault()
-    deepLinkUrl = url
-    if (windows.main) {
-        windows.main.webContents.send('deep-link-params', deepLinkUrl)
-        windows.main.webContents.send('deep-link-request')
-    }
-})
-
-/**
- * Check if a deep link request/event currently exists and has not been cleared
- */
-ipcMain.on('check-deep-link-request-exists', () => {
-    if (deepLinkUrl) {
-        windows.main.webContents.send('deep-link-params', deepLinkUrl)
-    }
-})
-
-/**
- * Clear deep link request/event
- */
-ipcMain.on('clear-deep-link-request', () => {
-    deepLinkUrl = null
-})
 
 /**
  * Proxy notification activated to the wallet application
@@ -784,12 +712,8 @@ function getJsonConfig(filename) {
     return path.join(userDataPath, filename)
 }
 
-export const updateVersionDetails = (details) => {
-    versionDetails = Object.assign({}, versionDetails, details)
-    if (process.env.STAGE !== 'prod') {
-        // Always true to avoid triggering auto-updater
-        versionDetails.upToDate = true
-    }
+export const updateVersionDetails = (version) => {
+    currentVersion = version
 
-    getOrInitWindow('main').webContents.send('version-details', versionDetails)
+    getOrInitWindow('main').webContents.send('version-details', currentVersion)
 }

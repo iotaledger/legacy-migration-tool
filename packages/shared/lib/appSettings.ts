@@ -9,7 +9,7 @@ import { AppSettings, AppTheme } from './typings/app'
 export const appSettings = persistent<AppSettings>('settings', {
     deepLinking: false,
     language: 'en',
-    theme: 'light',
+    theme: 'system',
     darkMode: false,
     notifications: true,
     sendCrashReports: false,

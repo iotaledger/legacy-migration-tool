@@ -59,7 +59,6 @@ const baseConfig = () => ({
     publish: {
         provider: 'generic',
         url: 'https://dl.firefly.iota.org/',
-        publishAutoUpdate: true,
         channel: 'latest',
     },
 })
@@ -118,9 +117,6 @@ const prodConfig = () => baseConfig()
 
 const alphaConfig = () => {
     const icons = getIconPaths('alpha')
-    const publish = {
-        publishAutoUpdate: false,
-    }
 
     return merge(
         {},
@@ -129,16 +125,12 @@ const alphaConfig = () => {
         { productName: getAppName('alpha') },
         { appId: getAppId('alpha') },
         getLinuxDesktopName('alpha'),
-        prereleaseNsisOptions,
-        { publish }
+        prereleaseNsisOptions
     )
 }
 
 const betaConfig = () => {
     const icons = getIconPaths('beta')
-    const publish = {
-        publishAutoUpdate: false,
-    }
 
     return merge(
         {},
@@ -147,8 +139,7 @@ const betaConfig = () => {
         { productName: getAppName('beta') },
         { appId: getAppId('beta') },
         getLinuxDesktopName('beta'),
-        prereleaseNsisOptions,
-        { publish }
+        prereleaseNsisOptions
     )
 }
 

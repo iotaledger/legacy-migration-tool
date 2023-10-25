@@ -32,8 +32,6 @@ export interface ProfileAccount {
 
 export const activeProfileId = persistent<string | null>('activeProfileId', null)
 export const profiles = persistent<Profile[]>('profiles', [])
-export const profileInProgress = persistent<string | undefined>('profileInProgress', undefined)
-
 export const newProfile = writable<Profile | null>(null)
 export const isStrongholdLocked = writable<boolean>(true)
 export const hasEverOpenedProfileModal = writable<boolean>(false)
@@ -127,7 +125,6 @@ export const storeProfile = (profileName: string, isDeveloperProfile: boolean): 
 
     newProfile.set(profile)
     activeProfileId.set(profile.id)
-    profileInProgress.set(profileName)
 }
 
 /**
@@ -253,20 +250,6 @@ export const updateProfile = (
                 return _profile
             })
         )
-    }
-}
-
-/**
- * Cleanup any in progress profiles
- *
- * @method cleanupInProgressProfiles
- *
- * @returns {void}
- */
-export const cleanupInProgressProfiles = (): void => {
-    const inProgressProfile = get(profileInProgress)
-    if (inProgressProfile) {
-        profileInProgress.update(() => undefined)
     }
 }
 
