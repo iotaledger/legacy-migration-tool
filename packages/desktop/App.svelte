@@ -1,5 +1,5 @@
 <script lang="typescript">
-    import { onDestroy, onMount } from 'svelte'
+    import { onMount } from 'svelte'
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
     import { stage, loggedIn } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
@@ -7,7 +7,6 @@
     import { goto } from 'shared/lib/helpers'
     import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
     import { pollMarketData } from 'shared/lib/market'
-    import { showAppNotification } from 'shared/lib/notifications'
     import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
@@ -99,24 +98,8 @@
             addError(err)
         })
 
-        Electron.onEvent('deep-link-request', showDeepLinkNotification)
-
         await cleanupEmptyProfiles()
     })
-
-    onDestroy(() => {
-        Electron.removeListenersForEvent('deep-link-request')
-        Electron.DeepLinkManager.clearDeepLinkRequest()
-    })
-
-    const showDeepLinkNotification = () => {
-        if (!$loggedIn) {
-            showAppNotification({
-                type: 'info',
-                message: $_('notifications.deepLinkingRequest.recievedWhileLoggedOut'),
-            })
-        }
-    }
 </script>
 
 <TitleBar>

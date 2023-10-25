@@ -1,4 +1,3 @@
-import { IDeepLinkManager } from '@common/deep-links'
 import { AppSettings } from './app'
 import { ILedger } from './ledger'
 import { INotificationManager } from './notificationManager'
@@ -43,7 +42,6 @@ export interface IPlatform {
     deleteFile(source: string): Promise<void>
 
     NotificationManager: INotificationManager | undefined
-    DeepLinkManager: IDeepLinkManager | undefined
     PincodeManager: IPincodeManager | undefined
     BarcodeManager: IBarcodeManager | undefined
 

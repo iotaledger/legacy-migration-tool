@@ -9,8 +9,6 @@ export interface EventMap {
     'menu-error-log': void
     'menu-diagnostics': void
     'log-error': void
-    'deep-link-request': void
-    'deep-link-params': string
     'version-details': string
     'notification-activated': unknown
 }
