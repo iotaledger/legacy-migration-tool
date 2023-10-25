@@ -3,7 +3,7 @@
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
     import { stage, loggedIn } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
-    import { getVersionDetails, pollVersion, versionDetails } from 'shared/lib/appUpdater'
+    import { getVersionDetails, pollVersion } from 'shared/lib/appUpdater'
     import { addError } from 'shared/lib/errors'
     import { goto } from 'shared/lib/helpers'
     import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
@@ -89,14 +89,7 @@
         Electron.onEvent('menu-navigate-settings', () => {
             settings = true
         })
-        Electron.onEvent('menu-check-for-update', () => {
-            openPopup({
-                type: 'version',
-                props: {
-                    currentVersion: $versionDetails.currentVersion,
-                },
-            })
-        })
+        Electron.onEvent('menu-check-for-update', () => {})
         Electron.onEvent('menu-error-log', () => {
             openPopup({ type: 'errorLog' })
         })

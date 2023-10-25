@@ -47,10 +47,3 @@ export { default as Chip } from './Chip.svelte'
 export { default as PingingBadge } from './PingingBadge.svelte'
 export { default as WarningBadge } from './WarningBadge.svelte'
 export { default as StrongholdWarningBadge } from './StrongholdWarningBadge.svelte'
-
-export * from './modals'
-// Charts
-export { default as Chart } from './charts/Index.svelte'
-export { default as BarChart } from './charts/Bar.svelte'
-export { default as LineChart } from './charts/Line.svelte'
-export * as ChartDefaults from './charts/defaults'
