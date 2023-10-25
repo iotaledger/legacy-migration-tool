@@ -1,7 +1,7 @@
 {
     "views": {
         "onboarding1": {
-            "title": "Welcome to Legacy Migration Tool",
+            "title": "Welcome to IOTA Legacy Migration Tool",
             "body": "This tool will help you migrate your data to be compatible with the Stardust protocol."
         },
         "legal": {
