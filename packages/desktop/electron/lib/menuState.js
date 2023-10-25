@@ -3,8 +3,6 @@ export const menuState = {
     enabled: true,
     strings: {
         about: 'About Firefly',
-        checkForUpdates: 'Check for Updates',
-        settings: 'Settings',
         generalSettings: 'General Settings',
         security: 'Security',
         advancedSettings: 'Advanced Settings',
