@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, ImportTextfield, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { createEventDispatcher, getContext } from 'svelte'
     import { Locale } from '@core/i18n'
     import { ImportRouter } from '@core/router'
@@ -47,7 +46,7 @@
             {:else}{locale('actions.continue')}{/if}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="import-from-text-desktop" />
     </div>
 </OnboardingLayout>

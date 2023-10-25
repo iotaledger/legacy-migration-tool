@@ -32,9 +32,7 @@
     </div>
     <div slot="leftpane__action">
         <Checkbox label={locale('views.crashReporting.checkbox')} bind:checked={sendCrashReports} classes="mb-8" />
-        <Button classes="w-full" onClick={handleContinueClick}>
-            {locale('actions.continue')}
-        </Button>
+        <Button classes="w-full" onClick={handleContinueClick}>{locale('actions.continue')}</Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-orange dark:bg-gray-900">
         <Animation animation="secure-desktop" />
