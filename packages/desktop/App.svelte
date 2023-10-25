@@ -18,14 +18,11 @@
         Balance,
         Congratulations,
         CrashReporting,
-        Create,
         Import,
         Ledger,
         Legal,
-        Login,
         Migrate,
         Password,
-        Profile,
         Protect,
         Secure,
         Settings,
@@ -143,18 +140,11 @@
         <Route route={AppRoute.Legal}>
             <Legal locale={$_} />
         </Route>
-        <Route route={AppRoute.Profile}>
-            <Profile locale={$_} />
-        </Route>
         <Route route={AppRoute.CrashReporting}>
             <CrashReporting locale={$_} />
         </Route>
         <Route route={AppRoute.Setup}>
             <Setup locale={$_} />
-        </Route>
-        <!-- TODO: fix ledger -->
-        <Route route={AppRoute.Create}>
-            <Create locale={$_} />
         </Route>
         <Route route={AppRoute.LedgerSetup}>
             <Ledger locale={$_} />
@@ -183,12 +173,6 @@
         </Route>
         <Route route={AppRoute.Congratulations}>
             <Congratulations locale={$_} {goto} />
-        </Route>
-        <!-- <Route route={AppRoute.Dashboard}>
-            <Dashboard locale={$_} {goto} />
-        </Route> -->
-        <Route route={AppRoute.Login}>
-            <Login locale={$_} {goto} />
         </Route>
         {#if settings}
             <Settings locale={$_} handleClose={() => (settings = false)} />

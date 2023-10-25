@@ -7,7 +7,6 @@ export { default as CrashReporting } from 'shared/routes/setup/CrashReporting.sv
 export { default as Secure } from 'shared/routes/setup/Secure.svelte'
 export { default as Profile } from 'shared/routes/setup/Profile.svelte'
 export { default as Setup } from 'shared/routes/setup/Setup.svelte'
-export { default as Create } from 'shared/routes/setup/Create.svelte'
 export { default as Ledger } from 'shared/routes/setup/ledger/Ledger.svelte'
 export { default as Password } from 'shared/routes/setup/Password.svelte'
 export { default as Protect } from 'shared/routes/setup/protect/Protect.svelte'
@@ -16,6 +15,3 @@ export { default as Import } from 'shared/routes/setup/import/Import.svelte'
 export { default as Balance } from 'shared/routes/setup/Balance.svelte'
 export { default as Migrate } from 'shared/routes/setup/migrate/Migrate.svelte'
 export { default as Congratulations } from 'shared/routes/setup/Congratulations.svelte'
-
-// login
-export { default as Login } from 'shared/routes/login/Login.svelte'
