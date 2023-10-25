@@ -14,7 +14,6 @@
         isSoftwareProfile,
         isStrongholdLocked,
     } from 'shared/lib/profile'
-    import { openSettings } from '@core/router'
     import { LedgerApp, LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
     import { api } from 'shared/lib/wallet'
     import { diffDates, getBackupWarningColor, getInitials, isRecentDate } from 'shared/lib/helpers'
@@ -46,7 +45,6 @@
     }
 
     const handleSettingsClick = (): void => {
-        openSettings()
         modal?.close()
     }
 

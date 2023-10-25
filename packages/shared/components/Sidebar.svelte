@@ -1,12 +1,5 @@
 <script lang="typescript">
-    import {
-        dashboardRoute,
-        DashboardRoute,
-        dashboardRouter,
-        governanceRouter,
-        resetWalletRoute,
-        SidebarTab as SidebarTabType,
-    } from '@core/router'
+    import { dashboardRoute, DashboardRoute, resetWalletRoute, SidebarTab as SidebarTabType } from '@core/router'
     import { versionDetails } from '@lib/appUpdater'
     import {
         Icon,
@@ -134,17 +127,9 @@
         resetWalletRoute()
     }
 
-    function openStaking() {
-        $dashboardRouter.goTo(DashboardRoute.Staking)
-    }
+    function openStaking() {}
 
-    function openGovernance() {
-        // reset router only if you are already on governance, act like a home button
-        if ($dashboardRoute === DashboardRoute.Governance) {
-            $governanceRouter.reset()
-        }
-        $dashboardRouter.goTo(DashboardRoute.Governance)
-    }
+    function openGovernance() {}
 </script>
 
 <aside
