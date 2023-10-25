@@ -33,7 +33,7 @@
         }
     })
 
-    const handleContinueClick = (): void => {
+    const exportMigrationLog = (): void => {
         if (wasMigrated) {
             const _continue = () => {
                 if ($walletSetupType === SetupType.TrinityLedger) {
@@ -42,8 +42,6 @@
                      * because the last app the user had open was the legacy one
                      */
                     promptUserToConnectLedger(false, () => $appRouter.next())
-                } else {
-                    $appRouter.next()
                 }
             }
             const _exportMigrationLog = () => {
@@ -69,8 +67,6 @@
             } else {
                 _exportMigrationLog()
             }
-        } else {
-            $appRouter.next()
         }
     }
 
@@ -172,8 +168,8 @@
                 {locale('views.congratulations.exportStronghold')}
             </Button>
         {/if}
-        <Button classes="w-full" onClick={() => handleContinueClick()}>
-            {locale(`${wasMigrated && !logExported ? 'views.congratulations.exportMigration' : 'actions.finishSetup'}`)}
+        <Button classes="w-full" onClick={exportMigrationLog}>
+            {locale('views.congratulations.exportMigration')}
         </Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
