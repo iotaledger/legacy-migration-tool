@@ -12,14 +12,13 @@
     import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
-    import { AppRoute, DashboardRoute, dashboardRouter, accountRouter, initRouters, openSettings } from '@core/router'
+    import { AppRoute, accountRouter, initRouters } from '@core/router'
     import {
         Backup,
         Balance,
         Congratulations,
         CrashReporting,
         Create,
-        Dashboard,
         Import,
         Ledger,
         Legal,
@@ -85,15 +84,10 @@
             pollVersion()
         }
         Electron.onEvent('menu-navigate-wallet', (route) => {
-            $dashboardRouter.goTo(DashboardRoute.Wallet)
             $accountRouter.goTo(route)
         })
         Electron.onEvent('menu-navigate-settings', () => {
-            if ($loggedIn) {
-                openSettings()
-            } else {
-                settings = true
-            }
+            settings = true
         })
         Electron.onEvent('menu-check-for-update', () => {
             openPopup({
@@ -197,9 +191,9 @@
         <Route route={AppRoute.Congratulations}>
             <Congratulations locale={$_} {goto} />
         </Route>
-        <Route route={AppRoute.Dashboard}>
+        <!-- <Route route={AppRoute.Dashboard}>
             <Dashboard locale={$_} {goto} />
-        </Route>
+        </Route> -->
         <Route route={AppRoute.Login}>
             <Login locale={$_} {goto} />
         </Route>
