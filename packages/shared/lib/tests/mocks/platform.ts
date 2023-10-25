@@ -1,5 +1,4 @@
 import { IPlatform } from '../../typings/platform'
-import { VersionDetails } from '../../typings/appUpdater'
 import { EventMap } from '../../typings/events'
 import { AppSettings } from '../../typings/app'
 import { Error } from '../../typings/error'
@@ -40,7 +39,7 @@ const Platform: IPlatform = {
     getUserDataPath(): Promise<string> {
         return Promise.resolve('')
     },
-    getVersionDetails(): Promise<VersionDetails> {
+    getVersionDetails(): Promise<string> {
         return Promise.resolve(undefined)
     },
     hookErrorLogger(logger: (error: Error) => void): void {},
@@ -75,18 +74,6 @@ const Platform: IPlatform = {
     },
     updateActiveProfile(id: string): void {},
     updateAppSettings(settings: Partial<AppSettings>): Promise<void> {
-        return Promise.resolve(undefined)
-    },
-    updateCancel(): Promise<void> {
-        return Promise.resolve(undefined)
-    },
-    updateCheck(): Promise<void> {
-        return Promise.resolve(undefined)
-    },
-    updateDownload(): Promise<void> {
-        return Promise.resolve(undefined)
-    },
-    updateInstall(): Promise<void> {
         return Promise.resolve(undefined)
     },
     updateMenu(attribute: string, value: unknown): void {},

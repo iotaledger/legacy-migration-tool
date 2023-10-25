@@ -7,7 +7,7 @@
         resetWalletRoute,
         SidebarTab as SidebarTabType,
     } from '@core/router'
-    import { versionDetails } from '@lib/appUpdater'
+    import { appVersion } from '@lib/appVersion'
     import {
         Icon,
         Modal,
@@ -167,7 +167,7 @@
                 on:click={profileModal?.open}
             >
                 <span class="text-12 text-center text-white uppercase">{profileInitial}</span>
-                {#if !$hasEverOpenedProfileModal && (!isBackupSafe || !$versionDetails.upToDate)}
+                {#if !$hasEverOpenedProfileModal && (!isBackupSafe || !$appVersion)}
                     <PingingBadge innerColor="red-500" outerColor="red-500" />
                 {/if}
             </button>

@@ -1,4 +1,3 @@
-import { initAutoUpdate } from './lib/appUpdater'
 import { shouldReportError } from './lib/errorHandling'
 const { app, dialog, ipcMain, protocol, shell, BrowserWindow, session } = require('electron')
 const path = require('path')
@@ -135,13 +134,7 @@ const paths = {
     errorPreload: '',
 }
 
-let versionDetails = {
-    upToDate: true,
-    currentVersion: app.getVersion(),
-    newVersion: '',
-    newVersionReleaseDate: new Date(),
-    changelog: '',
-}
+let currentVersion = app.getVersion()
 
 /**
  * Default web preferences (see https://www.electronjs.org/docs/tutorial/security)
@@ -276,9 +269,6 @@ function createWindow() {
 
         windows.main.loadURL('http://localhost:8080')
     } else {
-        if (process.env.STAGE === 'prod') {
-            initAutoUpdate()
-        }
         // load the index.html of the app.
         windows.main.loadFile(paths.html)
     }
@@ -309,7 +299,7 @@ function createWindow() {
     })
 
     windows.main.webContents.on('did-finish-load', () => {
-        windows.main.webContents.send('version-details', versionDetails)
+        windows.main.webContents.send('version-details', currentVersion)
     })
 
     /**
@@ -424,7 +414,7 @@ ipcMain.handle('get-path', (_e, path) => {
     }
     return app.getPath(path)
 })
-ipcMain.handle('get-version-details', (_e) => versionDetails)
+ipcMain.handle('get-version-details', (_e) => currentVersion)
 
 function ensureDirectoryExistence(filePath) {
     const dirname = path.dirname(filePath)
@@ -722,12 +712,8 @@ function getJsonConfig(filename) {
     return path.join(userDataPath, filename)
 }
 
-export const updateVersionDetails = (details) => {
-    versionDetails = Object.assign({}, versionDetails, details)
-    if (process.env.STAGE !== 'prod') {
-        // Always true to avoid triggering auto-updater
-        versionDetails.upToDate = true
-    }
+export const updateVersionDetails = (version) => {
+    currentVersion = version
 
-    getOrInitWindow('main').webContents.send('version-details', versionDetails)
+    getOrInitWindow('main').webContents.send('version-details', currentVersion)
 }

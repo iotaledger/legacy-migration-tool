@@ -12,7 +12,6 @@
     import { AppRoute, initRouters } from '@core/router'
     import { Platforms } from 'shared/lib/typings/platform'
     import {
-        Appearance,
         Backup,
         Balance,
         Congratulations,
@@ -24,11 +23,9 @@
         Login,
         Migrate,
         Password,
-        Profile,
         Protect,
         Secure,
         Setup,
-        Settings,
         Welcome,
     } from 'shared/routes'
     import { Stage } from 'shared/lib/typings/stage'
@@ -78,12 +75,6 @@
     </Route>
     <Route route={AppRoute.CrashReporting}>
         <CrashReporting locale={$_} />
-    </Route>
-    <Route route={AppRoute.Appearance}>
-        <Appearance locale={$_} />
-    </Route>
-    <Route route={AppRoute.Profile}>
-        <Profile locale={$_} />
     </Route>
     <Route route={AppRoute.Setup}>
         <Setup locale={$_} />
