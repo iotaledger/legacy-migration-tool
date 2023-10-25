@@ -2,7 +2,7 @@ export const menuState = {
     loggedIn: false,
     enabled: true,
     strings: {
-        about: 'About Legacy migration tool',
+        about: 'About IOTA Legacy Migration Tool',
         checkForUpdates: 'Check for Updates',
         settings: 'Settings',
         generalSettings: 'General Settings',

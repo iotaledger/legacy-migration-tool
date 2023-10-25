@@ -163,7 +163,7 @@ export const getDefaultStrongholdName = (): string => {
     const tzoffset = new Date().getTimezoneOffset() * 60000 // offset in milliseconds
     const localISOTime = new Date(Date.now() - tzoffset).toISOString()
     const date = localISOTime.slice(0, -5).replace(/:/g, '-')
-    return `iota-legacy-migration-tool-backup-${date}.stronghold`
+    return `legacy-migration-backup-${date}.stronghold`
 }
 
 export const downloadRecoveryKit = (): void => {
