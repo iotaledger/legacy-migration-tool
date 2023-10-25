@@ -70,7 +70,7 @@ export const generateTransactionHistoryCsvFromAccount = (
 }
 
 export const generateTransactionHistoryFileName = (profileName: string, accountAlias: string): string => {
-    const DEFAULT_FILE_NAME_PATTERN = 'legacy-migration-tx-history-{{profileName}}-{{accountAlias}}-{{date}}'
+    const DEFAULT_FILE_NAME_PATTERN = 'iota-legacy-migration-tx-history-{{profileName}}-{{accountAlias}}-{{date}}'
     const tzoffset = new Date().getTimezoneOffset() * 60000 // offset in milliseconds
     const localISOTime = new Date(Date.now() - tzoffset).toISOString()
     const date = localISOTime.slice(0, -5)

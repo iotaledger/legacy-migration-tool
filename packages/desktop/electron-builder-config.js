@@ -2,8 +2,8 @@ const notarize = require('./scripts/notarize.macos.js')
 const merge = require('lodash.merge')
 
 const baseConfig = () => ({
-    productName: 'Legacy Migration Tool',
-    artifactName: 'legacy-migration-tool-${version}.${ext}',
+    productName: 'IOTA Legacy Migration Tool',
+    artifactName: 'iota-legacy-migration-tool-${version}.${ext}',
     copyright: 'IOTA Foundation',
     directories: { buildResources: './public', output: './out' },
     files: ['public/', 'package.json', '!node_modules/firefly-actor-system-nodejs-bindings/native/*'],
@@ -40,7 +40,7 @@ const baseConfig = () => ({
     linux: {
         target: ['AppImage'],
         desktop: {
-            Name: 'Legacy Migration Tool',
+            Name: 'IOTA Legacy Migration Tool',
             Comment: 'Desktop migation tool for IOTA',
             Categories: 'Office;Network;Finance',
         },
@@ -82,13 +82,15 @@ const getIconPaths = (stage) => {
 }
 
 /**
- * If stage = 'prod' -> 'Legacy Migration Tool'
- * If stage = 'alpha' -> 'Legacy Migration Tool Alpha'
+ * If stage = 'prod' -> 'IOTA Legacy Migration Tool'
+ * If stage = 'alpha' -> 'IOTA Legacy Migration Tool Alpha'
  * @param {string} stage
  * @returns
  */
 const getAppName = (stage) =>
-    stage === 'prod' ? 'Legacy Migration Tool' : `Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
+    stage === 'prod'
+        ? 'IOTA Legacy Migration Tool'
+        : `IOTA Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
 
 const getAppId = (stage) => {
     const defaultAppId = 'org.iota.legacy-migration-tool'
