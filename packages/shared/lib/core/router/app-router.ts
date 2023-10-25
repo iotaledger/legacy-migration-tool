@@ -57,6 +57,7 @@ export class AppRouter extends Router<AppRoute> {
                 nextRoute = AppRoute.CrashReporting
                 break
             case AppRoute.CrashReporting:
+                walletSetupType.set(SetupType.Import)
                 nextRoute = AppRoute.Import
                 break
             case AppRoute.Create: {
