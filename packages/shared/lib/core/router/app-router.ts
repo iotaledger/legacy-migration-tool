@@ -8,7 +8,7 @@ import { walletSetupType } from '@lib/wallet'
 
 import { AppRoute } from './enums'
 import { Router } from './router'
-import { FireflyEvent } from './types'
+import { LegacyMigrationEvent } from './types'
 
 export const appRoute = writable<AppRoute>(null)
 export const appRouter = writable<AppRouter>(null)
@@ -28,7 +28,7 @@ export class AppRouter extends Router<AppRoute> {
         this.init()
     }
 
-    public next(event?: FireflyEvent): void {
+    public next(event?: LegacyMigrationEvent): void {
         // TODO: only handle route changes, not app variables
         const params = event || {}
         const currentRoute = get(this.routeStore)
@@ -57,26 +57,9 @@ export class AppRouter extends Router<AppRoute> {
                 nextRoute = AppRoute.CrashReporting
                 break
             case AppRoute.CrashReporting:
-                nextRoute = AppRoute.Appearance
+                walletSetupType.set(SetupType.Import)
+                nextRoute = AppRoute.Import
                 break
-            case AppRoute.Appearance:
-                nextRoute = AppRoute.Profile
-                break
-            case AppRoute.Profile:
-                nextRoute = AppRoute.Setup
-                break
-            case AppRoute.Setup: {
-                const { setupType } = params
-                if (setupType) {
-                    walletSetupType.set(setupType)
-                    if (setupType === SetupType.New) {
-                        nextRoute = AppRoute.Create
-                    } else if (setupType === SetupType.Import) {
-                        nextRoute = AppRoute.Import
-                    }
-                }
-                break
-            }
             case AppRoute.Create: {
                 const profileType = get(activeProfile)?.type
                 if (profileType === ProfileType.Software) {
@@ -123,11 +106,7 @@ export class AppRouter extends Router<AppRoute> {
                 const { importType } = params
                 walletSetupType.set(importType as unknown as SetupType)
                 nextRoute = AppRoute.Congratulations
-                if (importType === ImportType.Mnemonic) {
-                    nextRoute = AppRoute.Secure
-                } else if (
-                    [ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)
-                ) {
+                if ([ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)) {
                     nextRoute = AppRoute.Protect
                 } else if (importType === ImportType.Seed || importType === ImportType.SeedVault) {
                     nextRoute = AppRoute.Balance

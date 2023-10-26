@@ -24,15 +24,6 @@
         <Text type="p" secondary classes="mb-8">{locale('views.importFromLedger.body')}</Text>
         <Button
             icon="settings"
-            classes="w-full mb-5"
-            secondary
-            onClick={() => handleContinueClick(ImportType.FireflyLedger)}
-        >
-            {locale('views.importFromLedger.haveFireflyLedger')}
-            <Text type="p" secondary smaller>{locale('views.importFromLedger.haveFireflyLedgerDescription')}</Text>
-        </Button>
-        <Button
-            icon="settings"
             classes="w-full mb-8"
             secondary
             onClick={() => handleContinueClick(ImportType.TrinityLedger)}

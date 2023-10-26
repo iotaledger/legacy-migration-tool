@@ -1,27 +1,16 @@
 <script lang="typescript">
-    import { DeepLinkContext, isDeepLinkRequestActive, parseDeepLinkRequest } from '@common/deep-links'
     import { Locale } from '@core/i18n'
     import {
         AccountRoute,
         accountRouter,
-        AdvancedSettings,
         appRouter,
         dashboardRoute,
         DashboardRoute,
         dashboardRouter,
-        SettingsRoute,
-        settingsRouter,
     } from '@core/router'
-    import {
-        CURRENT_ASSEMBLY_STAKING_PERIOD,
-        CURRENT_SHIMMER_STAKING_PERIOD,
-        LAST_ASSEMBLY_STAKING_PERIOD,
-        LAST_SHIMMER_STAKING_PERIOD,
-    } from '@lib/participation/constants'
     import { activeProfile, isLedgerProfile, isSoftwareProfile, updateProfile } from '@lib/profile'
     import { Idle, Sidebar } from 'shared/components'
-    import { loggedIn, logout, sendParams } from 'shared/lib/app'
-    import { appSettings } from 'shared/lib/appSettings'
+    import { loggedIn, logout } from 'shared/lib/app'
     import { isPollingLedgerDeviceStatus, pollLedgerDeviceStatus, stopPollingLedgerStatus } from 'shared/lib/ledger'
     import { ongoingSnapshot, openSnapshotPopup } from 'shared/lib/migration'
     import { stopNetworkPoll, pollNetworkStatus } from 'shared/lib/networkStatus'
@@ -171,8 +160,6 @@
                 }
             }
         })
-
-        Platform.onEvent('deep-link-params', (data: string) => handleDeepLinkRequest(data))
     })
 
     onDestroy(() => {
@@ -181,9 +168,6 @@
         unsubscribePendingParticipations()
         stopNetworkPoll()
         stopParticipationPoll()
-
-        Platform.DeepLinkManager.clearDeepLinkRequest()
-        Platform.removeListenersForEvent('deep-link-params')
 
         if (fundsSoonNotificationId) {
             removeDisplayNotification(fundsSoonNotificationId)
@@ -217,7 +201,6 @@
                 if (get(popupState).type === 'busy') {
                     closePopup()
                 }
-                Platform.DeepLinkManager.checkDeepLinkRequestExists()
                 showTopNav = true
             }
             if (minTimeElapsed < 0) {
@@ -226,40 +209,6 @@
                 setTimeout(() => {
                     cancelBusyState()
                 }, minTimeElapsed)
-            }
-        }
-    }
-
-    const handleDeepLinkRequest = (data: string): void => {
-        const _redirect = (tab: DashboardRoute): void => {
-            isDeepLinkRequestActive.set(true)
-            $dashboardRouter.goTo(tab)
-        }
-        if (!$appSettings.deepLinking) {
-            _redirect(DashboardRoute.Settings)
-            $settingsRouter.goToChildRoute(SettingsRoute.AdvancedSettings, AdvancedSettings.DeepLinks)
-            showAppNotification({ type: 'warning', message: locale('notifications.deepLinkingRequest.notEnabled') })
-        } else {
-            if ($accounts && $accounts.length > 0) {
-                const addressPrefix = $accounts[0].depositAddress.split('1')[0]
-                const parsedDeepLink = parseDeepLinkRequest(addressPrefix, data)
-                if (parsedDeepLink && parsedDeepLink.context === DeepLinkContext.Wallet && parsedDeepLink.parameters) {
-                    _redirect(DashboardRoute.Wallet)
-                    sendParams.set({
-                        ...parsedDeepLink.parameters,
-                        isInternal: false,
-                    })
-                    showAppNotification({
-                        type: parsedDeepLink.notification.type,
-                        message: parsedDeepLink.notification.message,
-                    })
-                } else {
-                    showAppNotification({
-                        type: 'error',
-                        message: locale('notifications.deepLinkingRequest.invalidFormat'),
-                    })
-                }
-                Platform.DeepLinkManager.clearDeepLinkRequest()
             }
         }
     }

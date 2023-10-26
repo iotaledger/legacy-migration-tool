@@ -11,7 +11,6 @@ import { Locale } from '@core/i18n'
  */
 export const getLocalisedMenuItems = (locale: Locale): unknown => ({
     about: locale('views.settings.about.title'),
-    checkForUpdates: locale('actions.checkForUpdates'),
     settings: locale('views.settings.settings'),
     generalSettings: locale('views.settings.generalSettings.title'),
     security: locale('views.settings.security.title'),

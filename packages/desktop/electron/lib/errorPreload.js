@@ -4,7 +4,7 @@ const { version } = require('../../package.json')
 contextBridge.exposeInMainWorld('error', {
     getData: () =>
         ipcRenderer.invoke('error-data').then((data) => ({
-            iconPath: './assets/logos/firefly_logo.svg',
+            iconPath: './assets/logos/lightmode/logo_iota.svg',
             version,
             diagnostics: data.diagnostics
                 .map((d) => `${d.label.replace('popups.diagnostics.', '')}: ${d.value}`)

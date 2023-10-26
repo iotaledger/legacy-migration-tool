@@ -6,7 +6,6 @@
     import {
         BalanceFinder,
         CrashReporting,
-        DeepLinks,
         Diagnostics,
         ErrorLog,
         HiddenAccounts,
@@ -15,13 +14,12 @@
     } from './'
 
     const settings: {
-        component: unknown
+        component: any
         childRoute: AdvancedSettings
         requireLogin?: boolean
         requireLedger?: boolean
     }[] = [
         { component: NetworkConfiguration, childRoute: AdvancedSettings.NetworkConfiguration, requireLogin: true },
-        { component: DeepLinks, childRoute: AdvancedSettings.DeepLinks },
         { component: BalanceFinder, childRoute: AdvancedSettings.BalanceFinder, requireLogin: true },
         { component: HiddenAccounts, childRoute: AdvancedSettings.HiddenAccounts, requireLogin: true },
         { component: ErrorLog, childRoute: AdvancedSettings.ErrorLog },

@@ -14,14 +14,7 @@
     import { initialiseMigrationListeners } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { openPopup } from 'shared/lib/popup'
-    import {
-        cleanupInProgressProfiles,
-        storeProfile,
-        disposeNewProfile,
-        hasNoProfiles,
-        newProfile,
-        validateProfileName,
-    } from 'shared/lib/profile'
+    import { storeProfile, disposeNewProfile, hasNoProfiles, newProfile, validateProfileName } from 'shared/lib/profile'
     import { destroyActor, getProfileDataPath, initialise } from 'shared/lib/wallet'
     import { Locale } from '@core/i18n'
     import { Platform } from 'shared/lib/platform'
@@ -94,7 +87,6 @@
 
     async function handleBackClick(): Promise<void> {
         cleanupSignup()
-        cleanupInProgressProfiles()
         await disposeNewProfile()
         $appRouter.previous()
     }

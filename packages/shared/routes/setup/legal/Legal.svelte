@@ -1,10 +1,10 @@
 <script lang="typescript">
     import { Button, Checkbox, OnboardingLayout, Text } from 'shared/components'
-    import { Locale } from '@core/i18n'
     import Content from './Content.svelte'
     import { lastAcceptedTos, lastAcceptedPrivacyPolicy } from 'shared/lib/appSettings'
     import { TOS_VERSION, PRIVACY_POLICY_VERSION } from 'shared/lib/app'
     import { appRouter } from '@core/router'
+    import { Locale } from '@core/i18n'
 
     export let locale: Locale
 
@@ -31,10 +31,10 @@
         <Text type="p" secondary classes="mb-8">{locale('views.legal.body')}</Text>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-8">
-        <Checkbox label={locale('views.legal.checkbox')} bind:checked />
-        <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}>
-            {locale('actions.continue')}
-        </Button>
+        <Checkbox label="I've read and I accept the Privacy Policy & Terms of Service" bind:checked />
+        <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}
+            >{locale('actions.continue')}</Button
+        >
     </div>
     <div slot="rightpane" class="w-full h-full flex items-center px-40 py-20">
         <div

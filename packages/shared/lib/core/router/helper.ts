@@ -1,6 +1,5 @@
 import { get } from 'svelte/store'
 
-import { isDeepLinkRequestActive } from '@common/deep-links'
 import { closePopup } from '@lib/popup'
 import { selectedMessage } from '@lib/wallet'
 
@@ -28,7 +27,6 @@ export const resetRouters = (): void => {
     get(accountRouter).reset()
     get(settingsRouter).reset()
     get(governanceRouter).reset()
-    isDeepLinkRequestActive.set(false)
 }
 
 export const resetAccountRouter = (resetPanels: boolean = true): void => {

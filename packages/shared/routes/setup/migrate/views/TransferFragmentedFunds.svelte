@@ -24,7 +24,7 @@
         unmigratedBundles,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
-    import { newProfile, profileInProgress, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
@@ -283,7 +283,6 @@
         saveProfile($newProfile)
         setActiveProfile($newProfile.id)
 
-        profileInProgress.set(undefined)
         newProfile.set(null)
     }
 

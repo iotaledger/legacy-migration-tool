@@ -1,9 +1,9 @@
 <script lang="typescript">
-    import { get } from 'svelte/store'
-    import { onDestroy, onMount } from 'svelte'
+    import { Locale } from '@core/i18n'
+    import { appRouter, ledgerRouter } from '@core/router'
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
+    import { cleanupSignup } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
-    import { Platform } from 'shared/lib/platform'
     import { promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
         LOG_FILE_NAME,
@@ -12,21 +12,15 @@
         resetMigrationState,
         totalMigratedBalance,
     } from 'shared/lib/migration'
-    import {
-        activeProfile,
-        newProfile,
-        profileInProgress,
-        saveProfile,
-        setActiveProfile,
-        updateProfile,
-    } from 'shared/lib/profile'
-    import { appRouter, ledgerRouter } from '@core/router'
+    import { Platform } from 'shared/lib/platform'
+    import { activeProfile, newProfile, saveProfile, setActiveProfile, updateProfile } from 'shared/lib/profile'
+    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { LedgerAppName } from 'shared/lib/typings/ledger'
+    import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { Locale } from '@core/i18n'
-    import { SetupType } from 'shared/lib/typings/setup'
+    import { onDestroy, onMount } from 'svelte'
+    import { get } from 'svelte/store'
 
     export let locale: Locale
 
@@ -45,10 +39,10 @@
             }
             // This is the last screen in onboarding for all flows i.e., if you create a new wallet or import stronghold
             // When this component mounts, ensure that the profile is persisted in the local storage.
+            $newProfile = { ...$newProfile, name: $newProfile.id }
             saveProfile($newProfile)
             setActiveProfile($newProfile.id)
 
-            profileInProgress.set(undefined)
             newProfile.set(null)
         } else {
             if ($walletSetupType === SetupType.TrinityLedger) {
@@ -73,6 +67,10 @@
     )
 
     const handleContinueClick = (): void => {
+        function _onAppRouterNext(): void {
+            cleanupSignup()
+            $appRouter.next()
+        }
         if (wasMigrated) {
             const _continue = () => {
                 if ($walletSetupType === SetupType.TrinityLedger) {
@@ -80,9 +78,9 @@
                      * We check for the new Ledger IOTA app to be connected after migration
                      * because the last app the user had open was the legacy one
                      */
-                    promptUserToConnectLedger(false, () => $appRouter.next())
+                    promptUserToConnectLedger(false, _onAppRouterNext)
                 } else {
-                    $appRouter.next()
+                    _onAppRouterNext()
                 }
             }
             const _exportMigrationLog = () => {
@@ -109,7 +107,7 @@
                 _exportMigrationLog()
             }
         } else {
-            $appRouter.next()
+            _onAppRouterNext()
         }
     }
 

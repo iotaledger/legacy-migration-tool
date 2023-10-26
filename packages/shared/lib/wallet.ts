@@ -421,8 +421,8 @@ export const asyncRemoveWalletAccount = (accountId: string): Promise<void> =>
             onSuccess() {
                 /**
                  * CAUTION: If an account is successfully removed in wallet.rs then it should also be
-                 * removed in the Firefly store. This is "inefficient" (esp. for batch deletes) but it
-                 * at least ensures data integrity / consistency between Firefly and the backend.
+                 * removed in the IOTA Legacy Migration Tool store. This is "inefficient" (esp. for batch deletes) but it
+                 * at least ensures data integrity / consistency between IOTA Legacy Migration Tool and the backend.
                  */
                 get(wallet).accounts.update((_accounts) => _accounts.filter((wa) => wa.id !== accountId))
 

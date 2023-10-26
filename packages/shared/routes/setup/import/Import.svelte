@@ -4,7 +4,7 @@
     import { BackupPassword, FileImport, Import, Ledger, Success, TextImport } from './views/'
     import UpdateStrongholdRouter from '../../update-stronghold/UpdateStrongholdRouter.svelte'
     import { Locale } from '@core/i18n'
-    import { FireflyEvent, importRoute, ImportRouter, ImportRoute } from '@core/router'
+    import { LegacyMigrationEvent, importRoute, ImportRouter, ImportRoute } from '@core/router'
     import { showAppNotification } from 'shared/lib/notifications'
 
     export let locale: Locale
@@ -16,7 +16,7 @@
     let busy = false
     let error = ''
 
-    async function next(event: CustomEvent<FireflyEvent>): Promise<void> {
+    async function next(event: CustomEvent<LegacyMigrationEvent>): Promise<void> {
         busy = true
         try {
             await importRouter.next(event.detail)

@@ -141,12 +141,12 @@ export const logout = (_clearActiveProfile: boolean = false, _lockStronghold: bo
     })
 
 /**
- * The privacy policy packaged with the current version of Firefly
+ * The privacy policy packaged with the current version of IOTA Legacy Migration Tool
  */
 export const PRIVACY_POLICY_VERSION = 2
 
 /**
- * The Terms of Service packaged with the current version of Firefly
+ * The Terms of Service packaged with the current version of IOTA Legacy Migration Tool
  */
 export const TOS_VERSION = 2
 
