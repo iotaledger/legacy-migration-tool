@@ -1,6 +1,6 @@
 <script lang="typescript">
     import { Locale, localize } from '@core/i18n'
-    import { AppRoute, appRouter, ledgerRouter } from '@core/router'
+    import { appRouter, ledgerRouter } from '@core/router'
     import { cleanupSignup } from '@lib/app'
     import { promptUserToConnectLedger } from '@lib/ledger'
     import { showAppNotification } from '@lib/notifications'
@@ -64,7 +64,8 @@
     }
 
     const migrateAnotherProfile = (): void => {
-        $appRouter.goTo(AppRoute.Welcome)
+        cleanupSignup()
+        $appRouter.reset()
     }
 
     function handleExportClick() {
