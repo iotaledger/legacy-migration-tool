@@ -18,12 +18,10 @@
     import { LedgerApp, LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
     import { api } from 'shared/lib/wallet'
     import { diffDates, getBackupWarningColor, getInitials, isRecentDate } from 'shared/lib/helpers'
-    import { versionDetails } from 'shared/lib/appUpdater'
 
     export let modal: Modal
 
     const profileColor = 'blue' // TODO: each profile has a different color
-    const isUpToDate = $versionDetails.upToDate
 
     let isLedgerConnected = false
     let isCheckingLedger = false
@@ -114,11 +112,6 @@
             },
         })
     }
-
-    function handleVersionUpdateClick() {
-        modal?.close()
-        openPopup({ type: 'version' })
-    }
 </script>
 
 <Modal
@@ -144,27 +137,6 @@
             {/if}
         </div>
         <HR />
-        {#if !isUpToDate}
-            <div class="items-center p-3">
-                <div class="flex items-center justify-between bg-blue-50 dark:bg-gray-800 p-3 rounded-lg">
-                    <div class="flex flex-row items-center space-x-3">
-                        <Icon icon="warning" boxed classes="text-blue-500" />
-                        <div>
-                            <Text type="p">{localize('views.dashboard.profileModal.version.title')}</Text>
-                            <Text type="p" overrideColor classes="text-gray-500 -mt-0.5">
-                                {localize('views.dashboard.profileModal.version.updateVersion', {
-                                    values: { version: $versionDetails.newVersion },
-                                })}
-                            </Text>
-                        </div>
-                    </div>
-                    <Button secondary xsmall onClick={() => handleVersionUpdateClick()}>
-                        <Text type="p">{localize('views.dashboard.profileModal.version.button')}</Text>
-                    </Button>
-                </div>
-            </div>
-            <HR />
-        {/if}
         {#if $isSoftwareProfile}
             {#if !isBackupSafe}
                 <div class="items-center p-3">

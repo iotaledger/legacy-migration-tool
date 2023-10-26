@@ -48,7 +48,7 @@
     onMount(() => {
         /**
          * CAUTION: If neither the sendTo nor remainderAddress contain
-         * valid information then Firefly should cancel the transaction
+         * valid information then IOTA Legacy Migration Tool should cancel the transaction
          * (to be retried) and notify the user.
          */
         if (!shouldDisplaySendTo && !shouldDisplayRemainderAddress) onInvalid()

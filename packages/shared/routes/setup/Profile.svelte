@@ -1,7 +1,7 @@
 <script lang="typescript">
     import { get } from 'svelte/store'
     import { initAppSettings } from 'shared/lib/appSettings'
-    import { cleanupSignup, mobile, stage } from 'shared/lib/app'
+    import { cleanupSignup, stage } from 'shared/lib/app'
     import {
         Animation,
         Button,
@@ -98,7 +98,7 @@
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-4">{locale('views.profile.body1')}</Text>
-        <Text type="p" secondary classes={$mobile ? 'mb-4' : 'mb-10'}>
+        <Text type="p" secondary classes="mb-10">
             {locale(`views.profile.body2.${hasNoProfiles() ? 'first' : 'nonFirst'}`)}
             {locale('views.profile.addMore')}
         </Text>
@@ -130,7 +130,7 @@
             {locale('actions.continue')}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-green dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-green dark:bg-gray-900">
         <Animation animation="profile-desktop" />
     </div>
 </OnboardingLayout>

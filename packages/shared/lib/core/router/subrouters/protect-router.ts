@@ -15,7 +15,7 @@ import {
 import { appRouter } from '../app-router'
 import { ProtectRoute } from '../enums'
 import { Subrouter } from './subrouter'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 
 export const protectRoute = writable<ProtectRoute>(null)
 
@@ -26,7 +26,7 @@ export class ProtectRouter extends Subrouter<ProtectRoute> {
 
     public pin: string
 
-    async next(event: FireflyEvent): Promise<void> {
+    async next(event: LegacyMigrationEvent): Promise<void> {
         let nextRoute: ProtectRoute
         const { pin, protectionType } = event || {}
 

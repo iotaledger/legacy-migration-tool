@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { get } from 'svelte/store'
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text, Toast } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { displayNotificationForLedgerProfile, promptUserToConnectLedger } from 'shared/lib/ledger'
@@ -238,7 +237,7 @@
             {locale('actions.continue')}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-yellow dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="balance-desktop" />
     </div>
 </OnboardingLayout>

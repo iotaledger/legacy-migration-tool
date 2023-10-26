@@ -1,14 +1,12 @@
 <script lang="typescript">
     import { SettingsMenu, Text } from 'shared/components'
-    import { loggedIn, mobile } from 'shared/lib/app'
+    import { loggedIn } from 'shared/lib/app'
     import { localize } from '@core/i18n'
-    import { Platform } from 'shared/lib/platform'
     import { isLedgerProfile, isSoftwareProfile } from 'shared/lib/profile'
     import { SettingsIcons } from 'shared/lib/typings/icons'
     import {
         AdvancedSettings,
         AdvancedSettingsNoProfile,
-        ExternalRoute,
         GeneralSettings,
         GeneralSettingsNoProfile,
         HelpAndInfo,
@@ -39,32 +37,13 @@
             | AdvancedSettingsNoProfile
             | HelpAndInfo
     ) {
-        if (route === $settingsRouter.HelpAndInfo && $mobile) {
-            switch (childRoute) {
-                case HelpAndInfo.Documentation:
-                    Platform.openUrl(ExternalRoute.Documentation)
-                    break
-                case HelpAndInfo.Discord:
-                    Platform.openUrl(ExternalRoute.Discord)
-                    break
-                case HelpAndInfo.FAQ:
-                    Platform.openUrl(ExternalRoute.FAQ)
-                    break
-                case HelpAndInfo.ReportAnIssue:
-                    Platform.openUrl(ExternalRoute.FAQ)
-                    break
-            }
-        } else {
-            $settingsRouter.goToChildRoute(route, childRoute)
-        }
+        $settingsRouter.goToChildRoute(route, childRoute)
     }
 </script>
 
 <div class="flex flex-col flex-1 md:flex-initial pb-10 md:pb-0 md:h-full md:w-full">
-    {#if !$mobile}
-        <Text type="h2" classes="mb-14">{localize('views.settings.settings')}</Text>
-    {/if}
-    <div class="flex items-start {$mobile ? 'flex-col gap-5 md:p-6' : 'flex-row  space-x-10'}">
+    <Text type="h2" classes="mb-14">{localize('views.settings.settings')}</Text>
+    <div class="flex items-start flex-row  space-x-10">
         <SettingsMenu
             icon="settings"
             iconColor="bg-blue-500"

@@ -1,16 +1,18 @@
 <script lang="typescript">
-    import { onDestroy } from 'svelte'
-    import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
-    import { Platform } from 'shared/lib/platform'
-    import { LOG_FILE_NAME, migration, migrationLog, resetMigrationState } from 'shared/lib/migration'
-    import { activeProfile, updateProfile } from 'shared/lib/profile'
-    import { AppRoute, appRouter, ledgerRouter } from '@core/router'
-    import { api, getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
     import { Locale, localize } from '@core/i18n'
-    import { SetupType } from 'shared/lib/typings/setup'
+    import { AppRoute, appRouter, ledgerRouter } from '@core/router'
+    import { cleanupSignup } from '@lib/app'
+    import { promptUserToConnectLedger } from '@lib/ledger'
     import { showAppNotification } from '@lib/notifications'
     import { openPopup } from '@lib/popup'
     import { getDefaultStrongholdName } from '@lib/utils'
+    import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
+    import { LOG_FILE_NAME, migration, migrationLog, resetMigrationState } from 'shared/lib/migration'
+    import { Platform } from 'shared/lib/platform'
+    import { activeProfile, updateProfile } from 'shared/lib/profile'
+    import { SetupType } from 'shared/lib/typings/setup'
+    import { api, getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
+    import { onDestroy } from 'svelte'
 
     export let locale: Locale
 
@@ -22,14 +24,43 @@
     $: isLedgerProfile = $walletSetupType === SetupType.TrinityLedger
 
     const exportMigrationLog = (): void => {
-        getProfileDataPath($activeProfile.id)
-            .then((source) =>
-                isLedgerProfile
-                    ? Platform.exportLedgerMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-                    : Platform.exportMigrationLog(`${source}/${LOG_FILE_NAME}`, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-            )
-            .catch(console.error)
-            .finally(() => (exportStrongholdBusy = false))
+        function _onAppRouterNext(): void {
+            cleanupSignup()
+            $appRouter.next()
+        }
+        if (wasMigrated) {
+            const _continue = () => {
+                if ($walletSetupType === SetupType.TrinityLedger) {
+                    /**
+                     * We check for the new Ledger IOTA app to be connected after migration
+                     * because the last app the user had open was the legacy one
+                     */
+                    promptUserToConnectLedger(false, _onAppRouterNext)
+                } else {
+                    _onAppRouterNext()
+                }
+            }
+            const _exportMigrationLog = () => {
+                getProfileDataPath($activeProfile.id)
+                    .then((source) =>
+                        $walletSetupType === SetupType.TrinityLedger
+                            ? Platform.exportLedgerMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`)
+                            : Platform.exportMigrationLog(
+                                  `${source}/${LOG_FILE_NAME}`,
+                                  `${$activeProfile.id}-${LOG_FILE_NAME}`
+                              )
+                    )
+                    .then((result) => {
+                        if (result) {
+                            _continue()
+                        }
+                    })
+                    .catch(console.error)
+            }
+            _exportMigrationLog()
+        } else {
+            _onAppRouterNext()
+        }
     }
 
     const migrateAnotherProfile = (): void => {

@@ -1,12 +1,11 @@
 <script lang="typescript">
     import { HR } from 'shared/components'
-    import { loggedIn, mobile } from 'shared/lib/app'
+    import { loggedIn } from 'shared/lib/app'
     import { isLedgerProfile } from 'shared/lib/profile'
     import { AdvancedSettings, settingsChildRoute } from '@core/router'
     import {
         BalanceFinder,
         CrashReporting,
-        DeepLinks,
         Diagnostics,
         ErrorLog,
         HiddenAccounts,
@@ -15,13 +14,12 @@
     } from './'
 
     const settings: {
-        component: unknown
+        component: any
         childRoute: AdvancedSettings
         requireLogin?: boolean
         requireLedger?: boolean
     }[] = [
         { component: NetworkConfiguration, childRoute: AdvancedSettings.NetworkConfiguration, requireLogin: true },
-        { component: DeepLinks, childRoute: AdvancedSettings.DeepLinks },
         { component: BalanceFinder, childRoute: AdvancedSettings.BalanceFinder, requireLogin: true },
         { component: HiddenAccounts, childRoute: AdvancedSettings.HiddenAccounts, requireLogin: true },
         { component: ErrorLog, childRoute: AdvancedSettings.ErrorLog },
@@ -33,7 +31,7 @@
 
 <div>
     {#each settings as { component, childRoute, requireLogin, requireLedger }, index}
-        {#if (!requireLogin || (requireLogin && $loggedIn)) && (!requireLedger || (requireLedger && $isLedgerProfile)) && (!$mobile || ($mobile && $settingsChildRoute === childRoute))}
+        {#if (!requireLogin || (requireLogin && $loggedIn)) && (!requireLedger || (requireLedger && $isLedgerProfile))}
             <section id={childRoute} class="w-full sm:w-3/4">
                 <svelte:component this={component} id={childRoute} />
             </section>

@@ -3,7 +3,7 @@
     import { Pin, RepeatPin } from './views/'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Locale } from '@core/i18n'
-    import { FireflyEvent, protectRoute, ProtectRouter, ProtectRoute } from '@core/router'
+    import { LegacyMigrationEvent, protectRoute, ProtectRouter, ProtectRoute } from '@core/router'
 
     export let locale: Locale
 
@@ -18,7 +18,7 @@
             break
     }
 
-    async function next(event: CustomEvent<FireflyEvent>): Promise<void> {
+    async function next(event: CustomEvent<LegacyMigrationEvent>): Promise<void> {
         busy = true
         try {
             await protectRouter.next(event?.detail)

@@ -104,7 +104,6 @@
     }
 </script>
 
-<!-- TODO: improve UX for mobile, 3 step screen -->
 <form id="form-change-password" on:submit={changePassword}>
     <Text type="h4" classes="mb-3">{localize('views.settings.changePassword.title')}</Text>
     <Text type="p" secondary classes="mb-5">{localize('views.settings.changePassword.description')}</Text>

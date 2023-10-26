@@ -1,14 +1,14 @@
 import { get, writable } from 'svelte/store'
 
-import { cleanupSignup, login, mobile, strongholdPassword, walletPin } from '@lib/app'
-import { setProfileType, activeProfile, profiles } from '@lib/profile'
+import { cleanupSignup, login, strongholdPassword, walletPin } from '@lib/app'
+import { activeProfile } from '@lib/profile'
 import { ImportType, ProfileType } from '@lib/typings/profile'
 import { SetupType } from '@lib/typings/setup'
 import { walletSetupType } from '@lib/wallet'
 
 import { AppRoute } from './enums'
 import { Router } from './router'
-import { FireflyEvent } from './types'
+import { LegacyMigrationEvent } from './types'
 
 export const appRoute = writable<AppRoute>(null)
 export const appRouter = writable<AppRouter>(null)
@@ -28,7 +28,7 @@ export class AppRouter extends Router<AppRoute> {
         this.init()
     }
 
-    public next(event?: FireflyEvent): void {
+    public next(event?: LegacyMigrationEvent): void {
         // TODO: only handle route changes, not app variables
         const params = event || {}
         const currentRoute = get(this.routeStore)
@@ -57,12 +57,9 @@ export class AppRouter extends Router<AppRoute> {
                 nextRoute = AppRoute.CrashReporting
                 break
             case AppRoute.CrashReporting:
-                nextRoute = AppRoute.Setup
-                break
-            case AppRoute.Setup: {
+                walletSetupType.set(SetupType.Import)
                 nextRoute = AppRoute.Import
                 break
-            }
             case AppRoute.Create: {
                 const profileType = get(activeProfile)?.type
                 if (profileType === ProfileType.Software) {

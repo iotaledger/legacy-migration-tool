@@ -1,18 +1,16 @@
 <script lang="typescript">
-    import { onDestroy, onMount } from 'svelte'
+    import { Locale, _, isLocaleLoaded, localeDirection, setupI18n } from '@core/i18n'
+    import { AppRoute, DashboardRoute, accountRouter, dashboardRouter, initRouters, openSettings } from '@core/router'
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
-    import { stage, loggedIn } from 'shared/lib/app'
+    import { loggedIn, stage } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
-    import { getVersionDetails, pollVersion, versionDetails } from 'shared/lib/appUpdater'
+    import { Electron } from 'shared/lib/electron'
     import { addError } from 'shared/lib/errors'
     import { goto } from 'shared/lib/helpers'
-    import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
     import { pollMarketData } from 'shared/lib/market'
-    import { showAppNotification } from 'shared/lib/notifications'
-    import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
-    import { AppRoute, DashboardRoute, dashboardRouter, accountRouter, initRouters, openSettings } from '@core/router'
+    import { Stage } from 'shared/lib/typings/stage'
     import {
         Backup,
         Balance,
@@ -34,9 +32,8 @@
         Splash,
         Welcome,
     } from 'shared/routes'
+    import { onMount } from 'svelte'
     import { getLocalisedMenuItems } from './lib/helpers'
-    import { Stage } from 'shared/lib/typings/stage'
-    import { get } from 'svelte/store'
 
     stage.set(Stage[process.env.STAGE.toUpperCase()] ?? Stage.ALPHA)
 
@@ -80,10 +77,6 @@
 
         // @ts-ignore: This value is replaced by Webpack DefinePlugin
         /* eslint-disable no-undef */
-        if (!devMode && get(stage) === Stage.PROD) {
-            await getVersionDetails()
-            pollVersion()
-        }
         Electron.onEvent('menu-navigate-wallet', (route) => {
             $dashboardRouter.goTo(DashboardRoute.Wallet)
             $accountRouter.goTo(route)
@@ -95,14 +88,6 @@
                 settings = true
             }
         })
-        Electron.onEvent('menu-check-for-update', () => {
-            openPopup({
-                type: 'version',
-                props: {
-                    currentVersion: $versionDetails.currentVersion,
-                },
-            })
-        })
         Electron.onEvent('menu-error-log', () => {
             openPopup({ type: 'errorLog' })
         })
@@ -113,24 +98,8 @@
             addError(err)
         })
 
-        Electron.onEvent('deep-link-request', showDeepLinkNotification)
-
         await cleanupEmptyProfiles()
     })
-
-    onDestroy(() => {
-        Electron.removeListenersForEvent('deep-link-request')
-        Electron.DeepLinkManager.clearDeepLinkRequest()
-    })
-
-    const showDeepLinkNotification = () => {
-        if (!$loggedIn) {
-            showAppNotification({
-                type: 'info',
-                message: $_('notifications.deepLinkingRequest.recievedWhileLoggedOut'),
-            })
-        }
-    }
 </script>
 
 <TitleBar>

@@ -7,7 +7,7 @@ const { ipcRenderer } = require('electron')
  */
 const NotificationManager = {
     notify(message, contextData) {
-        const notification = new Notification('Firefly', {
+        const notification = new Notification('IOTA Legacy Migration Tool', {
             body: message,
             data: contextData,
         })

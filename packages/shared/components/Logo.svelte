@@ -13,15 +13,15 @@
     $: selected = logos[logo]?.[overrideStage ?? get(stage)]
 
     const logos = {
-        'logo-firefly-full': {
-            alpha: 'firefly_logo_full.svg',
-            beta: 'firefly_logo_full.svg',
-            prod: 'firefly_logo_full.svg',
+        'logo-iota-full': {
+            alpha: 'iota_logo_full.svg',
+            beta: 'iota_logo_full.svg',
+            prod: 'iota_logo_full.svg',
         },
-        'logo-firefly': {
-            alpha: 'alpha_firefly_logo.svg',
-            beta: 'beta_firefly_logo.svg',
-            prod: 'prod_firefly_logo.svg',
+        'logo-iota': {
+            alpha: 'logo_iota.svg',
+            beta: 'logo_iota.svg',
+            prod: 'logo_iota.svg',
         },
         'logo-stronghold': {
             alpha: 'stronghold.svg',

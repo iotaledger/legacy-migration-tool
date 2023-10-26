@@ -1,9 +1,8 @@
 <script lang="typescript">
-    import { FireflyEvent, loginRoute, LoginRouter, LoginRoute } from '@core/router'
+    import { LegacyMigrationEvent, loginRoute, LoginRouter, LoginRoute } from '@core/router'
     import { Transition } from 'shared/components'
     import { activeProfileId, clearActiveProfile, profiles } from 'shared/lib/profile'
     import { Locale } from '@core/i18n'
-    import { mobile } from 'shared/lib/app'
     import { onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { EnterPin, SelectProfile } from './views'
@@ -15,14 +14,14 @@
 
     onMount(() => {
         loginRouter = new LoginRouter()
-        if (!$mobile && get(activeProfileId) && get(profiles)?.find((p) => p.id === get(activeProfileId))) {
+        if (get(activeProfileId) && get(profiles)?.find((p) => p.id === get(activeProfileId))) {
             loginRouter.next()
         } else {
             clearActiveProfile()
         }
     })
 
-    const next = (event: CustomEvent<FireflyEvent>): void => loginRouter.next(event.detail)
+    const next = (event: CustomEvent<LegacyMigrationEvent>): void => loginRouter.next(event.detail)
     const previous = (): void => loginRouter.previous()
 </script>
 

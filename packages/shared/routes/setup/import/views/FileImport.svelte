@@ -1,7 +1,7 @@
 <script lang="typescript">
+    import { Locale } from '@core/i18n'
     import { Animation, Button, Dropzone, OnboardingLayout, Spinner, Text } from 'shared/components'
     import { createEventDispatcher } from 'svelte'
-    import { Locale } from '@core/i18n'
 
     export let locale: Locale
     export let busy = false
@@ -11,7 +11,7 @@
     let filePath: string
     let dropping: boolean
 
-    const allowedExtensions = ['kdbx', 'stronghold', 'txt']
+    const allowedExtensions = ['kdbx']
 
     const dispatch = createEventDispatcher()
 

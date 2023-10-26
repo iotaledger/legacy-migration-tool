@@ -89,7 +89,6 @@ export enum SecuritySettings {
 
 export enum AdvancedSettings {
     NetworkConfiguration = 'networkConfiguration',
-    DeepLinks = 'deepLinks',
     BalanceFinder = 'balanceFinder',
     HiddenAccounts = 'hiddenAccounts',
     ErrorLog = 'errorLog',
@@ -99,7 +98,6 @@ export enum AdvancedSettings {
 }
 
 export enum AdvancedSettingsNoProfile {
-    DeepLinks = 'deepLinks',
     ErrorLog = 'errorLog',
     Diagnostics = 'diagnostics',
 }
@@ -115,7 +113,7 @@ export enum ExternalRoute {
     Documentation = 'https://wiki.iota.org/use/wallets/firefly/general',
     Discord = 'https://discord.iota.org',
     FAQ = 'https://wiki.iota.org/use/wallets/firefly/faq-and-troubleshooting',
-    IssueReport = 'https://github.com/iotaledger/firefly/issues/new/choose',
+    IssueReport = 'https://github.com/iotaledger/legacy-migration-tool/issues/new/choose',
 }
 
 export enum LoginRoute {

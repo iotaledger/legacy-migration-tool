@@ -1,7 +1,7 @@
 import { ImportType } from '@lib/typings/profile'
 import { SetupType } from '@lib/typings/setup'
 
-export type FireflyEvent = {
+export type LegacyMigrationEvent = {
     file?: Buffer
     fileName?: string
     filePath?: string

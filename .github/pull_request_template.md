@@ -25,9 +25,6 @@ Please select any platforms where your changes have been tested.
 	- [ ] MacOS
 	- [ ] Linux
 	- [ ] Windows
-- __Mobile__
-	- [ ] iOS
-	- [ ] Android
 
 ### Instructions
 Please describe the specific instructions, configurations, and/or test cases necessary to __test and verify__ that your changes work as intended.

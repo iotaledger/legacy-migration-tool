@@ -6,7 +6,7 @@ import { isStrongholdOutdated } from '@lib/stronghold'
 import { appRouter } from '../app-router'
 import { LoginRoute } from '../enums'
 import { Subrouter } from './subrouter'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 import { UpdateStrongholdRouter, updateStrongholdRouter } from './update-stronghold-router'
 
 export const loginRoute = writable<LoginRoute>(null)
@@ -16,7 +16,7 @@ export class LoginRouter extends Subrouter<LoginRoute> {
         super(LoginRoute.Init, loginRoute)
     }
 
-    next(event?: FireflyEvent): void {
+    next(event?: LegacyMigrationEvent): void {
         let nextRoute: LoginRoute
         const currentRoute = get(this.routeStore)
         switch (currentRoute) {
