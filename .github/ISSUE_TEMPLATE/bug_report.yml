@@ -11,32 +11,20 @@ body:
     - type: markdown
       attributes:
           value: |
-              Thank you for helping us make Firefly better, by reporting a bug you have found. This issue may already be reported! Please search on the [issue tracker](https://github.com/iotaledger/firefly/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Abug) before creating one. This form is for bugs only and not for help or support using this application. Please visit the [help and support discussions forum](https://github.com/iotaledger/firefly/discussions/categories/help-support) or join our [discord](https://discord.iota.org/) for help.
+              Thank you for helping us make the IOTA Legacy Migration Tool better, by reporting a bug you have found. This issue may already be reported! Please search on the [issue tracker](https://github.com/iotaledger/legacy-migration-tool/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Abug) before creating one. This form is for bugs only and not for help or support using this application. Please visit the [help and support discussions forum](https://github.com/iotaledger/legacy-migration-tool/discussions/categories/help-support) or join our [discord](https://discord.iota.org/) for help.
 
     - type: markdown
       attributes:
-          value: '## Firefly application details'
-          
-    - type: dropdown
-      id: platform
-      attributes:
-          label: Platform
-          description: What platform does this issue occur on? (Select all that apply)
-          multiple: true
-          options:
-            - Desktop
-      validations:
-          required: true      
+          value: '## IOTA Legacy Migration Tool application details'    
     
     - type: input
       id: version
       attributes:
           label: Version
-          description: What version of Firefly are you using? (Select all that apply)
-          placeholder: "1.4.0"
+          description: What version of IOTA Legacy Migration Tool are you using? (Select all that apply)
+          placeholder: "1.0.0"
       validations:
           required: true
-
 
     - type: markdown
       attributes:
@@ -108,24 +96,12 @@ body:
       id: diagnostics
       attributes:
           label: Diagnostics
-          description: Paste the information from the Diagnostics popup accessible in the Firefly main menu or settings page.
+          description: Paste the information from the Diagnostics popup accessible in the IOTA Legacy Migration Tool main menu or settings page.
           render: shell
           
     - type: markdown
       attributes:
-          value: '## Use of Firefly'
-          
-    - type: dropdown
-      id: profile_role
-      attributes:
-          label: Developer Profile
-          description: Are you using a developer profile?
-          multiple: false
-          options:
-            - "No"
-            - "Yes"
-      validations:
-          required: true
+          value: '## Use of IOTA Legacy Migration Tool'
           
     - type: dropdown
       id: profile_type
@@ -138,18 +114,6 @@ body:
             - Hardware (Ledger)
       validations:
           required: true
-          
-    - type: dropdown
-      id: staking_status
-      attributes:
-          label: Staking
-          description: What is the state of staking in your profile?
-          multiple: false
-          options:
-            - Actively staking
-            - Previously staked
-            - Never staked
-      validations:
               
     - type: markdown
       attributes:
@@ -159,7 +123,7 @@ body:
       id: crash_info
       attributes:
           label: Crash Status
-          description: Did Firefly crash, hang or freeze?
+          description: Did IOTA Legacy Migration Tool crash, hang or freeze?
           multiple: false
           options:
             - "None of the above"
@@ -180,7 +144,7 @@ body:
       id: error_logs
       attributes:
           label: Error Logs
-          description: Paste the latest errors from the error log, accessible in the Firefly main menu or settings page
+          description: Paste the latest errors from the error log, accessible in the IOTA Legacy Migration Tool main menu or settings page
           render: shell
 
     - type: markdown
@@ -200,7 +164,7 @@ body:
       id: terms
       attributes:
           label: Code of Conduct
-          description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/iotaledger/firefly/blob/53b11691345897703cc3b2cfd3caa830bc2ff949/.github/CODE_OF_CONDUCT.md).
+          description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/iotaledger/legacy-migration-tool/blob/9ab79354190ed8acb43b53669e29a338f0935149/.github/CODE_OF_CONDUCT.md).
           options:
               - label: I agree to follow this project's Code of Conduct
                 required: true
