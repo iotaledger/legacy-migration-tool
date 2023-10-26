@@ -1,52 +1,27 @@
 <script lang="typescript">
-    import { Drawer, Icon } from 'shared/components'
+    import { Icon } from 'shared/components'
     import { clickOutside } from 'shared/lib/actions'
-    import { closePopup, popupState } from 'shared/lib/popup'
+    import { closePopup } from 'shared/lib/popup'
     import { Locale } from '@core/i18n'
     import { onMount } from 'svelte'
     import { fade } from 'svelte/transition'
-    import AddNode from './AddNode.svelte'
-    import AddressHistory from './AddressHistory.svelte'
-    import AirdropNetworkInfo from './AirdropNetworkInfo.svelte'
-    import Backup from './Backup.svelte'
-    import BalanceFinder from './BalanceFinder.svelte'
-    import Busy from './Busy.svelte'
     import CrashReporting from './CrashReporting.svelte'
-    import CreateAccount from './CreateAccount.svelte'
-    import DeleteAccount from './DeleteAccount.svelte'
-    import DeleteProfile from './DeleteProfile.svelte'
     import Diagnostics from './Diagnostics.svelte'
     import ErrorLog from './ErrorLog.svelte'
-    import ExportTransactionHistory from './ExportTransactionHistory.svelte'
-    import GovernanceManager from './GovernanceManager.svelte'
-    import HideAccount from './HideAccount.svelte'
     import LedgerAddress from './LedgerAddress.svelte'
     import LedgerAppGuide from './LedgerAppGuide.svelte'
-    import LedgerConfirmation from './LedgerConfirmation.svelte'
     import LedgerConnectionGuide from './LedgerConnectionGuide.svelte'
     import LedgerLegacyTransaction from './LedgerLegacyTransaction.svelte'
-    import LedgerMigrateIndex from './LedgerMigrateIndex.svelte'
     import LedgerNotConnected from './LedgerNotConnected.svelte'
-    import LedgerTransaction from './LedgerTransaction.svelte'
     import MissingBundle from './MissingBundle.svelte'
-    import NodeInfo from './NodeInfo.svelte'
     import Password from './Password.svelte'
-    import QR from './QR.svelte'
-    import RemoveNode from './RemoveNode.svelte'
     import RiskFunds from './RiskFunds.svelte'
     import Snapshot from './Snapshot.svelte'
-    import StakingConfirmation from './StakingConfirmation.svelte'
-    import StakingManager from './StakingManager.svelte'
     import Success from './Success.svelte'
-    import NewStakingPeriodNotification from './NewStakingPeriodNotification.svelte'
-    import SwitchNetwork from './SwitchNetwork.svelte'
     import Transaction from './Transaction.svelte'
-    import Version from './Version.svelte'
     import Video from './Video.svelte'
     import ConfirmDeveloperProfile from './ConfirmDeveloperProfile.svelte'
     import LegalUpdate from './LegalUpdate.svelte'
-    import SingleAccountGuide from './SingleAccountGuide.svelte'
-    import { mobile } from 'shared/lib/app'
     import { Platform } from 'shared/lib/platform'
 
     export let locale: Locale
@@ -91,48 +66,23 @@
     let popupContent
 
     const types = {
-        qr: QR,
         password: Password,
-        version: Version,
-        backup: Backup,
-        deleteAccount: DeleteAccount,
-        exportTransactionHistory: ExportTransactionHistory,
-        hideAccount: HideAccount,
-        addressHistory: AddressHistory,
         ledgerNotConnected: LedgerNotConnected,
-        ledgerConfirmation: LedgerConfirmation,
         ledgerAppGuide: LedgerAppGuide,
         ledgerConnectionGuide: LedgerConnectionGuide,
-        ledgerTransaction: LedgerTransaction,
         ledgerLegacyTransaction: LedgerLegacyTransaction,
         ledgerAddress: LedgerAddress,
-        ledgerMigrateIndex: LedgerMigrateIndex,
-        nodeInfo: NodeInfo,
-        addNode: AddNode,
-        removeNode: RemoveNode,
-        switchNetwork: SwitchNetwork,
-        busy: Busy,
         errorLog: ErrorLog,
         crashReporting: CrashReporting,
-        createAccount: CreateAccount,
-        deleteProfile: DeleteProfile,
         diagnostics: Diagnostics,
         transaction: Transaction,
         riskFunds: RiskFunds,
         missingBundle: MissingBundle,
-        balanceFinder: BalanceFinder,
         snapshot: Snapshot,
         video: Video,
-        // Participation (voting / staking)
-        stakingConfirmation: StakingConfirmation,
-        stakingManager: StakingManager,
-        newStakingPeriodNotification: NewStakingPeriodNotification,
-        airdropNetworkInfo: AirdropNetworkInfo,
         confirmDeveloperProfile: ConfirmDeveloperProfile,
         legalUpdate: LegalUpdate,
-        governanceManager: GovernanceManager,
         success: Success,
-        singleAccountGuide: SingleAccountGuide,
     }
 
     const onKey = (e) => {
@@ -182,44 +132,35 @@
 </script>
 
 <svelte:window on:keydown={onKey} />
-{#if $mobile && !fullScreen}
-    <Drawer opened zIndex="z-40" preventClose={hideClose} on:close={() => closePopup($popupState?.preventClose)}>
-        <div bind:this={popupContent} class="p-8">
-            <svelte:component this={types[type]} {...props} {locale} />
-        </div>
-    </Drawer>
-{:else}
-    <popup
-        in:fade={{ duration: transition ? 100 : 0 }}
-        class={`flex items-center justify-center fixed ${os === 'win32' ? 'top-9' : 'top-0'} left-0 w-screen p-6 ${
-            overflow ? '' : 'overflow-hidden'
-        }
-                h-full z-20 ${fullScreen ? 'bg-white dark:bg-gray-900' : 'bg-gray-800 bg-opacity-40'} ${
-            $mobile && 'z-40'
-        }`}
+
+<popup
+    in:fade={{ duration: transition ? 100 : 0 }}
+    class={`flex items-center justify-center fixed ${os === 'win32' ? 'top-9' : 'top-0'} left-0 w-screen p-6 ${
+        overflow ? '' : 'overflow-hidden'
+    }
+                h-full z-20 ${fullScreen ? 'bg-white dark:bg-gray-900' : 'bg-gray-800 bg-opacity-40'}`}
+>
+    <div tabindex="0" on:focus={handleFocusFirst} />
+    <popup-content
+        use:clickOutside
+        on:clickOutside={tryClosePopup}
+        bind:this={popupContent}
+        class={`${size} bg-white rounded-xl pt-6 px-8 pb-8 ${
+            fullScreen ? 'full-screen dark:bg-gray-900' : 'dark:bg-gray-900 shadow-elevation-4'
+        } ${overflow ? 'overflow' : 'relative'}`}
     >
-        <div tabindex="0" on:focus={handleFocusFirst} />
-        <popup-content
-            use:clickOutside
-            on:clickOutside={tryClosePopup}
-            bind:this={popupContent}
-            class={`${size} bg-white rounded-xl pt-6 px-8 pb-8 ${
-                fullScreen ? 'full-screen dark:bg-gray-900' : 'dark:bg-gray-900 shadow-elevation-4'
-            } ${overflow ? 'overflow' : 'relative'}`}
-        >
-            {#if !hideClose}
-                <button
-                    on:click={tryClosePopup}
-                    class="absolute top-6 right-8 text-gray-800 dark:text-white focus:text-blue-500"
-                >
-                    <Icon icon="close" />
-                </button>
-            {/if}
-            <svelte:component this={types[type]} {...props} {locale} />
-        </popup-content>
-        <div tabindex="0" on:focus={handleFocusLast} />
-    </popup>
-{/if}
+        {#if !hideClose}
+            <button
+                on:click={tryClosePopup}
+                class="absolute top-6 right-8 text-gray-800 dark:text-white focus:text-blue-500"
+            >
+                <Icon icon="close" />
+            </button>
+        {/if}
+        <svelte:component this={types[type]} {...props} {locale} />
+    </popup-content>
+    <div tabindex="0" on:focus={handleFocusLast} />
+</popup>
 
 <style type="text/scss">
     popup {

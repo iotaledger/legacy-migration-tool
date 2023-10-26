@@ -8,7 +8,6 @@
     "include": [
         "packages/backend/bindings/node",
         "packages/desktop",
-        "packages/mobile",
         "packages/shared/components",
         "packages/shared/lib",
         "packages/shared/lib/shell",

@@ -103,8 +103,6 @@ body:
             - Linux
             - Mac
             - Windows
-            - iOS
-            - Android
       validations:
           required: true
           

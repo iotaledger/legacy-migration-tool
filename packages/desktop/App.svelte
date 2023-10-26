@@ -10,24 +10,19 @@
     import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
-    import { AppRoute, DashboardRoute, dashboardRouter, accountRouter, initRouters, openSettings } from '@core/router'
+    import { AppRoute, initRouters } from '@core/router'
     import {
         Backup,
         Balance,
         Congratulations,
         CrashReporting,
-        Create,
-        Dashboard,
         Import,
         Ledger,
         Legal,
-        Login,
         Migrate,
         Password,
-        Profile,
         Protect,
         Secure,
-        Settings,
         Setup,
         Splash,
         Welcome,
@@ -59,7 +54,6 @@
     }
 
     let splash = true
-    let settings = false
 
     void setupI18n({ fallbackLocale: 'en', initialLocale: $appSettings.language })
 
@@ -77,17 +71,6 @@
 
         // @ts-ignore: This value is replaced by Webpack DefinePlugin
         /* eslint-disable no-undef */
-        Electron.onEvent('menu-navigate-wallet', (route) => {
-            $dashboardRouter.goTo(DashboardRoute.Wallet)
-            $accountRouter.goTo(route)
-        })
-        Electron.onEvent('menu-navigate-settings', () => {
-            if ($loggedIn) {
-                openSettings()
-            } else {
-                settings = true
-            }
-        })
         Electron.onEvent('menu-error-log', () => {
             openPopup({ type: 'errorLog' })
         })
@@ -125,18 +108,11 @@
         <Route route={AppRoute.Legal}>
             <Legal locale={$_} />
         </Route>
-        <Route route={AppRoute.Profile}>
-            <Profile locale={$_} />
-        </Route>
         <Route route={AppRoute.CrashReporting}>
             <CrashReporting locale={$_} />
         </Route>
         <Route route={AppRoute.Setup}>
             <Setup locale={$_} />
-        </Route>
-        <!-- TODO: fix ledger -->
-        <Route route={AppRoute.Create}>
-            <Create locale={$_} />
         </Route>
         <Route route={AppRoute.LedgerSetup}>
             <Ledger locale={$_} />
@@ -166,15 +142,6 @@
         <Route route={AppRoute.Congratulations}>
             <Congratulations locale={$_} {goto} />
         </Route>
-        <Route route={AppRoute.Dashboard}>
-            <Dashboard locale={$_} {goto} />
-        </Route>
-        <Route route={AppRoute.Login}>
-            <Login locale={$_} {goto} />
-        </Route>
-        {#if settings}
-            <Settings locale={$_} handleClose={() => (settings = false)} />
-        {/if}
 
         <ToastContainer />
     {/if}

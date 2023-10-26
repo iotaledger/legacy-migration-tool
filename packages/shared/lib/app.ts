@@ -19,11 +19,6 @@ import { SendParams } from 'shared/lib/typings/sendParams'
 export const stage = writable<Stage>(Stage.ALPHA)
 
 /**
- * Mobile mode
- */
-export const mobile = writable<boolean>(false)
-
-/**
  * Wallet access pin
  */
 export const walletPin = writable<string>(null)

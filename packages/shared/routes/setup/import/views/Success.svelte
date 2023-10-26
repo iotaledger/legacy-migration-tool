@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { createEventDispatcher, getContext } from 'svelte'
     import { Locale } from '@core/i18n'
     import { ImportType } from 'shared/lib/typings/profile'
@@ -32,7 +31,7 @@
     <div slot="leftpane__action">
         <Button classes="w-full" onClick={() => handleContinueClick()}>{locale('actions.continue')}</Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-green dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-green dark:bg-gray-900">
         <Animation
             classes="setup-anim-aspect-ratio"
             animation={$importType === ImportType.Seed || $importType === ImportType.Mnemonic

@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { appSettings, shouldBeDarkMode } from 'shared/lib/appSettings'
     import { pollChrysalisSnapshot } from 'shared/lib/migration'
     import { onMount } from 'svelte'
@@ -17,8 +16,8 @@
     })
 </script>
 
-<div class="w-full h-full flex justify-center items-center bg-gray-300 dark:bg-gray-900">
-    <div class={$mobile ? 'w-full px-4' : 'w-1/3'}>
+<div class="w-full h-full flex justify-center items-center bg-white dark:bg-gray-900">
+    <div class="w-1/3">
         <Animation classes="w-full h-auto" animation="splashscreen-desktop" loop={false} renderer="canvas" />
     </div>
 </div>

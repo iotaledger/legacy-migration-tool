@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, OnboardingLayout, Pin, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { validatePinFormat } from 'shared/lib/utils'
     import { createEventDispatcher } from 'svelte'
     import { Locale } from '@core/i18n'
@@ -48,7 +47,7 @@
             {locale('actions.setPin')}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-pink dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-pink dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="pin-desktop" />
     </div>
 </OnboardingLayout>

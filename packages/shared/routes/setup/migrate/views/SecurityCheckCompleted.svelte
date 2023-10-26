@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { createEventDispatcher } from 'svelte'
     import { Animation, Button, OnboardingLayout, SpentAddress, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { spentAddressesFromBundles, toggleMiningSelection } from 'shared/lib/migration'
     import { closePopup, openPopup } from 'shared/lib/popup'
     import { walletSetupType } from 'shared/lib/wallet'
@@ -96,7 +95,7 @@
             {locale('views.securityCheckCompleted.continueMigration')}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-blue dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" {animation} />
     </div>
 </OnboardingLayout>
