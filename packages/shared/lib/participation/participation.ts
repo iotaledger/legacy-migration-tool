@@ -1,20 +1,21 @@
-import { milestoneToDate } from '@lib/time'
 import { get } from 'svelte/store'
 import { WalletAccount } from '../typings/wallet'
 import { DUST_THRESHOLD, hasValidPendingTransactions } from '../wallet'
-import { getParticipationEvents, getParticipationOverview } from './api'
+import { canAccountReachMinimumAirdrop } from './account'
+import { getParticipationOverview, getParticipationEvents } from './api'
 import { ASSEMBLY_EVENT_ID, LAST_MILESTONE_BEFORE_TREASURY_EVENT, PARTICIPATION_POLL_DURATION } from './constants'
 import {
     isChangingParticipation,
-    isFetchingParticipationInfo,
     isPerformingParticipation,
     participationAction,
     participationEvents,
     participationHistory,
     participationOverview,
     pendingParticipations,
+    isFetchingParticipationInfo,
 } from './stores'
-import { AccountParticipationAbility, ParticipationAction, ParticipationEventState } from './types'
+import { AccountParticipationAbility, ParticipationAction, ParticipationEventState, StakingAirdrop } from './types'
+import { getDurationString, milestoneToDate } from '@lib/time'
 
 let shouldPollParticipation = true
 let participationPollTimeout
@@ -123,6 +124,8 @@ export const getAccountParticipationAbility = (account: WalletAccount): AccountP
         return AccountParticipationAbility.HasDustAmount
     } else if (hasValidPendingTransactions(account)) {
         return AccountParticipationAbility.HasPendingTransaction
+    } else if (!canAccountReachMinimumAirdrop(account, StakingAirdrop.Assembly)) {
+        return AccountParticipationAbility.WillNotReachMinAirdrop
     } else {
         return AccountParticipationAbility.Ok
     }

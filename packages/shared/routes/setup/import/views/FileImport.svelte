@@ -1,7 +1,7 @@
 <script lang="typescript">
-    import { Locale } from '@core/i18n'
     import { Animation, Button, Dropzone, OnboardingLayout, Spinner, Text } from 'shared/components'
     import { createEventDispatcher } from 'svelte'
+    import { Locale } from '@core/i18n'
 
     export let locale: Locale
     export let busy = false

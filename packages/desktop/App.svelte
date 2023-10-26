@@ -1,16 +1,16 @@
 <script lang="typescript">
-    import { Locale, _, isLocaleLoaded, localeDirection, setupI18n } from '@core/i18n'
-    import { AppRoute, initRouters } from '@core/router'
+    import { onMount } from 'svelte'
     import { Popup, Route, TitleBar, ToastContainer } from 'shared/components'
-    import { loggedIn, stage } from 'shared/lib/app'
+    import { stage, loggedIn } from 'shared/lib/app'
     import { appSettings, initAppSettings } from 'shared/lib/appSettings'
-    import { Electron } from 'shared/lib/electron'
     import { addError } from 'shared/lib/errors'
     import { goto } from 'shared/lib/helpers'
+    import { localeDirection, isLocaleLoaded, Locale, setupI18n, _ } from '@core/i18n'
     import { pollMarketData } from 'shared/lib/market'
+    import { Electron } from 'shared/lib/electron'
     import { openPopup, popupState } from 'shared/lib/popup'
     import { cleanupEmptyProfiles, renameOldProfileFoldersToId } from 'shared/lib/profile'
-    import { Stage } from 'shared/lib/typings/stage'
+    import { AppRoute, initRouters } from '@core/router'
     import {
         Backup,
         Balance,
@@ -27,8 +27,8 @@
         Splash,
         Welcome,
     } from 'shared/routes'
-    import { onMount } from 'svelte'
     import { getLocalisedMenuItems } from './lib/helpers'
+    import { Stage } from 'shared/lib/typings/stage'
 
     stage.set(Stage[process.env.STAGE.toUpperCase()] ?? Stage.ALPHA)
 
