@@ -147,15 +147,21 @@
         </div>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-4">
-        <Button icon="profile" classes="w-full" secondary onClick={migrateAnotherProfile}>
+        <Button
+            icon="profile"
+            classes="w-full"
+            secondary
+            onClick={migrateAnotherProfile}
+            disabled={exportMigrationLogBusy || exportStrongholdBusy}
+        >
             {locale('views.congratulations.migrateAnotherProfile')}
         </Button>
         {#if !isLedgerProfile}
-            <Button icon="export" classes="w-full" secondary onClick={exportStronghold}>
+            <Button icon="export" classes="w-full" secondary onClick={exportStronghold} disabled={exportStrongholdBusy}>
                 {locale('views.congratulations.exportStronghold')}
             </Button>
         {/if}
-        <Button classes="w-full" onClick={exportMigrationLog}>
+        <Button classes="w-full" onClick={exportMigrationLog} disabled={exportMigrationLogBusy}>
             {locale('views.congratulations.exportMigration')}
         </Button>
     </div>
