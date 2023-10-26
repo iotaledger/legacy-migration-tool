@@ -4,7 +4,6 @@
         "packages/backend/bindings/capacitor",
         "packages/backend/bindings/node",
         "packages/desktop",
-        "packages/mobile",
         "packages/shared"
     ],
     "devDependencies": {

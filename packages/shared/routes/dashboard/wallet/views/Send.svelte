@@ -3,7 +3,7 @@
     import { accountRouter } from '@core/router'
     import { Unit } from '@iota/unit-converter'
     import { Address, Amount, Button, Dropdown, Icon, KeyValueBox, ProgressBar, Text } from 'shared/components'
-    import { clearSendParams, mobile, sendParams } from 'shared/lib/app'
+    import { clearSendParams, sendParams } from 'shared/lib/app'
     import {
         convertFromFiat,
         convertToFiat,
@@ -518,11 +518,6 @@
                 {/if}
             </div>
             <div class="flex flex-row space-x-4">
-                {#if $mobile}
-                    <button on:click={onQRClick}>
-                        <Icon icon="qr" classes="text-blue-500" />
-                    </button>
-                {/if}
                 <button on:click={handleBackClick}>
                     <Icon icon="close" classes="text-gray-800 dark:text-white" />
                 </button>

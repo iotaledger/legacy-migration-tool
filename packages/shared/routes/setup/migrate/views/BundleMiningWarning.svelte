@@ -20,7 +20,6 @@
     }
 </script>
 
-<!-- TODO: missing mobile -->
 <BundleMiningLayout
     onBackClick={handleBackClick}
     {locale}

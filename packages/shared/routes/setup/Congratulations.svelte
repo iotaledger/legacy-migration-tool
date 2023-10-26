@@ -2,7 +2,7 @@
     import { Locale } from '@core/i18n'
     import { appRouter, ledgerRouter } from '@core/router'
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
-    import { cleanupSignup, mobile } from 'shared/lib/app'
+    import { cleanupSignup } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
@@ -150,7 +150,7 @@
             {locale(`${wasMigrated && !logExported ? 'views.congratulations.exportMigration' : 'actions.finishSetup'}`)}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-yellow dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="congratulations-desktop" />
     </div>
 </OnboardingLayout>

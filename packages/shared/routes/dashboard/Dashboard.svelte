@@ -8,15 +8,9 @@
         DashboardRoute,
         dashboardRouter,
     } from '@core/router'
-    import {
-        CURRENT_ASSEMBLY_STAKING_PERIOD,
-        CURRENT_SHIMMER_STAKING_PERIOD,
-        LAST_ASSEMBLY_STAKING_PERIOD,
-        LAST_SHIMMER_STAKING_PERIOD,
-    } from '@lib/participation/constants'
     import { activeProfile, isLedgerProfile, isSoftwareProfile, updateProfile } from '@lib/profile'
-    import { Idle, Sidebar, MainMenu } from 'shared/components'
-    import { loggedIn, logout, mobile } from 'shared/lib/app'
+    import { Idle, Sidebar } from 'shared/components'
+    import { loggedIn, logout } from 'shared/lib/app'
     import { isPollingLedgerDeviceStatus, pollLedgerDeviceStatus, stopPollingLedgerStatus } from 'shared/lib/ledger'
     import { ongoingSnapshot, openSnapshotPopup } from 'shared/lib/migration'
     import { stopNetworkPoll, pollNetworkStatus } from 'shared/lib/networkStatus'
@@ -322,29 +316,19 @@
     }
 </script>
 
-{#if $mobile}
-    <Idle />
-    <div class="flex flex-col w-full h-full">
-        <TopNavigation {onCreateAccount} />
-        <MainMenu {locale} />
+<Idle />
+<div class="dashboard-wrapper flex flex-col w-full h-full">
+    {#if showTopNav}
+        <TopNavigation
+            {onCreateAccount}
+            classes={$popupState?.type === 'singleAccountGuide' && $popupState?.active ? 'z-50' : ''}
+        />
+    {/if}
+    <div class="flex flex-row flex-auto h-1">
+        <Sidebar />
         <!-- Dashboard Pane -->
-        <svelte:component this={tabs[$dashboardRoute]} {locale} on:next={$appRouter.next} />
-    </div>
-{:else}
-    <Idle />
-    <div class="dashboard-wrapper flex flex-col w-full h-full">
-        {#if showTopNav}
-            <TopNavigation
-                {onCreateAccount}
-                classes={$popupState?.type === 'singleAccountGuide' && $popupState?.active ? 'z-50' : ''}
-            />
-        {/if}
-        <div class="flex flex-row flex-auto h-1">
-            <Sidebar />
-            <!-- Dashboard Pane -->
-            <div class="flex flex-col w-full h-full">
-                <svelte:component this={tabs[$dashboardRoute]} {locale} on:next={$appRouter.next} />
-            </div>
+        <div class="flex flex-col w-full h-full">
+            <svelte:component this={tabs[$dashboardRoute]} {locale} on:next={$appRouter.next} />
         </div>
     </div>
-{/if}
+</div>

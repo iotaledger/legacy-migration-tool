@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Button, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { createEventDispatcher } from 'svelte'
     import { Locale } from '@core/i18n'
 
@@ -29,7 +28,7 @@
     <div slot="leftpane__action">
         <Button classes="w-full" onClick={() => handleContinueClick()} autofocus>{locale('actions.continue')}</Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-purple dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-purple dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="backup-desktop" />
     </div>
 </OnboardingLayout>

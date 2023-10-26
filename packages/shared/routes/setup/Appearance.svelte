@@ -1,7 +1,6 @@
 <script lang="typescript">
     import { onMount } from 'svelte'
     import { Animation, Button, ButtonRadio, OnboardingLayout, Text } from 'shared/components'
-    import { mobile } from 'shared/lib/app'
     import { appSettings, shouldBeDarkMode } from 'shared/lib/appSettings'
     import { Locale } from '@core/i18n'
     import { appRouter } from '@core/router'
@@ -42,7 +41,7 @@
         <Text type="h2">{locale('views.appearance.title')}</Text>
     </div>
     <div slot="leftpane__content">
-        <Text type="p" secondary classes={$mobile ? 'mb-4' : 'mb-8'}>{locale('views.appearance.body')}</Text>
+        <Text type="p" secondary classes="mb-8">{locale('views.appearance.body')}</Text>
         <Text type="p" secondary classes="mb-2" smaller>{locale('general.appearance')}</Text>
         <ButtonRadio icon="theme-light" value={'light'} bind:group={appTheme}>
             {locale('general.lightTheme')}
@@ -55,10 +54,7 @@
     <div slot="leftpane__action">
         <Button onClick={() => handleContinueClick()} classes="w-full">{locale('actions.continue')}</Button>
     </div>
-    <div
-        slot="rightpane"
-        class="animation w-full h-full flex justify-center {!$mobile && 'bg-pastel-orange dark:bg-gray-900'}"
-    >
+    <div slot="rightpane" class="animation w-full h-full flex justify-center bg-pastel-orange dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="appearance-desktop" {segments} />
     </div>
 </OnboardingLayout>
