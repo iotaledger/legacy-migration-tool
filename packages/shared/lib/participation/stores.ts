@@ -1,4 +1,3 @@
-import { getStakingEventFromAirdrop } from '@lib/participation/staking'
 import { isSoftwareProfile } from '@lib/profile'
 import { NetworkStatus } from '@lib/typings/network'
 import { persistent } from 'shared/lib/helpers'
@@ -18,7 +17,6 @@ import {
     ParticipationHistoryItem,
     ParticipationOverview,
     PendingParticipation,
-    StakingAirdrop,
 } from './types'
 
 /**
@@ -106,22 +104,6 @@ function deriveParticipationEventState(
         return ParticipationEventState.Ended
     }
 }
-
-export const assemblyStakingEventState: Readable<ParticipationEventState> = derived(
-    [networkStatus, participationEvents],
-    ([$networkStatus]) => {
-        const stakingEvent = getStakingEventFromAirdrop(StakingAirdrop.Assembly)
-        return deriveParticipationEventState(stakingEvent, $networkStatus)
-    }
-)
-
-export const shimmerStakingEventState: Readable<ParticipationEventState> = derived(
-    [networkStatus, participationEvents],
-    ([$networkStatus]) => {
-        const stakingEvent = getStakingEventFromAirdrop(StakingAirdrop.Shimmer)
-        return deriveParticipationEventState(stakingEvent, $networkStatus)
-    }
-)
 
 export const treasuryEventState: Readable<ParticipationEventState> = derived(
     [networkStatus, participationEvents],
