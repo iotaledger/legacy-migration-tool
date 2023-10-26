@@ -72,7 +72,6 @@ export enum ImportType {
     File = 'file',
     SeedVault = 'seedvault',
     Stronghold = 'stronghold',
-    Ledger = 'ledger',
     TrinityLedger = 'trinityLedger',
     FireflyLedger = 'fireflyLedger',
 }
