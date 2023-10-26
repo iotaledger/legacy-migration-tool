@@ -35,21 +35,6 @@ export class AppRouter extends Router<AppRoute> {
         let nextRoute: AppRoute
 
         switch (currentRoute) {
-            case AppRoute.Login: {
-                if (params.shouldAddProfile) {
-                    nextRoute = AppRoute.Profile
-                } else {
-                    login()
-                    nextRoute = AppRoute.Dashboard
-                }
-                break
-            }
-            case AppRoute.Dashboard: {
-                if (params.reset) {
-                    nextRoute = AppRoute.Login
-                }
-                break
-            }
             case AppRoute.Welcome:
                 nextRoute = AppRoute.Legal
                 break
