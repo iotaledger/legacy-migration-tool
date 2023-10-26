@@ -9,9 +9,6 @@ contact_links:
     - name: General feedback
       url: https://github.com/iotaledger/legacy-migration-tool/discussions/categories/feedback
       about: Leave us some feedback
-    - name: Translation issues
-      url: https://crowdin.com/project/iota-firefly
-      about: Issues with translations can be resolved on Crowdin
     - name: Join our Discord
       url: https://discord.iota.org/
       about: Chat with the devs and the IF community
