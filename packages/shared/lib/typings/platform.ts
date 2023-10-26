@@ -1,15 +1,12 @@
-import { IDeepLinkManager } from '@common/deep-links'
 import { AppSettings } from './app'
 import { ILedger } from './ledger'
 import { INotificationManager } from './notificationManager'
 import { IPincodeManager } from './pincodeManager'
-import { VersionDetails } from './appUpdater'
 import { Error } from './error'
 import { EventMap } from './events'
 import { IBarcodeManager } from './barcodeManager'
 
 export enum Platforms {
-    MOBILE = 'mobile',
     DESKTOP = 'desktop',
 }
 
@@ -44,15 +41,10 @@ export interface IPlatform {
     deleteFile(source: string): Promise<void>
 
     NotificationManager: INotificationManager | undefined
-    DeepLinkManager: IDeepLinkManager | undefined
     PincodeManager: IPincodeManager | undefined
     BarcodeManager: IBarcodeManager | undefined
 
-    getVersionDetails(): Promise<VersionDetails>
-    updateCheck(): Promise<void>
-    updateInstall(): Promise<void>
-    updateCancel(): Promise<void>
-    updateDownload(): Promise<void>
+    getVersionDetails(): Promise<string>
 
     unhandledException(title: string, err: Error | unknown): Promise<void>
 

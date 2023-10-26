@@ -6,7 +6,7 @@ import { walletSetupType } from '@lib/wallet'
 import { appRouter } from '../app-router'
 import { LedgerRoute } from '../enums'
 import { Subrouter } from './subrouter'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 
 export const ledgerRoute = writable<LedgerRoute>(null)
 export const ledgerRouter = writable<LedgerRouter>(null)
@@ -28,7 +28,7 @@ export class LedgerRouter extends Subrouter<LedgerRoute> {
         }
     }
 
-    next(event: FireflyEvent): void {
+    next(event: LegacyMigrationEvent): void {
         let nextRoute: LedgerRoute
         const currentRoute = get(this.routeStore)
         const setupType = get(walletSetupType)

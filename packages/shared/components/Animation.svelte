@@ -97,7 +97,7 @@
         },
         'loading-desktop': {
             lightmode: 'loading-desktop.json',
-            darkmode: 'loading-desktop.json',
+            darkmode: 'loading-desktop-darkmode.json',
         },
         'ledger-choose-index-desktop': {
             lightmode: 'ledger-choose-index-desktop.json',

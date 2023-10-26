@@ -8,7 +8,7 @@ import { getDefaultStrongholdName } from '@lib/utils'
 
 import { appRouter } from '../app-router'
 import { BackupRoute } from '../enums'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 import { Subrouter } from './subrouter'
 
 export const backupRoute = writable<BackupRoute>(null)
@@ -18,7 +18,7 @@ export class BackupRouter extends Subrouter<BackupRoute> {
         super(BackupRoute.Init, backupRoute)
     }
 
-    async next(event: FireflyEvent): Promise<void> {
+    async next(event: LegacyMigrationEvent): Promise<void> {
         let nextRoute: BackupRoute
 
         const currentRoute = get(this.routeStore)

@@ -103,7 +103,6 @@
     })
 </script>
 
-<!-- TODO: missing mobile -->
 <BundleMiningLayout allowBack={false} {locale} showLedgerProgress={legacyLedger} showLedgerVideoButton={legacyLedger}>
     <div slot="icon_boxed">
         <div class="flex justify-center items-center rounded-2xl w-12 h-12 bg-blue-500 shadow-lg">

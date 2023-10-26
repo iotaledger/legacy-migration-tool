@@ -1,11 +1,10 @@
 import { get } from 'svelte/store'
 
-import { isDeepLinkRequestActive } from '@common/deep-links'
-import { selectedMessage } from '@lib/wallet'
-import { appRouter, AppRouter } from './app-router'
-import { accountRouter, AccountRouter } from './account-router'
-import { ledgerRouter, LedgerRouter } from './subrouters'
 import { clearSendParams } from '@lib/app'
+import { selectedMessage } from '@lib/wallet'
+import { accountRouter, AccountRouter } from './account-router'
+import { appRouter, AppRouter } from './app-router'
+import { ledgerRouter, LedgerRouter } from './subrouters'
 
 export const initRouters = (): void => {
     appRouter.set(new AppRouter())
@@ -16,7 +15,6 @@ export const initRouters = (): void => {
 export const resetRouters = (): void => {
     get(appRouter).reset()
     get(accountRouter).reset()
-    isDeepLinkRequestActive.set(false)
 }
 
 export const resetAccountRouter = (resetPanels: boolean = true): void => {

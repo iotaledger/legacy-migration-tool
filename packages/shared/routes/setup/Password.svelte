@@ -1,6 +1,6 @@
 <script lang="typescript">
     import { Animation, Button, OnboardingLayout, Password, Text } from 'shared/components'
-    import { mobile, strongholdPassword } from 'shared/lib/app'
+    import { strongholdPassword } from 'shared/lib/app'
     import { showAppNotification } from 'shared/lib/notifications'
     import passwordInfo from 'shared/lib/password'
     import { asyncChangeStrongholdPassword, asyncSetStrongholdPassword, MAX_PASSWORD_LENGTH } from 'shared/lib/wallet'
@@ -99,7 +99,7 @@
             {locale('actions.savePassword')}
         </Button>
     </div>
-    <div slot="rightpane" class="w-full h-full flex justify-center {!$mobile && 'bg-pastel-yellow dark:bg-gray-900'}">
+    <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" animation="password-desktop" />
     </div>
 </OnboardingLayout>

@@ -22,7 +22,6 @@
     import Video from './Video.svelte'
     import ConfirmDeveloperProfile from './ConfirmDeveloperProfile.svelte'
     import LegalUpdate from './LegalUpdate.svelte'
-    import { mobile } from 'shared/lib/app'
     import { Platform } from 'shared/lib/platform'
 
     export let locale: Locale
@@ -133,14 +132,13 @@
 </script>
 
 <svelte:window on:keydown={onKey} />
+
 <popup
     in:fade={{ duration: transition ? 100 : 0 }}
     class={`flex items-center justify-center fixed ${os === 'win32' ? 'top-9' : 'top-0'} left-0 w-screen p-6 ${
         overflow ? '' : 'overflow-hidden'
     }
-                h-full z-20 ${fullScreen ? 'bg-white dark:bg-gray-900' : 'bg-gray-800 bg-opacity-40'} ${
-        $mobile && 'z-40'
-    }`}
+                h-full z-20 ${fullScreen ? 'bg-white dark:bg-gray-900' : 'bg-gray-800 bg-opacity-40'}`}
 >
     <div tabindex="0" on:focus={handleFocusFirst} />
     <popup-content

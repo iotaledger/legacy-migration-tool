@@ -2,7 +2,7 @@
     import { Transition } from 'shared/components'
     import { mnemonic, strongholdPassword } from 'shared/lib/app'
     import { Backup, BackupToFile, RecoveryPhrase, VerifyRecoveryPhrase } from './views/'
-    import { backupRoute, BackupRouter, BackupRoute, FireflyEvent } from '@core/router'
+    import { backupRoute, BackupRouter, BackupRoute, LegacyMigrationEvent } from '@core/router'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Locale } from '@core/i18n'
 
@@ -12,7 +12,7 @@
 
     let busy = false
 
-    async function next(event: CustomEvent<FireflyEvent>): Promise<void> {
+    async function next(event: CustomEvent<LegacyMigrationEvent>): Promise<void> {
         busy = true
         try {
             await backupRouter.next(event.detail)

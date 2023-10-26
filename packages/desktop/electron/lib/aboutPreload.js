@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld('about', {
             const aboutData = {
                 appName: productName,
                 version: data.strings.version.replace('{version}', version),
-                iconPath: `./assets/logos/darkmode/${stage}_firefly_logo.svg`,
+                iconPath: './assets/logos/darkmode/logo_iota.svg',
             }
 
             return aboutData

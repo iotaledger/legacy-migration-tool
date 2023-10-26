@@ -10,7 +10,7 @@ import { asyncRestoreBackup } from '@lib/wallet'
 import { appRouter } from '../app-router'
 import { ImportRoute } from '../enums'
 import { Subrouter } from './subrouter'
-import { FireflyEvent } from '../types'
+import { LegacyMigrationEvent } from '../types'
 import { UpdateStrongholdRouter, updateStrongholdRouter } from './update-stronghold-router'
 import { getErrorMessage } from '@lib/shell/walletErrors'
 import { ErrorType } from '@lib/typings/events'
@@ -27,7 +27,7 @@ export class ImportRouter extends Subrouter<ImportRoute> {
         super(ImportRoute.Init, importRoute)
     }
 
-    async next(event: FireflyEvent): Promise<void> {
+    async next(event: LegacyMigrationEvent): Promise<void> {
         let nextRoute: ImportRoute
         const params = event || {}
 
