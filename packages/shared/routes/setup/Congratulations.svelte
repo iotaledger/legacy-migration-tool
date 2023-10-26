@@ -1,29 +1,72 @@
 <script lang="typescript">
-    import { Locale, localize } from '@core/i18n'
+    import { Locale } from '@core/i18n'
     import { appRouter, ledgerRouter } from '@core/router'
-    import { cleanupSignup } from '@lib/app'
-    import { promptUserToConnectLedger } from '@lib/ledger'
-    import { showAppNotification } from '@lib/notifications'
-    import { openPopup } from '@lib/popup'
-    import { getDefaultStrongholdName } from '@lib/utils'
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
-    import { LOG_FILE_NAME, migration, migrationLog, resetMigrationState } from 'shared/lib/migration'
+    import { cleanupSignup } from 'shared/lib/app'
+    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
+    import { promptUserToConnectLedger } from 'shared/lib/ledger'
+    import {
+        LOG_FILE_NAME,
+        migration,
+        migrationLog,
+        resetMigrationState,
+        totalMigratedBalance,
+    } from 'shared/lib/migration'
     import { Platform } from 'shared/lib/platform'
-    import { activeProfile, updateProfile } from 'shared/lib/profile'
+    import { activeProfile, newProfile, saveProfile, setActiveProfile, updateProfile } from 'shared/lib/profile'
+    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
+    import { LedgerAppName } from 'shared/lib/typings/ledger'
     import { SetupType } from 'shared/lib/typings/setup'
-    import { api, getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
-    import { onDestroy } from 'svelte'
+    import { formatUnitBestMatch } from 'shared/lib/units'
+    import { getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
+    import { onDestroy, onMount } from 'svelte'
+    import { get } from 'svelte/store'
 
     export let locale: Locale
 
     const { didComplete } = $migration
+
     const wasMigrated = $didComplete
 
-    let exportStrongholdBusy = false
+    let localizedBody = 'body'
+    let localizedValues = {}
+    let logExported = false
 
-    $: isLedgerProfile = $walletSetupType === SetupType.TrinityLedger
+    onMount(() => {
+        if (!wasMigrated) {
+            if ($walletSetupType === SetupType.FireflyLedger) {
+                localizedBody = 'fireflyLedgerBody'
+            }
+            // This is the last screen in onboarding for all flows i.e., if you create a new wallet or import stronghold
+            // When this component mounts, ensure that the profile is persisted in the local storage.
+            $newProfile = { ...$newProfile, name: $newProfile.id }
+            saveProfile($newProfile)
+            setActiveProfile($newProfile.id)
 
-    const exportMigrationLog = (): void => {
+            newProfile.set(null)
+        } else {
+            if ($walletSetupType === SetupType.TrinityLedger) {
+                localizedBody = 'trinityLedgerBody'
+                localizedValues = { legacy: LedgerAppName.IOTALegacy }
+
+                updateProfile('ledgerMigrationCount', $activeProfile.ledgerMigrationCount + 1)
+            } else {
+                localizedBody = 'softwareMigratedBody'
+            }
+        }
+    })
+
+    const fiatbalance = formatCurrency(
+        convertToFiat(
+            // Only show actually migrated balance to user
+            $totalMigratedBalance,
+            get(currencies)?.[CurrencyTypes.USD],
+            get(exchangeRates)?.[AvailableExchangeRates.USD]
+        ),
+        AvailableExchangeRates.USD
+    )
+
+    const handleContinueClick = (): void => {
         function _onAppRouterNext(): void {
             cleanupSignup()
             $appRouter.next()
@@ -52,76 +95,20 @@
                     )
                     .then((result) => {
                         if (result) {
+                            logExported = true
                             _continue()
                         }
                     })
                     .catch(console.error)
             }
-            _exportMigrationLog()
+            if (logExported) {
+                _continue()
+            } else {
+                _exportMigrationLog()
+            }
         } else {
             _onAppRouterNext()
         }
-    }
-
-    const migrateAnotherProfile = (): void => {
-        cleanupSignup()
-        $appRouter.reset()
-    }
-
-    function handleExportClick() {
-        reset()
-        exportStrongholdBusy = true
-
-        const _callback = (cancelled, err) => {
-            if (!cancelled) {
-                if (err) {
-                    showAppNotification({
-                        type: 'error',
-                        message: localize(err),
-                    })
-                    exportStrongholdBusy = false
-                }
-            }
-        }
-
-        openPopup({
-            type: 'password',
-            props: {
-                onSuccess: (password) => {
-                    exportStronghold(password, _callback)
-                },
-                returnPassword: true,
-                subtitle: localize('popups.password.backup'),
-            },
-        })
-    }
-
-    function reset() {
-        exportStrongholdBusy = false
-    }
-
-    function exportStronghold(password: string, callback?: (cancelled: boolean, err?: string) => void): void {
-        Platform.getStrongholdBackupDestination(getDefaultStrongholdName())
-            .then((result) => {
-                if (result) {
-                    Platform.saveStrongholdBackup({ allowAccess: true })
-                    api.backup(result, password, {
-                        onSuccess() {
-                            Platform.saveStrongholdBackup({ allowAccess: false })
-                            updateProfile('lastStrongholdBackupTime', new Date())
-                            callback(false)
-                        },
-                        onError(err) {
-                            callback(false, err.error)
-                        },
-                    })
-                } else {
-                    callback(true)
-                }
-            })
-            .catch((err) => {
-                callback(false, err.error)
-            })
     }
 
     onDestroy(() => {
@@ -134,25 +121,33 @@
 
 <OnboardingLayout allowBack={false}>
     <div slot="leftpane__content">
-        <div class="relative flex flex-col items-center bg-gray-100 dark:bg-gray-900 rounded-2xl mt-10 p-10 pb-6">
-            <div class="bg-green-500 rounded-2xl absolute -top-6 w-12 h-12 flex items-center justify-center">
-                <Icon icon="success-check" classes="text-white" />
+        {#if wasMigrated}
+            <div class="relative flex flex-col items-center bg-gray-100 dark:bg-gray-900 rounded-2xl mt-10 p-10 pb-6">
+                <div class="bg-green-500 rounded-2xl absolute -top-6 w-12 h-12 flex items-center justify-center">
+                    <Icon icon="success-check" classes="text-white" />
+                </div>
+                <Text type="h2" classes="mb-6 text-center">{locale('views.congratulations.fundsMigrated')}</Text>
+                <Text type="p" secondary classes="mb-6 text-center">
+                    {locale(`views.congratulations.${localizedBody}`, { values: localizedValues })}
+                </Text>
+                <Text type="h2">{formatUnitBestMatch($totalMigratedBalance, true, 3)}</Text>
+                <Text type="p" highlighted classes="py-1 uppercase">{fiatbalance}</Text>
             </div>
-            <Text type="h2" classes="mb-5 text-center">{locale('views.congratulations.title')}</Text>
-            <Text type="p" secondary classes="mb-2 text-center">{locale('views.congratulations.body')}</Text>
-        </div>
-    </div>
-    <div slot="leftpane__action" class="flex flex-col space-y-4">
-        <Button icon="profile" classes="w-full" secondary onClick={migrateAnotherProfile}>
-            {locale('views.congratulations.migrateAnotherProfile')}
-        </Button>
-        {#if !isLedgerProfile}
-            <Button icon="export" classes="w-full" secondary onClick={handleExportClick}>
-                {locale('views.congratulations.exportStronghold')}
-            </Button>
+        {:else}
+            <div class="relative flex flex-col items-center bg-gray-100 dark:bg-gray-900 rounded-2xl mt-10 p-10 pb-6">
+                <div class="bg-green-500 rounded-2xl absolute -top-6 w-12 h-12 flex items-center justify-center">
+                    <Icon icon="success-check" classes="text-white" />
+                </div>
+                <Text type="h2" classes="mb-5 text-center">{locale('views.congratulations.title')}</Text>
+                <Text type="p" secondary classes="mb-2 text-center"
+                    >{locale(`views.congratulations.${localizedBody}`)}</Text
+                >
+            </div>
         {/if}
-        <Button classes="w-full" onClick={exportMigrationLog}>
-            {locale('views.congratulations.exportMigration')}
+    </div>
+    <div slot="leftpane__action">
+        <Button classes="w-full" onClick={() => handleContinueClick()}>
+            {locale(`${wasMigrated && !logExported ? 'views.congratulations.exportMigration' : 'actions.finishSetup'}`)}
         </Button>
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-yellow dark:bg-gray-900">
