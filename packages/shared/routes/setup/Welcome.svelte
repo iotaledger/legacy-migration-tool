@@ -39,8 +39,7 @@
             return (error = err.message)
         }
         cleanUpIfPreviouslyInitialized()
-        await initialiseProfile(trimmedProfileName)
-        $appRouter.next()
+        await initialiseProfileAndContinue(trimmedProfileName)
     }
 
     function cleanUpIfPreviouslyInitialized(): void {
@@ -50,7 +49,7 @@
         }
     }
 
-    async function initialiseProfile(name: string): Promise<void> {
+    async function initialiseProfileAndContinue(name: string): Promise<void> {
         try {
             busy = true
             if (hasDeveloperProfileChanged) {

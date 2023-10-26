@@ -10,7 +10,7 @@
     const dispatch = createEventDispatcher()
 
     function handleContinueClick(importType: ImportType) {
-        const profileType = importType === ImportType.Ledger ? ProfileType.Ledger : ProfileType.Software
+        const profileType = importType === ImportType.TrinityLedger ? ProfileType.Ledger : ProfileType.Software
         setProfileType(profileType)
         dispatch('next', { importType })
     }
@@ -21,7 +21,7 @@
 
 <OnboardingLayout onBackClick={handleBackClick}>
     <div slot="title">
-        <Text type="h2">{locale('views.import.title')}s</Text>
+        <Text type="h2">{locale('views.import.title')}</Text>
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-8">{locale('views.import.body')}</Text>
@@ -35,7 +35,12 @@
             {locale('views.import.importFile')}
             <Text type="p" secondary smaller>{locale('views.import.importFileDescription')}</Text>
         </Button>
-        <Button icon="chip" classes="w-full mb-8" secondary onClick={() => handleContinueClick(ImportType.Ledger)}>
+        <Button
+            icon="chip"
+            classes="w-full mb-8"
+            secondary
+            onClick={() => handleContinueClick(ImportType.TrinityLedger)}
+        >
             {locale('views.import.importLedger')}
             <Text type="p" secondary smaller>{locale('views.import.importLedgerDescription')}</Text>
         </Button>

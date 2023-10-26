@@ -1,6 +1,13 @@
 import { get, writable } from 'svelte/store'
 
-import { cleanupSignup, login, strongholdPassword, walletPin } from '@lib/app'
+import {
+    cleanupSignup,
+    login,
+    needsToAcceptLatestPrivacyPolicy,
+    needsToAcceptLatestTos,
+    strongholdPassword,
+    walletPin,
+} from '@lib/app'
 import { activeProfile } from '@lib/profile'
 import { ImportType, ProfileType } from '@lib/typings/profile'
 import { SetupType } from '@lib/typings/setup'
@@ -36,7 +43,14 @@ export class AppRouter extends Router<AppRoute> {
 
         switch (currentRoute) {
             case AppRoute.Welcome:
-                nextRoute = AppRoute.Legal
+                {
+                    const showLegalPage = needsToAcceptLatestPrivacyPolicy() || needsToAcceptLatestTos()
+                    if (showLegalPage) {
+                        nextRoute = AppRoute.Legal
+                    } else {
+                        nextRoute = AppRoute.CrashReporting
+                    }
+                }
                 break
             case AppRoute.Legal:
                 nextRoute = AppRoute.CrashReporting

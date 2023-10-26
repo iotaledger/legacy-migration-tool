@@ -1,7 +1,7 @@
 <script lang="typescript">
     import { setContext } from 'svelte'
     import { Transition } from 'shared/components'
-    import { BackupPassword, FileImport, Import, Ledger, Success, TextImport } from './views/'
+    import { BackupPassword, FileImport, Import, Success, TextImport } from './views/'
     import UpdateStrongholdRouter from '../../update-stronghold/UpdateStrongholdRouter.svelte'
     import { Locale } from '@core/i18n'
     import { LegacyMigrationEvent, importRoute, ImportRouter, ImportRoute } from '@core/router'
@@ -55,10 +55,6 @@
 {:else if $importRoute === ImportRoute.FileImport}
     <Transition>
         <FileImport on:next={next} on:previous={previous} {locale} {busy} />
-    </Transition>
-{:else if $importRoute === ImportRoute.LedgerImport}
-    <Transition>
-        <Ledger on:next={next} on:previous={previous} {locale} />
     </Transition>
 {:else if $importRoute === ImportRoute.BackupPassword}
     <Transition>

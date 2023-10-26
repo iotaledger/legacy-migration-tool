@@ -40,8 +40,9 @@ export class ImportRouter extends Subrouter<ImportRoute> {
                     nextRoute = ImportRoute.TextImport
                 } else if (importType === ImportType.File) {
                     nextRoute = ImportRoute.FileImport
-                } else if (importType === ImportType.Ledger) {
-                    nextRoute = ImportRoute.LedgerImport
+                } else if (importType === ImportType.TrinityLedger) {
+                    this.importType.set(importType)
+                    get(appRouter).next({ importType })
                 }
                 break
             }
@@ -116,12 +117,6 @@ export class ImportRouter extends Subrouter<ImportRoute> {
                 strongholdPassword.set(undefined)
                 get(appRouter).next({ importType: get(this.importType) })
                 return
-            case ImportRoute.LedgerImport: {
-                const { importType } = params
-                this.importType.set(importType)
-                get(appRouter).next({ importType })
-                break
-            }
             case ImportRoute.Success:
                 get(appRouter).next({ importType: get(this.importType) })
                 return

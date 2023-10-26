@@ -124,13 +124,15 @@
             "body": "You have backed up your wallets to a Stronghold."
         },
         "congratulations": {
-            "title": "Wallet setup completed",
+            "title": "Wallet migration completed",
             "fundsMigrated": "Funds migrated",
             "body": "Your new wallet is ready to use.",
             "softwareMigratedBody": "You have successfully migrated your funds to the new network",
             "fireflyLedgerBody": "Your Ledger account is successfully recovered and you can now continue.",
             "trinityLedgerBody": "You have successfully migrated your Ledger to the new network.",
-            "exportMigration": "Export migration log and finish setup"
+            "exportMigration": "Export migration log",
+            "exportStronghold": "Export Stronghold",
+            "migrateAnotherProfile": "Migrate another profile"
         },
         "import": {
             "title": "Recover or migrate funds",
