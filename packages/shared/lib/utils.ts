@@ -275,6 +275,21 @@ export const toUtf8String = (bytes: Uint8Array | number[]): string | undefined =
 }
 
 /**
+ * Converts a string to its hexadecimal representation.
+ *
+ * @method convertToHex
+ *
+ * @param {string} str - The string to be converted to hexadecimal.
+ *
+ * @returns {string} - The hexadecimal representation of the input string.
+ */
+export function convertToHex(str: string): string {
+    return Array.from(str)
+        .map((c) => c.charCodeAt(0).toString(16))
+        .join('')
+}
+
+/**
  * Deserializes an array of bytes into hexadecimal format.
  *
  * @method toHexString
