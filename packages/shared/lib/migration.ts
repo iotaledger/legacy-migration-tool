@@ -172,7 +172,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
         const inputs: Input[] = []
 
         for (let index = 0; index < FIXED_ADDRESSES_GENERATED; index++) {
-            const legacyAddress = generateAddress(migrationSeed, index, 2)
+            const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
             const binaryAddress = '0x' + convertToHex(legacyAddress)
             const balance = await fetchMigratableBalance(binaryAddress)
 
@@ -183,7 +183,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
                 balance,
                 spent: false,
                 index,
-                securityLevel: 2,
+                securityLevel: ADDRESS_SECURITY_LEVEL,
                 spentBundleHashes: [],
             })
         }
