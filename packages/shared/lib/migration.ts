@@ -26,7 +26,8 @@ import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
-import { getJsonRequestOptions } from '@lib/utils'
+import { convertToHex, getJsonRequestOptions } from '@lib/utils'
+import { generateAddress } from '@iota/core'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -169,6 +170,15 @@ export const getMigrationData = (migrationSeed: string, initialAddressIndex = 0)
             reject({ snapshot: true })
             openSnapshotPopup()
         } else {
+            // Generate address using iotajs
+            const legacyAddresses: string[] = []
+            const binaryAddresses: string[] = []
+            for (let index = 0; index < 10; index++) {
+                const legacyAddress = generateAddress(migrationSeed, index, 2)
+                legacyAddresses.push(legacyAddress)
+                binaryAddresses.push('0x' + convertToHex(legacyAddress))
+            }
+
             api.getMigrationData(
                 migrationSeed,
                 MIGRATION_NODES,
