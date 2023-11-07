@@ -163,56 +163,99 @@ export const createUnsignedBundle = (
  *
  * @returns {Promise<void}
  */
-export const getMigrationData = (migrationSeed: string, initialAddressIndex = 0): Promise<void> =>
-    /* eslint-disable @typescript-eslint/no-misused-promises */
-    new Promise((resolve, reject) => {
+export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> =>
+     {
         if (get(ongoingSnapshot) === true) {
-            reject({ snapshot: true })
             openSnapshotPopup()
         } else {
-            // Generate address using iotajs
-            const legacyAddresses: string[] = []
-            const binaryAddresses: string[] = []
-            for (let index = 0; index < 10; index++) {
+            const FIXED_ADDRESSES_GENERATED = 10
+            let totalBalance = 0
+            const inputs: Input[] = []
+
+            for (let index = 0; index < FIXED_ADDRESSES_GENERATED; index++) {
                 const legacyAddress = generateAddress(migrationSeed, index, 2)
-                legacyAddresses.push(legacyAddress)
-                binaryAddresses.push('0x' + convertToHex(legacyAddress))
+                const binaryAddress = '0x' + convertToHex(legacyAddress)
+                const balance = await fetchMigratableBalance(binaryAddress)
+
+                totalBalance += balance
+
+                inputs.push({
+                    address: legacyAddress,
+                    balance,
+                    spent: false,
+                    index,
+                    securityLevel: 2,
+                    spentBundleHashes: [],
+                })
             }
 
-            api.getMigrationData(
-                migrationSeed,
-                MIGRATION_NODES,
-                ADDRESS_SECURITY_LEVEL,
-                initialAddressIndex,
-                PERMANODE,
-                {
-                    onSuccess(response) {
-                        const { seed, data } = get(migration)
+            const migrationData: MigrationData = {
+                lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+                balance: totalBalance,
+                inputs: inputs,
+                spentAddresses: false,
+            }
 
-                        if (initialAddressIndex === 0) {
-                            seed.set(migrationSeed)
-                            data.set(response.payload)
-                        } else {
-                            data.update((_existingData) =>
-                                Object.assign({}, _existingData, {
-                                    balance: _existingData.balance + response.payload.balance,
-                                    inputs: [..._existingData.inputs, ...response.payload.inputs],
-                                    lastCheckedAddressIndex: response.payload.lastCheckedAddressIndex,
-                                })
-                            )
-                        }
+            const { seed, data } = get(migration)
 
-                        prepareBundles()
-
-                        resolve()
-                    },
-                    onError(error) {
-                        reject(error)
-                    },
+            try {
+                if (initialAddressIndex === 0) {
+                    seed.set(migrationSeed)
+                    data.set(migrationData)
+                } else {
+                    data.update((_existingData) =>
+                        Object.assign({}, _existingData, {
+                            balance: _existingData.balance + migrationData.balance,
+                            inputs: [..._existingData.inputs, ...migrationData.inputs],
+                            lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
+                        })
+                    )
                 }
-            )
+
+                prepareBundles()
+
+            } catch (error) {
+                console.error(error)
+            }
         }
-    })
+    }
+
+async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
+    const BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+    const WASP_ENDPOINT = '/v1/chains/atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58/callview'
+    let balance = 0
+
+    const body = {
+        functionName: 'getMigratableBalance',
+        contractName: 'legacymigration',
+        arguments: {
+            Items: [
+                {
+                    value: binaryAddress,
+                    key: '0x61', // convertToHex("a")
+                },
+            ],
+        },
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
+        body: JSON.stringify(body),
+    }
+    const endpoint = BASE_URL + WASP_ENDPOINT
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        const migrationData: { Items: { key: string; value: string }[] } = await response.json()
+        const binaryBalance = migrationData?.Items[0]?.value || '0'
+        balance = parseInt(binaryBalance)
+    } catch (error) {
+        console.error('error', error)
+    }
+    return balance
+}
 
 /**
  * Prepares migration log
