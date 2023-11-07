@@ -174,7 +174,7 @@ export const getMigrationData = (migrationSeed: string, initialAddressIndex = 0)
             const legacyAddresses: string[] = []
             const binaryAddresses: string[] = []
             for (let index = 0; index < 10; index++) {
-                const legacyAddress = generateAddress(migrationSeed, index, 2)
+                const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
                 legacyAddresses.push(legacyAddress)
                 binaryAddresses.push('0x' + convertToHex(legacyAddress))
             }
