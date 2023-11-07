@@ -163,62 +163,60 @@ export const createUnsignedBundle = (
  *
  * @returns {Promise<void}
  */
-export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> =>
-     {
-        if (get(ongoingSnapshot) === true) {
-            openSnapshotPopup()
-        } else {
-            const FIXED_ADDRESSES_GENERATED = 10
-            let totalBalance = 0
-            const inputs: Input[] = []
+export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
+    if (get(ongoingSnapshot) === true) {
+        openSnapshotPopup()
+    } else {
+        const FIXED_ADDRESSES_GENERATED = 10
+        let totalBalance = 0
+        const inputs: Input[] = []
 
-            for (let index = 0; index < FIXED_ADDRESSES_GENERATED; index++) {
-                const legacyAddress = generateAddress(migrationSeed, index, 2)
-                const binaryAddress = '0x' + convertToHex(legacyAddress)
-                const balance = await fetchMigratableBalance(binaryAddress)
+        for (let index = 0; index < FIXED_ADDRESSES_GENERATED; index++) {
+            const legacyAddress = generateAddress(migrationSeed, index, 2)
+            const binaryAddress = '0x' + convertToHex(legacyAddress)
+            const balance = await fetchMigratableBalance(binaryAddress)
 
-                totalBalance += balance
+            totalBalance += balance
 
-                inputs.push({
-                    address: legacyAddress,
-                    balance,
-                    spent: false,
-                    index,
-                    securityLevel: 2,
-                    spentBundleHashes: [],
-                })
+            inputs.push({
+                address: legacyAddress,
+                balance,
+                spent: false,
+                index,
+                securityLevel: 2,
+                spentBundleHashes: [],
+            })
+        }
+
+        const migrationData: MigrationData = {
+            lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+            balance: totalBalance,
+            inputs: inputs,
+            spentAddresses: false,
+        }
+
+        const { seed, data } = get(migration)
+
+        try {
+            if (initialAddressIndex === 0) {
+                seed.set(migrationSeed)
+                data.set(migrationData)
+            } else {
+                data.update((_existingData) =>
+                    Object.assign({}, _existingData, {
+                        balance: _existingData.balance + migrationData.balance,
+                        inputs: [..._existingData.inputs, ...migrationData.inputs],
+                        lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
+                    })
+                )
             }
 
-            const migrationData: MigrationData = {
-                lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
-                balance: totalBalance,
-                inputs: inputs,
-                spentAddresses: false,
-            }
-
-            const { seed, data } = get(migration)
-
-            try {
-                if (initialAddressIndex === 0) {
-                    seed.set(migrationSeed)
-                    data.set(migrationData)
-                } else {
-                    data.update((_existingData) =>
-                        Object.assign({}, _existingData, {
-                            balance: _existingData.balance + migrationData.balance,
-                            inputs: [..._existingData.inputs, ...migrationData.inputs],
-                            lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
-                        })
-                    )
-                }
-
-                prepareBundles()
-
-            } catch (error) {
-                console.error(error)
-            }
+            prepareBundles()
+        } catch (error) {
+            console.error(error)
         }
     }
+}
 
 async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
     const BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
