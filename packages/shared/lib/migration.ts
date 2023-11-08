@@ -116,11 +116,6 @@ export const hardwareIndexes = writable<HardwareIndexes>({
 
 export const migrationLog = writable<MigrationLog[]>([])
 
-/*
- * ongoingSnapshot
- */
-export const ongoingSnapshot = writable<boolean>(false)
-
 export const createUnsignedBundle = (
     outputAddress: string,
     inputAddresses: string[],
@@ -170,57 +165,53 @@ export const createUnsignedBundle = (
  * @returns {Promise<void}
  */
 export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
-    if (get(ongoingSnapshot) === true) {
-        openSnapshotPopup()
-    } else {
-        const FIXED_ADDRESSES_GENERATED = 10
-        let totalBalance = 0
-        const inputs: Input[] = []
+    const FIXED_ADDRESSES_GENERATED = 10
+    let totalBalance = 0
+    const inputs: Input[] = []
 
-        for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
-            const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-            const binaryAddress = '0x' + convertToHex(legacyAddress)
-            const balance = await fetchMigratableBalance(binaryAddress)
+    for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
+        const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
+        const binaryAddress = '0x' + convertToHex(legacyAddress)
+        const balance = await fetchMigratableBalance(binaryAddress)
 
-            totalBalance += balance
+        totalBalance += balance
 
-            inputs.push({
-                address: legacyAddress,
-                balance,
-                spent: false,
-                index,
-                securityLevel: ADDRESS_SECURITY_LEVEL,
-                spentBundleHashes: [],
-            })
+        inputs.push({
+            address: legacyAddress,
+            balance,
+            spent: false,
+            index,
+            securityLevel: ADDRESS_SECURITY_LEVEL,
+            spentBundleHashes: [],
+        })
+    }
+
+    const migrationData: MigrationData = {
+        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        balance: totalBalance,
+        inputs: inputs,
+        spentAddresses: false,
+    }
+
+    const { seed, data } = get(migration)
+
+    try {
+        if (initialAddressIndex === 0) {
+            seed.set(migrationSeed)
+            data.set(migrationData)
+        } else {
+            data.update((_existingData) =>
+                Object.assign({}, _existingData, {
+                    balance: _existingData.balance + migrationData.balance,
+                    inputs: [..._existingData.inputs, ...migrationData.inputs],
+                    lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
+                })
+            )
         }
 
-        const migrationData: MigrationData = {
-            lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
-            balance: totalBalance,
-            inputs: inputs,
-            spentAddresses: false,
-        }
-
-        const { seed, data } = get(migration)
-
-        try {
-            if (initialAddressIndex === 0) {
-                seed.set(migrationSeed)
-                data.set(migrationData)
-            } else {
-                data.update((_existingData) =>
-                    Object.assign({}, _existingData, {
-                        balance: _existingData.balance + migrationData.balance,
-                        inputs: [..._existingData.inputs, ...migrationData.inputs],
-                        lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
-                    })
-                )
-            }
-
-            prepareBundles()
-        } catch (error) {
-            console.error(error)
-        }
+        prepareBundles()
+    } catch (error) {
+        console.error(error)
     }
 }
 
@@ -664,21 +655,16 @@ export const createMigrationBundle = (
 export const sendMigrationBundle = (bundleHash: string, mwm = MINIMUM_WEIGHT_MAGNITUDE): Promise<void> =>
     new Promise((resolve, reject) => {
         /* eslint-disable @typescript-eslint/no-misused-promises */
-        if (get(ongoingSnapshot) === true) {
-            reject({ snapshot: true })
-            openSnapshotPopup()
-        } else {
-            api.sendMigrationBundle(MIGRATION_NODES, bundleHash, mwm, {
-                onSuccess(response) {
-                    _sendMigrationBundle(bundleHash, response.payload)
+        api.sendMigrationBundle(MIGRATION_NODES, bundleHash, mwm, {
+            onSuccess(response) {
+                _sendMigrationBundle(bundleHash, response.payload)
 
-                    resolve()
-                },
-                onError(error) {
-                    reject(error)
-                },
-            })
-        }
+                resolve()
+            },
+            onError(error) {
+                reject(error)
+            },
+        })
     })
 
 const _sendMigrationBundle = (hash: string, data: SendMigrationBundleResponse): void => {
@@ -1270,12 +1256,7 @@ export async function checkChrysalisSnapshot(): Promise<void> {
             payload: jsonResponse,
         })
         if (isValid) {
-            const _ongoingSnapshot = jsonResponse.snapshot
-            if (get(ongoingSnapshot) === true && _ongoingSnapshot === false) {
-                // snapshot finished
-                closePopup()
-            }
-            ongoingSnapshot.set(_ongoingSnapshot)
+            closePopup()
         } else {
             throw new Error(payload.error)
         }
