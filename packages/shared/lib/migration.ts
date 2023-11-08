@@ -28,6 +28,7 @@ import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
+// import { convertBech32AddressToEd25519Address } from './ed25519'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -146,10 +147,18 @@ export const createUnsignedBundle = (
     bundle = finalizeBundle(bundle)
 
     const bundleTrytes = []
-
     for (let offset = 0; offset < bundle.length; offset += TRANSACTION_LENGTH) {
         bundleTrytes.push(tritsToTrytes(bundle.subarray(offset, offset + TRANSACTION_LENGTH)))
     }
+
+    // console.log("bundleTrytes", bundleTrytes);
+    // const prueba = []
+    // for (let index = 0; index < bundleTrytes.length; index++) {
+    //     const bundleTryte = bundleTrytes[index];
+    //     console.log("bundleTryte", bundleTryte);
+    //     prueba.push(new TextEncoder().encode(bundleTryte))
+    // }
+    // console.log("prueba", prueba);
 
     return bundleTrytes
 }
@@ -627,19 +636,106 @@ export const createMigrationBundle = (
     offset: number,
     mine: boolean
 ): Promise<MigrationBundle> => {
-    const { seed } = get(migration)
+    const { bundles } = get(migration)
+    const _bundles = get(bundles)
 
     return new Promise((resolve, reject) => {
-        api.createMigrationBundle(get(seed), inputAddressIndexes, mine, MINING_TIMEOUT_SECONDS, offset, LOG_FILE_NAME, {
-            onSuccess(response) {
-                assignBundleHash(inputAddressIndexes, response.payload, mine)
-                resolve(response.payload)
-            },
-            onError(error) {
-                reject(error)
-            },
+        return new Promise((resolve, reject) => {
+            api.getAccounts({
+                onSuccess(getAccountsResponse) {
+                    api.getMigrationAddress(
+                        false,
+                        getAccountsResponse.payload[get(activeProfile)?.ledgerMigrationCount]?.id,
+                        {
+                            onSuccess(response) {
+                                resolve(response.payload)
+                            },
+                            onError(error) {
+                                reject(error)
+                            },
+                        }
+                    )
+                },
+                onError(getAccountsError) {
+                    reject(getAccountsError)
+                },
+            })
         })
+        .then(async (address: MigrationAddress) => {
+            // console.log('address', address)
+            // const _address = convertBech32AddressToEd25519Address(address.bech32)
+            // console.log('_address', _address)
+            // const _chainidaddress = convertBech32AddressToEd25519Address(
+            //     'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+            // )
+
+            const unsignedBundle = createUnsignedBundle(
+                removeAddressChecksum(address.trytes),
+                _bundles[0].inputs.map((input) => input.address),
+                _bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                Math.floor(Date.now() / 1000),
+                ADDRESS_SECURITY_LEVEL
+            )
+            console.log('unsignedBundle', unsignedBundle)
+
+            const response: MigrationBundle = {
+                bundleHash: '',
+                crackability: 0,
+                trytes: [],
+            }
+
+            await fetchOffledgerRequest(unsignedBundle)
+
+            // assignBundleHash(inputAddressIndexes, response, mine)
+            resolve(response)
+        })
+        .catch((err) => reject(err))
     })
+}
+
+async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
+    const _activeProfile = get(activeProfile)
+    let chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+
+    let chainIdEncoded = new TextEncoder().encode(chainId)
+    let contractNameEncoded = new TextEncoder().encode("legacymigration")
+    let functionEncoded = new TextEncoder().encode("migrate")
+    let bundleLengthEncoded = new TextEncoder().encode(finalBundle.length.toString())
+    let bundleHash = ""
+
+    // TODO: convert in hexadecimal
+    let request = '0x' + chainIdEncoded + contractNameEncoded + functionEncoded + bundleLengthEncoded + bundleHash
+
+    const body = {
+        "request": request,
+        "chainId": chainId
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
+        body: JSON.stringify(body),
+    }
+
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/v1/requests/offledger`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/v1/requests/offledger`
+    }
+
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        const result = await response.json()
+        console.log("result", result)
+        // const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
+        // balance = decodeUint64(binaryBalance)
+    } catch (error) {
+        console.error('error', error)
+    }
+    return
 }
 
 /**
