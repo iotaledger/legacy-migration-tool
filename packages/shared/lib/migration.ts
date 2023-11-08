@@ -55,6 +55,12 @@ const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
 
+const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+// TODO: Update these constants with the real production values
+const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
 export const currentLedgerMigrationProgress = writable<LedgerMigrationProgress>(null)
@@ -171,7 +177,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
         let totalBalance = 0
         const inputs: Input[] = []
 
-        for (let index = 0; index < FIXED_ADDRESSES_GENERATED; index++) {
+        for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
             const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
             const binaryAddress = '0x' + convertToHex(legacyAddress)
             const balance = await fetchMigratableBalance(binaryAddress)
@@ -219,10 +225,6 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
 }
 
 async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
-    const BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
-    const WASP_ENDPOINT = '/v1/chains/atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58/callview'
-    let balance = 0
-
     const body = {
         functionName: 'getMigratableBalance',
         contractName: 'legacymigration',
@@ -243,7 +245,16 @@ async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
         },
         body: JSON.stringify(body),
     }
-    const endpoint = BASE_URL + WASP_ENDPOINT
+
+    const _activeProfile = get(activeProfile)
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/v1/chains/${DEVELOP_CHAIN_ID}/callview`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/v1/chains/${PRODUCTION_CHAIN_ID}/callview`
+    }
+
+    let balance = 0
     try {
         const response = await fetch(endpoint, requestOptions)
         const migrationData: { Items: { key: string; value: string }[] } = await response.json()
