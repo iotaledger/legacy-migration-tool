@@ -26,7 +26,7 @@ import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
-import { convertToHex, getJsonRequestOptions } from '@lib/utils'
+import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
@@ -247,8 +247,8 @@ async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
     try {
         const response = await fetch(endpoint, requestOptions)
         const migrationData: { Items: { key: string; value: string }[] } = await response.json()
-        const binaryBalance = migrationData?.Items[0]?.value || '0'
-        balance = parseInt(binaryBalance)
+        const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
+        balance = decodeUint64(binaryBalance)
     } catch (error) {
         console.error('error', error)
     }
