@@ -10,10 +10,6 @@
      * the app was last opened.
      */
     $: $appSettings.darkMode = shouldBeDarkMode($appSettings.theme)
-
-    onMount(() => {
-        void pollChrysalisSnapshot()
-    })
 </script>
 
 <div class="w-full h-full flex justify-center items-center bg-white dark:bg-gray-900">

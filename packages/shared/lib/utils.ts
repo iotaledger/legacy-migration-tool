@@ -507,3 +507,76 @@ export function convertStringToUtf8Array(input: string): number[] {
 export function getByteLengthOfString(str: string): number {
     return new Blob([str]).size
 }
+
+/**
+ * Decode a hex string to raw array.
+ *
+ * @method hexToBytes
+ *
+ * @param {string} hex
+ * @param {boolean} reverse
+ *
+ * @returns {Uint8Array}
+ */
+export const hexToBytes = (hex: string, reverse?: boolean): Uint8Array => {
+    let ENCODE_LOOKUP: string[] | undefined
+    let DECODE_LOOKUP: number[] | undefined
+    const strippedHex = hex.replace(/^0x/, '')
+    const sizeof = strippedHex.length >> 1
+    const length = sizeof << 1
+    const array = new Uint8Array(sizeof)
+
+    // build hex lookup
+    if (!ENCODE_LOOKUP || !DECODE_LOOKUP) {
+        const alphabet = '0123456789abcdef'
+        ENCODE_LOOKUP = []
+        DECODE_LOOKUP = []
+
+        for (let i = 0; i < 256; i++) {
+            ENCODE_LOOKUP[i] = alphabet[(i >> 4) & 0xf] + alphabet[i & 0xf]
+            if (i < 16) {
+                if (i < 10) {
+                    DECODE_LOOKUP[0x30 + i] = i
+                } else {
+                    DECODE_LOOKUP[0x61 - 10 + i] = i
+                }
+            }
+        }
+    }
+
+    if (DECODE_LOOKUP) {
+        let i = 0
+        let n = 0
+        while (i < length) {
+            array[n++] = (DECODE_LOOKUP[strippedHex.charCodeAt(i++)] << 4) | DECODE_LOOKUP[strippedHex.charCodeAt(i++)]
+        }
+
+        if (reverse) {
+            array.reverse()
+        }
+    }
+    return array
+}
+
+/**
+ * Deserializes an array of bytes into hexadecimal format.
+ *
+ * @method decodeUint64
+ *
+ * @param {Uint8Array[]} bytes
+ *
+ * @returns {number}
+ */
+export function decodeUint64(bytes: Uint8Array): number {
+    if (bytes == null) {
+        throw new Error('Cannot decode nil uint64')
+    }
+    if (bytes.length !== 8) {
+        throw new Error('Invalid uint64 size')
+    }
+    let result = 0
+    for (let i = 0; i < 8; i++) {
+        result += bytes[i] * Math.pow(256, i)
+    }
+    return result
+}
