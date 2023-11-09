@@ -175,15 +175,16 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
         const balance = await fetchMigratableBalance(binaryAddress)
 
         totalBalance += balance
-
-        inputs.push({
-            address: legacyAddress,
-            balance,
-            spent: false,
-            index,
-            securityLevel: ADDRESS_SECURITY_LEVEL,
-            spentBundleHashes: [],
-        })
+        if (balance > 0) {
+            inputs.push({
+                address: legacyAddress,
+                balance,
+                spent: false,
+                index,
+                securityLevel: ADDRESS_SECURITY_LEVEL,
+                spentBundleHashes: [],
+            })
+        }
     }
 
     const migrationData: MigrationData = {
