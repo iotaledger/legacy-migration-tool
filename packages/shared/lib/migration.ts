@@ -29,7 +29,7 @@ import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
-// import { convertBech32AddressToEd25519Address } from './ed25519'
+import { Buffer } from 'buffer'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -152,18 +152,8 @@ export const createUnsignedBundle = (
         bundleTrytes.push(tritsToTrytes(bundle.subarray(offset, offset + TRANSACTION_LENGTH)))
     }
 
-    // console.log("bundleTrytes", bundleTrytes);
-    // const prueba = []
-    // for (let index = 0; index < bundleTrytes.length; index++) {
-    //     const bundleTryte = bundleTrytes[index];
-    //     console.log("bundleTryte", bundleTryte);
-    //     prueba.push(new TextEncoder().encode(bundleTryte))
-    // }
-    // console.log("prueba", prueba);
-
     return bundleTrytes
 }
-
 
 export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
     const OFF_LEDGER_REQUEST_TYPE = 1
@@ -171,7 +161,7 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
     // Chain ID as a hexadecimal string
     const _activeProfile = get(activeProfile)
     const chainId: string = convertBech32AddressToEd25519Address(
-      _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+        _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
     )
 
     // Contract Hname and other hexadecimal strings
@@ -191,19 +181,19 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
 
     // Calculate the total length needed for the buffer
     const totalLength =
-      OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
-      chainIdBuffer.length +
-      contractHnameBuffer.length +
-      additionalDataBuffer.length +
-      1 + // params len
-      1 + // key len
-      1 + // 'b'
-      vluBundleLength.length + // VLU-encoded bundle length
-      bundleBytes.length + // Total length of bundleByte
-      8 + // nonce
-      1 + // gasbudget
-      1 + // allowance
-      33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+        OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
+        chainIdBuffer.length +
+        contractHnameBuffer.length +
+        additionalDataBuffer.length +
+        1 + // params len
+        1 + // key len
+        1 + // 'b'
+        vluBundleLength.length + // VLU-encoded bundle length
+        bundleBytes.length + // Total length of bundleByte
+        8 + // nonce
+        1 + // gasbudget
+        1 + // allowance
+        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
 
     // Allocate the request buffer with the calculated length
     const reqBuffer: Buffer = Buffer.alloc(totalLength)
@@ -243,9 +233,9 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
     position += bundleBytes.length
 
     // Append 0_u64 (nonce) as little-endian bytes
-    const zeroNonce = Buffer.alloc(8, 0x00, 'hex');
-    zeroNonce.copy(reqBuffer, position);
-    position += zeroNonce.length;
+    const zeroNonce = Buffer.alloc(8, 0x00, 'hex')
+    zeroNonce.copy(reqBuffer, position)
+    position += zeroNonce.length
 
     reqBuffer.writeUInt8(0, position) // gasbudget
     position++
@@ -255,8 +245,8 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
     for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
-        reqBuffer.writeUInt8(0, position);
-        position++;
+        reqBuffer.writeUInt8(0, position)
+        position++
     }
 
     // Convert reqBuffer to hexadecimal string
@@ -271,32 +261,32 @@ function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {
 
     // Iterate over each trytes string in rawTrytes
     for (const txTrytes of rawTrytes) {
-      // Append the little-endian u16 length
-      encodedBundle.push(txTrytes.length & 0xFF, (txTrytes.length >> 8) & 0xFF)
+        // Append the little-endian u16 length
+        encodedBundle.push(txTrytes.length & 0xff, (txTrytes.length >> 8) & 0xff)
 
-      // Append UTF-8 encoded bytes of the trytes string
-      for (let i = 0; i < txTrytes.length; i++) {
-        encodedBundle.push(txTrytes.charCodeAt(i))
-      }
+        // Append UTF-8 encoded bytes of the trytes string
+        for (let i = 0; i < txTrytes.length; i++) {
+            encodedBundle.push(txTrytes.charCodeAt(i))
+        }
     }
 
     // Convert the array of numbers to a Uint8Array
     return Buffer.from(encodedBundle)
-  }
+}
 
 // Function to encode a variable-length unsigned integer (VLU)
 function iscVluEncode(value: number): Buffer {
-    const buf: number[] = [];
-    let b: number;
+    const buf: number[] = []
+    let b: number
     do {
-        b = value & 0x7f;
-        value >>= 7;
+        b = value & 0x7f
+        value >>= 7
         if (value > 0) {
-            b |= 0x80;
+            b |= 0x80
         }
-        buf.push(b);
-    } while (value > 0);
-    return Buffer.from(buf);
+        buf.push(b)
+    } while (value > 0)
+    return Buffer.from(buf)
 }
 
 /**
@@ -856,8 +846,8 @@ async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
     const request = '0x' + chainIdEncoded + contractNameEncoded + functionEncoded + bundleLengthEncoded + bundleHash
 
     const body = {
-        'request': request,
-        'chainId': chainId
+        request: request,
+        chainId: chainId,
     }
     const requestOptions: RequestInit = {
         method: 'POST',
