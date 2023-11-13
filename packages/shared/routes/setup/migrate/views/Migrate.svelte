@@ -5,28 +5,33 @@
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
         ADDRESS_SECURITY_LEVEL,
+        MINING_TIMEOUT_SECONDS,
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        createOffLedgerRequest,
+        createUnsignedBundle,
         getInputIndexesForBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        removeAddressChecksum,
         sendLedgerMigrationBundle,
         sendMigrationBundle,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
-    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { activeProfile, newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { createEventDispatcher, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { walletSetupType } from 'shared/lib/wallet'
+    import { api, selectedAccountIdStore, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { MigrationAddress } from '@lib/typings/migration'
 
     export let locale: Locale
 
@@ -77,7 +82,7 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            return createLedgerMigrationBundle(0, iota.prepareTransfers, callback)
+                            return createLedgerMigrationBundle(0, iota.prepareTransfer, callback)
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
@@ -109,26 +114,51 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
-                createMigrationBundle(getInputIndexesForBundle($bundles[0]), 0, false)
-                    .then((data) => {
-                        singleMigrationBundleHash = data.bundleHash
-                        return sendMigrationBundle(data.bundleHash).then(() => {
-                            // Save profile
-                            saveProfile($newProfile)
-                            setActiveProfile($newProfile.id)
+                const { accounts } = get(wallet)
+                api.getMigrationAddress(false, get(accounts)[0].id, {
+                    onSuccess(response) {
+                        // console.log("migration address success", response.payload)
+                        const unsignedBundle = createUnsignedBundle(
+                            removeAddressChecksum((response.payload as unknown as MigrationAddress).trytes),
+                            $bundles[0].inputs.map((input) => input.address),
+                            $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                            Math.floor(Date.now() / 1000),
+                            ADDRESS_SECURITY_LEVEL
+                        )
 
-                            newProfile.set(null)
-                        })
-                    })
-                    .catch((err) => {
-                        loading = false
-                        if (!err?.snapshot) {
-                            showAppNotification({
-                                type: 'error',
-                                message: locale('views.migrate.error'),
-                            })
-                        }
-                    })
+                        // console.log("unsignedBundle", unsignedBundle)
+
+                        const offLedgerHexRequest = createOffLedgerRequest(unsignedBundle)
+                        // console.log("offLedgerHexRequest", unsignedBundle)
+
+                        // todo sendMigrationBundleData
+                    },
+                    onError(error) {
+                        // console.log("migration address errir", error)
+                    },
+                })
+
+                loading = false
+                // createMigrationBundle(getInputIndexesForBundle($bundles[0]), 0, false)
+                //     .then((data) => {
+                //         singleMigrationBundleHash = data.bundleHash
+                //         return sendMigrationBundle(data.bundleHash).then(() => {
+                //             // Save profile
+                //             saveProfile($newProfile)
+                //             setActiveProfile($newProfile.id)
+
+                //             newProfile.set(null)
+                //         })
+                //     })
+                //     .catch((err) => {
+                //         loading = false
+                //         if (!err?.snapshot) {
+                //             showAppNotification({
+                //                 type: 'error',
+                //                 message: locale('views.migrate.error'),
+                //             })
+                //         }
+                //     })
             }
         } else {
             loading = true

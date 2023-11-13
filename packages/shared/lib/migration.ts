@@ -28,6 +28,7 @@ import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
+import { convertBech32AddressToEd25519Address } from './ed25519'
 // import { convertBech32AddressToEd25519Address } from './ed25519'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
@@ -161,6 +162,141 @@ export const createUnsignedBundle = (
     // console.log("prueba", prueba);
 
     return bundleTrytes
+}
+
+
+export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
+    const OFF_LEDGER_REQUEST_TYPE = 1
+
+    // Chain ID as a hexadecimal string
+    const _activeProfile = get(activeProfile)
+    const chainId: string = convertBech32AddressToEd25519Address(
+      _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    )
+
+    // Contract Hname and other hexadecimal strings
+    const contractHname: string = '69492005'
+    const additionalData: string = '060d3f50'
+
+    // Convert hexadecimal strings to buffers
+    const chainIdBuffer: Buffer = Buffer.from(chainId, 'hex')
+    const contractHnameBuffer: Buffer = Buffer.from(contractHname, 'hex')
+    const additionalDataBuffer: Buffer = Buffer.from(additionalData, 'hex')
+
+    // Obtain bundle bytes using iscParamBytesFromBundle function
+    const bundleBytes: Buffer = iscParamBytesFromBundle(bundleTrytes)
+
+    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
+    const vluBundleLength: Buffer = iscVluEncode(bundleBytes.length)
+
+    // Calculate the total length needed for the buffer
+    const totalLength =
+      OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
+      chainIdBuffer.length +
+      contractHnameBuffer.length +
+      additionalDataBuffer.length +
+      1 + // params len
+      1 + // key len
+      1 + // 'b'
+      vluBundleLength.length + // VLU-encoded bundle length
+      bundleBytes.length + // Total length of bundleByte
+      8 + // nonce
+      1 + // gasbudget
+      1 + // allowance
+      33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+
+    // Allocate the request buffer with the calculated length
+    const reqBuffer: Buffer = Buffer.alloc(totalLength)
+
+    // Set the initial value (requestKindOffLedgerISC) at the beginning of the buffer
+    let position: number = 0
+    reqBuffer.writeUInt8(OFF_LEDGER_REQUEST_TYPE, position) // Assuming 1 is the value
+    position++
+
+    // Copy other buffers to reqBuffer at appropriate positions without using explicit lengths
+    chainIdBuffer.copy(reqBuffer, position)
+    position += chainIdBuffer.length
+
+    contractHnameBuffer.copy(reqBuffer, position)
+    position += contractHnameBuffer.length
+
+    additionalDataBuffer.copy(reqBuffer, position)
+    position += additionalDataBuffer.length
+
+    // Set params len and key len at appropriate positions without using explicit lengths
+    reqBuffer.writeUInt8(1, position)
+    position++
+
+    reqBuffer.writeUInt8(1, position)
+    position++
+
+    // Add the key 'b' at the end of the buffer without using explicit lengths
+    reqBuffer.write('b', position)
+    position++
+
+    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
+    vluBundleLength.copy(reqBuffer, position)
+    position += vluBundleLength.length
+
+    // Append bundle bytes to reqBuffer without using explicit lengths
+    bundleBytes.copy(reqBuffer, position)
+    position += bundleBytes.length
+
+    // Append 0_u64 (nonce) as little-endian bytes
+    const zeroNonce = Buffer.alloc(8, 0x00, 'hex');
+    zeroNonce.copy(reqBuffer, position);
+    position += zeroNonce.length;
+
+    reqBuffer.writeUInt8(0, position) // gasbudget
+    position++
+
+    reqBuffer.writeUInt8(0, position) // allowance
+    position++
+
+    // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
+        reqBuffer.writeUInt8(0, position);
+        position++;
+    }
+
+    // Convert reqBuffer to hexadecimal string
+    return `${reqBuffer.toString('hex')}`
+}
+
+function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {
+    const encodedBundle: number[] = []
+
+    // Append the length of rawTrytes as a single byte
+    encodedBundle.push(rawTrytes.length)
+
+    // Iterate over each trytes string in rawTrytes
+    for (const txTrytes of rawTrytes) {
+      // Append the little-endian u16 length
+      encodedBundle.push(txTrytes.length & 0xFF, (txTrytes.length >> 8) & 0xFF)
+
+      // Append UTF-8 encoded bytes of the trytes string
+      for (let i = 0; i < txTrytes.length; i++) {
+        encodedBundle.push(txTrytes.charCodeAt(i))
+      }
+    }
+
+    // Convert the array of numbers to a Uint8Array
+    return Buffer.from(encodedBundle)
+  }
+
+// Function to encode a variable-length unsigned integer (VLU)
+function iscVluEncode(value: number): Buffer {
+    const buf: number[] = [];
+    let b: number;
+    do {
+        b = value & 0x7f;
+        value >>= 7;
+        if (value > 0) {
+            b |= 0x80;
+        }
+        buf.push(b);
+    } while (value > 0);
+    return Buffer.from(buf);
 }
 
 /**
@@ -637,79 +773,91 @@ export const createMigrationBundle = (
     offset: number,
     mine: boolean
 ): Promise<MigrationBundle> => {
-    const { bundles } = get(migration)
-    const _bundles = get(bundles)
+    // const { bundles } = get(migration)
+    // const _bundles = get(bundles)
+    const { seed } = get(migration)
 
     return new Promise((resolve, reject) => {
-        return new Promise((resolve, reject) => {
-            api.getAccounts({
-                onSuccess(getAccountsResponse) {
-                    api.getMigrationAddress(
-                        false,
-                        getAccountsResponse.payload[get(activeProfile)?.ledgerMigrationCount]?.id,
-                        {
-                            onSuccess(response) {
-                                resolve(response.payload)
-                            },
-                            onError(error) {
-                                reject(error)
-                            },
-                        }
-                    )
-                },
-                onError(getAccountsError) {
-                    reject(getAccountsError)
-                },
-            })
+        api.createMigrationBundle(get(seed), inputAddressIndexes, mine, MINING_TIMEOUT_SECONDS, offset, LOG_FILE_NAME, {
+            onSuccess(response) {
+                assignBundleHash(inputAddressIndexes, response.payload, mine)
+                resolve(response.payload)
+            },
+            onError(error) {
+                reject(error)
+            },
         })
-        .then(async (address: MigrationAddress) => {
-            // console.log('address', address)
-            // const _address = convertBech32AddressToEd25519Address(address.bech32)
-            // console.log('_address', _address)
-            // const _chainidaddress = convertBech32AddressToEd25519Address(
-            //     'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-            // )
-
-            const unsignedBundle = createUnsignedBundle(
-                removeAddressChecksum(address.trytes),
-                _bundles[0].inputs.map((input) => input.address),
-                _bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                Math.floor(Date.now() / 1000),
-                ADDRESS_SECURITY_LEVEL
-            )
-            console.log('unsignedBundle', unsignedBundle)
-
-            const response: MigrationBundle = {
-                bundleHash: '',
-                crackability: 0,
-                trytes: [],
-            }
-
-            await fetchOffledgerRequest(unsignedBundle)
-
-            // assignBundleHash(inputAddressIndexes, response, mine)
-            resolve(response)
-        })
-        .catch((err) => reject(err))
     })
+    // return new Promise((resolve, reject) => {
+    //     return new Promise((resolve, reject) => {
+    //         api.getAccounts({
+    //             onSuccess(getAccountsResponse) {
+    //                 api.getMigrationAddress(
+    //                     false,
+    //                     getAccountsResponse.payload[get(activeProfile)?.ledgerMigrationCount]?.id,
+    //                     {
+    //                         onSuccess(response) {
+    //                             resolve(response.payload)
+    //                         },
+    //                         onError(error) {
+    //                             reject(error)
+    //                         },
+    //                     }
+    //                 )
+    //             },
+    //             onError(getAccountsError) {
+    //                 reject(getAccountsError)
+    //             },
+    //         })
+    //     })
+    //     .then(async (address: MigrationAddress) => {
+    //         // console.log('address', address)
+    //         // const _address = convertBech32AddressToEd25519Address(address.bech32)
+    //         // console.log('_address', _address)
+    //         // const _chainidaddress = convertBech32AddressToEd25519Address(
+    //         //     'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+    //         // )
+
+    //         const unsignedBundle = createUnsignedBundle(
+    //             removeAddressChecksum(address.trytes),
+    //             _bundles[0].inputs.map((input) => input.address),
+    //             _bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+    //             Math.floor(Date.now() / 1000),
+    //             ADDRESS_SECURITY_LEVEL
+    //         )
+    //         // console.log('unsignedBundle', unsignedBundle)
+
+    //         const response: MigrationBundle = {
+    //             bundleHash: '',
+    //             crackability: 0,
+    //             trytes: [],
+    //         }
+
+    //         await fetchOffledgerRequest(unsignedBundle)
+
+    //         // assignBundleHash(inputAddressIndexes, response, mine)
+    //         resolve(response)
+    //     })
+    //     .catch((err) => reject(err))
+    // })
 }
 
 async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
     const _activeProfile = get(activeProfile)
-    let chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
 
-    let chainIdEncoded = new TextEncoder().encode(chainId)
-    let contractNameEncoded = new TextEncoder().encode("legacymigration")
-    let functionEncoded = new TextEncoder().encode("migrate")
-    let bundleLengthEncoded = new TextEncoder().encode(finalBundle.length.toString())
-    let bundleHash = ""
+    const chainIdEncoded = new TextEncoder().encode(chainId)
+    const contractNameEncoded = new TextEncoder().encode('legacymigration')
+    const functionEncoded = new TextEncoder().encode('migrate')
+    const bundleLengthEncoded = new TextEncoder().encode(finalBundle.length.toString())
+    const bundleHash = ''
 
     // TODO: convert in hexadecimal
-    let request = '0x' + chainIdEncoded + contractNameEncoded + functionEncoded + bundleLengthEncoded + bundleHash
+    const request = '0x' + chainIdEncoded + contractNameEncoded + functionEncoded + bundleLengthEncoded + bundleHash
 
     const body = {
-        "request": request,
-        "chainId": chainId
+        'request': request,
+        'chainId': chainId
     }
     const requestOptions: RequestInit = {
         method: 'POST',
@@ -730,7 +878,7 @@ async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
     try {
         const response = await fetch(endpoint, requestOptions)
         const result = await response.json()
-        console.log("result", result)
+        // console.log("result", result)
         // const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
         // balance = decodeUint64(binaryBalance)
     } catch (error) {
