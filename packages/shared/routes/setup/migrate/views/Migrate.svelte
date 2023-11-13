@@ -12,6 +12,7 @@
         createMinedLedgerMigrationBundle,
         createOffLedgerRequest,
         createUnsignedBundle,
+        fetchOffLedgerRequest,
         getInputIndexesForBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
@@ -132,19 +133,22 @@
                         ]
 
                         const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
-                                address: input.address,
-                                keyIndex: input.index,
-                                security: input.securityLevel,
-                                balance: input.balance,
-                            }))
+                            address: input.address,
+                            keyIndex: input.index,
+                            security: input.securityLevel,
+                            balance: input.balance,
+                        }))
                         prepareTransfers(get(seed), transfers, {
                             inputs: inputsForTransfer,
                         })
-                            .then((bundleTrytes) => {
+                            .then((bundleTrytes: string[]) => {
                                 // console.log('Bundle trytes are ready to be attached to the Tangle:');
-                                // console.log(bundleTrytes);
-                                const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes)
+                                const reversed = bundleTrytes.reverse()
+
+                                // console.log("rev", reversed);
+                                const offLedgerHexRequest = createOffLedgerRequest(reversed)
                                 // console.log("offLedgerHexRequest", offLedgerHexRequest)
+                                fetchOffLedgerRequest(offLedgerHexRequest)
                             })
                             .catch((error) => {
                                 // console.log(`Something went wrong: ${error}`);

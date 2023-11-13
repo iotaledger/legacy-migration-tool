@@ -832,18 +832,9 @@ export const createMigrationBundle = (
     // })
 }
 
-async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
+export async function fetchOffLedgerRequest(request: string): Promise<void> {
     const _activeProfile = get(activeProfile)
     const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
-
-    const chainIdEncoded = new TextEncoder().encode(chainId)
-    const contractNameEncoded = new TextEncoder().encode('legacymigration')
-    const functionEncoded = new TextEncoder().encode('migrate')
-    const bundleLengthEncoded = new TextEncoder().encode(finalBundle.length.toString())
-    const bundleHash = ''
-
-    // TODO: convert in hexadecimal
-    const request = '0x' + chainIdEncoded + contractNameEncoded + functionEncoded + bundleLengthEncoded + bundleHash
 
     const body = {
         request: request,
@@ -868,9 +859,7 @@ async function fetchOffledgerRequest(finalBundle: string[]): Promise<void> {
     try {
         const response = await fetch(endpoint, requestOptions)
         const result = await response.json()
-        // console.log("result", result)
-        // const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
-        // balance = decodeUint64(binaryBalance)
+        return result
     } catch (error) {
         console.error('error', error)
     }
