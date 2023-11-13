@@ -250,7 +250,7 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
     }
 
     // Convert reqBuffer to hexadecimal string
-    return `${reqBuffer.toString('hex')}`
+    return `0x${reqBuffer.toString('hex')}`
 }
 
 function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {

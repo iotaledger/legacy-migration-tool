@@ -9,6 +9,7 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        createMinedLedgerMigrationBundle,
         createOffLedgerRequest,
         createUnsignedBundle,
         getInputIndexesForBundle,
@@ -32,6 +33,7 @@
     import { api, selectedAccountIdStore, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
+    import { createPrepareTransfers } from '@iota/core'
 
     export let locale: Locale
 
@@ -115,26 +117,43 @@
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
                 const { accounts } = get(wallet)
+                const { seed } = get(migration)
+
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        // console.log("migration address success", response.payload)
-                        const unsignedBundle = createUnsignedBundle(
-                            removeAddressChecksum((response.payload as unknown as MigrationAddress).trytes),
-                            $bundles[0].inputs.map((input) => input.address),
-                            $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                            Math.floor(Date.now() / 1000),
-                            ADDRESS_SECURITY_LEVEL
-                        )
+                        const prepareTransfers = createPrepareTransfers()
+                        const transfers = [
+                            {
+                                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                                address: removeAddressChecksum(
+                                    (response.payload as unknown as MigrationAddress).trytes
+                                ),
+                            },
+                        ]
 
-                        // console.log("unsignedBundle", unsignedBundle)
-
-                        const offLedgerHexRequest = createOffLedgerRequest(unsignedBundle)
-                        // console.log("offLedgerHexRequest", unsignedBundle)
+                        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
+                                address: input.address,
+                                keyIndex: input.index,
+                                security: input.securityLevel,
+                                balance: input.balance,
+                            }))
+                        prepareTransfers(get(seed), transfers, {
+                            inputs: inputsForTransfer,
+                        })
+                            .then((bundleTrytes) => {
+                                // console.log('Bundle trytes are ready to be attached to the Tangle:');
+                                // console.log(bundleTrytes);
+                                const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes)
+                                // console.log("offLedgerHexRequest", offLedgerHexRequest)
+                            })
+                            .catch((error) => {
+                                // console.log(`Something went wrong: ${error}`);
+                            })
 
                         // todo sendMigrationBundleData
                     },
                     onError(error) {
-                        // console.log("migration address errir", error)
+                        // console.log("migration address error", error)
                     },
                 })
 
