@@ -30,6 +30,7 @@ import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@
 import { generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
+import { blake2b } from 'blakejs';
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -248,6 +249,12 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
         reqBuffer.writeUInt8(0, position)
         position++
     }
+
+    const hash = blake2b(reqBuffer, undefined, 32);
+    const extendedHash = Buffer.concat([hash, Buffer.alloc(2)]);
+    const id = `0x${extendedHash.toString('hex')}`
+    console.log("id", id);
+    
 
     // Convert reqBuffer to hexadecimal string
     return `0x${reqBuffer.toString('hex')}`
