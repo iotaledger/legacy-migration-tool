@@ -30,7 +30,7 @@ import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@
 import { generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
-import { blake2b } from 'blakejs';
+import { blake2b } from 'blakejs'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -156,7 +156,7 @@ export const createUnsignedBundle = (
     return bundleTrytes
 }
 
-export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
+export const createOffLedgerRequest = (bundleTrytes: string[]): { request: string; requestId: string } => {
     const OFF_LEDGER_REQUEST_TYPE = 1
 
     // Chain ID as a hexadecimal string
@@ -194,7 +194,7 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
         8 + // nonce
         1 + // gasbudget
         1 + // allowance
-        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+        26 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
 
     // Allocate the request buffer with the calculated length
     const reqBuffer: Buffer = Buffer.alloc(totalLength)
@@ -245,19 +245,19 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
     position++
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
-    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
+    // Todo: check why 26 and not 33 as descripbed in Jorges example? Are the nonce, gas and allowance zeros needed?
+    for (let i = 0; i < 26 && position < reqBuffer.length; i++) {
         reqBuffer.writeUInt8(0, position)
         position++
     }
 
-    const hash = blake2b(reqBuffer, undefined, 32);
-    const extendedHash = Buffer.concat([hash, Buffer.alloc(2)]);
-    const id = `0x${extendedHash.toString('hex')}`
-    console.log("id", id);
-    
+    const request = `0x${reqBuffer.toString('hex')}`
 
-    // Convert reqBuffer to hexadecimal string
-    return `0x${reqBuffer.toString('hex')}`
+    const hash = blake2b(reqBuffer, undefined, 32)
+    const extendedHash = Buffer.concat([hash, Buffer.alloc(2)])
+    const requestId = `0x${extendedHash.toString('hex')}`
+
+    return { request, requestId }
 }
 
 function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {

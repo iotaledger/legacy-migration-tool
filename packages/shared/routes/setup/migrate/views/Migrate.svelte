@@ -145,16 +145,13 @@
                                 // console.log('Bundle trytes are ready to be attached to the Tangle:');
                                 const reversed = bundleTrytes.reverse()
 
-                                // console.log("rev", reversed);
                                 const offLedgerHexRequest = createOffLedgerRequest(reversed)
                                 // console.log("offLedgerHexRequest", offLedgerHexRequest)
-                                fetchOffLedgerRequest(offLedgerHexRequest)
+                                fetchOffLedgerRequest(offLedgerHexRequest.request)
                             })
                             .catch((error) => {
                                 // console.log(`Something went wrong: ${error}`);
                             })
-
-                        // todo sendMigrationBundleData
                     },
                     onError(error) {
                         // console.log("migration address error", error)
