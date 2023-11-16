@@ -162,33 +162,22 @@ export const createUnsignedBundle = (
  * @param {string} migrationSeed
  * @param {number} initialAddressIndex
  *
- * @returns {Promise<void}
+ * @returns {Promise<void>}
  */
-export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
+export async function getMigrationData(migrationSeed: string, initialAddressIndex = 0): Promise<void> {
     const FIXED_ADDRESSES_GENERATED = 10
-    let totalBalance = 0
-    const inputs: Input[] = []
 
-    for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
-        const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-        const binaryAddress = '0x' + convertToHex(legacyAddress)
-        const balance = await fetchMigratableBalance(binaryAddress)
-
-        totalBalance += balance
-        if (balance > 0) {
-            inputs.push({
-                address: legacyAddress,
-                balance,
-                spent: false,
-                index,
-                securityLevel: ADDRESS_SECURITY_LEVEL,
-                spentBundleHashes: [],
-            })
-        }
-    }
+    const legacyAddresses = generateLegacyAddresses(
+        migrationSeed,
+        FIXED_ADDRESSES_GENERATED,
+        initialAddressIndex,
+        ADDRESS_SECURITY_LEVEL
+    )
+    const inputs: Input[] = await fetchMigratableBalance(legacyAddresses)
+    const totalBalance = inputs.reduce((acc, input) => acc + input.balance, 0)
 
     const migrationData: MigrationData = {
-        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        lastCheckedAddressIndex: initialAddressIndex + FIXED_ADDRESSES_GENERATED,
         balance: totalBalance,
         inputs: inputs,
         spentAddresses: false,
@@ -216,28 +205,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 }
 
-async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
-    const body = {
-        functionName: 'getMigratableBalance',
-        contractName: 'legacymigration',
-        arguments: {
-            Items: [
-                {
-                    value: binaryAddress,
-                    key: '0x61', // convertToHex("a")
-                },
-            ],
-        },
-    }
-    const requestOptions: RequestInit = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
-        },
-        body: JSON.stringify(body),
-    }
-
+async function fetchMigratableBalance(addresses: string[]): Promise<Input[]> {
     const _activeProfile = get(activeProfile)
     let endpoint: string = ''
     if (_activeProfile.isDeveloperProfile) {
@@ -245,17 +213,72 @@ async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
     } else {
         endpoint = `${PRODUCTION_BASE_URL}/v1/chains/${PRODUCTION_CHAIN_ID}/callview`
     }
+    const inputs: Input[] = []
 
-    let balance = 0
-    try {
-        const response = await fetch(endpoint, requestOptions)
-        const migrationData: { Items: { key: string; value: string }[] } = await response.json()
-        const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
-        balance = decodeUint64(binaryBalance)
-    } catch (error) {
-        console.error('error', error)
+    await Promise.all(
+        addresses.map(async (address: string, index: number) => {
+            const body = {
+                functionName: 'getMigratableBalance',
+                contractName: 'legacymigration',
+                arguments: {
+                    Items: [
+                        {
+                            value: `0x${convertToHex(address)}`,
+                            key: '0x61', // convertToHex("a")
+                        },
+                    ],
+                },
+            }
+            const requestOptions: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: 'application/json',
+                },
+                body: JSON.stringify(body),
+            }
+
+            try {
+                const response = await fetch(endpoint, requestOptions)
+                const migrationData: { Items: { key: string; value: string }[] } = await response.json()
+
+                const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
+                const balance = decodeUint64(binaryBalance)
+
+                if (balance > 0) {
+                    inputs.push({
+                        address,
+                        balance,
+                        spent: false,
+                        index,
+                        securityLevel: ADDRESS_SECURITY_LEVEL,
+                        spentBundleHashes: [],
+                    })
+                }
+            } catch (err) {
+                console.error(err.name === 'AbortError' ? new Error(`Could not fetch from ${endpoint}.`) : err)
+            }
+        })
+    )
+
+    return inputs
+}
+
+export const generateLegacyAddresses = (
+    seed: string,
+    numberOfAddresses: number,
+    startIndex: number = 0,
+    security: number = 2,
+    checksum: boolean = false
+): string[] => {
+    const addresses: string[] = []
+
+    for (let i = startIndex; i < startIndex + numberOfAddresses; i++) {
+        const address = generateAddress(seed, i, security, checksum)
+        addresses.push(address)
     }
-    return balance
+
+    return addresses
 }
 
 /**
