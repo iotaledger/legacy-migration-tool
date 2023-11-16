@@ -26,7 +26,7 @@ import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
-import { convertToHex, getJsonRequestOptions } from '@lib/utils'
+import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
@@ -54,6 +54,12 @@ const HARDWARE_MAX_INPUTS_PER_BUNDLE = 3
 const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
+
+const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+// TODO: Update these constants with the real production values
+const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
@@ -110,11 +116,6 @@ export const hardwareIndexes = writable<HardwareIndexes>({
 
 export const migrationLog = writable<MigrationLog[]>([])
 
-/*
- * ongoingSnapshot
- */
-export const ongoingSnapshot = writable<boolean>(false)
-
 export const createUnsignedBundle = (
     outputAddress: string,
     inputAddresses: string[],
@@ -163,56 +164,99 @@ export const createUnsignedBundle = (
  *
  * @returns {Promise<void}
  */
-export const getMigrationData = (migrationSeed: string, initialAddressIndex = 0): Promise<void> =>
-    /* eslint-disable @typescript-eslint/no-misused-promises */
-    new Promise((resolve, reject) => {
-        if (get(ongoingSnapshot) === true) {
-            reject({ snapshot: true })
-            openSnapshotPopup()
+export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
+    const FIXED_ADDRESSES_GENERATED = 10
+    let totalBalance = 0
+    const inputs: Input[] = []
+
+    for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
+        const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
+        const binaryAddress = '0x' + convertToHex(legacyAddress)
+        const balance = await fetchMigratableBalance(binaryAddress)
+
+        totalBalance += balance
+        if (balance > 0) {
+            inputs.push({
+                address: legacyAddress,
+                balance,
+                spent: false,
+                index,
+                securityLevel: ADDRESS_SECURITY_LEVEL,
+                spentBundleHashes: [],
+            })
+        }
+    }
+
+    const migrationData: MigrationData = {
+        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        balance: totalBalance,
+        inputs: inputs,
+        spentAddresses: false,
+    }
+
+    const { seed, data } = get(migration)
+
+    try {
+        if (initialAddressIndex === 0) {
+            seed.set(migrationSeed)
+            data.set(migrationData)
         } else {
-            // Generate address using iotajs
-            const legacyAddresses: string[] = []
-            const binaryAddresses: string[] = []
-            for (let index = 0; index < 10; index++) {
-                const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-                legacyAddresses.push(legacyAddress)
-                binaryAddresses.push('0x' + convertToHex(legacyAddress))
-            }
-
-            api.getMigrationData(
-                migrationSeed,
-                MIGRATION_NODES,
-                ADDRESS_SECURITY_LEVEL,
-                initialAddressIndex,
-                PERMANODE,
-                {
-                    onSuccess(response) {
-                        const { seed, data } = get(migration)
-
-                        if (initialAddressIndex === 0) {
-                            seed.set(migrationSeed)
-                            data.set(response.payload)
-                        } else {
-                            data.update((_existingData) =>
-                                Object.assign({}, _existingData, {
-                                    balance: _existingData.balance + response.payload.balance,
-                                    inputs: [..._existingData.inputs, ...response.payload.inputs],
-                                    lastCheckedAddressIndex: response.payload.lastCheckedAddressIndex,
-                                })
-                            )
-                        }
-
-                        prepareBundles()
-
-                        resolve()
-                    },
-                    onError(error) {
-                        reject(error)
-                    },
-                }
+            data.update((_existingData) =>
+                Object.assign({}, _existingData, {
+                    balance: _existingData.balance + migrationData.balance,
+                    inputs: [..._existingData.inputs, ...migrationData.inputs],
+                    lastCheckedAddressIndex: migrationData.lastCheckedAddressIndex,
+                })
             )
         }
-    })
+
+        prepareBundles()
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
+    const body = {
+        functionName: 'getMigratableBalance',
+        contractName: 'legacymigration',
+        arguments: {
+            Items: [
+                {
+                    value: binaryAddress,
+                    key: '0x61', // convertToHex("a")
+                },
+            ],
+        },
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
+        body: JSON.stringify(body),
+    }
+
+    const _activeProfile = get(activeProfile)
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/v1/chains/${DEVELOP_CHAIN_ID}/callview`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/v1/chains/${PRODUCTION_CHAIN_ID}/callview`
+    }
+
+    let balance = 0
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        const migrationData: { Items: { key: string; value: string }[] } = await response.json()
+        const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
+        balance = decodeUint64(binaryBalance)
+    } catch (error) {
+        console.error('error', error)
+    }
+    return balance
+}
 
 /**
  * Prepares migration log
@@ -612,21 +656,16 @@ export const createMigrationBundle = (
 export const sendMigrationBundle = (bundleHash: string, mwm = MINIMUM_WEIGHT_MAGNITUDE): Promise<void> =>
     new Promise((resolve, reject) => {
         /* eslint-disable @typescript-eslint/no-misused-promises */
-        if (get(ongoingSnapshot) === true) {
-            reject({ snapshot: true })
-            openSnapshotPopup()
-        } else {
-            api.sendMigrationBundle(MIGRATION_NODES, bundleHash, mwm, {
-                onSuccess(response) {
-                    _sendMigrationBundle(bundleHash, response.payload)
+        api.sendMigrationBundle(MIGRATION_NODES, bundleHash, mwm, {
+            onSuccess(response) {
+                _sendMigrationBundle(bundleHash, response.payload)
 
-                    resolve()
-                },
-                onError(error) {
-                    reject(error)
-                },
-            })
-        }
+                resolve()
+            },
+            onError(error) {
+                reject(error)
+            },
+        })
     })
 
 const _sendMigrationBundle = (hash: string, data: SendMigrationBundleResponse): void => {
@@ -1218,12 +1257,7 @@ export async function checkChrysalisSnapshot(): Promise<void> {
             payload: jsonResponse,
         })
         if (isValid) {
-            const _ongoingSnapshot = jsonResponse.snapshot
-            if (get(ongoingSnapshot) === true && _ongoingSnapshot === false) {
-                // snapshot finished
-                closePopup()
-            }
-            ongoingSnapshot.set(_ongoingSnapshot)
+            closePopup()
         } else {
             throw new Error(payload.error)
         }
