@@ -146,15 +146,20 @@
                                 const reversed = bundleTrytes.reverse()
 
                                 const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                // console.log("offLedgerHexRequest", offLedgerHexRequest)
+                                // console.log("offLedgerHexRequest request", offLedgerHexRequest.request)
+                                // console.log("requestId", offLedgerHexRequest.requestId)
                                 fetchOffLedgerRequest(offLedgerHexRequest.request)
+                                .then(() => {
+                                    console.log("Perfect! requestId --> ", offLedgerHexRequest.requestId)
+                                })
+                                .catch((err) => {showAppNotification({type: 'error', message: err})})
                             })
                             .catch((error) => {
                                 // console.log(`Something went wrong: ${error}`);
                             })
                     },
                     onError(error) {
-                        // console.log("migration address error", error)
+                        console.log("migration address error", error)
                     },
                 })
 

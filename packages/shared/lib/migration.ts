@@ -847,13 +847,20 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
         request: request,
         chainId: chainId,
     }
+
+    // TODO: I think the cache is not working, because it always returns a successful response with a status of 202
+    // and in the second request with the same bundle hash, it should give a response with an error 400
+    // and the following message -> { "Message": "Failed to execute contract request", "Error": "request already processed" }
     const requestOptions: RequestInit = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
         },
         body: JSON.stringify(body),
+        cache: 'no-store'
     }
 
     let endpoint: string = ''
@@ -863,12 +870,11 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
         endpoint = `${PRODUCTION_BASE_URL}/v1/requests/offledger`
     }
 
-    try {
-        const response = await fetch(endpoint, requestOptions)
-        const result = await response.json()
-        return result
-    } catch (error) {
-        console.error('error', error)
+    const response = await fetch(endpoint, requestOptions)
+
+    // TODO: Improve handle error
+    if (response.status === 400) {
+        throw new Error('Bad request')
     }
     return
 }
