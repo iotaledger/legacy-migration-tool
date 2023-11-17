@@ -13,6 +13,7 @@
         createOffLedgerRequest,
         createUnsignedBundle,
         fetchOffLedgerRequest,
+        fetchReceiptForRequest,
         getInputIndexesForBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
@@ -123,12 +124,13 @@
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
                         const prepareTransfers = createPrepareTransfers()
+                        const addressTrytes = removeAddressChecksum(
+                            (response.payload as unknown as MigrationAddress).trytes
+                        )
                         const transfers = [
                             {
                                 value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                                address: removeAddressChecksum(
-                                    (response.payload as unknown as MigrationAddress).trytes
-                                ),
+                                address: addressTrytes,
                             },
                         ]
 
@@ -146,20 +148,22 @@
                                 const reversed = bundleTrytes.reverse()
 
                                 const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                // console.log("offLedgerHexRequest request", offLedgerHexRequest.request)
-                                // console.log("requestId", offLedgerHexRequest.requestId)
+                                // console.log("requestId", offLedgerHexRequest)
                                 fetchOffLedgerRequest(offLedgerHexRequest.request)
-                                .then(() => {
-                                    console.log("Perfect! requestId --> ", offLedgerHexRequest.requestId)
-                                })
-                                .catch((err) => {showAppNotification({type: 'error', message: err})})
+                                    .then(() => {
+                                        // console.log("Perfect! requestId --> ", offLedgerHexRequest.requestId)
+                                        fetchReceiptForRequest(offLedgerHexRequest.requestId)
+                                    })
+                                    .catch((err) => {
+                                        showAppNotification({ type: 'error', message: err })
+                                    })
                             })
                             .catch((error) => {
                                 // console.log(`Something went wrong: ${error}`);
                             })
                     },
                     onError(error) {
-                        console.log("migration address error", error)
+                        console.error('migration address error', error)
                     },
                 })
 

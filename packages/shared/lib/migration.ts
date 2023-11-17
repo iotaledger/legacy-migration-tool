@@ -58,10 +58,12 @@ const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
 
-const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+// const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+const DEVELOP_BASE_URL = 'http://localhost:9090'
 const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 // TODO: Update these constants with the real production values
-const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+// const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+const DEVELOP_CHAIN_ID = 'tst1prm8pfskxva90k2ulcje5cgs3u5t767ax8n2e5gyzzzrwh44c60xvudas84'
 const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
@@ -307,7 +309,7 @@ function iscVluEncode(value: number): Buffer {
  * @returns {Promise<void}
  */
 export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
-    const FIXED_ADDRESSES_GENERATED = 10
+    const FIXED_ADDRESSES_GENERATED = 1
     let totalBalance = 0
     const inputs: Input[] = []
 
@@ -339,7 +341,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     const { seed, data } = get(migration)
 
     try {
-        if (initialAddressIndex === 0) {
+        if (initialAddressIndex === 0 || initialAddressIndex === 48) {
             seed.set(migrationSeed)
             data.set(migrationData)
         } else {
@@ -770,8 +772,6 @@ export const createMigrationBundle = (
     offset: number,
     mine: boolean
 ): Promise<MigrationBundle> => {
-    // const { bundles } = get(migration)
-    // const _bundles = get(bundles)
     const { seed } = get(migration)
 
     return new Promise((resolve, reject) => {
@@ -785,63 +785,13 @@ export const createMigrationBundle = (
             },
         })
     })
-    // return new Promise((resolve, reject) => {
-    //     return new Promise((resolve, reject) => {
-    //         api.getAccounts({
-    //             onSuccess(getAccountsResponse) {
-    //                 api.getMigrationAddress(
-    //                     false,
-    //                     getAccountsResponse.payload[get(activeProfile)?.ledgerMigrationCount]?.id,
-    //                     {
-    //                         onSuccess(response) {
-    //                             resolve(response.payload)
-    //                         },
-    //                         onError(error) {
-    //                             reject(error)
-    //                         },
-    //                     }
-    //                 )
-    //             },
-    //             onError(getAccountsError) {
-    //                 reject(getAccountsError)
-    //             },
-    //         })
-    //     })
-    //     .then(async (address: MigrationAddress) => {
-    //         // console.log('address', address)
-    //         // const _address = convertBech32AddressToEd25519Address(address.bech32)
-    //         // console.log('_address', _address)
-    //         // const _chainidaddress = convertBech32AddressToEd25519Address(
-    //         //     'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-    //         // )
-
-    //         const unsignedBundle = createUnsignedBundle(
-    //             removeAddressChecksum(address.trytes),
-    //             _bundles[0].inputs.map((input) => input.address),
-    //             _bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-    //             Math.floor(Date.now() / 1000),
-    //             ADDRESS_SECURITY_LEVEL
-    //         )
-    //         // console.log('unsignedBundle', unsignedBundle)
-
-    //         const response: MigrationBundle = {
-    //             bundleHash: '',
-    //             crackability: 0,
-    //             trytes: [],
-    //         }
-
-    //         await fetchOffledgerRequest(unsignedBundle)
-
-    //         // assignBundleHash(inputAddressIndexes, response, mine)
-    //         resolve(response)
-    //     })
-    //     .catch((err) => reject(err))
-    // })
 }
 
 export async function fetchOffLedgerRequest(request: string): Promise<void> {
     const _activeProfile = get(activeProfile)
     const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    const baseUrl = _activeProfile.isDeveloperProfile ? DEVELOP_BASE_URL : PRODUCTION_BASE_URL
+    const endpoint = `${baseUrl}/v1/requests/offledger`
 
     const body = {
         request: request,
@@ -857,17 +807,10 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
             'Content-Type': 'application/json',
             accept: 'application/json',
             'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
+            Pragma: 'no-cache',
         },
         body: JSON.stringify(body),
-        cache: 'no-store'
-    }
-
-    let endpoint: string = ''
-    if (_activeProfile.isDeveloperProfile) {
-        endpoint = `${DEVELOP_BASE_URL}/v1/requests/offledger`
-    } else {
-        endpoint = `${PRODUCTION_BASE_URL}/v1/requests/offledger`
+        cache: 'no-store',
     }
 
     const response = await fetch(endpoint, requestOptions)
@@ -876,6 +819,47 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
     if (response.status === 400) {
         throw new Error('Bad request')
     }
+    return
+}
+
+export async function fetchReceiptForRequest(requestId: string): Promise<any> {
+    const _activeProfile = get(activeProfile)
+    const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    const baseUrl = _activeProfile.isDeveloperProfile ? DEVELOP_BASE_URL : PRODUCTION_BASE_URL
+    let endpoint: string = `${baseUrl}/v1/chains/${chainId}/requests/${requestId}/wait?`
+
+    const queryParams = {
+        timeoutSeconds: 5,
+        waitForL1Confirmation: true,
+    }
+
+    const queryString = Object.keys(queryParams)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(queryParams[key])}`)
+        .join('&')
+
+    endpoint += queryString
+
+    const requestOptions: RequestInit = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
+    }
+
+    try {
+        const response = await fetch(endpoint, requestOptions)
+
+        if (response.status === 400) {
+            throw new Error('Bad request')
+        }
+        const receipt = await response.json()
+
+        return receipt
+    } catch (error) {
+        console.error(error)
+    }
+
     return
 }
 
