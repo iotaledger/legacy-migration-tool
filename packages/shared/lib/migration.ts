@@ -58,12 +58,10 @@ const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
 
-// const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
-const DEVELOP_BASE_URL = 'http://localhost:9090'
+const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 // TODO: Update these constants with the real production values
-// const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-const DEVELOP_CHAIN_ID = 'tst1prm8pfskxva90k2ulcje5cgs3u5t767ax8n2e5gyzzzrwh44c60xvudas84'
+const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
 const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
@@ -193,10 +191,10 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): { request: strin
         1 + // 'b'
         vluBundleLength.length + // VLU-encoded bundle length
         bundleBytes.length + // Total length of bundleByte
-        8 + // nonce
+        1 + // nonce
         1 + // gasbudget
         1 + // allowance
-        26 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
 
     // Allocate the request buffer with the calculated length
     const reqBuffer: Buffer = Buffer.alloc(totalLength)
@@ -235,10 +233,8 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): { request: strin
     bundleBytes.copy(reqBuffer, position)
     position += bundleBytes.length
 
-    // Append 0_u64 (nonce) as little-endian bytes
-    const zeroNonce = Buffer.alloc(8, 0x00, 'hex')
-    zeroNonce.copy(reqBuffer, position)
-    position += zeroNonce.length
+    reqBuffer.writeUInt8(0, position) // nonce
+    position++
 
     reqBuffer.writeUInt8(0, position) // gasbudget
     position++
@@ -247,8 +243,7 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): { request: strin
     position++
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
-    // Todo: check why 26 and not 33 as descripbed in Jorges example? Are the nonce, gas and allowance zeros needed?
-    for (let i = 0; i < 26 && position < reqBuffer.length; i++) {
+    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
         reqBuffer.writeUInt8(0, position)
         position++
     }
