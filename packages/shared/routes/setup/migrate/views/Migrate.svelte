@@ -76,6 +76,41 @@
         })
     })
 
+    const sendMigrationRequest = async (migrationAddress: MigrationAddress) => {
+        const { seed } = get(migration)
+        const prepareTransfers = createPrepareTransfers()
+
+        const transfers = [
+            {
+                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                address: removeAddressChecksum(migrationAddress.trytes),
+            },
+        ]
+
+        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
+            address: input.address,
+            keyIndex: input.index,
+            security: input.securityLevel,
+            balance: input.balance,
+        }))
+
+        try {
+            const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+                inputs: inputsForTransfer,
+            })
+
+            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes)
+
+            await fetchOffLedgerRequest(offLedgerHexRequest.request)
+
+            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+            loading = false
+        } catch (err) {
+            loading = false
+            showAppNotification({ type: 'error', message: err })
+        }
+    }
+
     function handleContinueClick() {
         if ($hasSingleBundle && !$hasBundlesWithSpentAddresses) {
             loading = true
@@ -119,48 +154,10 @@
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
                 const { accounts } = get(wallet)
-                const { seed } = get(migration)
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        const prepareTransfers = createPrepareTransfers()
-                        const addressTrytes = removeAddressChecksum(
-                            (response.payload as unknown as MigrationAddress).trytes
-                        )
-                        const transfers = [
-                            {
-                                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                                address: addressTrytes,
-                            },
-                        ]
-
-                        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
-                            address: input.address,
-                            keyIndex: input.index,
-                            security: input.securityLevel,
-                            balance: input.balance,
-                        }))
-                        prepareTransfers(get(seed), transfers, {
-                            inputs: inputsForTransfer,
-                        })
-                            .then((bundleTrytes: string[]) => {
-                                const reversed = bundleTrytes.reverse()
-
-                                const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                fetchOffLedgerRequest(offLedgerHexRequest.request)
-                                    .then(() => {
-                                        loading = false
-                                        fetchReceiptForRequest(offLedgerHexRequest.requestId)
-                                    })
-                                    .catch((err) => {
-                                        loading = false
-                                        showAppNotification({ type: 'error', message: err })
-                                    })
-                            })
-                            .catch((error) => {
-                                loading = false
-                                console.error(`Something went wrong: ${error}`)
-                            })
+                        sendMigrationRequest(response.payload as unknown as MigrationAddress)
                     },
                     onError(error) {
                         loading = false
