@@ -5,13 +5,9 @@
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
         ADDRESS_SECURITY_LEVEL,
-        MINING_TIMEOUT_SECONDS,
         confirmedBundles,
         createLedgerMigrationBundle,
-        createMigrationBundle,
-        createMinedLedgerMigrationBundle,
         createOffLedgerRequest,
-        createUnsignedBundle,
         fetchOffLedgerRequest,
         fetchReceiptForRequest,
         getInputIndexesForBundle,
@@ -21,18 +17,17 @@
         migration,
         removeAddressChecksum,
         sendLedgerMigrationBundle,
-        sendMigrationBundle,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
-    import { activeProfile, newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { createEventDispatcher, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { api, selectedAccountIdStore, walletSetupType, wallet } from 'shared/lib/wallet'
+    import { api, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
@@ -104,10 +99,10 @@
             await fetchOffLedgerRequest(offLedgerHexRequest.request)
 
             await fetchReceiptForRequest(offLedgerHexRequest.requestId)
-            loading = false
         } catch (err) {
+            showAppNotification({ type: 'error', message: err || 'Error to prepare transfers' })
+        } finally {
             loading = false
-            showAppNotification({ type: 'error', message: err })
         }
     }
 
@@ -161,7 +156,10 @@
                     },
                     onError(error) {
                         loading = false
-                        console.error('migration address error', error)
+                        showAppNotification({
+                            type: 'error',
+                            message: error.error || 'Error to getMigrationAddress',
+                        })
                     },
                 })
             }
