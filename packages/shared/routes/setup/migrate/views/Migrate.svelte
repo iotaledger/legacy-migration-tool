@@ -144,50 +144,29 @@
                             inputs: inputsForTransfer,
                         })
                             .then((bundleTrytes: string[]) => {
-                                // console.log('Bundle trytes are ready to be attached to the Tangle:');
                                 const reversed = bundleTrytes.reverse()
 
                                 const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                // console.log("requestId", offLedgerHexRequest)
                                 fetchOffLedgerRequest(offLedgerHexRequest.request)
                                     .then(() => {
-                                        // console.log("Perfect! requestId --> ", offLedgerHexRequest.requestId)
+                                        loading = false
                                         fetchReceiptForRequest(offLedgerHexRequest.requestId)
                                     })
                                     .catch((err) => {
+                                        loading = false
                                         showAppNotification({ type: 'error', message: err })
                                     })
                             })
                             .catch((error) => {
-                                // console.log(`Something went wrong: ${error}`);
+                                loading = false
+                                console.error(`Something went wrong: ${error}`)
                             })
                     },
                     onError(error) {
+                        loading = false
                         console.error('migration address error', error)
                     },
                 })
-
-                loading = false
-                // createMigrationBundle(getInputIndexesForBundle($bundles[0]), 0, false)
-                //     .then((data) => {
-                //         singleMigrationBundleHash = data.bundleHash
-                //         return sendMigrationBundle(data.bundleHash).then(() => {
-                //             // Save profile
-                //             saveProfile($newProfile)
-                //             setActiveProfile($newProfile.id)
-
-                //             newProfile.set(null)
-                //         })
-                //     })
-                //     .catch((err) => {
-                //         loading = false
-                //         if (!err?.snapshot) {
-                //             showAppNotification({
-                //                 type: 'error',
-                //                 message: locale('views.migrate.error'),
-                //             })
-                //         }
-                //     })
             }
         } else {
             loading = true
