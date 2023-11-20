@@ -763,8 +763,6 @@ export const createMigrationBundle = (
     offset: number,
     mine: boolean
 ): Promise<MigrationBundle> => {
-    // const { bundles } = get(migration)
-    // const _bundles = get(bundles)
     const { seed } = get(migration)
 
     return new Promise((resolve, reject) => {
@@ -778,58 +776,6 @@ export const createMigrationBundle = (
             },
         })
     })
-    // return new Promise((resolve, reject) => {
-    //     return new Promise((resolve, reject) => {
-    //         api.getAccounts({
-    //             onSuccess(getAccountsResponse) {
-    //                 api.getMigrationAddress(
-    //                     false,
-    //                     getAccountsResponse.payload[get(activeProfile)?.ledgerMigrationCount]?.id,
-    //                     {
-    //                         onSuccess(response) {
-    //                             resolve(response.payload)
-    //                         },
-    //                         onError(error) {
-    //                             reject(error)
-    //                         },
-    //                     }
-    //                 )
-    //             },
-    //             onError(getAccountsError) {
-    //                 reject(getAccountsError)
-    //             },
-    //         })
-    //     })
-    //     .then(async (address: MigrationAddress) => {
-    //         // console.log('address', address)
-    //         // const _address = convertBech32AddressToEd25519Address(address.bech32)
-    //         // console.log('_address', _address)
-    //         // const _chainidaddress = convertBech32AddressToEd25519Address(
-    //         //     'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-    //         // )
-
-    //         const unsignedBundle = createUnsignedBundle(
-    //             removeAddressChecksum(address.trytes),
-    //             _bundles[0].inputs.map((input) => input.address),
-    //             _bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-    //             Math.floor(Date.now() / 1000),
-    //             ADDRESS_SECURITY_LEVEL
-    //         )
-    //         // console.log('unsignedBundle', unsignedBundle)
-
-    //         const response: MigrationBundle = {
-    //             bundleHash: '',
-    //             crackability: 0,
-    //             trytes: [],
-    //         }
-
-    //         await fetchOffledgerRequest(unsignedBundle)
-
-    //         // assignBundleHash(inputAddressIndexes, response, mine)
-    //         resolve(response)
-    //     })
-    //     .catch((err) => reject(err))
-    // })
 }
 
 export async function fetchOffLedgerRequest(request: string): Promise<void> {

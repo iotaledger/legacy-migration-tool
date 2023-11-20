@@ -5,33 +5,27 @@
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
         ADDRESS_SECURITY_LEVEL,
-        MINING_TIMEOUT_SECONDS,
         confirmedBundles,
         createLedgerMigrationBundle,
-        createMigrationBundle,
-        createMinedLedgerMigrationBundle,
         createOffLedgerRequest,
-        createUnsignedBundle,
         fetchOffLedgerRequest,
-        getInputIndexesForBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
         removeAddressChecksum,
         sendLedgerMigrationBundle,
-        sendMigrationBundle,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
-    import { activeProfile, newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { createEventDispatcher, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { api, selectedAccountIdStore, walletSetupType, wallet } from 'shared/lib/wallet'
+    import { api, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
@@ -142,46 +136,26 @@
                             inputs: inputsForTransfer,
                         })
                             .then((bundleTrytes: string[]) => {
-                                // console.log('Bundle trytes are ready to be attached to the Tangle:');
                                 const reversed = bundleTrytes.reverse()
-
-                                // console.log("rev", reversed);
                                 const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                // console.log("offLedgerHexRequest", offLedgerHexRequest)
                                 fetchOffLedgerRequest(offLedgerHexRequest)
                             })
                             .catch((error) => {
-                                // console.log(`Something went wrong: ${error}`);
+                                showAppNotification({
+                                    type: 'error',
+                                    message: error || 'Error to prepare transfers',
+                                })
                             })
-
-                        // todo sendMigrationBundleData
                     },
                     onError(error) {
-                        // console.log("migration address error", error)
+                        showAppNotification({
+                            type: 'error',
+                            message: error.error || 'Error to getMigrationAddress',
+                        })
                     },
                 })
 
                 loading = false
-                // createMigrationBundle(getInputIndexesForBundle($bundles[0]), 0, false)
-                //     .then((data) => {
-                //         singleMigrationBundleHash = data.bundleHash
-                //         return sendMigrationBundle(data.bundleHash).then(() => {
-                //             // Save profile
-                //             saveProfile($newProfile)
-                //             setActiveProfile($newProfile.id)
-
-                //             newProfile.set(null)
-                //         })
-                //     })
-                //     .catch((err) => {
-                //         loading = false
-                //         if (!err?.snapshot) {
-                //             showAppNotification({
-                //                 type: 'error',
-                //                 message: locale('views.migrate.error'),
-                //             })
-                //         }
-                //     })
             }
         } else {
             loading = true
