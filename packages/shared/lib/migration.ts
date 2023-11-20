@@ -31,6 +31,7 @@ import { generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
 import { blake2b } from 'blakejs'
+import { SimpleBufferCursor } from './simpleBufferCursor'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -158,6 +159,8 @@ export const createUnsignedBundle = (
 
 export const createOffLedgerRequest = (bundleTrytes: string[]): { request: string; requestId: string } => {
     const OFF_LEDGER_REQUEST_TYPE = 1
+    const CONTRACT_H_NAME = '69492005' // Contract Hname
+    const CONTRACT_ENTRYPOINT = '060d3f50' // Contract entrypoint
 
     // Chain ID as a hexadecimal string
     const _activeProfile = get(activeProfile)
@@ -165,92 +168,39 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): { request: strin
         _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
     )
 
-    // Contract Hname and other hexadecimal strings
-    const contractHname: string = '69492005'
-    const additionalData: string = '060d3f50'
-
-    // Convert hexadecimal strings to buffers
-    const chainIdBuffer: Buffer = Buffer.from(chainId, 'hex')
-    const contractHnameBuffer: Buffer = Buffer.from(contractHname, 'hex')
-    const additionalDataBuffer: Buffer = Buffer.from(additionalData, 'hex')
-
-    // Obtain bundle bytes using iscParamBytesFromBundle function
     const bundleBytes: Buffer = iscParamBytesFromBundle(bundleTrytes)
 
-    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
-    const vluBundleLength: Buffer = iscVluEncode(bundleBytes.length)
+    const buffer = new SimpleBufferCursor(Buffer.alloc(0))
 
-    // Calculate the total length needed for the buffer
-    const totalLength =
-        OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
-        chainIdBuffer.length +
-        contractHnameBuffer.length +
-        additionalDataBuffer.length +
-        1 + // params len
-        1 + // key len
-        1 + // 'b'
-        vluBundleLength.length + // VLU-encoded bundle length
-        bundleBytes.length + // Total length of bundleByte
-        1 + // nonce
-        1 + // gasbudget
-        1 + // allowance
-        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+    buffer.writeInt8(OFF_LEDGER_REQUEST_TYPE)
 
-    // Allocate the request buffer with the calculated length
-    const reqBuffer: Buffer = Buffer.alloc(totalLength)
+    // Write hexadecimal contract strings
+    buffer.writeBytes(Buffer.from(chainId, 'hex'))
+    buffer.writeBytes(Buffer.from(CONTRACT_H_NAME, 'hex'))
+    buffer.writeBytes(Buffer.from(CONTRACT_ENTRYPOINT, 'hex'))
 
-    // Set the initial value (requestKindOffLedgerISC) at the beginning of the buffer
-    let position: number = 0
-    reqBuffer.writeUInt8(OFF_LEDGER_REQUEST_TYPE, position) // Assuming 1 is the value
-    position++
+    // Set params len and key len
+    buffer.writeInt8(1)
+    buffer.writeInt8(1)
+    // Add the key 'b'
+    buffer.writeBytes(Buffer.from('b'))
 
-    // Copy other buffers to reqBuffer at appropriate positions without using explicit lengths
-    chainIdBuffer.copy(reqBuffer, position)
-    position += chainIdBuffer.length
+    // Write bundle bytes using iscParamBytesFromBundle function
+    buffer.writeBytes(iscVluEncode(bundleBytes.length))
+    buffer.writeBytes(bundleBytes)
 
-    contractHnameBuffer.copy(reqBuffer, position)
-    position += contractHnameBuffer.length
-
-    additionalDataBuffer.copy(reqBuffer, position)
-    position += additionalDataBuffer.length
-
-    // Set params len and key len at appropriate positions without using explicit lengths
-    reqBuffer.writeUInt8(1, position)
-    position++
-
-    reqBuffer.writeUInt8(1, position)
-    position++
-
-    // Add the key 'b' at the end of the buffer without using explicit lengths
-    reqBuffer.write('b', position)
-    position++
-
-    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
-    vluBundleLength.copy(reqBuffer, position)
-    position += vluBundleLength.length
-
-    // Append bundle bytes to reqBuffer without using explicit lengths
-    bundleBytes.copy(reqBuffer, position)
-    position += bundleBytes.length
-
-    reqBuffer.writeUInt8(0, position) // nonce
-    position++
-
-    reqBuffer.writeUInt8(0, position) // gasbudget
-    position++
-
-    reqBuffer.writeUInt8(0, position) // allowance
-    position++
+    buffer.writeInt8(0) // nonce
+    buffer.writeInt8(0) // gasbudget
+    buffer.writeInt8(0) // allowance
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
-    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
-        reqBuffer.writeUInt8(0, position)
-        position++
+    for (let i = 0; i < 33; i++) {
+        buffer.writeInt8(0)
     }
 
-    const request = `0x${reqBuffer.toString('hex')}`
+    const request = `0x${buffer.buffer.toString('hex')}`
 
-    const hash = blake2b(reqBuffer, undefined, 32)
+    const hash = blake2b(buffer.buffer, undefined, 32)
     const extendedHash = Buffer.concat([hash, Buffer.alloc(2)])
     const requestId = `0x${extendedHash.toString('hex')}`
 
