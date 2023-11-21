@@ -170,37 +170,37 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): { request: strin
 
     const bundleBytes: Buffer = iscParamBytesFromBundle(bundleTrytes)
 
-    const buffer = new SimpleBufferCursor(Buffer.alloc(0))
+    const bufferCursor = new SimpleBufferCursor(Buffer.alloc(0))
 
-    buffer.writeInt8(OFF_LEDGER_REQUEST_TYPE)
+    bufferCursor.writeInt8(OFF_LEDGER_REQUEST_TYPE)
 
     // Write hexadecimal contract strings
-    buffer.writeBytes(Buffer.from(chainId, 'hex'))
-    buffer.writeBytes(Buffer.from(CONTRACT_H_NAME, 'hex'))
-    buffer.writeBytes(Buffer.from(CONTRACT_ENTRYPOINT, 'hex'))
+    bufferCursor.writeBytes(Buffer.from(chainId, 'hex'))
+    bufferCursor.writeBytes(Buffer.from(CONTRACT_H_NAME, 'hex'))
+    bufferCursor.writeBytes(Buffer.from(CONTRACT_ENTRYPOINT, 'hex'))
 
     // Set params len and key len
-    buffer.writeInt8(1)
-    buffer.writeInt8(1)
+    bufferCursor.writeInt8(1)
+    bufferCursor.writeInt8(1)
     // Add the key 'b'
-    buffer.writeBytes(Buffer.from('b'))
+    bufferCursor.writeBytes(Buffer.from('b'))
 
     // Write bundle bytes using iscParamBytesFromBundle function
-    buffer.writeBytes(iscVluEncode(bundleBytes.length))
-    buffer.writeBytes(bundleBytes)
+    bufferCursor.writeBytes(iscVluEncode(bundleBytes.length))
+    bufferCursor.writeBytes(bundleBytes)
 
-    buffer.writeInt8(0) // nonce
-    buffer.writeInt8(0) // gasbudget
-    buffer.writeInt8(0) // allowance
+    bufferCursor.writeInt8(0) // nonce
+    bufferCursor.writeInt8(0) // gasbudget
+    bufferCursor.writeInt8(0) // allowance
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
     for (let i = 0; i < 33; i++) {
-        buffer.writeInt8(0)
+        bufferCursor.writeInt8(0)
     }
 
-    const request = `0x${buffer.buffer.toString('hex')}`
+    const request = `0x${bufferCursor.buffer.toString('hex')}`
 
-    const hash = blake2b(buffer.buffer, undefined, 32)
+    const hash = blake2b(bufferCursor.buffer, undefined, 32)
     const extendedHash = Buffer.concat([hash, Buffer.alloc(2)])
     const requestId = `0x${extendedHash.toString('hex')}`
 
