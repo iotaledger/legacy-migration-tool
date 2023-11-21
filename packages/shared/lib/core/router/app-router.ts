@@ -75,22 +75,7 @@ export class AppRouter extends Router<AppRoute> {
                 const { password } = params
                 if (password) {
                     strongholdPassword.set(password)
-                    nextRoute = AppRoute.Protect
-                }
-                break
-            }
-            case AppRoute.Protect: {
-                const { pin } = params
-                if (pin) {
-                    walletPin.set(pin)
-                    const profileType = get(activeProfile)?.type
-                    if ([SetupType.Mnemonic, SetupType.Stronghold].includes(get(walletSetupType))) {
-                        nextRoute = AppRoute.Congratulations
-                    } else if ([ProfileType.Ledger, ProfileType.LedgerSimulator].includes(profileType)) {
-                        nextRoute = AppRoute.LedgerSetup
-                    } else {
-                        nextRoute = AppRoute.Backup
-                    }
+                    nextRoute = AppRoute.Backup
                 }
                 break
             }
