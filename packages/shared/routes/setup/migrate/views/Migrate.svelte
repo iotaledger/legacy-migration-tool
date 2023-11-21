@@ -94,10 +94,8 @@
             })
 
             const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes.reverse())
-            const res = await fetchOffLedgerRequest(offLedgerHexRequest.request)
-
-            const receipt = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
-            loading = false
+            await fetchOffLedgerRequest(offLedgerHexRequest.request)
+            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
         } catch (err) {
             showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
         } finally {
