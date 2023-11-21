@@ -10,7 +10,6 @@
         createOffLedgerRequest,
         fetchOffLedgerRequest,
         fetchReceiptForRequest,
-        getInputIndexesForBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
@@ -94,13 +93,13 @@
                 inputs: inputsForTransfer,
             })
 
-            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes)
+            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes.reverse())
+            const res = await fetchOffLedgerRequest(offLedgerHexRequest.request)
 
-            await fetchOffLedgerRequest(offLedgerHexRequest.request)
-
-            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+            const receipt = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+            loading = false
         } catch (err) {
-            showAppNotification({ type: 'error', message: err || 'Error to prepare transfers' })
+            showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
         } finally {
             loading = false
         }

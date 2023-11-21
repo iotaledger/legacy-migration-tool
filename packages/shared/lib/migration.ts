@@ -743,26 +743,26 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
         chainId: chainId,
     }
 
-    // TODO: I think the cache is not working, because it always returns a successful response with a status of 202
-    // and in the second request with the same bundle hash, it should give a response with an error 400
-    // and the following message -> { "Message": "Failed to execute contract request", "Error": "request already processed" }
     const requestOptions: RequestInit = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
         },
         body: JSON.stringify(body),
-        cache: 'no-store',
     }
 
-    const response = await fetch(endpoint, requestOptions)
+    try {
+        const response = await fetch(endpoint, requestOptions)
 
-    // TODO: Improve handle error
-    if (response.status === 400) {
-        throw new Error('Bad request')
+        if (response.status === 400) {
+            return response.json().then((err) => {
+                throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
+            })
+        }
+    } catch (error) {
+        console.error(error)
+        throw new Error(error.message)
     }
     return
 }
@@ -796,16 +796,17 @@ export async function fetchReceiptForRequest(requestId: string): Promise<any> {
         const response = await fetch(endpoint, requestOptions)
 
         if (response.status === 400) {
-            throw new Error('Bad request')
+            return response.json().then((err) => {
+                throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
+            })
         }
         const receipt = await response.json()
 
         return receipt
     } catch (error) {
         console.error(error)
+        throw new Error(error.message)
     }
-
-    return
 }
 
 /**
