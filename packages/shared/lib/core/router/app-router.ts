@@ -79,6 +79,21 @@ export class AppRouter extends Router<AppRoute> {
                 }
                 break
             }
+            case AppRoute.Protect: {
+                const { pin } = params
+                if (pin) {
+                    walletPin.set(pin)
+                    const profileType = get(activeProfile)?.type
+                    if ([SetupType.Mnemonic, SetupType.Stronghold].includes(get(walletSetupType))) {
+                        nextRoute = AppRoute.Congratulations
+                    } else if ([ProfileType.Ledger, ProfileType.LedgerSimulator].includes(profileType)) {
+                        nextRoute = AppRoute.LedgerSetup
+                    } else {
+                        nextRoute = AppRoute.Backup
+                    }
+                }
+                break
+            }
             case AppRoute.Backup:
                 if (get(walletSetupType) === SetupType.Seed || get(walletSetupType) === SetupType.Seedvault) {
                     nextRoute = AppRoute.Migrate
@@ -91,7 +106,7 @@ export class AppRouter extends Router<AppRoute> {
                 walletSetupType.set(importType as unknown as SetupType)
                 nextRoute = AppRoute.Congratulations
                 if ([ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)) {
-                    nextRoute = AppRoute.Protect
+                    nextRoute = AppRoute.LedgerSetup
                 } else if (importType === ImportType.Seed || importType === ImportType.SeedVault) {
                     nextRoute = AppRoute.Balance
                 }
