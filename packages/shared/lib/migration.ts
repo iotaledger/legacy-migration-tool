@@ -60,8 +60,8 @@ const CHECKSUM_LENGTH = 9
 const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 // TODO: Update these constants with the real production values
-const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+const DEVELOP_CHAIN_ID = 'atoi1prdg7a8d2jpdcjptujmyngcpxk6uchxdjasfa0uev6ycqmq0hpqnww6scln'
+const PRODUCTION_CHAIN_ID = 'atoi1prdg7a8d2jpdcjptujmyngcpxk6uchxdjasfa0uev6ycqmq0hpqnww6scln'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
@@ -323,7 +323,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 
     const migrationData: MigrationData = {
-        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        lastCheckedAddressIndex: initialAddressIndex + FIXED_ADDRESSES_GENERATED,
         balance: totalBalance,
         inputs: inputs,
         spentAddresses: false,
