@@ -784,11 +784,11 @@ export const updateBalanceOverview = (balance: number, incoming: number, outgoin
 
     balanceOverviewStore.update((overview) =>
         Object.assign<BalanceOverview, BalanceOverview, Partial<BalanceOverview>>({} as BalanceOverview, overview, {
-            incoming: formatUnitBestMatch(incoming, true, 3),
+            incoming: formatUnitBestMatch(incoming, true),
             incomingRaw: incoming,
-            outgoing: formatUnitBestMatch(outgoing, true, 3),
+            outgoing: formatUnitBestMatch(outgoing, true),
             outgoingRaw: outgoing,
-            balance: formatUnitBestMatch(balance, true, 3),
+            balance: formatUnitBestMatch(balance, true),
             balanceRaw: balance,
             balanceFiat: formatCurrency(
                 convertToFiat(balance, get(currencies)?.[CurrencyTypes.USD], get(exchangeRates)?.[activeCurrency])
@@ -933,7 +933,7 @@ export const updateAccountsBalanceEquiv = (): void => {
 
     accounts.update((storedAccounts) => {
         for (const storedAccount of storedAccounts) {
-            storedAccount.balance = formatUnitBestMatch(storedAccount.rawIotaBalance, true, 3)
+            storedAccount.balance = formatUnitBestMatch(storedAccount.rawIotaBalance, true)
             storedAccount.balanceEquiv = formatCurrency(
                 convertToFiat(
                     storedAccount.rawIotaBalance,
@@ -1146,7 +1146,7 @@ export const formatAccountWithMetadata = (account: Account, meta: AccountMetadat
         alias,
         rawIotaBalance: balance,
         signerType,
-        balance: formatUnitBestMatch(balance, true, 3),
+        balance: formatUnitBestMatch(balance, true),
         balanceEquiv: formatCurrency(
             convertToFiat(balance, get(currencies)?.[CurrencyTypes.USD], get(exchangeRates)?.[activeCurrency])
         ),

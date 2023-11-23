@@ -142,7 +142,7 @@
             <Text type="p" secondary classes="mb-6 text-center">
                 {locale(`views.congratulations.${localizedBody}`, { values: localizedValues })}
             </Text>
-            <Text type="h2">{formatUnitBestMatch($totalMigratedBalance, true, 3)}</Text>
+            <Text type="h2">{formatUnitBestMatch($totalMigratedBalance, true)}</Text>
             <Text type="p" highlighted classes="py-1 uppercase">{fiatBalance}</Text>
         </div>
     </div>
