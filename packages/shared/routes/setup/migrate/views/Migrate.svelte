@@ -7,14 +7,14 @@
         ADDRESS_SECURITY_LEVEL,
         confirmedBundles,
         createLedgerMigrationBundle,
-        createMigrationBundle,
-        getInputIndexesForBundle,
+        createOffLedgerRequest,
+        fetchOffLedgerRequest,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        removeAddressChecksum,
         sendLedgerMigrationBundle,
-        sendMigrationBundle,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
@@ -25,8 +25,10 @@
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { walletSetupType } from 'shared/lib/wallet'
+    import { api, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { MigrationAddress } from '@lib/typings/migration'
+    import { createPrepareTransfers } from '@iota/core'
 
     export let locale: Locale
 
@@ -77,7 +79,7 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            return createLedgerMigrationBundle(0, iota.prepareTransfers, callback)
+                            return createLedgerMigrationBundle(0, iota.prepareTransfer, callback)
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
@@ -109,26 +111,51 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
-                createMigrationBundle(getInputIndexesForBundle($bundles[0]), 0, false)
-                    .then((data) => {
-                        singleMigrationBundleHash = data.bundleHash
-                        return sendMigrationBundle(data.bundleHash).then(() => {
-                            // Save profile
-                            saveProfile($newProfile)
-                            setActiveProfile($newProfile.id)
+                const { accounts } = get(wallet)
+                const { seed } = get(migration)
 
-                            newProfile.set(null)
+                api.getMigrationAddress(false, get(accounts)[0].id, {
+                    onSuccess(response) {
+                        const prepareTransfers = createPrepareTransfers()
+                        const transfers = [
+                            {
+                                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                                address: removeAddressChecksum(
+                                    (response.payload as unknown as MigrationAddress).trytes
+                                ),
+                            },
+                        ]
+
+                        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
+                            address: input.address,
+                            keyIndex: input.index,
+                            security: input.securityLevel,
+                            balance: input.balance,
+                        }))
+                        prepareTransfers(get(seed), transfers, {
+                            inputs: inputsForTransfer,
                         })
-                    })
-                    .catch((err) => {
-                        loading = false
-                        if (!err?.snapshot) {
-                            showAppNotification({
-                                type: 'error',
-                                message: locale('views.migrate.error'),
+                            .then((bundleTrytes: string[]) => {
+                                const reversed = bundleTrytes.reverse()
+                                const offLedgerHexRequest = createOffLedgerRequest(reversed)
+                                fetchOffLedgerRequest(offLedgerHexRequest)
                             })
-                        }
-                    })
+                            .catch((error) => {
+                                showAppNotification({
+                                    type: 'error',
+                                    message: error || 'Error to prepare transfers',
+                                })
+                            })
+                    },
+                    onError(error) {
+                        showAppNotification({
+                            type: 'error',
+                            message: error.error || 'Error to getMigrationAddress',
+                        })
+                    },
+                })
+
+                loading = false
             }
         } else {
             loading = true
