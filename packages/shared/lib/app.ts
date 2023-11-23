@@ -1,4 +1,3 @@
-import { Unit } from '@iota/unit-converter'
 import { isSoftwareProfile } from 'shared/lib/profile'
 import { get, writable } from 'svelte/store'
 import { lastAcceptedPrivacyPolicy, lastAcceptedTos } from './appSettings'
@@ -12,6 +11,7 @@ import { resetRouters } from '@core/router'
 import { Stage } from './typings/stage'
 import { api, destroyActor, resetWallet } from './wallet'
 import { SendParams } from 'shared/lib/typings/sendParams'
+import { Unit } from './units'
 
 /**
  * Beta mode
@@ -43,7 +43,7 @@ export const lastActiveAt = writable<Date>(new Date())
  */
 export const sendParams = writable<SendParams>({
     amount: undefined,
-    unit: Unit.Mi,
+    unit: Unit.iota,
     address: '',
     message: '',
     isInternal: false,
@@ -53,7 +53,7 @@ export const sendParams = writable<SendParams>({
 export const clearSendParams = (isInternal = false): void =>
     sendParams.set({
         amount: undefined,
-        unit: Unit.Mi,
+        unit: Unit.iota,
         address: '',
         message: '',
         isInternal,

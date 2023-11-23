@@ -26,7 +26,7 @@
         AvailableExchangeRates.USD
     )
 
-    const balanceString = `${formatUnitBestMatch(balance, true, 3)} • ${fiatBalance}`
+    const balanceString = `${formatUnitBestMatch(balance, true)} • ${fiatBalance}`
 
     let showTooltip = false
     let tooltipAnchor

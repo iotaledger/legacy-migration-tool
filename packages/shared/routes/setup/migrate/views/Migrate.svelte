@@ -159,7 +159,7 @@
         <Box
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
         >
-            <Text type="h2">{formatUnitBestMatch(migratableBalance, true, 3)}</Text>
+            <Text type="h2">{formatUnitBestMatch(migratableBalance, true)}</Text>
             <Text type="p" highlighted classes="py-1 uppercase">{fiatbalance}</Text>
         </Box>
     </div>
