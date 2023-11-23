@@ -446,19 +446,39 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
  */
 export const getLedgerMigrationData = (
     getAddressFn: (index: number) => Promise<string>,
-    callback: () => void
+    callback: () => void,
+    initialAddressIndex: number = 0
 ): Promise<unknown> => {
-    const _get = (addresses: AddressInput[]): Promise<unknown> =>
-        new Promise((resolve, reject) => {
-            api.getLedgerMigrationData(addresses, MIGRATION_NODES, PERMANODE, ADDRESS_SECURITY_LEVEL, {
-                onSuccess(response) {
-                    resolve(response)
-                },
-                onError(error) {
-                    reject(error)
-                },
-            })
-        })
+    const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
+        let totalBalance = 0
+        const inputs: Input[] = []
+        for (let index = initialAddressIndex; index < initialAddressIndex + addresses.length; index++) {
+            const legacyAddress = addresses[index].address
+            const binaryAddress = '0x' + convertToHex(legacyAddress)
+            const balance = await fetchMigratableBalance(binaryAddress)
+
+            totalBalance += balance
+            if (balance > 0) {
+                inputs.push({
+                    address: legacyAddress,
+                    balance,
+                    spent: false,
+                    index,
+                    securityLevel: ADDRESS_SECURITY_LEVEL,
+                    spentBundleHashes: [],
+                })
+            }
+        }
+
+        const migrationData: MigrationData = {
+            lastCheckedAddressIndex: initialAddressIndex + addresses.length,
+            balance: totalBalance,
+            inputs: inputs,
+            spentAddresses: false,
+        }
+
+        return migrationData
+    }
 
     const _generate = () => {
         const { data } = get(migration)
@@ -471,7 +491,6 @@ export const getLedgerMigrationData = (
             } else {
                 idx = index + lastCheckedAddressIndex + 1
             }
-
             return promise.then((acc) => getAddressFn(idx).then((address) => acc.concat({ address, index: idx })))
         }, Promise.resolve([]))
     }
@@ -483,14 +502,14 @@ export const getLedgerMigrationData = (
             .then((response: any) => {
                 const { data } = get(migration)
 
-                if (get(data).lastCheckedAddressIndex === 0) {
-                    data.set(response.payload)
+                if (initialAddressIndex === 0) {
+                    data.set(response)
                 } else {
                     data.update((_existingData) =>
                         Object.assign({}, _existingData, {
-                            balance: _existingData.balance + response.payload.balance,
-                            inputs: [..._existingData.inputs, ...response.payload.inputs],
-                            lastCheckedAddressIndex: response.payload.lastCheckedAddressIndex,
+                            balance: _existingData.balance + response.balance,
+                            inputs: [..._existingData.inputs, ...response.inputs],
+                            lastCheckedAddressIndex: response.lastCheckedAddressIndex,
                         })
                     )
                 }
@@ -498,9 +517,7 @@ export const getLedgerMigrationData = (
                 prepareBundles()
 
                 const shouldGenerateMore =
-                    response.payload.spentAddresses === true ||
-                    response.payload.inputs.length > 0 ||
-                    response.payload.balance > 0
+                    response.spentAddresses === true || response.inputs.length > 0 || response.balance > 0
 
                 if (shouldGenerateMore) {
                     return _process()
