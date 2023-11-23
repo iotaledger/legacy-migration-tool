@@ -188,7 +188,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 
     const migrationData: MigrationData = {
-        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        lastCheckedAddressIndex: initialAddressIndex + FIXED_ADDRESSES_GENERATED,
         balance: totalBalance,
         inputs: inputs,
         spentAddresses: false,
