@@ -28,6 +28,8 @@ import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
 import { generateAddress } from '@iota/core'
+import { convertBech32AddressToEd25519Address } from './ed25519'
+import { Buffer } from 'buffer'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -146,12 +148,145 @@ export const createUnsignedBundle = (
     bundle = finalizeBundle(bundle)
 
     const bundleTrytes = []
-
     for (let offset = 0; offset < bundle.length; offset += TRANSACTION_LENGTH) {
         bundleTrytes.push(tritsToTrytes(bundle.subarray(offset, offset + TRANSACTION_LENGTH)))
     }
 
     return bundleTrytes
+}
+
+export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
+    const OFF_LEDGER_REQUEST_TYPE = 1
+
+    // Chain ID as a hexadecimal string
+    const _activeProfile = get(activeProfile)
+    const chainId: string = convertBech32AddressToEd25519Address(
+        _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    )
+
+    // Contract Hname and other hexadecimal strings
+    const contractHname: string = '69492005'
+    const additionalData: string = '060d3f50'
+
+    // Convert hexadecimal strings to buffers
+    const chainIdBuffer: Buffer = Buffer.from(chainId, 'hex')
+    const contractHnameBuffer: Buffer = Buffer.from(contractHname, 'hex')
+    const additionalDataBuffer: Buffer = Buffer.from(additionalData, 'hex')
+
+    // Obtain bundle bytes using iscParamBytesFromBundle function
+    const bundleBytes: Buffer = iscParamBytesFromBundle(bundleTrytes)
+
+    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
+    const vluBundleLength: Buffer = iscVluEncode(bundleBytes.length)
+
+    // Calculate the total length needed for the buffer
+    const totalLength =
+        OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
+        chainIdBuffer.length +
+        contractHnameBuffer.length +
+        additionalDataBuffer.length +
+        1 + // params len
+        1 + // key len
+        1 + // 'b'
+        vluBundleLength.length + // VLU-encoded bundle length
+        bundleBytes.length + // Total length of bundleByte
+        8 + // nonce
+        1 + // gasbudget
+        1 + // allowance
+        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+
+    // Allocate the request buffer with the calculated length
+    const reqBuffer: Buffer = Buffer.alloc(totalLength)
+
+    // Set the initial value (requestKindOffLedgerISC) at the beginning of the buffer
+    let position: number = 0
+    reqBuffer.writeUInt8(OFF_LEDGER_REQUEST_TYPE, position) // Assuming 1 is the value
+    position++
+
+    // Copy other buffers to reqBuffer at appropriate positions without using explicit lengths
+    chainIdBuffer.copy(reqBuffer, position)
+    position += chainIdBuffer.length
+
+    contractHnameBuffer.copy(reqBuffer, position)
+    position += contractHnameBuffer.length
+
+    additionalDataBuffer.copy(reqBuffer, position)
+    position += additionalDataBuffer.length
+
+    // Set params len and key len at appropriate positions without using explicit lengths
+    reqBuffer.writeUInt8(1, position)
+    position++
+
+    reqBuffer.writeUInt8(1, position)
+    position++
+
+    // Add the key 'b' at the end of the buffer without using explicit lengths
+    reqBuffer.write('b', position)
+    position++
+
+    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
+    vluBundleLength.copy(reqBuffer, position)
+    position += vluBundleLength.length
+
+    // Append bundle bytes to reqBuffer without using explicit lengths
+    bundleBytes.copy(reqBuffer, position)
+    position += bundleBytes.length
+
+    // Append 0_u64 (nonce) as little-endian bytes
+    const zeroNonce = Buffer.alloc(8, 0x00, 'hex')
+    zeroNonce.copy(reqBuffer, position)
+    position += zeroNonce.length
+
+    reqBuffer.writeUInt8(0, position) // gasbudget
+    position++
+
+    reqBuffer.writeUInt8(0, position) // allowance
+    position++
+
+    // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
+        reqBuffer.writeUInt8(0, position)
+        position++
+    }
+
+    // Convert reqBuffer to hexadecimal string
+    return `0x${reqBuffer.toString('hex')}`
+}
+
+function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {
+    const encodedBundle: number[] = []
+
+    // Append the length of rawTrytes as a single byte
+    encodedBundle.push(rawTrytes.length)
+
+    // Iterate over each trytes string in rawTrytes
+    for (const txTrytes of rawTrytes) {
+        // Append the little-endian u16 length
+        encodedBundle.push(txTrytes.length & 0xff, (txTrytes.length >> 8) & 0xff)
+
+        // Append UTF-8 encoded bytes of the trytes string
+        for (let i = 0; i < txTrytes.length; i++) {
+            encodedBundle.push(txTrytes.charCodeAt(i))
+        }
+    }
+
+    // Convert the array of numbers to a Uint8Array
+    return Buffer.from(encodedBundle)
+}
+
+// Function to encode a variable-length unsigned integer (VLU)
+function iscVluEncode(value: number): Buffer {
+    const buf: number[] = []
+    let b: number
+    do {
+        b = value & 0x7f
+        value >>= 7
+        if (value > 0) {
+            b |= 0x80
+        }
+        buf.push(b)
+    } while (value > 0)
+    return Buffer.from(buf)
 }
 
 /**
@@ -311,19 +446,39 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
  */
 export const getLedgerMigrationData = (
     getAddressFn: (index: number) => Promise<string>,
-    callback: () => void
+    callback: () => void,
+    initialAddressIndex: number = 0
 ): Promise<unknown> => {
-    const _get = (addresses: AddressInput[]): Promise<unknown> =>
-        new Promise((resolve, reject) => {
-            api.getLedgerMigrationData(addresses, MIGRATION_NODES, PERMANODE, ADDRESS_SECURITY_LEVEL, {
-                onSuccess(response) {
-                    resolve(response)
-                },
-                onError(error) {
-                    reject(error)
-                },
-            })
-        })
+    const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
+        let totalBalance = 0
+        const inputs: Input[] = []
+        for (let index = initialAddressIndex; index < initialAddressIndex + addresses.length; index++) {
+            const legacyAddress = addresses[index].address
+            const binaryAddress = '0x' + convertToHex(legacyAddress)
+            const balance = await fetchMigratableBalance(binaryAddress)
+
+            totalBalance += balance
+            if (balance > 0) {
+                inputs.push({
+                    address: legacyAddress,
+                    balance,
+                    spent: false,
+                    index,
+                    securityLevel: ADDRESS_SECURITY_LEVEL,
+                    spentBundleHashes: [],
+                })
+            }
+        }
+
+        const migrationData: MigrationData = {
+            lastCheckedAddressIndex: initialAddressIndex + addresses.length,
+            balance: totalBalance,
+            inputs: inputs,
+            spentAddresses: false,
+        }
+
+        return migrationData
+    }
 
     const _generate = () => {
         const { data } = get(migration)
@@ -336,7 +491,6 @@ export const getLedgerMigrationData = (
             } else {
                 idx = index + lastCheckedAddressIndex + 1
             }
-
             return promise.then((acc) => getAddressFn(idx).then((address) => acc.concat({ address, index: idx })))
         }, Promise.resolve([]))
     }
@@ -348,14 +502,14 @@ export const getLedgerMigrationData = (
             .then((response: any) => {
                 const { data } = get(migration)
 
-                if (get(data).lastCheckedAddressIndex === 0) {
-                    data.set(response.payload)
+                if (initialAddressIndex === 0) {
+                    data.set(response)
                 } else {
                     data.update((_existingData) =>
                         Object.assign({}, _existingData, {
-                            balance: _existingData.balance + response.payload.balance,
-                            inputs: [..._existingData.inputs, ...response.payload.inputs],
-                            lastCheckedAddressIndex: response.payload.lastCheckedAddressIndex,
+                            balance: _existingData.balance + response.balance,
+                            inputs: [..._existingData.inputs, ...response.inputs],
+                            lastCheckedAddressIndex: response.lastCheckedAddressIndex,
                         })
                     )
                 }
@@ -363,9 +517,7 @@ export const getLedgerMigrationData = (
                 prepareBundles()
 
                 const shouldGenerateMore =
-                    response.payload.spentAddresses === true ||
-                    response.payload.inputs.length > 0 ||
-                    response.payload.balance > 0
+                    response.spentAddresses === true || response.inputs.length > 0 || response.balance > 0
 
                 if (shouldGenerateMore) {
                     return _process()
@@ -641,6 +793,40 @@ export const createMigrationBundle = (
             },
         })
     })
+}
+
+export async function fetchOffLedgerRequest(request: string): Promise<void> {
+    const _activeProfile = get(activeProfile)
+    const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+
+    const body = {
+        request: request,
+        chainId: chainId,
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
+        body: JSON.stringify(body),
+    }
+
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/v1/requests/offledger`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/v1/requests/offledger`
+    }
+
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        const result = await response.json()
+        return result
+    } catch (error) {
+        console.error('error', error)
+    }
+    return
 }
 
 /**
