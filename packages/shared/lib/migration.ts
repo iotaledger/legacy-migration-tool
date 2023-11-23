@@ -39,7 +39,7 @@ export const PERMANODE = 'https://chronicle.iota.org/api'
 export const ADDRESS_SECURITY_LEVEL = 2
 
 /** Minimum migration balance */
-export const MINIMUM_MIGRATION_BALANCE = 1000000
+export const MINIMUM_MIGRATION_BALANCE = 0
 
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60

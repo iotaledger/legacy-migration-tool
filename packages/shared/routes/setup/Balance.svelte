@@ -93,13 +93,6 @@
             }
         }
 
-        if ($hasLowBalanceOnAllSpentAddresses && !$bundlesWithUnspentAddresses.length) {
-            return {
-                allowToProceed: false,
-                text: locale('views.migrate.minimumMigrationAmountSpentAddresses'),
-            }
-        }
-
         if (!_bundles.length) {
             return {
                 allowToProceed: false,
