@@ -9,6 +9,7 @@
         createLedgerMigrationBundle,
         createOffLedgerRequest,
         fetchOffLedgerRequest,
+        fetchReceiptForRequest,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
@@ -69,6 +70,39 @@
         })
     })
 
+    const sendMigrationRequest = async (migrationAddress: MigrationAddress) => {
+        const { seed } = get(migration)
+        const prepareTransfers = createPrepareTransfers()
+
+        const transfers = [
+            {
+                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
+                address: removeAddressChecksum(migrationAddress.trytes),
+            },
+        ]
+
+        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
+            address: input.address,
+            keyIndex: input.index,
+            security: input.securityLevel,
+            balance: input.balance,
+        }))
+
+        try {
+            const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+                inputs: inputsForTransfer,
+            })
+
+            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes.reverse())
+            await fetchOffLedgerRequest(offLedgerHexRequest.request)
+            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+        } catch (err) {
+            showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
+        } finally {
+            loading = false
+        }
+    }
+
     function handleContinueClick() {
         if ($hasSingleBundle && !$hasBundlesWithSpentAddresses) {
             loading = true
@@ -112,50 +146,19 @@
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
                 const { accounts } = get(wallet)
-                const { seed } = get(migration)
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        const prepareTransfers = createPrepareTransfers()
-                        const transfers = [
-                            {
-                                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                                address: removeAddressChecksum(
-                                    (response.payload as unknown as MigrationAddress).trytes
-                                ),
-                            },
-                        ]
-
-                        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
-                            address: input.address,
-                            keyIndex: input.index,
-                            security: input.securityLevel,
-                            balance: input.balance,
-                        }))
-                        prepareTransfers(get(seed), transfers, {
-                            inputs: inputsForTransfer,
-                        })
-                            .then((bundleTrytes: string[]) => {
-                                const reversed = bundleTrytes.reverse()
-                                const offLedgerHexRequest = createOffLedgerRequest(reversed)
-                                fetchOffLedgerRequest(offLedgerHexRequest)
-                            })
-                            .catch((error) => {
-                                showAppNotification({
-                                    type: 'error',
-                                    message: error || 'Error to prepare transfers',
-                                })
-                            })
+                        void sendMigrationRequest(response.payload as unknown as MigrationAddress)
                     },
                     onError(error) {
+                        loading = false
                         showAppNotification({
                             type: 'error',
                             message: error.error || 'Error to getMigrationAddress',
                         })
                     },
                 })
-
-                loading = false
             }
         } else {
             loading = true

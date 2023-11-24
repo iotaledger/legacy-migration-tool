@@ -30,6 +30,8 @@ import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@
 import { generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
+import { blake2b } from 'blakejs'
+import { SimpleBufferCursor } from './simpleBufferCursor'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -155,8 +157,10 @@ export const createUnsignedBundle = (
     return bundleTrytes
 }
 
-export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
+export const createOffLedgerRequest = (bundleTrytes: string[]): { request: string; requestId: string } => {
     const OFF_LEDGER_REQUEST_TYPE = 1
+    const CONTRACT_H_NAME = '69492005' // Contract Hname
+    const CONTRACT_ENTRYPOINT = '060d3f50' // Contract entrypoint
 
     // Chain ID as a hexadecimal string
     const _activeProfile = get(activeProfile)
@@ -164,93 +168,43 @@ export const createOffLedgerRequest = (bundleTrytes: string[]): string => {
         _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
     )
 
-    // Contract Hname and other hexadecimal strings
-    const contractHname: string = '69492005'
-    const additionalData: string = '060d3f50'
-
-    // Convert hexadecimal strings to buffers
-    const chainIdBuffer: Buffer = Buffer.from(chainId, 'hex')
-    const contractHnameBuffer: Buffer = Buffer.from(contractHname, 'hex')
-    const additionalDataBuffer: Buffer = Buffer.from(additionalData, 'hex')
-
-    // Obtain bundle bytes using iscParamBytesFromBundle function
     const bundleBytes: Buffer = iscParamBytesFromBundle(bundleTrytes)
 
-    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
-    const vluBundleLength: Buffer = iscVluEncode(bundleBytes.length)
+    const bufferCursor = new SimpleBufferCursor(Buffer.alloc(0))
 
-    // Calculate the total length needed for the buffer
-    const totalLength =
-        OFF_LEDGER_REQUEST_TYPE + // requestKindOffLedgerISC
-        chainIdBuffer.length +
-        contractHnameBuffer.length +
-        additionalDataBuffer.length +
-        1 + // params len
-        1 + // key len
-        1 + // 'b'
-        vluBundleLength.length + // VLU-encoded bundle length
-        bundleBytes.length + // Total length of bundleByte
-        8 + // nonce
-        1 + // gasbudget
-        1 + // allowance
-        33 // 33 bytes (32 for empty pubkey and one extra 0 for the signature)
+    bufferCursor.writeInt8(OFF_LEDGER_REQUEST_TYPE)
 
-    // Allocate the request buffer with the calculated length
-    const reqBuffer: Buffer = Buffer.alloc(totalLength)
+    // Write hexadecimal contract strings
+    bufferCursor.writeBytes(Buffer.from(chainId, 'hex'))
+    bufferCursor.writeBytes(Buffer.from(CONTRACT_H_NAME, 'hex'))
+    bufferCursor.writeBytes(Buffer.from(CONTRACT_ENTRYPOINT, 'hex'))
 
-    // Set the initial value (requestKindOffLedgerISC) at the beginning of the buffer
-    let position: number = 0
-    reqBuffer.writeUInt8(OFF_LEDGER_REQUEST_TYPE, position) // Assuming 1 is the value
-    position++
+    // Set params len and key len
+    bufferCursor.writeInt8(1)
+    bufferCursor.writeInt8(1)
+    // Add the key 'b'
+    bufferCursor.writeBytes(Buffer.from('b'))
 
-    // Copy other buffers to reqBuffer at appropriate positions without using explicit lengths
-    chainIdBuffer.copy(reqBuffer, position)
-    position += chainIdBuffer.length
+    // Write bundle bytes using iscParamBytesFromBundle function
+    bufferCursor.writeBytes(iscVluEncode(bundleBytes.length))
+    bufferCursor.writeBytes(bundleBytes)
 
-    contractHnameBuffer.copy(reqBuffer, position)
-    position += contractHnameBuffer.length
-
-    additionalDataBuffer.copy(reqBuffer, position)
-    position += additionalDataBuffer.length
-
-    // Set params len and key len at appropriate positions without using explicit lengths
-    reqBuffer.writeUInt8(1, position)
-    position++
-
-    reqBuffer.writeUInt8(1, position)
-    position++
-
-    // Add the key 'b' at the end of the buffer without using explicit lengths
-    reqBuffer.write('b', position)
-    position++
-
-    // Encode bundle length as VLU and append to reqBuffer without using explicit lengths
-    vluBundleLength.copy(reqBuffer, position)
-    position += vluBundleLength.length
-
-    // Append bundle bytes to reqBuffer without using explicit lengths
-    bundleBytes.copy(reqBuffer, position)
-    position += bundleBytes.length
-
-    // Append 0_u64 (nonce) as little-endian bytes
-    const zeroNonce = Buffer.alloc(8, 0x00, 'hex')
-    zeroNonce.copy(reqBuffer, position)
-    position += zeroNonce.length
-
-    reqBuffer.writeUInt8(0, position) // gasbudget
-    position++
-
-    reqBuffer.writeUInt8(0, position) // allowance
-    position++
+    bufferCursor.writeInt8(0) // nonce
+    bufferCursor.writeInt8(0) // gasbudget
+    bufferCursor.writeInt8(0) // allowance
 
     // Add 33 bytes (32 for empty pubkey and one extra 0 for the signature)
-    for (let i = 0; i < 33 && position < reqBuffer.length; i++) {
-        reqBuffer.writeUInt8(0, position)
-        position++
+    for (let i = 0; i < 33; i++) {
+        bufferCursor.writeInt8(0)
     }
 
-    // Convert reqBuffer to hexadecimal string
-    return `0x${reqBuffer.toString('hex')}`
+    const request = `0x${bufferCursor.buffer.toString('hex')}`
+
+    const hash = blake2b(bufferCursor.buffer, undefined, 32)
+    const extendedHash = Buffer.concat([hash, Buffer.alloc(2)])
+    const requestId = `0x${extendedHash.toString('hex')}`
+
+    return { request, requestId }
 }
 
 function iscParamBytesFromBundle(rawTrytes: string[]): Buffer {
@@ -798,6 +752,8 @@ export const createMigrationBundle = (
 export async function fetchOffLedgerRequest(request: string): Promise<void> {
     const _activeProfile = get(activeProfile)
     const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    const baseUrl = _activeProfile.isDeveloperProfile ? DEVELOP_BASE_URL : PRODUCTION_BASE_URL
+    const endpoint = `${baseUrl}/v1/requests/offledger`
 
     const body = {
         request: request,
@@ -812,21 +768,61 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
         body: JSON.stringify(body),
     }
 
-    let endpoint: string = ''
-    if (_activeProfile.isDeveloperProfile) {
-        endpoint = `${DEVELOP_BASE_URL}/v1/requests/offledger`
-    } else {
-        endpoint = `${PRODUCTION_BASE_URL}/v1/requests/offledger`
+    try {
+        const response = await fetch(endpoint, requestOptions)
+
+        if (response.status === 400) {
+            return response.json().then((err) => {
+                throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
+            })
+        }
+    } catch (error) {
+        console.error(error)
+        throw new Error(error.message)
+    }
+    return
+}
+
+export async function fetchReceiptForRequest(requestId: string): Promise<any> {
+    const _activeProfile = get(activeProfile)
+    const chainId = _activeProfile.isDeveloperProfile ? DEVELOP_CHAIN_ID : PRODUCTION_CHAIN_ID
+    const baseUrl = _activeProfile.isDeveloperProfile ? DEVELOP_BASE_URL : PRODUCTION_BASE_URL
+    let endpoint: string = `${baseUrl}/v1/chains/${chainId}/requests/${requestId}/wait?`
+
+    const queryParams = {
+        timeoutSeconds: 5,
+        waitForL1Confirmation: true,
+    }
+
+    const queryString = Object.keys(queryParams)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(queryParams[key])}`)
+        .join('&')
+
+    endpoint += queryString
+
+    const requestOptions: RequestInit = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+        },
     }
 
     try {
         const response = await fetch(endpoint, requestOptions)
-        const result = await response.json()
-        return result
+
+        if (response.status === 400) {
+            return response.json().then((err) => {
+                throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
+            })
+        }
+        const receipt = await response.json()
+
+        return receipt
     } catch (error) {
-        console.error('error', error)
+        console.error(error)
+        throw new Error(error.message)
     }
-    return
 }
 
 /**
