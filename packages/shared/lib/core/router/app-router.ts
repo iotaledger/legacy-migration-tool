@@ -75,7 +75,7 @@ export class AppRouter extends Router<AppRoute> {
                 const { password } = params
                 if (password) {
                     strongholdPassword.set(password)
-                    nextRoute = AppRoute.Protect
+                    nextRoute = AppRoute.Backup
                 }
                 break
             }
@@ -106,7 +106,7 @@ export class AppRouter extends Router<AppRoute> {
                 walletSetupType.set(importType as unknown as SetupType)
                 nextRoute = AppRoute.Congratulations
                 if ([ImportType.Stronghold, ImportType.TrinityLedger, ImportType.FireflyLedger].includes(importType)) {
-                    nextRoute = AppRoute.Protect
+                    nextRoute = AppRoute.LedgerSetup
                 } else if (importType === ImportType.Seed || importType === ImportType.SeedVault) {
                     nextRoute = AppRoute.Balance
                 }

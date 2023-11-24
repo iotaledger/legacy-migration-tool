@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { localize } from '@core/i18n'
-    import { Unit } from '@iota/unit-converter'
     import { Button, Icon, Illustration, Text } from 'shared/components'
     import { convertToFiat, currencies, exchangeRates, formatCurrency, isFiatCurrency } from 'shared/lib/currency'
     import { isAccountStaked, isParticipationPossible } from 'shared/lib/participation'
@@ -10,14 +9,14 @@
     import { closePopup } from 'shared/lib/popup'
     import { activeProfile } from 'shared/lib/profile'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { formatUnitBestMatch, formatUnitPrecision } from 'shared/lib/units'
+    import { Unit, formatUnitBestMatch, formatUnitPrecision } from 'shared/lib/units'
     import { TrackedParticipationItem } from 'shared/lib/participation/types'
 
     export let accountId: string
     export let internal = false
     export let to = ''
     export let amount = 0
-    export let unit = Unit.i
+    export let unit = Unit.micro
 
     export let onConfirm = (..._: any[]): void => {}
 

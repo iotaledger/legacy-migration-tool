@@ -79,7 +79,7 @@ export const initialiseListeners = (): void => {
                 saveNewMessage(accountId, message)
 
                 const notificationMessage = localize('notifications.valueTx')
-                    .replace('{{value}}', formatUnitBestMatch(message?.payload.data.essence.data.value, true, 3))
+                    .replace('{{value}}', formatUnitBestMatch(message?.payload.data.essence.data.value, true))
                     .replace('{{account}}', account?.alias)
 
                 showSystemNotification({
@@ -186,7 +186,7 @@ export const initialiseListeners = (): void => {
 
                         if (accountTo) {
                             notificationMessage = localize(`notifications.${messageKey}Internal`)
-                                .replace('{{value}}', formatUnitBestMatch(tx.data.essence.data.value, true, 3))
+                                .replace('{{value}}', formatUnitBestMatch(tx.data.essence.data.value, true))
                                 .replace('{{senderAccount}}', account1.alias)
                                 .replace('{{receiverAccount}}', accountTo)
                         } else {
@@ -197,11 +197,11 @@ export const initialiseListeners = (): void => {
                                 // was wiped, display the anonymous account message instead
                                 notificationMessage = localize('notifications.confirmedInternalNoAccounts').replace(
                                     '{{value}}',
-                                    formatUnitBestMatch(tx.data.essence.data.value, true, 3)
+                                    formatUnitBestMatch(tx.data.essence.data.value, true)
                                 )
                             } else {
                                 notificationMessage = localize(`notifications.${messageKey}`)
-                                    .replace('{{value}}', formatUnitBestMatch(tx.data.essence.data.value, true, 3))
+                                    .replace('{{value}}', formatUnitBestMatch(tx.data.essence.data.value, true))
                                     .replace('{{account}}', account1.alias)
                             }
                         }

@@ -1,8 +1,7 @@
-import { Unit } from '@iota/unit-converter'
 import { convertToFiat, currencies, exchangeRates } from 'shared/lib/currency'
 import { localize } from '@core/i18n'
 import { activeProfile, updateProfile } from 'shared/lib/profile'
-import { formatUnitPrecision } from 'shared/lib/units'
+import { Unit, formatUnitPrecision } from 'shared/lib/units'
 import { isSelfTransaction } from 'shared/lib/wallet'
 import { formatDate } from '@core/i18n'
 import { derived, get, writable } from 'svelte/store'
@@ -167,7 +166,7 @@ export const getAccountActivityData = (
                 }),
                 label: localize('charts.incomingMi', {
                     values: {
-                        value: formatUnitPrecision(_incoming, Unit.Mi, true),
+                        value: formatUnitPrecision(_incoming, Unit.iota, true),
                     },
                 }),
             })
@@ -179,7 +178,7 @@ export const getAccountActivityData = (
                 }),
                 label: localize('charts.outgoingMi', {
                     values: {
-                        value: formatUnitPrecision(_outgoing, Unit.Mi, true),
+                        value: formatUnitPrecision(_outgoing, Unit.iota, true),
                     },
                 }),
             })
@@ -249,7 +248,7 @@ function formatLineChartTooltip(
     showMiota: boolean = false,
     showCurrencyUnit: boolean = true
 ): Tooltip {
-    const title: string = `${showMiota ? `1 ${Unit.Mi}: ` : ''}${formatCurrencyValue(data, currency, 3)} ${
+    const title: string = `${showMiota ? `1 ${Unit.iota}: ` : ''}${formatCurrencyValue(data, currency, 3)} ${
         showCurrencyUnit ? currency : ''
     }`
     const label: string = formatDate(new Date(timestamp), {

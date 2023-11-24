@@ -43,7 +43,7 @@ export const PERMANODE = 'https://chronicle.iota.org/api'
 export const ADDRESS_SECURITY_LEVEL = 2
 
 /** Minimum migration balance */
-export const MINIMUM_MIGRATION_BALANCE = 1000000
+export const MINIMUM_MIGRATION_BALANCE = 500000
 
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60
@@ -62,8 +62,8 @@ const CHECKSUM_LENGTH = 9
 const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
 // TODO: Update these constants with the real production values
-const DEVELOP_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
-const PRODUCTION_CHAIN_ID = 'atoi1pqq3nm2kfvt8gfx7lecrtt374a0g0y824srdnjlxust6a7zhdwj3uqxxe58'
+const DEVELOP_CHAIN_ID = 'atoi1prdg7a8d2jpdcjptujmyngcpxk6uchxdjasfa0uev6ycqmq0hpqnww6scln'
+const PRODUCTION_CHAIN_ID = 'atoi1prdg7a8d2jpdcjptujmyngcpxk6uchxdjasfa0uev6ycqmq0hpqnww6scln'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
@@ -277,7 +277,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 
     const migrationData: MigrationData = {
-        lastCheckedAddressIndex: FIXED_ADDRESSES_GENERATED,
+        lastCheckedAddressIndex: initialAddressIndex + FIXED_ADDRESSES_GENERATED,
         balance: totalBalance,
         inputs: inputs,
         spentAddresses: false,
@@ -400,19 +400,39 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
  */
 export const getLedgerMigrationData = (
     getAddressFn: (index: number) => Promise<string>,
-    callback: () => void
+    callback: () => void,
+    initialAddressIndex: number = 0
 ): Promise<unknown> => {
-    const _get = (addresses: AddressInput[]): Promise<unknown> =>
-        new Promise((resolve, reject) => {
-            api.getLedgerMigrationData(addresses, MIGRATION_NODES, PERMANODE, ADDRESS_SECURITY_LEVEL, {
-                onSuccess(response) {
-                    resolve(response)
-                },
-                onError(error) {
-                    reject(error)
-                },
-            })
-        })
+    const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
+        let totalBalance = 0
+        const inputs: Input[] = []
+        for (let index = initialAddressIndex; index < initialAddressIndex + addresses.length; index++) {
+            const legacyAddress = addresses[index].address
+            const binaryAddress = '0x' + convertToHex(legacyAddress)
+            const balance = await fetchMigratableBalance(binaryAddress)
+
+            totalBalance += balance
+            if (balance > 0) {
+                inputs.push({
+                    address: legacyAddress,
+                    balance,
+                    spent: false,
+                    index,
+                    securityLevel: ADDRESS_SECURITY_LEVEL,
+                    spentBundleHashes: [],
+                })
+            }
+        }
+
+        const migrationData: MigrationData = {
+            lastCheckedAddressIndex: initialAddressIndex + addresses.length,
+            balance: totalBalance,
+            inputs: inputs,
+            spentAddresses: false,
+        }
+
+        return migrationData
+    }
 
     const _generate = () => {
         const { data } = get(migration)
@@ -425,7 +445,6 @@ export const getLedgerMigrationData = (
             } else {
                 idx = index + lastCheckedAddressIndex + 1
             }
-
             return promise.then((acc) => getAddressFn(idx).then((address) => acc.concat({ address, index: idx })))
         }, Promise.resolve([]))
     }
@@ -437,14 +456,14 @@ export const getLedgerMigrationData = (
             .then((response: any) => {
                 const { data } = get(migration)
 
-                if (get(data).lastCheckedAddressIndex === 0) {
-                    data.set(response.payload)
+                if (initialAddressIndex === 0) {
+                    data.set(response)
                 } else {
                     data.update((_existingData) =>
                         Object.assign({}, _existingData, {
-                            balance: _existingData.balance + response.payload.balance,
-                            inputs: [..._existingData.inputs, ...response.payload.inputs],
-                            lastCheckedAddressIndex: response.payload.lastCheckedAddressIndex,
+                            balance: _existingData.balance + response.balance,
+                            inputs: [..._existingData.inputs, ...response.inputs],
+                            lastCheckedAddressIndex: response.lastCheckedAddressIndex,
                         })
                     )
                 }
@@ -452,9 +471,7 @@ export const getLedgerMigrationData = (
                 prepareBundles()
 
                 const shouldGenerateMore =
-                    response.payload.spentAddresses === true ||
-                    response.payload.inputs.length > 0 ||
-                    response.payload.balance > 0
+                    response.spentAddresses === true || response.inputs.length > 0 || response.balance > 0
 
                 if (shouldGenerateMore) {
                     return _process()
@@ -742,7 +759,6 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
         request: request,
         chainId: chainId,
     }
-
     const requestOptions: RequestInit = {
         method: 'POST',
         headers: {

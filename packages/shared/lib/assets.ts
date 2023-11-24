@@ -1,15 +1,14 @@
-import { Unit } from '@iota/unit-converter'
 import { convertToFiat, currencies, exchangeRates, formatNumber } from 'shared/lib/currency'
 import { formatStakingAirdropReward } from 'shared/lib/participation/staking'
 import { totalAssemblyStakingRewards, totalShimmerStakingRewards } from 'shared/lib/participation/account'
 import { activeProfile } from 'shared/lib/profile'
 import { Asset, Token } from 'shared/lib/typings/assets'
 import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-import { UNIT_MAP } from 'shared/lib/units'
 import { selectedAccountStore } from 'shared/lib/wallet'
 import { derived } from 'svelte/store'
 import { StakingAirdrop } from 'shared/lib/participation/types'
 import { getNumberOfDecimalPlaces } from '@lib/utils'
+import { IOTA_VALUE } from './units'
 
 export const assets = derived(
     [
@@ -32,7 +31,7 @@ export const assets = derived(
         const profileCurrency = $activeProfile?.settings.currency ?? AvailableExchangeRates.USD
 
         const rawFiatPrice = convertToFiat(
-            UNIT_MAP[Unit.Mi].val,
+            IOTA_VALUE,
             $currencies?.[CurrencyTypes.USD],
             $exchangeRates?.[profileCurrency]
         )
