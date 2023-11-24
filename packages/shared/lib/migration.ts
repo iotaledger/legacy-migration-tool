@@ -43,7 +43,7 @@ export const PERMANODE = 'https://chronicle.iota.org/api'
 export const ADDRESS_SECURITY_LEVEL = 2
 
 /** Minimum migration balance */
-export const MINIMUM_MIGRATION_BALANCE = 0
+export const MINIMUM_MIGRATION_BALANCE = 1000000
 
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60
@@ -251,10 +251,10 @@ function iscVluEncode(value: number): Buffer {
  * @param {string} migrationSeed
  * @param {number} initialAddressIndex
  *
- * @returns {Promise<void}
+ * @returns {Promise<void>}
  */
 export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
-    const FIXED_ADDRESSES_GENERATED = 10
+    const FIXED_ADDRESSES_GENERATED = 1
     let totalBalance = 0
     const inputs: Input[] = []
 
@@ -263,11 +263,16 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
         const binaryAddress = '0x' + convertToHex(legacyAddress)
         const balance = await fetchMigratableBalance(binaryAddress)
 
+        // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
+        // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+        // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
         totalBalance += balance
         if (balance > 0) {
+            // Hardcode MINIMUM_MIGRATION_BALANCE for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATION_BALANCE.
+            // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
             inputs.push({
                 address: legacyAddress,
-                balance,
+                balance: MINIMUM_MIGRATION_BALANCE,
                 spent: false,
                 index,
                 securityLevel: ADDRESS_SECURITY_LEVEL,
