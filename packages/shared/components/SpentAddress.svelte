@@ -77,7 +77,7 @@
             <div>
                 <Text type="pre" smaller>{truncateString(address, 9, 9)}</Text>
                 <Text type="p" secondary smaller>
-                    {formatUnitBestMatch(balance, true, 3)}
+                    {formatUnitBestMatch(balance, true)}
                     ·
                     <span class="uppercase">{fiatBalance}</span>
                 </Text>

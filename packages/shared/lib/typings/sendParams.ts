@@ -1,4 +1,4 @@
-import { Unit } from '@iota/unit-converter'
+import { Unit } from '@lib/units'
 import { LabeledWalletAccount } from './wallet'
 
 export interface SendParams {
