@@ -16,6 +16,7 @@
         migration,
         removeAddressChecksum,
         sendLedgerMigrationBundle,
+        sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
@@ -113,14 +114,15 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            return createLedgerMigrationBundle(0, iota.prepareTransfer, callback)
+                            return createLedgerMigrationBundle(0, iota.prepareTransfers, callback)
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
-                            return sendLedgerMigrationBundle(bundleHash, trytes)
+                            return sendOffLedgerMigrationRequest(trytes.reverse())
                         })
-                        .then((data) => {
+                        .then((receipt) => {
+                            // todo: handle receipt data
                             if ($newProfile) {
                                 // Save profile
                                 saveProfile($newProfile)
