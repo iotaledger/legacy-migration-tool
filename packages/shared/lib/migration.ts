@@ -254,7 +254,7 @@ function iscVluEncode(value: number): Buffer {
  * @returns {Promise<void>}
  */
 export const getMigrationData = async (migrationSeed: string, initialAddressIndex = 0): Promise<void> => {
-    const FIXED_ADDRESSES_GENERATED = 1
+    const FIXED_ADDRESSES_GENERATED = 10
     let totalBalance = 0
     const inputs: Input[] = []
 
