@@ -123,6 +123,7 @@
                         })
                         .then((receipt) => {
                             // todo: handle receipt data
+                            loading = false
                             if ($newProfile) {
                                 // Save profile
                                 saveProfile($newProfile)
