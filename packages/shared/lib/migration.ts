@@ -406,7 +406,7 @@ export const getLedgerMigrationData = (
     const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
         let totalBalance = 0
         const inputs: Input[] = []
-        for (let index = initialAddressIndex; index < initialAddressIndex + addresses.length; index++) {
+        for (let index = 0; index < addresses.length; index++) {
             const legacyAddress = addresses[index].address
             const binaryAddress = '0x' + convertToHex(legacyAddress)
             const balance = await fetchMigratableBalance(binaryAddress)
@@ -469,13 +469,6 @@ export const getLedgerMigrationData = (
                 }
 
                 prepareBundles()
-
-                const shouldGenerateMore =
-                    response.spentAddresses === true || response.inputs.length > 0 || response.balance > 0
-
-                if (shouldGenerateMore) {
-                    return _process()
-                }
 
                 return Promise.resolve()
             })

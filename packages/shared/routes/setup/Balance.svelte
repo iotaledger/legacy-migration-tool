@@ -167,7 +167,9 @@
             const _onConnected = () => {
                 Platform.ledger
                     .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
-                    .then(({ iota, callback }) => getLedgerMigrationData(iota.getAddress, callback))
+                    .then(({ iota, callback }) =>
+                        getLedgerMigrationData(iota.getAddress, callback, $data.lastCheckedAddressIndex)
+                    )
                     .then(() => {
                         isCheckingForBalance = false
                     })
