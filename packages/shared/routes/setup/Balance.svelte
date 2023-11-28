@@ -6,14 +6,11 @@
     import { displayNotificationForLedgerProfile, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
         ADDRESS_SECURITY_LEVEL,
-        bundlesWithUnspentAddresses,
         getLedgerMigrationData,
         getMigrationData,
         hardwareIndexes,
         hasAnySpentAddressWithNoBundleHashes,
-        hasLowBalanceOnAllSpentAddresses,
         migration,
-        MINIMUM_MIGRATION_BALANCE,
         resetMigrationState,
         spentAddressesWithNoBundleHashes,
         unselectedInputs,
@@ -50,8 +47,6 @@
         return formatCurrency(balanceAsFiat, AvailableExchangeRates.USD)
     }
 
-    const hasInsufficientBalance = (balance: number) => balance < MINIMUM_MIGRATION_BALANCE
-
     const { balance } = _data
 
     let fiatBalance = getFiatBalance(balance)
@@ -86,39 +81,10 @@
             }
         }
 
-        if (hasInsufficientBalance(_balance)) {
-            return {
-                allowToProceed: false,
-                text: locale('views.balance.error'),
-            }
-        }
-
-        if ($hasLowBalanceOnAllSpentAddresses && !$bundlesWithUnspentAddresses.length) {
-            return {
-                allowToProceed: false,
-                text: locale('views.migrate.minimumMigrationAmountSpentAddresses'),
-            }
-        }
-
         if (!_bundles.length) {
             return {
                 allowToProceed: false,
                 text: locale('views.migrate.tooManyAddressesToMigrate'),
-            }
-        }
-
-        if ($unselectedInputs.length) {
-            const totalUnselectedBalance = $unselectedInputs.reduce((acc, input) => acc + input.balance, 0)
-
-            return {
-                allowToProceed: true,
-                text: locale('views.migrate.cannotMigrateAllYourFunds', {
-                    values: {
-                        value: `${formatUnitBestMatch(totalUnselectedBalance, true)} (${getFiatBalance(
-                            totalUnselectedBalance
-                        ).toUpperCase()})`,
-                    },
-                }),
             }
         }
 
