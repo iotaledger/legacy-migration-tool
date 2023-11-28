@@ -7,15 +7,11 @@
         ADDRESS_SECURITY_LEVEL,
         confirmedBundles,
         createLedgerMigrationBundle,
-        createOffLedgerRequest,
-        fetchOffLedgerRequest,
-        fetchReceiptForRequest,
+        createMigrationBundle,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
-        removeAddressChecksum,
-        sendLedgerMigrationBundle,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
@@ -30,7 +26,6 @@
     import { api, walletSetupType, wallet } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
-    import { createPrepareTransfers } from '@iota/core'
 
     export let locale: Locale
 
@@ -71,39 +66,6 @@
         })
     })
 
-    const sendMigrationRequest = async (migrationAddress: MigrationAddress) => {
-        const { seed } = get(migration)
-        const prepareTransfers = createPrepareTransfers()
-
-        const transfers = [
-            {
-                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                address: removeAddressChecksum(migrationAddress.trytes),
-            },
-        ]
-
-        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
-            address: input.address,
-            keyIndex: input.index,
-            security: input.securityLevel,
-            balance: input.balance,
-        }))
-
-        try {
-            const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
-                inputs: inputsForTransfer,
-            })
-
-            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes.reverse())
-            await fetchOffLedgerRequest(offLedgerHexRequest.request)
-            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
-        } catch (err) {
-            showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
-        } finally {
-            loading = false
-        }
-    }
-
     function handleContinueClick() {
         if ($hasSingleBundle && !$hasBundlesWithSpentAddresses) {
             loading = true
@@ -119,7 +81,7 @@
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
-                            return sendOffLedgerMigrationRequest(trytes.reverse())
+                            return sendOffLedgerMigrationRequest(trytes.reverse(), 0)
                         })
                         .then((receipt) => {
                             // todo: handle receipt data
@@ -152,7 +114,21 @@
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        void sendMigrationRequest(response.payload as unknown as MigrationAddress)
+                        createMigrationBundle($bundles[0], response.payload as unknown as MigrationAddress)
+                            .then((trytes: string[]) => sendOffLedgerMigrationRequest(trytes.reverse(), 0))
+                            .then((receipt) => {
+                                // todo: handle receipt data
+                                // console.log("receipt", receipt)
+                                loading = false
+                            })
+                            .catch((error) => {
+                                loading = false
+                                showAppNotification({
+                                    type: 'error',
+                                    message: error.message || 'Failed to prepare transfers',
+                                })
+                                console.error(error)
+                            })
                     },
                     onError(error) {
                         loading = false

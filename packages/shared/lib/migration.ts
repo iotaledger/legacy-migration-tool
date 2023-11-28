@@ -27,7 +27,7 @@ import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
-import { generateAddress } from '@iota/core'
+import { createPrepareTransfers, generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
 import { blake2b } from 'blakejs'
@@ -43,7 +43,9 @@ export const PERMANODE = 'https://chronicle.iota.org/api'
 export const ADDRESS_SECURITY_LEVEL = 2
 
 /** Minimum migration balance */
-export const MINIMUM_MIGRATION_BALANCE = 1000000
+export const MINIMUM_MIGRATION_BALANCE = 0
+
+export const MINIMUM_MIGRATABLE_AMOUNT = 1000000
 
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60
@@ -51,7 +53,7 @@ export const MINING_TIMEOUT_SECONDS = 10 * 60
 // TODO: Change back temp mwm (previously 9)
 export const MINIMUM_WEIGHT_MAGNITUDE = 14
 
-const SOFTWARE_MAX_INPUTS_PER_BUNDLE = 10
+const SOFTWARE_MAX_INPUTS_PER_BUNDLE = 1
 
 const HARDWARE_MAX_INPUTS_PER_BUNDLE = 3
 
@@ -272,7 +274,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
             // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
             inputs.push({
                 address: legacyAddress,
-                balance: MINIMUM_MIGRATION_BALANCE,
+                balance,
                 spent: false,
                 index,
                 securityLevel: ADDRESS_SECURITY_LEVEL,
@@ -726,14 +728,31 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
  *
  * @returns {Promise<Receipt>}
  */
-export const sendOffLedgerMigrationRequest = async (trytes: string[]): Promise<any> => {
+export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleIndex: number): Promise<any> => {
+    const { bundles } = get(migration)
     try {
         const offLedgerHexRequest = createOffLedgerRequest(trytes)
         await fetchOffLedgerRequest(offLedgerHexRequest.request)
-        return await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+
+        const receipt = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+        if (receipt?.errorMessage) {
+            throw new Error(receipt?.errorMessage)
+        }
+
+        // Update bundle and mark it as migrated
+        bundles.update((_bundles) =>
+            _bundles.map((bundle) => {
+                if (bundle.index === bundleIndex) {
+                    return Object.assign({}, bundle, { migrated: true, confirmed: true })
+                }
+
+                return bundle
+            })
+        )
+
+        return receipt
     } catch (err) {
-        showAppNotification({ type: 'error', message: err.message || 'Failed to send migration request' })
-        return
+        throw new Error(err.message || 'Failed to send migration request')
     }
 }
 /**
@@ -741,29 +760,42 @@ export const sendOffLedgerMigrationRequest = async (trytes: string[]): Promise<a
  *
  * @method createMigrationBundle
  *
- * @param {number[]} inputIndexes
- * @param {boolean} mine
+ * @param {number} bundleIndex
+ * @param {MigrationAddress} migrationAddress
  *
  * @returns {Promise}
  */
-export const createMigrationBundle = (
-    inputAddressIndexes: number[],
-    offset: number,
-    mine: boolean
-): Promise<MigrationBundle> => {
+export const createMigrationBundle = async (
+    bundle: Bundle,
+    migrationAddress: MigrationAddress
+): Promise<string[]> => {
     const { seed } = get(migration)
 
-    return new Promise((resolve, reject) => {
-        api.createMigrationBundle(get(seed), inputAddressIndexes, mine, MINING_TIMEOUT_SECONDS, offset, LOG_FILE_NAME, {
-            onSuccess(response) {
-                assignBundleHash(inputAddressIndexes, response.payload, mine)
-                resolve(response.payload)
-            },
-            onError(error) {
-                reject(error)
-            },
+    const prepareTransfers = createPrepareTransfers()
+
+    const transfers = [
+        {
+            value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+            address: removeAddressChecksum(migrationAddress.trytes),
+        }
+    ]
+
+    const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
+        address: input.address,
+        keyIndex: input.index,
+        security: input.securityLevel,
+        balance: MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+    }))
+
+    try {
+        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+            inputs: inputsForTransfer,
         })
-    })
+
+        return bundleTrytes
+    } catch (err) {
+        throw new Error(err.message || 'Failed to prepare transfers')
+    }
 }
 
 export async function fetchOffLedgerRequest(request: string): Promise<void> {
@@ -788,7 +820,7 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
     try {
         const response = await fetch(endpoint, requestOptions)
 
-        if (response.status === 400) {
+        if (response.status >= 400) {
             return response.json().then((err) => {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })
@@ -828,7 +860,7 @@ export async function fetchReceiptForRequest(requestId: string): Promise<any> {
     try {
         const response = await fetch(endpoint, requestOptions)
 
-        if (response.status === 400) {
+        if (response.status >= 400) {
             return response.json().then((err) => {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })

@@ -21,14 +21,18 @@
         migration,
         sendLedgerMigrationBundle,
         sendMigrationBundle,
+        sendOffLedgerMigrationRequest,
         unmigratedBundles,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
     import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
-    import { walletSetupType } from 'shared/lib/wallet'
+    import { api, wallet, walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
     import { Locale } from '@core/i18n'
+    import { convertBech32AddressToEd25519Address } from '@lib/ed25519'
+    import { Bundle, MigrationAddress } from '@lib/typings/migration'
+    import { showAppNotification } from '@lib/notifications'
 
     export let locale: Locale
 
@@ -82,13 +86,13 @@
     // TODO: add missing unsubscribe to onDestroy
     confirmedBundles.subscribe((newConfirmedBundles) => {
         newConfirmedBundles.forEach((bundle) => {
-            if (bundle.bundleHash && bundle.confirmed) {
+            if (bundle.confirmed) {
                 migratedAndUnconfirmedBundles = migratedAndUnconfirmedBundles.filter(
                     (bundleHash) => bundleHash !== bundle.bundleHash
                 )
 
                 transactions = transactions.map((item) => {
-                    if (item.bundleHash === bundle.bundleHash) {
+                    if (item.index === bundle.index) {
                         return { ...item, status: 2 }
                     }
 
@@ -130,6 +134,73 @@
 
             return _transaction
         })
+    }
+    function sendLedgerMigrationRequest(transaction, migrationAddress: MigrationAddress) {
+        // Platform.ledger
+        //     .selectSeed(
+        //         $hardwareIndexes.accountIndex,
+        //         $hardwareIndexes.pageIndex,
+        //         ADDRESS_SECURITY_LEVEL
+        //     )
+        //     .then(({ iota, callback }) => {
+        //         closeTransport = callback
+        //         return createLedgerMigrationBundle(
+        //             transaction.index,
+        //             iota.prepareTransfers,
+        //             callback
+        //         )
+        //     })
+        //     .then(({ trytes, bundleHash }) => {
+        //         closePopup(true) // close transaction popup
+        //         setMigratingTransaction(transaction, 1)
+        //         transactions = transactions.map((_transaction, i) => {
+        //             if (_transaction.index === transaction.index) {
+        //                 return { ..._transaction, bundleHash }
+        //             }
+        //             return _transaction
+        //         })
+        //         return sendLedgerMigrationBundle(bundleHash, trytes).then(() => {
+        //             if (!hasBroadcastAnyBundle) {
+        //                 hasBroadcastAnyBundle = true
+        //                 persistProfile()
+        //             }
+        //             migratedAndUnconfirmedBundles = [...migratedAndUnconfirmedBundles, bundleHash]
+        //         })
+        //     })
+    }
+
+    function sendMigrationRequest(transaction, migrationAddress: MigrationAddress) {
+        setMigratingTransaction(transaction, 1)
+
+        createMigrationBundle(transaction as Bundle, migrationAddress)
+            .then((trytes: string[]) => sendOffLedgerMigrationRequest(trytes.reverse(), transaction.index))
+            .then((receipt) => {
+                // todo: handle receipt data
+                // is this needed?
+                if (!hasBroadcastAnyBundle) {
+                    hasBroadcastAnyBundle = true
+
+                    persistProfile()
+                }
+                // console.log("receipt", receipt)
+            })
+            .catch((error) => {
+                showAppNotification({ type: 'error', message: error.message || 'Failed to prepare transfers' })
+                console.error(error)
+
+                transactions = transactions.map((_transaction, i) => {
+                    if (_transaction.index === transaction.index) {
+                        return { ..._transaction, status: -1, errorText: 'Migration failed' }
+                    }
+
+                    return _transaction
+                })
+
+                if (transaction.index === transactions.length - 1 && transactions.every((tx) => tx.status !== 0)) {
+                    migrated = true
+                    busy = false
+                }
+            })
     }
 
     function rerunMigration() {
@@ -299,153 +370,177 @@
 
     function migrateFunds() {
         migratingFundsMessage = locale('views.migrate.migrating')
+        // console.log("transactions:", transactions)
+        const { accounts } = get(wallet)
 
-        transactions.reduce(
-            (promise, transaction, idx) =>
-                // @ts-ignore
-                promise
-                    .then((acc) => {
-                        if (legacyLedger) {
-                            if (transaction.trytes && transaction.trytes.length) {
-                                return Platform.ledger
-                                    .selectSeed(
-                                        $hardwareIndexes.accountIndex,
-                                        $hardwareIndexes.pageIndex,
-                                        ADDRESS_SECURITY_LEVEL
-                                    )
-                                    .then(({ iota, callback }) => {
-                                        closeTransport = callback
-                                        return createMinedLedgerMigrationBundle(
-                                            transaction.index,
-                                            iota.prepareTransfers,
-                                            callback
-                                        )
-                                    })
-                                    .then(({ trytes, bundleHash }) => {
-                                        closePopup(true) // close transaction popup
-                                        setMigratingTransaction(transaction, 1)
-                                        transactions = transactions.map((_transaction, i) => {
-                                            if (_transaction.index === transaction.index) {
-                                                return { ..._transaction, bundleHash }
-                                            }
+        api.getMigrationAddress(false, get(accounts)[0].id, {
+            onSuccess(response) {
+                const migrationAddress = response.payload as unknown as MigrationAddress
+                // console.log("bech32", migrationAddress.bech32)
+                // console.log("ed25519",convertBech32AddressToEd25519Address(migrationAddress.bech32))
 
-                                            return _transaction
-                                        })
+                transactions.forEach((transaction, index) => {
+                    if (legacyLedger) {
+                        sendLedgerMigrationRequest(transaction, migrationAddress)
+                    } else {
+                        sendMigrationRequest(transaction, migrationAddress)
+                    }
+                })
+            },
+            onError(error) {
+                console.error(error)
+                showAppNotification({
+                    type: 'error',
+                    message: error.error || 'Error to getMigrationAddress',
+                })
+            },
+        })
+        // transactions.reduce(
+        //     (promise, transaction, idx) =>
+        //         // @ts-ignore
+        //         promise
+        //             .then((acc) => {
+        //                 if (legacyLedger) {
+        //                     if (transaction.trytes && transaction.trytes.length) {
+        //                         return Platform.ledger
+        //                             .selectSeed(
+        //                                 $hardwareIndexes.accountIndex,
+        //                                 $hardwareIndexes.pageIndex,
+        //                                 ADDRESS_SECURITY_LEVEL
+        //                             )
+        //                             .then(({ iota, callback }) => {
+        //                                 closeTransport = callback
+        //                                 return createMinedLedgerMigrationBundle(
+        //                                     transaction.index,
+        //                                     iota.prepareTransfers,
+        //                                     callback
+        //                                 )
+        //                             })
+        //                             .then(({ trytes, bundleHash }) => {
+        //                                 closePopup(true) // close transaction popup
+        //                                 setMigratingTransaction(transaction, 1)
+        //                                 transactions = transactions.map((_transaction, i) => {
+        //                                     if (_transaction.index === transaction.index) {
+        //                                         return { ..._transaction, bundleHash }
+        //                                     }
 
-                                        return sendLedgerMigrationBundle(bundleHash, trytes)
-                                    })
-                                    .then(() => {
-                                        if (!hasBroadcastAnyBundle) {
-                                            hasBroadcastAnyBundle = true
+        //                                     return _transaction
+        //                                 })
 
-                                            persistProfile()
-                                        }
+        //                                 return sendLedgerMigrationBundle(bundleHash, trytes)
+        //                             })
+        //                             .then(() => {
+        //                                 if (!hasBroadcastAnyBundle) {
+        //                                     hasBroadcastAnyBundle = true
 
-                                        migratedAndUnconfirmedBundles = [
-                                            ...migratedAndUnconfirmedBundles,
-                                            transaction.bundleHash,
-                                        ]
-                                    })
-                            }
+        //                                     persistProfile()
+        //                                 }
 
-                            return Platform.ledger
-                                .selectSeed(
-                                    $hardwareIndexes.accountIndex,
-                                    $hardwareIndexes.pageIndex,
-                                    ADDRESS_SECURITY_LEVEL
-                                )
-                                .then(({ iota, callback }) => {
-                                    closeTransport = callback
-                                    return createLedgerMigrationBundle(
-                                        transaction.index,
-                                        iota.prepareTransfers,
-                                        callback
-                                    )
-                                })
-                                .then(({ trytes, bundleHash }) => {
-                                    closePopup(true) // close transaction popup
-                                    setMigratingTransaction(transaction, 1)
-                                    transactions = transactions.map((_transaction, i) => {
-                                        if (_transaction.index === transaction.index) {
-                                            return { ..._transaction, bundleHash }
-                                        }
+        //                                 migratedAndUnconfirmedBundles = [
+        //                                     ...migratedAndUnconfirmedBundles,
+        //                                     transaction.bundleHash,
+        //                                 ]
+        //                             })
+        //                     }
 
-                                        return _transaction
-                                    })
+        //                     return Platform.ledger
+        //                         .selectSeed(
+        //                             $hardwareIndexes.accountIndex,
+        //                             $hardwareIndexes.pageIndex,
+        //                             ADDRESS_SECURITY_LEVEL
+        //                         )
+        //                         .then(({ iota, callback }) => {
+        //                             closeTransport = callback
+        //                             return createLedgerMigrationBundle(
+        //                                 transaction.index,
+        //                                 iota.prepareTransfers,
+        //                                 callback
+        //                             )
+        //                         })
+        //                         .then(({ trytes, bundleHash }) => {
+        //                             closePopup(true) // close transaction popup
+        //                             setMigratingTransaction(transaction, 1)
+        //                             transactions = transactions.map((_transaction, i) => {
+        //                                 if (_transaction.index === transaction.index) {
+        //                                     return { ..._transaction, bundleHash }
+        //                                 }
 
-                                    return sendLedgerMigrationBundle(bundleHash, trytes).then(() => {
-                                        if (!hasBroadcastAnyBundle) {
-                                            hasBroadcastAnyBundle = true
+        //                                 return _transaction
+        //                             })
 
-                                            persistProfile()
-                                        }
+        //                             return sendLedgerMigrationBundle(bundleHash, trytes).then(() => {
+        //                                 if (!hasBroadcastAnyBundle) {
+        //                                     hasBroadcastAnyBundle = true
 
-                                        migratedAndUnconfirmedBundles = [...migratedAndUnconfirmedBundles, bundleHash]
-                                    })
-                                })
-                        }
+        //                                     persistProfile()
+        //                                 }
 
-                        if (transaction.bundleHash) {
-                            setMigratingTransaction(transaction, 1)
-                            return sendMigrationBundle(transaction.bundleHash).then(() => {
-                                if (!hasBroadcastAnyBundle) {
-                                    hasBroadcastAnyBundle = true
+        //                                 migratedAndUnconfirmedBundles = [...migratedAndUnconfirmedBundles, bundleHash]
+        //                             })
+        //                         })
+        //                 }
+        //                 console.log("transaction:", transaction)
+        //                 if (transaction.bundleHash) {
+        //                     setMigratingTransaction(transaction, 1)
+        //                     return sendMigrationBundle(transaction.bundleHash).then(() => {
+        //                         if (!hasBroadcastAnyBundle) {
+        //                             hasBroadcastAnyBundle = true
 
-                                    persistProfile()
-                                }
+        //                             persistProfile()
+        //                         }
 
-                                migratedAndUnconfirmedBundles = [
-                                    ...migratedAndUnconfirmedBundles,
-                                    transaction.bundleHash,
-                                ]
-                            })
-                        }
+        //                         migratedAndUnconfirmedBundles = [
+        //                             ...migratedAndUnconfirmedBundles,
+        //                             transaction.bundleHash,
+        //                         ]
+        //                     })
+        //                 }
 
-                        return createMigrationBundle(getInputIndexesForBundle(transaction), 0, false).then((result) => {
-                            setMigratingTransaction(transaction, 1)
-                            transactions = transactions.map((_transaction, i) => {
-                                if (_transaction.index === transaction.index) {
-                                    return { ..._transaction, bundleHash: result.bundleHash }
-                                }
+        //                 return createMigrationBundle(getInputIndexesForBundle(transaction), 0, false).then((result) => {
+        //                     setMigratingTransaction(transaction, 1)
+        //                     transactions = transactions.map((_transaction, i) => {
+        //                         if (_transaction.index === transaction.index) {
+        //                             return { ..._transaction, bundleHash: result.bundleHash }
+        //                         }
 
-                                return _transaction
-                            })
+        //                         return _transaction
+        //                     })
 
-                            return sendMigrationBundle(result.bundleHash).then(() => {
-                                if (!hasBroadcastAnyBundle) {
-                                    hasBroadcastAnyBundle = true
+        //                     return sendMigrationBundle(result.bundleHash).then(() => {
+        //                         if (!hasBroadcastAnyBundle) {
+        //                             hasBroadcastAnyBundle = true
 
-                                    persistProfile()
-                                }
+        //                             persistProfile()
+        //                         }
 
-                                migratedAndUnconfirmedBundles = [...migratedAndUnconfirmedBundles, result.bundleHash]
-                            })
-                        })
-                    })
-                    .catch((error) => {
-                        console.error(error)
+        //                         migratedAndUnconfirmedBundles = [...migratedAndUnconfirmedBundles, result.bundleHash]
+        //                     })
+        //                 })
+        //             })
+        //             .catch((error) => {
+        //                 console.error(error)
 
-                        if (legacyLedger) {
-                            closePopup(true) // close transaction popup
-                            closeTransport()
-                            displayNotificationForLedgerProfile('error', false, true, false, true, error)
-                        }
+        //                 if (legacyLedger) {
+        //                     closePopup(true) // close transaction popup
+        //                     closeTransport()
+        //                     displayNotificationForLedgerProfile('error', false, true, false, true, error)
+        //                 }
 
-                        transactions = transactions.map((_transaction, i) => {
-                            if (_transaction.index === transaction.index) {
-                                return { ..._transaction, status: -1, errorText: 'Migration failed' }
-                            }
+        //                 transactions = transactions.map((_transaction, i) => {
+        //                     if (_transaction.index === transaction.index) {
+        //                         return { ..._transaction, status: -1, errorText: 'Migration failed' }
+        //                     }
 
-                            return _transaction
-                        })
+        //                     return _transaction
+        //                 })
 
-                        if (idx === transactions.length - 1 && transactions.every((tx) => tx.status !== 0)) {
-                            migrated = true
-                            busy = false
-                        }
-                    }),
-            Promise.resolve([])
-        )
+        //                 if (idx === transactions.length - 1 && transactions.every((tx) => tx.status !== 0)) {
+        //                     migrated = true
+        //                     busy = false
+        //                 }
+        //             }),
+        //     Promise.resolve([])
+        // )
     }
 </script>
 
