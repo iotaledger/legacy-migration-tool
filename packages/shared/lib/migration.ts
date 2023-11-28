@@ -725,6 +725,25 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
     })
 
 /**
+ * Sends off ledger migration request
+ *
+ * @method sendOffLedgerMigrationRequest
+ *
+ * @param {string[]} trytes
+ *
+ * @returns {Promise<Receipt>}
+ */
+export const sendOffLedgerMigrationRequest = async (trytes: string[]): Promise<any> => {
+    try {
+        const offLedgerHexRequest = createOffLedgerRequest(trytes)
+        await fetchOffLedgerRequest(offLedgerHexRequest.request)
+        return await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+    } catch (err) {
+        showAppNotification({ type: 'error', message: err.message || 'Failed to send migration request' })
+        return
+    }
+}
+/**
  * Creates migration bundle
  *
  * @method createMigrationBundle
