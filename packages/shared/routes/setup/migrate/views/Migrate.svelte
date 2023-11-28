@@ -7,15 +7,12 @@
         ADDRESS_SECURITY_LEVEL,
         confirmedBundles,
         createLedgerMigrationBundle,
-        createOffLedgerRequest,
-        fetchOffLedgerRequest,
-        fetchReceiptForRequest,
+        depositAddressMigration,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
         removeAddressChecksum,
-        sendLedgerMigrationBundle,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
@@ -31,6 +28,8 @@
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
+    import { appRouter } from '@core/router'
+    import { convertBech32AddressToEd25519Address } from '@lib/ed25519'
 
     export let locale: Locale
 
@@ -71,7 +70,7 @@
         })
     })
 
-    const sendMigrationRequest = async (migrationAddress: MigrationAddress) => {
+    const sendMigrationRequest = async (migrationAddress: MigrationAddress): Promise<any> => {
         const { seed } = get(migration)
         const prepareTransfers = createPrepareTransfers()
 
@@ -94,9 +93,7 @@
                 inputs: inputsForTransfer,
             })
 
-            const offLedgerHexRequest = createOffLedgerRequest(bundleTrytes.reverse())
-            await fetchOffLedgerRequest(offLedgerHexRequest.request)
-            await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+            return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
         } catch (err) {
             showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
         } finally {
@@ -131,6 +128,7 @@
 
                                 newProfile.set(null)
                             }
+                            $appRouter.next()
                         })
                         .catch((error) => {
                             loading = false
@@ -152,7 +150,31 @@
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        void sendMigrationRequest(response.payload as unknown as MigrationAddress)
+                        const migrationAddressEd25519 = convertBech32AddressToEd25519Address(
+                            (response.payload as unknown as MigrationAddress).bech32
+                        )
+                        depositAddressMigration.set((response.payload as unknown as MigrationAddress).bech32)
+                        sendMigrationRequest(response.payload as unknown as MigrationAddress)
+                            .then((receipt) => {
+                                // todo: handle receipt data
+                                loading = false
+                                if ($newProfile) {
+                                    // Save profile
+                                    saveProfile($newProfile)
+                                    setActiveProfile($newProfile.id)
+
+                                    newProfile.set(null)
+                                }
+                                $appRouter.next()
+                            })
+                            .catch((error) => {
+                                loading = false
+                                showAppNotification({
+                                    type: 'error',
+                                    message: locale(getLegacyErrorMessage(error)),
+                                })
+                                console.error(error)
+                            })
                     },
                     onError(error) {
                         loading = false

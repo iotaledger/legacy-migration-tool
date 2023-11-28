@@ -111,6 +111,8 @@ export const migration = writable<MigrationState>({
     bundles: writable<Bundle[]>([]),
 })
 
+export const depositAddressMigration = writable<string | null>(null)
+
 export const didInitialiseMigrationListeners = writable<boolean>(false)
 
 export const hardwareIndexes = writable<HardwareIndexes>({
@@ -672,6 +674,7 @@ export const createLedgerMigrationBundle = (
             },
         })
     }).then((address: MigrationAddress) => {
+        depositAddressMigration.set(address.bech32)
         const bundle = findMigrationBundle(bundleIndex)
         const transfer = {
             address: address.trytes.toString(),
@@ -1334,15 +1337,7 @@ export const hasMigratedAndConfirmedAllSelectedBundles = derived(get(migration).
 /**
  * Total migration balance
  */
-export const totalMigratedBalance = derived(get(migration).bundles, (_bundles) =>
-    _bundles.reduce((acc, bundle) => {
-        if (bundle.selected && bundle.migrated) {
-            return acc + bundle.inputs.reduce((_acc, input) => _acc + input.balance, 0)
-        }
-
-        return acc
-    }, 0)
-)
+export const totalMigratedBalance = derived(get(migration).data, (data) => data.balance)
 
 /**
  * Determines if all spent addresses have low (less than MINIMUM MIGRATION) balance
