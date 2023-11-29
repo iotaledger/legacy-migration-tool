@@ -12,6 +12,7 @@
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        prepareMigrationLog,
         removeAddressChecksum,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
@@ -93,6 +94,8 @@
                 inputs: inputsForTransfer,
             })
 
+            // TODO: Check the bundlehash with software profiles
+            prepareMigrationLog('', bundleTrytes.reverse(), migratableBalance)
             return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
         } catch (err) {
             showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
@@ -116,6 +119,7 @@
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
+                            prepareMigrationLog(bundleHash, trytes.reverse(), migratableBalance)
                             return sendOffLedgerMigrationRequest(trytes.reverse())
                         })
                         .then((receipt) => {
@@ -150,9 +154,6 @@
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        const migrationAddressEd25519 = convertBech32AddressToEd25519Address(
-                            (response.payload as unknown as MigrationAddress).bech32
-                        )
                         depositAddressMigration.set((response.payload as unknown as MigrationAddress).bech32)
                         sendMigrationRequest(response.payload as unknown as MigrationAddress)
                             .then((receipt) => {
