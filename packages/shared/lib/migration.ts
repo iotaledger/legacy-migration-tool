@@ -53,7 +53,7 @@ export const MINING_TIMEOUT_SECONDS = 10 * 60
 // TODO: Change back temp mwm (previously 9)
 export const MINIMUM_WEIGHT_MAGNITUDE = 14
 
-const SOFTWARE_MAX_INPUTS_PER_BUNDLE = 1
+const SOFTWARE_MAX_INPUTS_PER_BUNDLE = 10
 
 const HARDWARE_MAX_INPUTS_PER_BUNDLE = 3
 
@@ -650,48 +650,72 @@ export const createMinedLedgerMigrationBundle = (
  */
 export const createLedgerMigrationBundle = (
     bundleIndex: number,
+    migrationAddress: MigrationAddress,
     prepareTransfersFn: (transfers: Transfer[], inputs: Input[]) => Promise<string[]>,
     callback: () => void
-): Promise<MigrationBundle> =>
-    new Promise((resolve, reject) => {
-        api.getAccounts({
-            onSuccess(getAccountsResponse) {
-                api.getMigrationAddress(
-                    false,
-                    getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
-                    {
-                        onSuccess(response) {
-                            resolve(response.payload)
-                        },
-                        onError(error) {
-                            reject(error)
-                        },
-                    }
-                )
-            },
-            onError(getAccountsError) {
-                reject(getAccountsError)
-            },
-        })
-    }).then((address: MigrationAddress) => {
-        const bundle = findMigrationBundle(bundleIndex)
-        const transfer = {
-            address: address.trytes.toString(),
-            value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
-            tag: 'U'.repeat(27),
-        }
+): Promise<MigrationBundle> => {
+    const bundle = findMigrationBundle(bundleIndex)
+    // console.log("bundle", bundle)
 
-        openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
+    const transfer = {
+        address: migrationAddress.trytes,
+        value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
+        tag: 'U'.repeat(27),
+    }
+    // console.log("transfer", transfer)
+    openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
 
-        return prepareTransfersFn(
-            [transfer],
-            bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
-        ).then((trytes) => {
-            updateLedgerBundleState(bundleIndex, trytes, false)
-            callback()
-            return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
-        })
+    return prepareTransfersFn(
+        [transfer],
+        bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
+    ).then((trytes) => {
+        // console.log("tryer", trytes)
+        updateLedgerBundleState(bundleIndex, trytes, false)
+        callback()
+        return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
     })
+}
+// new Promise((resolve, reject) => {
+//     api.getAccounts({
+//         onSuccess(getAccountsResponse) {
+//             api.getMigrationAddress(
+//                 false,
+//                 getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
+//                 {
+//                     onSuccess(response) {
+//                         console.log("gen add", response)
+//                         resolve(response.payload)
+//                     },
+//                     onError(error) {
+//                         reject(error)
+//                     },
+//                 }
+//             )
+//         },
+//         onError(getAccountsError) {
+//             reject(getAccountsError)
+//         },
+//     })
+// }).then((address: MigrationAddress) => {
+//     const bundle = findMigrationBundle(bundleIndex)
+//     const transfer = {
+//         address: address.trytes.toString(),
+//         value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
+//         tag: 'U'.repeat(27),
+//     }
+//     console.log("transfer", transfer)
+//     openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
+
+//     return prepareTransfersFn(
+//         [transfer],
+//         bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
+//     ).then((trytes) => {
+//         console.log("tytes prepare fn", trytes)
+//         updateLedgerBundleState(bundleIndex, trytes, false)
+//         callback()
+//         return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
+//     })
+// })
 
 /**
  * Sends ledger migration bundle
@@ -765,10 +789,7 @@ export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleInde
  *
  * @returns {Promise}
  */
-export const createMigrationBundle = async (
-    bundle: Bundle,
-    migrationAddress: MigrationAddress
-): Promise<string[]> => {
+export const createMigrationBundle = async (bundle: Bundle, migrationAddress: MigrationAddress): Promise<string[]> => {
     const { seed } = get(migration)
 
     const prepareTransfers = createPrepareTransfers()
@@ -777,7 +798,7 @@ export const createMigrationBundle = async (
         {
             value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
             address: removeAddressChecksum(migrationAddress.trytes),
-        }
+        },
     ]
 
     const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
@@ -1204,6 +1225,7 @@ export const prepareBundles = (): void => {
             })),
         ].map((_, index) => ({ ..._, index }))
     )
+    // console.log("bundles", get(bundles))
 }
 
 /**
