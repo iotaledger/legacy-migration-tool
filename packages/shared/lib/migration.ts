@@ -372,7 +372,7 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
     const { bundles } = get(migration)
 
     const bundle = get(bundles).find((bundle) => bundle.bundleHash === bundleHash)
-    const spentInputs = bundle.inputs.filter((input) => input.spent === true)
+    const spentInputs = bundle?.inputs?.filter((input) => input.spent === true) || []
 
     const spentBundleHashes = []
 
@@ -391,9 +391,9 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
             receiveAddressTrytes: transactionObjects.find((tx) => tx.address.startsWith('TRANSFER')).address,
             balance,
             spentBundleHashes,
-            spentAddresses: bundle.inputs.filter((input) => input.spent === true).map((input) => input.address),
-            mine: bundle.miningRuns > 0,
-            crackability: bundle.crackability,
+            spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
+            mine: bundle?.miningRuns > 0,
+            crackability: bundle?.crackability || null,
         },
     ])
 }
@@ -730,14 +730,10 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
  * @returns {Promise<Receipt>}
  */
 export const sendOffLedgerMigrationRequest = async (trytes: string[]): Promise<any> => {
-    try {
-        const offLedgerHexRequest = createOffLedgerRequest(trytes)
-        await fetchOffLedgerRequest(offLedgerHexRequest.request)
-        return await fetchReceiptForRequest(offLedgerHexRequest.requestId)
-    } catch (err) {
-        showAppNotification({ type: 'error', message: err.message || 'Failed to send migration request' })
-        return
-    }
+    const offLedgerHexRequest = createOffLedgerRequest(trytes)
+    await fetchOffLedgerRequest(offLedgerHexRequest.request)
+    const receiptResponse = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+    return receiptResponse
 }
 /**
  * Creates migration bundle

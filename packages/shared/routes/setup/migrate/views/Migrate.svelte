@@ -12,6 +12,7 @@
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        prepareMigrationLog,
         removeAddressChecksum,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
@@ -29,7 +30,6 @@
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
     import { appRouter } from '@core/router'
-    import { convertBech32AddressToEd25519Address } from '@lib/ed25519'
 
     export let locale: Locale
 
@@ -88,17 +88,13 @@
             balance: input.balance,
         }))
 
-        try {
-            const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
-                inputs: inputsForTransfer,
-            })
+        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+            inputs: inputsForTransfer,
+        })
 
-            return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
-        } catch (err) {
-            showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
-        } finally {
-            loading = false
-        }
+        // TODO: Check the bundlehash with software profiles
+        prepareMigrationLog('', bundleTrytes.reverse(), migratableBalance)
+        return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
     }
 
     function handleContinueClick() {
@@ -116,6 +112,7 @@
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
+                            prepareMigrationLog(bundleHash, trytes.reverse(), migratableBalance)
                             return sendOffLedgerMigrationRequest(trytes.reverse())
                         })
                         .then((receipt) => {
