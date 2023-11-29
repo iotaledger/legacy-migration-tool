@@ -372,7 +372,7 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
     const { bundles } = get(migration)
 
     const bundle = get(bundles).find((bundle) => bundle.bundleHash === bundleHash)
-    const spentInputs = bundle.inputs.filter((input) => input.spent === true)
+    const spentInputs = bundle?.inputs?.filter((input) => input.spent === true) || []
 
     const spentBundleHashes = []
 
@@ -391,9 +391,9 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
             receiveAddressTrytes: transactionObjects.find((tx) => tx.address.startsWith('TRANSFER')).address,
             balance,
             spentBundleHashes,
-            spentAddresses: bundle.inputs.filter((input) => input.spent === true).map((input) => input.address),
-            mine: bundle.miningRuns > 0,
-            crackability: bundle.crackability,
+            spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
+            mine: bundle?.miningRuns > 0,
+            crackability: bundle?.crackability || null,
         },
     ])
 }

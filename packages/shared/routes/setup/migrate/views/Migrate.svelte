@@ -88,19 +88,13 @@
             balance: input.balance,
         }))
 
-        try {
-            const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
-                inputs: inputsForTransfer,
-            })
+        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+            inputs: inputsForTransfer,
+        })
 
-            // TODO: Check the bundlehash with software profiles
-            prepareMigrationLog('', bundleTrytes.reverse(), migratableBalance)
-            return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
-        } catch (err) {
-            showAppNotification({ type: 'error', message: err.message || 'Failed to prepare transfers' })
-        } finally {
-            loading = false
-        }
+        // TODO: Check the bundlehash with software profiles
+        prepareMigrationLog('', bundleTrytes.reverse(), migratableBalance)
+        return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
     }
 
     function handleContinueClick() {
