@@ -30,7 +30,6 @@
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
     import { appRouter } from '@core/router'
-    import { convertBech32AddressToEd25519Address } from '@lib/ed25519'
 
     export let locale: Locale
 
