@@ -21,7 +21,7 @@ import {
 } from 'shared/lib/typings/migration'
 import { appRoute, AppRoute } from '@core/router'
 import Validator from 'shared/lib/validator'
-import { api, walletSetupType } from 'shared/lib/wallet'
+import { api, wallet, walletSetupType } from 'shared/lib/wallet'
 import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
@@ -45,6 +45,7 @@ export const ADDRESS_SECURITY_LEVEL = 2
 /** Minimum migration balance */
 export const MINIMUM_MIGRATION_BALANCE = 0
 
+/** Amount to hardcode in the inputs to bypass legacy validation in ISC */
 export const MINIMUM_MIGRATABLE_AMOUNT = 1000000
 
 /** Bundle mining timeout for each bundle */
@@ -121,6 +122,8 @@ export const hardwareIndexes = writable<HardwareIndexes>({
 })
 
 export const migrationLog = writable<MigrationLog[]>([])
+
+export const migrationAddress = writable<MigrationAddress>()
 
 export const createUnsignedBundle = (
     outputAddress: string,
@@ -245,6 +248,45 @@ function iscVluEncode(value: number): Buffer {
     return Buffer.from(buf)
 }
 
+export const generateMigrationAddress = async (ledger: boolean = false): Promise<MigrationAddress> =>
+    new Promise<MigrationAddress>((resolve, reject) => {
+        if (ledger) {
+            api.getAccounts({
+                onSuccess: (getAccountsResponse) => {
+                    api.getMigrationAddress(
+                        false,
+                        getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
+                        {
+                            onSuccess: (response) => {
+                                resolve(response.payload as unknown as MigrationAddress)
+                            },
+                            onError: (error) => {
+                                console.error(error)
+                                reject(error)
+                            },
+                        }
+                    )
+                },
+                onError: (getAccountsError) => {
+                    console.error(getAccountsError)
+                    reject(getAccountsError)
+                },
+            })
+        } else {
+            const { accounts } = get(wallet)
+
+            api.getMigrationAddress(false, get(accounts)[0].id, {
+                onSuccess: (response) => {
+                    resolve(response.payload as unknown as MigrationAddress)
+                },
+                onError: (error) => {
+                    console.error(error)
+                    reject(error)
+                },
+            })
+        }
+    })
+
 /**
  * Gets migration data and sets it to state
  *
@@ -265,13 +307,8 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
         const binaryAddress = '0x' + convertToHex(legacyAddress)
         const balance = await fetchMigratableBalance(binaryAddress)
 
-        // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
-        // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-        // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
         totalBalance += balance
         if (balance > 0) {
-            // Hardcode MINIMUM_MIGRATION_BALANCE for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATION_BALANCE.
-            // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
             inputs.push({
                 address: legacyAddress,
                 balance,
@@ -655,67 +692,24 @@ export const createLedgerMigrationBundle = (
     callback: () => void
 ): Promise<MigrationBundle> => {
     const bundle = findMigrationBundle(bundleIndex)
-    // console.log("bundle", bundle)
 
     const transfer = {
         address: migrationAddress.trytes,
         value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
         tag: 'U'.repeat(27),
     }
-    // console.log("transfer", transfer)
+
     openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
 
     return prepareTransfersFn(
         [transfer],
         bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
     ).then((trytes) => {
-        // console.log("tryer", trytes)
         updateLedgerBundleState(bundleIndex, trytes, false)
         callback()
         return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
     })
 }
-// new Promise((resolve, reject) => {
-//     api.getAccounts({
-//         onSuccess(getAccountsResponse) {
-//             api.getMigrationAddress(
-//                 false,
-//                 getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
-//                 {
-//                     onSuccess(response) {
-//                         console.log("gen add", response)
-//                         resolve(response.payload)
-//                     },
-//                     onError(error) {
-//                         reject(error)
-//                     },
-//                 }
-//             )
-//         },
-//         onError(getAccountsError) {
-//             reject(getAccountsError)
-//         },
-//     })
-// }).then((address: MigrationAddress) => {
-//     const bundle = findMigrationBundle(bundleIndex)
-//     const transfer = {
-//         address: address.trytes.toString(),
-//         value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
-//         tag: 'U'.repeat(27),
-//     }
-//     console.log("transfer", transfer)
-//     openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
-
-//     return prepareTransfersFn(
-//         [transfer],
-//         bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
-//     ).then((trytes) => {
-//         console.log("tytes prepare fn", trytes)
-//         updateLedgerBundleState(bundleIndex, trytes, false)
-//         callback()
-//         return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
-//     })
-// })
 
 /**
  * Sends ledger migration bundle
@@ -800,7 +794,11 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
             address: removeAddressChecksum(migrationAddress.trytes),
         },
     ]
-
+    // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
+    // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
+    // Hardcode MINIMUM_MIGRATABLE_AMOUNT for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
+    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
     const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
         address: input.address,
         keyIndex: input.index,
@@ -1225,7 +1223,6 @@ export const prepareBundles = (): void => {
             })),
         ].map((_, index) => ({ ..._, index }))
     )
-    // console.log("bundles", get(bundles))
 }
 
 /**

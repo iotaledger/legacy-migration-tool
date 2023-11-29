@@ -8,25 +8,25 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        migrationAddress,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
-    import { activeProfile, newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
+    import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { api, walletSetupType, wallet } from 'shared/lib/wallet'
+    import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
-    import { MigrationAddress } from '@lib/typings/migration'
-    import { convertBech32AddressToEd25519Address } from '@lib/ed25519'
 
     export let locale: Locale
 
@@ -52,8 +52,6 @@
 
     let singleMigrationBundleHash
 
-    let migrationAddress: MigrationAddress
-
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
     $: animation = legacyLedger ? 'ledger-migrate-desktop' : 'migrate-desktop'
 
@@ -69,58 +67,6 @@
         })
     })
 
-    function generateMigrationAddress() {
-        if (legacyLedger) {
-            api.getAccounts({
-                onSuccess(getAccountsResponse) {
-                    api.getMigrationAddress(
-                        false,
-                        getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
-                        {
-                            onSuccess(response) {
-                                migrationAddress = response.payload as unknown as MigrationAddress
-                                // console.log("ledger address", migrationAddress)
-                                // console.log("ledger bech32", migrationAddress.bech32)
-                                // console.log("ledger ed25519",convertBech32AddressToEd25519Address(migrationAddress.bech32))
-                            },
-                            onError(error) {
-                                console.error(error)
-                                showAppNotification({
-                                    type: 'error',
-                                    message: error.error || 'Error to getMigrationAddress',
-                                })
-                            },
-                        }
-                    )
-                },
-                onError(getAccountsError) {
-                    console.error(getAccountsError)
-                    showAppNotification({
-                        type: 'error',
-                        message: getAccountsError.error || 'Error to getAccounts',
-                    })
-                },
-            })
-        } else {
-            const { accounts } = get(wallet)
-
-            api.getMigrationAddress(false, get(accounts)[0].id, {
-                onSuccess(response) {
-                    migrationAddress = response.payload as unknown as MigrationAddress
-                    // console.log("bech32", migrationAddress.bech32)
-                    // console.log("ed25519",convertBech32AddressToEd25519Address(migrationAddress.bech32))
-                },
-                onError(error) {
-                    console.error(error)
-                    showAppNotification({
-                        type: 'error',
-                        message: error.error || 'Error to getMigrationAddress',
-                    })
-                },
-            })
-        }
-    }
-
     function handleContinueClick() {
         if ($hasSingleBundle && !$hasBundlesWithSpentAddresses) {
             loading = true
@@ -131,7 +77,12 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            return createLedgerMigrationBundle(0, migrationAddress, iota.prepareTransfers, callback)
+                            return createLedgerMigrationBundle(
+                                0,
+                                get(migrationAddress),
+                                iota.prepareTransfers,
+                                callback
+                            )
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
@@ -165,15 +116,10 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
-                // const { accounts } = get(wallet)
-
-                // api.getMigrationAddress(false, get(accounts)[0].id, {
-                //     onSuccess(response) {
-                createMigrationBundle($bundles[0], migrationAddress)
+                createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => sendOffLedgerMigrationRequest(trytes.reverse(), 0))
                     .then((receipt) => {
                         // todo: handle receipt data
-                        // console.log("receipt", receipt)
                         loading = false
                     })
                     .catch((error) => {
@@ -184,15 +130,6 @@
                         })
                         console.error(error)
                     })
-                //     },
-                //     onError(error) {
-                //         loading = false
-                //         showAppNotification({
-                //             type: 'error',
-                //             message: error.error || 'Error to getMigrationAddress',
-                //         })
-                //     },
-                // })
             }
         } else {
             loading = true
@@ -207,9 +144,16 @@
         Platform.openUrl('https://blog.iota.org/firefly-token-migration/')
     }
 
-    onMount(() => {
-        if (!migrationAddress) {
-            generateMigrationAddress()
+    onMount(async () => {
+        if (!get(migrationAddress)) {
+            try {
+                migrationAddress.set(await generateMigrationAddress(legacyLedger))
+            } catch (error) {
+                showAppNotification({
+                    type: 'error',
+                    message: error.error || 'Error generating migration address',
+                })
+            }
         }
     })
 
@@ -237,7 +181,7 @@
         <button on:click={learnAboutMigrationsClick}>
             <Text type="p" highlighted>{locale('views.migrate.learn')}</Text>
         </button>
-        <Button disabled={loading || !migrationAddress} classes="w-full" onClick={() => handleContinueClick()}>
+        <Button disabled={loading || !$migrationAddress} classes="w-full" onClick={() => handleContinueClick()}>
             {#if loading}
                 <Spinner busy={loading} message={locale('views.migrate.migrating')} classes="justify-center" />
             {:else}{locale('views.migrate.beginMigration')}{/if}
