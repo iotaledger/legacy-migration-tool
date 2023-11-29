@@ -150,9 +150,6 @@
 
                 api.getMigrationAddress(false, get(accounts)[0].id, {
                     onSuccess(response) {
-                        const migrationAddressEd25519 = convertBech32AddressToEd25519Address(
-                            (response.payload as unknown as MigrationAddress).bech32
-                        )
                         depositAddressMigration.set((response.payload as unknown as MigrationAddress).bech32)
                         sendMigrationRequest(response.payload as unknown as MigrationAddress)
                             .then((receipt) => {
