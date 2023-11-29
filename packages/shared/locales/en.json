@@ -126,6 +126,7 @@
         "congratulations": {
             "title": "Wallet migration completed",
             "fundsMigrated": "Funds migrated",
+            "consultExplorer": "Consult your transaction in the explorer",
             "body": "Your new wallet is ready to use.",
             "softwareMigratedBody": "You have successfully migrated your funds to the new network",
             "fireflyLedgerBody": "Your Ledger account is successfully recovered and you can now continue.",

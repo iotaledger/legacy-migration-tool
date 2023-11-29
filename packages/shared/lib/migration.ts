@@ -409,7 +409,7 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
     const { bundles } = get(migration)
 
     const bundle = get(bundles).find((bundle) => bundle.bundleHash === bundleHash)
-    const spentInputs = bundle.inputs.filter((input) => input.spent === true)
+    const spentInputs = bundle?.inputs?.filter((input) => input.spent === true) || []
 
     const spentBundleHashes = []
 
@@ -428,9 +428,9 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
             receiveAddressTrytes: transactionObjects.find((tx) => tx.address.startsWith('TRANSFER')).address,
             balance,
             spentBundleHashes,
-            spentAddresses: bundle.inputs.filter((input) => input.spent === true).map((input) => input.address),
-            mine: bundle.miningRuns > 0,
-            crackability: bundle.crackability,
+            spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
+            mine: bundle?.miningRuns > 0,
+            crackability: bundle?.crackability || null,
         },
     ])
 }
@@ -1385,15 +1385,7 @@ export const hasMigratedAndConfirmedAllSelectedBundles = derived(get(migration).
 /**
  * Total migration balance
  */
-export const totalMigratedBalance = derived(get(migration).bundles, (_bundles) =>
-    _bundles.reduce((acc, bundle) => {
-        if (bundle.selected && bundle.migrated) {
-            return acc + bundle.inputs.reduce((_acc, input) => _acc + input.balance, 0)
-        }
-
-        return acc
-    }, 0)
-)
+export const totalMigratedBalance = derived(get(migration).data, (data) => data.balance)
 
 /**
  * Determines if all spent addresses have low (less than MINIMUM MIGRATION) balance

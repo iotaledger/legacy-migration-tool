@@ -14,6 +14,8 @@
         hasSingleBundle,
         migration,
         migrationAddress,
+        prepareMigrationLog,
+        removeAddressChecksum,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
@@ -27,6 +29,9 @@
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { MigrationAddress } from '@lib/typings/migration'
+    import { createPrepareTransfers } from '@iota/core'
+    import { appRouter } from '@core/router'
 
     export let locale: Locale
 
@@ -87,6 +92,7 @@
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
+                            prepareMigrationLog(bundleHash, trytes.reverse(), migratableBalance)
                             return sendOffLedgerMigrationRequest(trytes.reverse(), 0)
                         })
                         .then((receipt) => {
@@ -99,6 +105,7 @@
 
                                 newProfile.set(null)
                             }
+                            $appRouter.next()
                         })
                         .catch((error) => {
                             loading = false
@@ -117,10 +124,22 @@
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
                 createMigrationBundle($bundles[0], get(migrationAddress))
-                    .then((trytes: string[]) => sendOffLedgerMigrationRequest(trytes.reverse(), 0))
+                    .then((trytes: string[]) => {
+                        // TODO: Check the bundlehash with software profiles
+                        prepareMigrationLog('', trytes, migratableBalance)
+                        sendOffLedgerMigrationRequest(trytes.reverse(), 0)
+                    })
                     .then((receipt) => {
                         // todo: handle receipt data
                         loading = false
+                        if ($newProfile) {
+                            // Save profile
+                            saveProfile($newProfile)
+                            setActiveProfile($newProfile.id)
+
+                            newProfile.set(null)
+                        }
+                        $appRouter.next()
                     })
                     .catch((error) => {
                         loading = false

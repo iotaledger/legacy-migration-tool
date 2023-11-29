@@ -6,7 +6,13 @@
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
     import { cleanupSignup } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
-    import { LOG_FILE_NAME, migrationLog, resetMigrationState, totalMigratedBalance } from 'shared/lib/migration'
+    import {
+        LOG_FILE_NAME,
+        migrationLog,
+        resetMigrationState,
+        totalMigratedBalance,
+        migrationAddress,
+    } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
     import { activeProfile, updateProfile } from 'shared/lib/profile'
@@ -124,6 +130,16 @@
         })
     }
 
+    function consultExplorerClick() {
+        let urlToOpen = ''
+        if ($activeProfile.isDeveloperProfile) {
+            urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$migrationAddress.bech32}`
+        } else {
+            urlToOpen = `https://explorer.stardust-mainnet.iotaledger.net/mainnet/addr/${$migrationAddress.bech32}`
+        }
+        Platform.openUrl(urlToOpen)
+    }
+
     function migrateAnotherProfile(): void {
         cleanupSignup()
         resetMigrationState()
@@ -147,6 +163,9 @@
         </div>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-4">
+        <button on:click={() => consultExplorerClick()}>
+            <Text type="p" highlighted>{locale('views.congratulations.consultExplorer')}</Text>
+        </button>
         <Button
             icon="profile"
             classes="w-full"

@@ -16,7 +16,7 @@
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
     import { openPopup } from 'shared/lib/popup'
-    import { newProfile, storeProfile, validateProfileName } from 'shared/lib/profile'
+    import { newProfile, profiles, storeProfile, validateProfileName } from 'shared/lib/profile'
     import { Stage } from 'shared/lib/typings/stage'
     import { destroyActor, getProfileDataPath, initialise } from 'shared/lib/wallet'
     import { get } from 'svelte/store'
@@ -32,7 +32,9 @@
     $: hasDeveloperProfileChanged = $newProfile?.isDeveloperProfile !== isDeveloperProfile
 
     async function handleContinueClick(): Promise<void> {
-        const trimmedProfileName = TMP_PROFILE_NAME.trim()
+        const _profiles = get(profiles)
+        const trimmedProfileName = TMP_PROFILE_NAME.trim() + _profiles.length
+
         try {
             validateProfileName(trimmedProfileName)
         } catch (err) {
