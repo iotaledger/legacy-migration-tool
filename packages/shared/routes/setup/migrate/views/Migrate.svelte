@@ -92,8 +92,9 @@
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
-                            prepareMigrationLog(bundleHash, trytes.reverse(), migratableBalance)
-                            return sendOffLedgerMigrationRequest(trytes.reverse(), 0)
+                            const reverseTrytesLedger = trytes.reverse()
+                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
+                            return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
                             // todo: handle receipt data
@@ -126,8 +127,9 @@
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         // TODO: Check the bundlehash with software profiles
-                        prepareMigrationLog('', trytes, migratableBalance)
-                        sendOffLedgerMigrationRequest(trytes.reverse(), 0)
+                        const reverseTrytesSoftware = trytes.reverse()
+                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
+                        sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
                         // todo: handle receipt data
