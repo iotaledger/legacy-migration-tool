@@ -19,6 +19,7 @@
         hasMigratedAnyBundle,
         migration,
         migrationAddress,
+        prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unmigratedBundles,
     } from 'shared/lib/migration'
@@ -209,7 +210,9 @@
                             }
                             return _transaction
                         })
-                        return sendOffLedgerMigrationRequest(trytes.reverse(), transaction.index)
+                        const reverseTrytesLedger = trytes.reverse()
+                        prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
+                        return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                     })
                     .then((receipt) => {
                         // todo: handle receipt
@@ -248,7 +251,11 @@
                 setMigratingTransaction(transaction, 1)
 
                 createMigrationBundle(transaction as Bundle, get(migrationAddress))
-                    .then((trytes: string[]) => sendOffLedgerMigrationRequest(trytes.reverse(), transaction.index))
+                    .then((trytes: string[]) => {
+                        const reverseTrytesSoftware = trytes.reverse()
+                        prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
+                        sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
+                    })
                     .then((receipt) => {
                         // todo: handle receipt data
                         // is this needed?
