@@ -106,7 +106,6 @@
 
                                 newProfile.set(null)
                             }
-                            $appRouter.next()
                         })
                         .catch((error) => {
                             loading = false
@@ -141,7 +140,6 @@
 
                             newProfile.set(null)
                         }
-                        $appRouter.next()
                     })
                     .catch((error) => {
                         loading = false
