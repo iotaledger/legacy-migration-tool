@@ -9,10 +9,7 @@ const Platform: IPlatform = {
     PincodeManager: undefined,
     ledger: undefined,
     close(): void {},
-    exportLedgerMigrationLog(content: unknown, defaultFileName: string): Promise<boolean | null> {
-        return Promise.resolve(undefined)
-    },
-    exportMigrationLog(sourcePath: string, defaultFileName: string): Promise<boolean | null> {
+    exportMigrationLog(content: unknown, defaultFileName: string): Promise<boolean | null> {
         return Promise.resolve(undefined)
     },
     exportTransactionHistory(defaultPath: string, contents: string): Promise<string | null> {

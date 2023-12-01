@@ -56,11 +56,7 @@
     function exportMigrationLog(): void {
         exportMigrationLogBusy = true
         getProfileDataPath($activeProfile.id)
-            .then((source) =>
-                $walletSetupType === SetupType.TrinityLedger
-                    ? Platform.exportLedgerMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-                    : Platform.exportMigrationLog(`${source}/${LOG_FILE_NAME}`, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-            )
+            .then(() => Platform.exportMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`))
             .catch((error) => {
                 console.error(error)
                 showAppNotification({

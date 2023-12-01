@@ -118,45 +118,12 @@ const ElectronApi = {
      *
      * @method exportMigrationLog
      *
-     * @param {string} sourcePath
-     * @param {string} defaultFileName
-     *
-     * @returns {Promise<boolean>}
-     */
-    exportMigrationLog: (sourcePath, defaultFileName) =>
-        ipcRenderer
-            .invoke('show-save-dialog', {
-                properties: ['createDirectory', 'showOverwriteConfirmation'],
-                defaultPath: defaultFileName,
-                filters: [{ name: 'Log Files', extensions: ['log'] }],
-            })
-            .then((result) => {
-                if (result.canceled) {
-                    return null
-                }
-
-                return new Promise((resolve, reject) => {
-                    fs.copyFile(sourcePath, result.filePath, (err) => {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            resolve(true)
-                        }
-                    })
-                })
-            }),
-
-    /**
-     * Exports ledger migration log
-     *
-     * @method exportLedgerMigrationLog
-     *
      * @param {string} content
      * @param {string} defaultFileName
      *
      * @returns {Promise}
      */
-    exportLedgerMigrationLog: (content, defaultFileName) =>
+    exportMigrationLog: (content, defaultFileName) =>
         ipcRenderer
             .invoke('show-save-dialog', {
                 properties: ['createDirectory', 'showOverwriteConfirmation'],
