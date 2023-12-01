@@ -304,8 +304,8 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
 
     for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
         const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-        const binaryAddress = '0x' + convertToHex(legacyAddress)
-        const balance = await fetchMigratableBalance(binaryAddress)
+        const hexAddress = '0x' + convertToHex(legacyAddress)
+        const balance = await fetchMigratableBalance(hexAddress)
 
         totalBalance += balance
         if (balance > 0) {
@@ -349,14 +349,14 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 }
 
-async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
+async function fetchMigratableBalance(hexAddress: string): Promise<number> {
     const body = {
         functionName: 'getMigratableBalance',
         contractName: 'legacymigration',
         arguments: {
             Items: [
                 {
-                    value: binaryAddress,
+                    value: hexAddress,
                     key: '0x61', // convertToHex("a")
                 },
             ],
@@ -450,18 +450,20 @@ export const getLedgerMigrationData = (
     const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
         let totalBalance = 0
         const inputs: Input[] = []
+        const { lastCheckedAddressIndex } = get(get(migration).data)
+
         for (let index = 0; index < addresses.length; index++) {
-            const legacyAddress = addresses[index].address
-            const binaryAddress = '0x' + convertToHex(legacyAddress)
-            const balance = await fetchMigratableBalance(binaryAddress)
+            const legacyAddress = addresses[index]
+            const hexAddress = '0x' + convertToHex(legacyAddress.address)
+            const balance = await fetchMigratableBalance(hexAddress)
 
             totalBalance += balance
             if (balance > 0) {
                 inputs.push({
-                    address: legacyAddress,
+                    address: legacyAddress.address,
                     balance,
                     spent: false,
-                    index,
+                    index: legacyAddress.index,
                     securityLevel: ADDRESS_SECURITY_LEVEL,
                     spentBundleHashes: [],
                 })
@@ -469,7 +471,7 @@ export const getLedgerMigrationData = (
         }
 
         const migrationData: MigrationData = {
-            lastCheckedAddressIndex: initialAddressIndex + addresses.length,
+            lastCheckedAddressIndex: lastCheckedAddressIndex + addresses.length,
             balance: totalBalance,
             inputs: inputs,
             spentAddresses: false,
