@@ -22,7 +22,7 @@ const LEGACY_ADDRESS_WITH_CHECKSUM_LENGTH = 90
 
 let intervalTimer
 
-export const ledgerSimulator = false
+export const ledgerSimulator = true
 export const ledgerDeviceState = writable<LedgerDeviceState>(LedgerDeviceState.NotDetected)
 export const isLedgerLegacyConnected = writable<boolean>(false)
 
@@ -65,6 +65,16 @@ export function calculateLedgerDeviceState(status: LedgerStatus): LedgerDeviceSt
     if (locked) {
         return LedgerDeviceState.Locked
     } else {
+        if (connected) {
+            // add this part
+            if (app?.version === '0.8.6') {
+                return LedgerDeviceState.Connected
+            } else if (app?.version === '0.5.9') {
+                return LedgerDeviceState.LegacyConnected
+            }
+        } else {
+            return LedgerDeviceState.NotDetected
+        }
         switch (app?.name) {
             default:
                 if (connected) {
