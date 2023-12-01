@@ -693,18 +693,33 @@ export const createLedgerMigrationBundle = (
 ): Promise<MigrationBundle> => {
     const bundle = findMigrationBundle(bundleIndex)
 
-    const transfer = {
+    const transferForConfirmation = {
         address: migrationAddress.trytes,
         value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
         tag: 'U'.repeat(27),
     }
 
-    openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
+    openLedgerLegacyTransactionPopup(transferForConfirmation, bundle.inputs)
 
-    return prepareTransfersFn(
-        [transfer],
-        bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
-    ).then((trytes) => {
+    const transfers = [
+        {
+            address: migrationAddress.trytes,
+            value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+            tag: 'U'.repeat(27),
+        },
+    ]
+    // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
+    // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
+    // Hardcode MINIMUM_MIGRATABLE_AMOUNT for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
+    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
+    const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
+        address: input.address,
+        keyIndex: input.index,
+        security: input.securityLevel,
+        balance: MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+    }))
+    return prepareTransfersFn(transfers, inputsForTransfer).then((trytes) => {
         updateLedgerBundleState(bundleIndex, trytes, false)
         callback()
         return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
