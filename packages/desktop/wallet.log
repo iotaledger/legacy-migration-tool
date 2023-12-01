@@ -1,0 +1,1318 @@
+2023-12-01 16:15:02 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:02 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:02 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:03 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:05 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:05 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:05 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:06 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:06 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:06 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:08 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:09 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:11 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:12 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:12 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:12 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:14 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:14 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:14 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:15 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:15 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:15 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:17 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:17 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:17 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:18 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:18 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:18 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:20 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:21 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:23 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:23 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:23 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:24 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:24 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:24 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:26 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:27 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:27 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:27 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:29 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:41 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:41 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:41 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:42 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:42 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:42 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:44 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:44 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:44 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:45 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:45 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:45 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:47 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:47 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:47 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:48 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:48 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:48 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:50 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:51 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:53 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:53 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:53 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:54 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:54 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:54 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:56 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:56 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:56 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:57 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:57 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:57 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:15:59 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:15:59 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:15:59 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:00 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:00 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:00 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:02 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:02 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:02 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:03 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:05 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:05 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:05 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:06 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:06 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:06 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:08 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:09 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:11 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:12 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:12 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:12 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:16:14 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:16:14 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:16:14 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:19:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:36 iota_client::node_manager                  [94mDEBUG[0m GET request took 197 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:19:36 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:19:36 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:19:36 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:19:36 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:36 iota_client::node_manager                  [94mDEBUG[0m GET request took 302 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:19:36 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:19:36 iota_wallet::signing::ledger               [92mINFO [0m Account 0 addresses or leder pool entry empty, creating first address for ledger address pool
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:36 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_wallet::signing::ledger               [92mINFO [0m Got 80000000:80000000:80000000 from pool
+2023-12-01 16:19:37 iota_wallet::account                       [94mDEBUG[0m [LEDGERADDRESS] saved first address Ed25519(Ed25519Address(4d5c5c1e97b8f0552391c9050b3b01b18d9bb1ef2471a865bbb142c3a18707b2))
+2023-12-01 16:19:37 iota_wallet::monitor                       [94mDEBUG[0m [MQTT] subscribe: [Topic("addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs")]
+2023-12-01 16:19:37 iota_wallet::signing::ledger               [92mINFO [0m Interactive address display - not using address pool
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:37 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:19:37 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:37 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:19:37 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:19:37 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:19:38 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:19:38 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:19:38 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:19:38 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:19:38 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:19:38 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:19:38 rumqttc::state                             [94mDEBUG[0m Subscribe. Topics = [Filter = addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs, Qos = AtLeastOnce], Pkid = 1
+2023-12-01 16:20:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:20:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:20:36 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:20:36 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:20:36 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:20:36 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:20:36 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:20:36 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:20:36 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:20:36 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:20:37 iota_client::node_manager                  [94mDEBUG[0m GET request took 170 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:20:37 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:20:37 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:20:37 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:20:37 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:20:37 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:20:37 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:20:37 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:20:37 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:20:37 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:20:37 iota_client::node_manager                  [94mDEBUG[0m GET request took 284 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:20:37 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:20:37 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 60213 millisecs,
+            last outgoing request before 60213 millisecs
+2023-12-01 16:20:38 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:21:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:09 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:21:09 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:21:09 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:10 iota_client::node_manager                  [94mDEBUG[0m GET request took 183 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:21:10 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:21:10 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:10 iota_client::node_manager                  [94mDEBUG[0m GET request took 263 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:21:10 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:21:10 iota_wallet::signing::ledger               [92mINFO [0m Account 0 addresses or leder pool entry empty, creating first address for ledger address pool
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_wallet::signing::ledger               [92mINFO [0m Got 80000000:80000000:80000000 from pool
+2023-12-01 16:21:10 iota_wallet::account                       [94mDEBUG[0m [LEDGERADDRESS] saved first address Ed25519(Ed25519Address(4d5c5c1e97b8f0552391c9050b3b01b18d9bb1ef2471a865bbb142c3a18707b2))
+2023-12-01 16:21:10 iota_wallet::signing::ledger               [92mINFO [0m Interactive address display - not using address pool
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_wallet::monitor                       [94mDEBUG[0m [MQTT] subscribe: [Topic("addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs")]
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:21:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:21:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:11 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:11 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:21:11 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:21:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:21:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:21:11 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:21:11 rumqttc::state                             [94mDEBUG[0m Subscribe. Topics = [Filter = addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs, Qos = AtLeastOnce], Pkid = 1
+2023-12-01 16:21:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:48 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:21:48 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:48 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:21:48 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:48 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:21:55 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:21:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:55 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:21:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:21:55 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:22:10 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:22:10 iota_client::node_manager                  [94mDEBUG[0m GET request took 164 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:22:10 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:22:10 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:22:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:22:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:22:10 iota_client::node_manager                  [94mDEBUG[0m GET request took 262 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:22:10 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:22:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 60323 millisecs,
+            last outgoing request before 60323 millisecs
+2023-12-01 16:22:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:22:55 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:22:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:22:55 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:22:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:22:55 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:23:10 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:23:10 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:23:10 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:23:10 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:23:10 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:23:10 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:23:10 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:23:10 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:23:10 iota_client::node_manager                  [94mDEBUG[0m GET request took 173 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:23:10 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:23:10 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:23:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:23:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:23:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:23:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:23:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:23:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:23:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:23:11 iota_client::node_manager                  [94mDEBUG[0m GET request took 261 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:23:11 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:23:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59952 millisecs,
+            last outgoing request before 60008 millisecs
+2023-12-01 16:23:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:24:11 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:24:11 iota_client::node_manager                  [94mDEBUG[0m GET request took 173 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:24:11 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:24:11 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:24:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59937 millisecs,
+            last outgoing request before 59993 millisecs
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:24:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:24:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:24:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:24:11 iota_client::node_manager                  [94mDEBUG[0m GET request took 267 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:24:11 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:25:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:25:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59968 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:25:11 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:25:11 iota_client::node_manager                  [94mDEBUG[0m GET request took 170 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:25:11 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:25:11 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:25:11 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:25:11 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:25:12 iota_client::node_manager                  [94mDEBUG[0m GET request took 268 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:25:12 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:26:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:26:11 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:26:12 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:26:12 iota_client::node_manager                  [94mDEBUG[0m GET request took 174 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:26:12 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:26:12 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:26:12 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:26:12 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:26:12 iota_client::node_manager                  [94mDEBUG[0m GET request took 269 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:26:12 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:28:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:15 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:28:15 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:28:15 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:15 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:28:15 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:15 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:28:15 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:28:15 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:15 iota_client::node_manager                  [94mDEBUG[0m GET request took 277 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:28:15 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:28:15 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:16 iota_client::node_manager                  [94mDEBUG[0m GET request took 179 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:28:16 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:28:16 iota_wallet::signing::ledger               [92mINFO [0m Account 0 addresses or leder pool entry empty, creating first address for ledger address pool
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_wallet::signing::ledger               [92mINFO [0m Got 80000000:80000000:80000000 from pool
+2023-12-01 16:28:16 iota_wallet::account                       [94mDEBUG[0m [LEDGERADDRESS] saved first address Ed25519(Ed25519Address(4d5c5c1e97b8f0552391c9050b3b01b18d9bb1ef2471a865bbb142c3a18707b2))
+2023-12-01 16:28:16 iota_wallet::signing::ledger               [92mINFO [0m Interactive address display - not using address pool
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_wallet::monitor                       [94mDEBUG[0m [MQTT] subscribe: [Topic("addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs")]
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:16 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:28:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:28:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:17 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:28:17 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:28:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:28:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:28:17 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:28:17 rumqttc::state                             [94mDEBUG[0m Subscribe. Topics = [Filter = addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs, Qos = AtLeastOnce], Pkid = 1
+2023-12-01 16:28:23 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:23 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:32 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:32 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:32 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:32 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:32 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:34 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:34 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:34 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:35 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:35 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:35 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:35 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:35 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:37 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:37 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:37 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:37 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:37 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:38 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:38 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:38 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:38 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:38 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:40 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:40 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:40 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:40 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:40 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:41 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:41 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:41 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:41 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:41 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:43 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:43 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:43 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:43 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:43 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:44 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:44 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:44 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:44 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:44 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:46 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:46 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:46 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:46 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:46 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:47 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:47 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:47 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:47 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:47 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:49 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:49 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:49 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:49 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:49 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:50 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:50 iota_ledger::api::helpers                  [91mERROR[0m error: Transport error
+2023-12-01 16:28:50 iota_wallet::error                         [92mINFO [0m ledger error: Transport error
+2023-12-01 16:28:52 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:52 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:52 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:52 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:52 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:28:56 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:28:56 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:56 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:28:56 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:28:56 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:29:04 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:29:04 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:29:04 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:29:04 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:29:04 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:29:16 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:29:16 iota_client::node_manager                  [94mDEBUG[0m GET request took 274 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:29:16 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:29:16 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:29:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:29:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:29:16 iota_client::node_manager                  [94mDEBUG[0m GET request took 170 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:29:16 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:29:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 60220 millisecs,
+            last outgoing request before 60220 millisecs
+2023-12-01 16:29:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59945 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:30:16 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:30:16 iota_client::node_manager                  [94mDEBUG[0m GET request took 253 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:30:16 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:30:16 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:30:16 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:30:16 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:30:17 iota_client::node_manager                  [94mDEBUG[0m GET request took 177 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:30:17 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:30:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:30:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59945 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:31:17 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:31:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:31:17 iota_client::node_manager                  [94mDEBUG[0m GET request took 253 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:31:17 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:31:17 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:31:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:31:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:31:17 iota_client::node_manager                  [94mDEBUG[0m GET request took 177 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:31:17 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:31:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:32:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:32:17 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:32:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:32:17 iota_client::node_manager                  [94mDEBUG[0m GET request took 267 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:32:17 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:32:17 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:32:17 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:32:17 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:32:17 iota_client::node_manager                  [94mDEBUG[0m GET request took 177 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:32:17 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:33:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:33:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59945 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:33:17 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:33:17 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:33:17 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:33:18 iota_client::node_manager                  [94mDEBUG[0m GET request took 254 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:33:18 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:33:18 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:33:18 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:33:18 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:33:18 iota_client::node_manager                  [94mDEBUG[0m GET request took 168 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:33:18 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:34:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59965 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:34:17 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:34:18 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:34:18 iota_client::node_manager                  [94mDEBUG[0m GET request took 269 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:34:18 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:34:18 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:34:18 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:34:18 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:34:18 iota_client::node_manager                  [94mDEBUG[0m GET request took 176 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:34:18 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:35:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:22 iota_client::node_manager                  [94mDEBUG[0m GET request took 177 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:35:22 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:35:22 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:35:22 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:35:22 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:22 iota_client::node_manager                  [94mDEBUG[0m GET request took 270 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:35:22 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:35:22 iota_wallet::signing::ledger               [92mINFO [0m Account 0 addresses or leder pool entry empty, creating first address for ledger address pool
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_wallet::signing::ledger               [92mINFO [0m Got 80000000:80000000:80000000 from pool
+2023-12-01 16:35:22 iota_wallet::account                       [94mDEBUG[0m [LEDGERADDRESS] saved first address Ed25519(Ed25519Address(4d5c5c1e97b8f0552391c9050b3b01b18d9bb1ef2471a865bbb142c3a18707b2))
+2023-12-01 16:35:22 iota_wallet::signing::ledger               [92mINFO [0m Interactive address display - not using address pool
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_wallet::monitor                       [94mDEBUG[0m [MQTT] subscribe: [Topic("addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs")]
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:23 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-1.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:23 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DNSNameRef("api.lb-0.h.chrysalis-devnet.iota.cafe")
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:35:23 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_CHACHA20_POLY1305_SHA256
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: []
+2023-12-01 16:35:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is None
+2023-12-01 16:35:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:35:23 tungstenite::handshake::client             [94mDEBUG[0m Client handshake done.
+2023-12-01 16:35:23 rumqttc::state                             [94mDEBUG[0m Subscribe. Topics = [Filter = addresses/atoi1qpx4chq7j7u0q4frj8ys2zemqxccmxa3auj8r2r9hwc59sapsurmyezyu9t/outputs, Qos = AtLeastOnce], Pkid = 1
+2023-12-01 16:35:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:30 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:35:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:35:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:35:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:22 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:36:22 iota_client::node_manager                  [94mDEBUG[0m GET request took 165 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:36:22 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:36:22 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:36:22 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:36:22 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:36:22 iota_client::node_manager                  [94mDEBUG[0m GET request took 270 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:36:22 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:36:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 60335 millisecs,
+            last outgoing request before 60335 millisecs
+2023-12-01 16:36:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:36:25 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:36:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:25 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:36:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:25 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:36:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:36:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:36:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:29 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:36:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:36:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:36:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:36:57 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:36:57 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:57 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:36:57 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:36:57 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:37:17 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:37:17 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:17 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:37:17 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:17 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:37:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:37:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:37:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:20 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:37:22 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:37:22 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:37:22 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:37:23 iota_client::node_manager                  [94mDEBUG[0m GET request took 173 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:37:23 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:37:23 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:37:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:37:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:37:23 iota_client::node_manager                  [94mDEBUG[0m GET request took 272 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:37:23 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:37:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:37:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:37:31 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2023-12-01 16:37:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2023-12-01 16:37:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2023-12-01 16:37:31 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2023-12-01 16:38:23 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:38:23 iota_client::node_manager                  [94mDEBUG[0m GET request took 171 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:38:23 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:38:23 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:38:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59945 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:38:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:38:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:38:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59970 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:38:23 iota_client::node_manager                  [94mDEBUG[0m GET request took 273 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:38:23 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:39:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59945 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:39:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59968 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:39:23 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:39:23 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:39:23 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:39:23 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:39:23 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:39:23 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:39:23 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:39:23 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:39:23 iota_client::node_manager                  [94mDEBUG[0m GET request took 170 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:39:23 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:39:23 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:39:24 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:39:24 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:39:24 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:39:24 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:39:24 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:39:24 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:39:24 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:39:24 iota_client::node_manager                  [94mDEBUG[0m GET request took 269 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:39:24 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:40:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59943 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:40:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:40:24 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:40:24 iota_client::node_manager                  [94mDEBUG[0m GET request took 170 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:40:24 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:40:24 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:40:24 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:40:24 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:40:24 iota_client::node_manager                  [94mDEBUG[0m GET request took 268 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:40:24 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:41:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:41:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:41:24 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:41:24 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:41:24 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:41:24 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:41:24 iota_client::node_manager                  [94mDEBUG[0m GET request took 174 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:41:24 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:41:24 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:41:24 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:41:25 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:41:25 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:41:25 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:41:25 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:41:25 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:41:25 iota_client::node_manager                  [94mDEBUG[0m GET request took 266 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:41:25 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:42:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59942 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:42:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59968 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:42:25 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:42:25 iota_client::node_manager                  [94mDEBUG[0m GET request took 194 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:42:25 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:42:25 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:42:25 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:42:25 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:42:25 iota_client::node_manager                  [94mDEBUG[0m GET request took 278 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:42:25 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:43:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59938 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:43:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59967 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:43:25 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:43:25 iota_client::node_manager                  [94mDEBUG[0m GET request took 167 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:43:25 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:43:25 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:43:25 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:43:25 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:43:26 iota_client::node_manager                  [94mDEBUG[0m GET request took 264 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:43:26 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:44:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59944 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:44:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59965 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:44:26 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:44:26 iota_client::node_manager                  [94mDEBUG[0m GET request took 167 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:44:26 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:44:26 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:44:26 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:44:26 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:44:26 iota_client::node_manager                  [94mDEBUG[0m GET request took 257 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:44:26 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:45:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59942 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:45:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59969 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:45:26 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:45:26 iota_client::node_manager                  [94mDEBUG[0m GET request took 165 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:45:26 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:45:26 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:45:26 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:45:26 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:45:26 iota_client::node_manager                  [94mDEBUG[0m GET request took 264 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:45:26 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:46:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59939 millisecs,
+            last outgoing request before 60000 millisecs
+2023-12-01 16:46:23 rumqttc::state                             [94mDEBUG[0m Pingreq,
+            last incoming packet before 59966 millisecs,
+            last outgoing request before 60001 millisecs
+2023-12-01 16:46:26 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-0.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:46:26 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-0.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:46:26 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:46:27 iota_client::node_manager                  [94mDEBUG[0m GET request took 175 ms for https://api.lb-0.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:46:27 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
+2023-12-01 16:46:27 reqwest::connect                           [94mDEBUG[0m starting new connection: https://api.lb-1.h.chrysalis-devnet.iota.cafe/
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m No cached session for DnsName(DnsName(DnsName("api.lb-1.h.chrysalis-devnet.iota.cafe")))
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m Not resuming any session
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m Using ciphersuite TLS13_AES_128_GCM_SHA256
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m Not resuming
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m TLS1.3 encrypted extensions: [Protocols([6832])]
+2023-12-01 16:46:27 rustls::client::hs                         [94mDEBUG[0m ALPN protocol is Some(b"h2")
+2023-12-01 16:46:27 rustls::client::tls13                      [94mDEBUG[0m Ticket saved
+2023-12-01 16:46:27 iota_client::node_manager                  [94mDEBUG[0m GET request took 277 ms for https://api.lb-1.h.chrysalis-devnet.iota.cafe/api/v1/info
+2023-12-01 16:46:27 rustls::conn                               [94mDEBUG[0m Sending warning alert CloseNotify
