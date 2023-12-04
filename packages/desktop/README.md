@@ -1,12 +1,12 @@
-# Firefly - Desktop
+# Legacy Migration Tool - Desktop
 
-This is the directory for the desktop application of Firefly - IOTA's new official wallet.
+This is the directory for the desktop application of Legacy Migration Tool.
 
 ## Setup
 
 The following __must__ be installed on all platforms:
 
-- [Node.js](https://nodejs.org/en/) 14+ (NOTE: There may be issues with Node.js 15 on Windows)
+- [Node.js](https://nodejs.org/en/) 14 - Node.js 16 (NOTE: There may be issues with Node.js 15 on Windows)
 - [Yarn](https://classic.yarnpkg.com/en/docs/install)
 - [Rust](https://www.rust-lang.org/tools/install)
 
@@ -97,17 +97,3 @@ yarn compile:<platform>
 
 Change `<platform>` as necessary (`win`, `mac`, and `linux`).
 MacOS users __must__ set an environment variable in order to skip notarization (`MACOS_SKIP_NOTARIZATION=true`).
-
-## Running the Firefly Snap
-
-To run the Firefly snap properly on Linux, you may need to run the following commands:
-
-Install the snap when built locally:
-```bash
-snap install --dangerous path/to/firefly-desktop-0.0.1.snap
-```
-
-Connect the `password-manager-service` interface:
-```bash
-snap connect firefly-wallet:password-manager-service
-```
