@@ -7,11 +7,13 @@
         ADDRESS_SECURITY_LEVEL,
         confirmedBundles,
         createLedgerMigrationBundle,
-        depositAddressMigration,
+        createMigrationBundle,
+        generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
         migration,
+        migrationAddress,
         prepareMigrationLog,
         removeAddressChecksum,
         sendOffLedgerMigrationRequest,
@@ -21,11 +23,11 @@
     import { closePopup } from 'shared/lib/popup'
     import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
     import { formatUnitBestMatch } from 'shared/lib/units'
-    import { createEventDispatcher, onDestroy } from 'svelte'
+    import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
-    import { api, walletSetupType, wallet } from 'shared/lib/wallet'
+    import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { MigrationAddress } from '@lib/typings/migration'
     import { createPrepareTransfers } from '@iota/core'
@@ -70,33 +72,6 @@
         })
     })
 
-    const sendMigrationRequest = async (migrationAddress: MigrationAddress): Promise<any> => {
-        const { seed } = get(migration)
-        const prepareTransfers = createPrepareTransfers()
-
-        const transfers = [
-            {
-                value: $bundles[0].inputs.reduce((acc, input) => acc + input.balance, 0),
-                address: removeAddressChecksum(migrationAddress.trytes),
-            },
-        ]
-
-        const inputsForTransfer: any[] = $bundles[0].inputs.map((input) => ({
-            address: input.address,
-            keyIndex: input.index,
-            security: input.securityLevel,
-            balance: input.balance,
-        }))
-
-        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
-            inputs: inputsForTransfer,
-        })
-
-        // TODO: Check the bundlehash with software profiles
-        prepareMigrationLog('', bundleTrytes.reverse(), migratableBalance)
-        return sendOffLedgerMigrationRequest(bundleTrytes.reverse())
-    }
-
     function handleContinueClick() {
         if ($hasSingleBundle && !$hasBundlesWithSpentAddresses) {
             loading = true
@@ -107,13 +82,19 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            return createLedgerMigrationBundle(0, iota.prepareTransfers, callback)
+                            return createLedgerMigrationBundle(
+                                0,
+                                get(migrationAddress),
+                                iota.prepareTransfers,
+                                callback
+                            )
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
-                            prepareMigrationLog(bundleHash, trytes.reverse(), migratableBalance)
-                            return sendOffLedgerMigrationRequest(trytes.reverse())
+                            const reverseTrytesLedger = trytes.reverse()
+                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
+                            return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
                             // todo: handle receipt data
@@ -125,7 +106,6 @@
 
                                 newProfile.set(null)
                             }
-                            $appRouter.next()
                         })
                         .catch((error) => {
                             loading = false
@@ -143,41 +123,32 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
-                const { accounts } = get(wallet)
+                createMigrationBundle($bundles[0], get(migrationAddress))
+                    .then((trytes: string[]) => {
+                        // TODO: Check the bundlehash with software profiles
+                        const reverseTrytesSoftware = trytes.reverse()
+                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
+                        sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
+                    })
+                    .then((receipt) => {
+                        // todo: handle receipt data
+                        loading = false
+                        if ($newProfile) {
+                            // Save profile
+                            saveProfile($newProfile)
+                            setActiveProfile($newProfile.id)
 
-                api.getMigrationAddress(false, get(accounts)[0].id, {
-                    onSuccess(response) {
-                        depositAddressMigration.set((response.payload as unknown as MigrationAddress).bech32)
-                        sendMigrationRequest(response.payload as unknown as MigrationAddress)
-                            .then((receipt) => {
-                                // todo: handle receipt data
-                                loading = false
-                                if ($newProfile) {
-                                    // Save profile
-                                    saveProfile($newProfile)
-                                    setActiveProfile($newProfile.id)
-
-                                    newProfile.set(null)
-                                }
-                                $appRouter.next()
-                            })
-                            .catch((error) => {
-                                loading = false
-                                showAppNotification({
-                                    type: 'error',
-                                    message: locale(getLegacyErrorMessage(error)),
-                                })
-                                console.error(error)
-                            })
-                    },
-                    onError(error) {
+                            newProfile.set(null)
+                        }
+                    })
+                    .catch((error) => {
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error.error || 'Error to getMigrationAddress',
+                            message: error.message || 'Failed to prepare transfers',
                         })
-                    },
-                })
+                        console.error(error)
+                    })
             }
         } else {
             loading = true
@@ -191,6 +162,19 @@
     function learnAboutMigrationsClick() {
         Platform.openUrl('https://blog.iota.org/firefly-token-migration/')
     }
+
+    onMount(async () => {
+        if (!get(migrationAddress)) {
+            try {
+                migrationAddress.set(await generateMigrationAddress(legacyLedger))
+            } catch (error) {
+                showAppNotification({
+                    type: 'error',
+                    message: error.error || 'Error generating migration address',
+                })
+            }
+        }
+    })
 
     onDestroy(() => {
         clearTimeout(timeout)
@@ -216,7 +200,7 @@
         <button on:click={learnAboutMigrationsClick}>
             <Text type="p" highlighted>{locale('views.migrate.learn')}</Text>
         </button>
-        <Button disabled={loading} classes="w-full" onClick={() => handleContinueClick()}>
+        <Button disabled={loading || !$migrationAddress} classes="w-full" onClick={() => handleContinueClick()}>
             {#if loading}
                 <Spinner busy={loading} message={locale('views.migrate.migrating')} classes="justify-center" />
             {:else}{locale('views.migrate.beginMigration')}{/if}
