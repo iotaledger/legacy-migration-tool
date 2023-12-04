@@ -15,8 +15,7 @@ export interface IPlatform {
     getStrongholdBackupDestination(defaultPath: string): Promise<string | null>
     saveStrongholdBackup({ allowAccess }: { allowAccess: boolean }): Promise<void>
     exportTransactionHistory(defaultPath: string, contents: string): Promise<string | null>
-    exportMigrationLog(sourcePath: string, defaultFileName: string): Promise<boolean | null>
-    exportLedgerMigrationLog(content: unknown, defaultFileName: string): Promise<boolean | null>
+    exportMigrationLog(content: unknown, defaultFileName: string): Promise<boolean | null>
     getUserDataPath(): Promise<string>
     getDiagnostics(): Promise<{ label: string; value: string }[]>
     getOS(): Promise<string> | string
