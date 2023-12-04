@@ -11,7 +11,7 @@
         migrationLog,
         resetMigrationState,
         totalMigratedBalance,
-        depositAddressMigration,
+        migrationAddress,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
@@ -133,9 +133,9 @@
     function consultExplorerClick() {
         let urlToOpen = ''
         if ($activeProfile.isDeveloperProfile) {
-            urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$depositAddressMigration}`
+            urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$migrationAddress.bech32}`
         } else {
-            urlToOpen = `https://explorer.stardust-mainnet.iotaledger.net/mainnet/addr/${$depositAddressMigration}`
+            urlToOpen = `https://explorer.stardust-mainnet.iotaledger.net/mainnet/addr/${$migrationAddress.bech32}`
         }
         Platform.openUrl(urlToOpen)
     }
