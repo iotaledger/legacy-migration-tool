@@ -137,7 +137,6 @@
     function rerunMigration() {
         const _unmigratedBundles = $unmigratedBundles
         const unmigratedBundleIndexes = _unmigratedBundles.map((_bundle) => _bundle.index)
-
         transactions = transactions.map((item) => {
             if (unmigratedBundleIndexes.includes(item.index)) {
                 return { ...item, status: 0, errorText: null }
@@ -188,106 +187,98 @@
     function migrateFunds() {
         migratingFundsMessage = locale('views.migrate.migrating')
 
-        transactions.forEach((transaction, index) => {
-            if (legacyLedger) {
-                Platform.ledger
-                    .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
-                    .then(({ iota, callback }) => {
-                        closeTransport = callback
-                        return createLedgerMigrationBundle(
-                            transaction.index,
-                            get(migrationAddress),
-                            iota.prepareTransfers,
-                            callback
-                        )
-                    })
-                    .then(({ trytes, bundleHash }) => {
-                        closePopup(true) // close transaction popup
-                        setMigratingTransaction(transaction, 1)
-                        transactions = transactions.map((_transaction, i) => {
-                            if (_transaction.index === transaction.index) {
-                                return { ..._transaction, bundleHash }
-                            }
-                            return _transaction
-                        })
-                        const reverseTrytesLedger = trytes.reverse()
-                        prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
-                        return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
-                    })
-                    .then((receipt) => {
-                        // todo: handle receipt
-                        if (!hasBroadcastAnyBundle) {
-                            hasBroadcastAnyBundle = true
-                            persistProfile()
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(error)
+        transactions.reduce(
+            (promise, transaction, idx) =>
+                transaction.status === 0
+                    ? // @ts-ignore
+                      promise
+                          .then((acc) => {
+                              if (legacyLedger) {
+                                  return Platform.ledger
+                                      .selectSeed(
+                                          $hardwareIndexes.accountIndex,
+                                          $hardwareIndexes.pageIndex,
+                                          ADDRESS_SECURITY_LEVEL
+                                      )
+                                      .then(({ iota, callback }) => {
+                                          closeTransport = callback
+                                          return createLedgerMigrationBundle(
+                                              transaction.index,
+                                              get(migrationAddress),
+                                              iota.prepareTransfers,
+                                              callback
+                                          )
+                                      })
+                                      .then(({ trytes, bundleHash }) => {
+                                          closePopup(true) // close transaction popup
+                                          setMigratingTransaction(transaction, 1)
+                                          transactions = transactions.map((_transaction, i) => {
+                                              if (_transaction.index === transaction.index) {
+                                                  return { ..._transaction, bundleHash }
+                                              }
+                                              return _transaction
+                                          })
+                                          const reverseTrytesLedger = trytes.reverse()
+                                          prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
+                                          return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
+                                      })
+                                      .then((receipt) => {
+                                          // todo: handle receipt
+                                          if (!hasBroadcastAnyBundle) {
+                                              hasBroadcastAnyBundle = true
+                                              persistProfile()
+                                          }
+                                      })
+                              } else {
+                                  setMigratingTransaction(transaction, 1)
 
-                        if (legacyLedger) {
-                            closePopup(true) // close transaction popup
-                            closeTransport()
-                            displayNotificationForLedgerProfile('error', false, true, false, true, error)
-                        }
+                                  return createMigrationBundle(transaction as Bundle, get(migrationAddress))
+                                      .then((trytes: string[]) => {
+                                          const reverseTrytesSoftware = trytes.reverse()
+                                          prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
+                                          return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
+                                      })
+                                      .then((receipt) => {
+                                          // todo: handle receipt data
+                                          // is this needed?
+                                          if (!hasBroadcastAnyBundle) {
+                                              hasBroadcastAnyBundle = true
 
-                        transactions = transactions.map((_transaction, i) => {
-                            if (_transaction.index === transaction.index) {
-                                return { ..._transaction, status: -1, errorText: 'Migration failed' }
-                            }
+                                              persistProfile()
+                                          }
+                                      })
+                              }
+                          })
+                          .catch((error) => {
+                              console.error(error)
 
-                            return _transaction
-                        })
-                    })
-                    .finally(() => {
-                        if (
-                            !transactions.some((tx) => tx.status === 1) &&
-                            transactions.every((tx) => tx.status !== 0)
-                        ) {
-                            migrated = true
-                            busy = false
-                        }
-                    })
-            } else {
-                setMigratingTransaction(transaction, 1)
+                              if (legacyLedger) {
+                                  closePopup(true) // close transaction popup
+                                  closeTransport()
+                                  displayNotificationForLedgerProfile('error', false, true, false, true, error)
+                              }
+                              showAppNotification({
+                                  type: 'error',
+                                  message: error.message || 'Failed to prepare transfers',
+                              })
 
-                createMigrationBundle(transaction as Bundle, get(migrationAddress))
-                    .then((trytes: string[]) => {
-                        const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
-                        sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
-                    })
-                    .then((receipt) => {
-                        // todo: handle receipt data
-                        // is this needed?
-                        if (!hasBroadcastAnyBundle) {
-                            hasBroadcastAnyBundle = true
+                              transactions = transactions.map((_transaction, i) => {
+                                  if (_transaction.index === transaction.index) {
+                                      return { ..._transaction, status: -1, errorText: 'Migration failed' }
+                                  }
 
-                            persistProfile()
-                        }
-                    })
-                    .catch((error) => {
-                        showAppNotification({ type: 'error', message: error.message || 'Failed to prepare transfers' })
-                        console.error(error)
-
-                        transactions = transactions.map((_transaction, i) => {
-                            if (_transaction.index === transaction.index) {
-                                return { ..._transaction, status: -1, errorText: 'Migration failed' }
-                            }
-
-                            return _transaction
-                        })
-                    })
-                    .finally(() => {
-                        if (
-                            !transactions.some((tx) => tx.status === 1) &&
-                            transactions.every((tx) => tx.status !== 0)
-                        ) {
-                            migrated = true
-                            busy = false
-                        }
-                    })
-            }
-        })
+                                  return _transaction
+                              })
+                          })
+                          .finally(() => {
+                              if (transactions.every((tx) => tx.status !== 0 && tx.status !== 1)) {
+                                  migrated = true
+                                  busy = false
+                              }
+                          })
+                    : promise,
+            Promise.resolve([])
+        )
     }
 </script>
 
