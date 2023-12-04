@@ -21,13 +21,13 @@ import {
 } from 'shared/lib/typings/migration'
 import { appRoute, AppRoute } from '@core/router'
 import Validator from 'shared/lib/validator'
-import { api, walletSetupType } from 'shared/lib/wallet'
+import { api, wallet, walletSetupType } from 'shared/lib/wallet'
 import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
 import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
-import { generateAddress } from '@iota/core'
+import { createPrepareTransfers, generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
 import { blake2b } from 'blakejs'
@@ -43,7 +43,10 @@ export const PERMANODE = 'https://chronicle.iota.org/api'
 export const ADDRESS_SECURITY_LEVEL = 2
 
 /** Minimum migration balance */
-export const MINIMUM_MIGRATION_BALANCE = 1000000
+export const MINIMUM_MIGRATION_BALANCE = 0
+
+/** Amount to hardcode in the inputs to bypass legacy validation in ISC */
+export const MINIMUM_MIGRATABLE_AMOUNT = 1000000
 
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60
@@ -111,8 +114,6 @@ export const migration = writable<MigrationState>({
     bundles: writable<Bundle[]>([]),
 })
 
-export const depositAddressMigration = writable<string | null>(null)
-
 export const didInitialiseMigrationListeners = writable<boolean>(false)
 
 export const hardwareIndexes = writable<HardwareIndexes>({
@@ -121,6 +122,8 @@ export const hardwareIndexes = writable<HardwareIndexes>({
 })
 
 export const migrationLog = writable<MigrationLog[]>([])
+
+export const migrationAddress = writable<MigrationAddress>()
 
 export const createUnsignedBundle = (
     outputAddress: string,
@@ -245,6 +248,45 @@ function iscVluEncode(value: number): Buffer {
     return Buffer.from(buf)
 }
 
+export const generateMigrationAddress = async (ledger: boolean = false): Promise<MigrationAddress> =>
+    new Promise<MigrationAddress>((resolve, reject) => {
+        if (ledger) {
+            api.getAccounts({
+                onSuccess: (getAccountsResponse) => {
+                    api.getMigrationAddress(
+                        false,
+                        getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
+                        {
+                            onSuccess: (response) => {
+                                resolve(response.payload as unknown as MigrationAddress)
+                            },
+                            onError: (error) => {
+                                console.error(error)
+                                reject(error)
+                            },
+                        }
+                    )
+                },
+                onError: (getAccountsError) => {
+                    console.error(getAccountsError)
+                    reject(getAccountsError)
+                },
+            })
+        } else {
+            const { accounts } = get(wallet)
+
+            api.getMigrationAddress(false, get(accounts)[0].id, {
+                onSuccess: (response) => {
+                    resolve(response.payload as unknown as MigrationAddress)
+                },
+                onError: (error) => {
+                    console.error(error)
+                    reject(error)
+                },
+            })
+        }
+    })
+
 /**
  * Gets migration data and sets it to state
  *
@@ -262,19 +304,14 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
 
     for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
         const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-        const binaryAddress = '0x' + convertToHex(legacyAddress)
-        const balance = await fetchMigratableBalance(binaryAddress)
+        const hexAddress = '0x' + convertToHex(legacyAddress)
+        const balance = await fetchMigratableBalance(hexAddress)
 
-        // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
-        // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-        // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
         totalBalance += balance
         if (balance > 0) {
-            // Hardcode MINIMUM_MIGRATION_BALANCE for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATION_BALANCE.
-            // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
             inputs.push({
                 address: legacyAddress,
-                balance: MINIMUM_MIGRATION_BALANCE,
+                balance,
                 spent: false,
                 index,
                 securityLevel: ADDRESS_SECURITY_LEVEL,
@@ -312,14 +349,14 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 }
 
-async function fetchMigratableBalance(binaryAddress: string): Promise<number> {
+async function fetchMigratableBalance(hexAddress: string): Promise<number> {
     const body = {
         functionName: 'getMigratableBalance',
         contractName: 'legacymigration',
         arguments: {
             Items: [
                 {
-                    value: binaryAddress,
+                    value: hexAddress,
                     key: '0x61', // convertToHex("a")
                 },
             ],
@@ -413,18 +450,20 @@ export const getLedgerMigrationData = (
     const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
         let totalBalance = 0
         const inputs: Input[] = []
+        const { lastCheckedAddressIndex } = get(get(migration).data)
+
         for (let index = 0; index < addresses.length; index++) {
-            const legacyAddress = addresses[index].address
-            const binaryAddress = '0x' + convertToHex(legacyAddress)
-            const balance = await fetchMigratableBalance(binaryAddress)
+            const legacyAddress = addresses[index]
+            const hexAddress = '0x' + convertToHex(legacyAddress.address)
+            const balance = await fetchMigratableBalance(hexAddress)
 
             totalBalance += balance
             if (balance > 0) {
                 inputs.push({
-                    address: legacyAddress,
+                    address: legacyAddress.address,
                     balance,
                     spent: false,
-                    index,
+                    index: legacyAddress.index,
                     securityLevel: ADDRESS_SECURITY_LEVEL,
                     spentBundleHashes: [],
                 })
@@ -432,7 +471,7 @@ export const getLedgerMigrationData = (
         }
 
         const migrationData: MigrationData = {
-            lastCheckedAddressIndex: initialAddressIndex + addresses.length,
+            lastCheckedAddressIndex: lastCheckedAddressIndex + addresses.length,
             balance: totalBalance,
             inputs: inputs,
             spentAddresses: false,
@@ -650,49 +689,29 @@ export const createMinedLedgerMigrationBundle = (
  */
 export const createLedgerMigrationBundle = (
     bundleIndex: number,
+    migrationAddress: MigrationAddress,
     prepareTransfersFn: (transfers: Transfer[], inputs: Input[]) => Promise<string[]>,
     callback: () => void
-): Promise<MigrationBundle> =>
-    new Promise((resolve, reject) => {
-        api.getAccounts({
-            onSuccess(getAccountsResponse) {
-                api.getMigrationAddress(
-                    false,
-                    getAccountsResponse.payload[get(activeProfile).ledgerMigrationCount].id,
-                    {
-                        onSuccess(response) {
-                            resolve(response.payload)
-                        },
-                        onError(error) {
-                            reject(error)
-                        },
-                    }
-                )
-            },
-            onError(getAccountsError) {
-                reject(getAccountsError)
-            },
-        })
-    }).then((address: MigrationAddress) => {
-        depositAddressMigration.set(address.bech32)
-        const bundle = findMigrationBundle(bundleIndex)
-        const transfer = {
-            address: address.trytes.toString(),
-            value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
-            tag: 'U'.repeat(27),
-        }
+): Promise<MigrationBundle> => {
+    const bundle = findMigrationBundle(bundleIndex)
 
-        openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
+    const transfer = {
+        address: migrationAddress.trytes,
+        value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
+        tag: 'U'.repeat(27),
+    }
 
-        return prepareTransfersFn(
-            [transfer],
-            bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
-        ).then((trytes) => {
-            updateLedgerBundleState(bundleIndex, trytes, false)
-            callback()
-            return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
-        })
+    openLedgerLegacyTransactionPopup(transfer, bundle.inputs)
+
+    return prepareTransfersFn(
+        [transfer],
+        bundle.inputs.map((input) => Object.assign({}, input, { keyIndex: input.index }))
+    ).then((trytes) => {
+        updateLedgerBundleState(bundleIndex, trytes, false)
+        callback()
+        return { trytes, bundleHash: asTransactionObject(trytes[0]).bundle }
     })
+}
 
 /**
  * Sends ledger migration bundle
@@ -729,40 +748,75 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
  *
  * @returns {Promise<Receipt>}
  */
-export const sendOffLedgerMigrationRequest = async (trytes: string[]): Promise<any> => {
-    const offLedgerHexRequest = createOffLedgerRequest(trytes)
-    await fetchOffLedgerRequest(offLedgerHexRequest.request)
-    const receiptResponse = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
-    return receiptResponse
+export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleIndex: number): Promise<any> => {
+    const { bundles } = get(migration)
+    try {
+        const offLedgerHexRequest = createOffLedgerRequest(trytes)
+        await fetchOffLedgerRequest(offLedgerHexRequest.request)
+
+        const receipt = await fetchReceiptForRequest(offLedgerHexRequest.requestId)
+        if (receipt?.errorMessage) {
+            throw new Error(receipt?.errorMessage)
+        }
+
+        // Update bundle and mark it as migrated
+        bundles.update((_bundles) =>
+            _bundles.map((bundle) => {
+                if (bundle.index === bundleIndex) {
+                    return Object.assign({}, bundle, { migrated: true, confirmed: true })
+                }
+
+                return bundle
+            })
+        )
+
+        return receipt
+    } catch (err) {
+        throw new Error(err.message || 'Failed to send migration request')
+    }
 }
 /**
  * Creates migration bundle
  *
  * @method createMigrationBundle
  *
- * @param {number[]} inputIndexes
- * @param {boolean} mine
+ * @param {number} bundleIndex
+ * @param {MigrationAddress} migrationAddress
  *
  * @returns {Promise}
  */
-export const createMigrationBundle = (
-    inputAddressIndexes: number[],
-    offset: number,
-    mine: boolean
-): Promise<MigrationBundle> => {
+export const createMigrationBundle = async (bundle: Bundle, migrationAddress: MigrationAddress): Promise<string[]> => {
     const { seed } = get(migration)
 
-    return new Promise((resolve, reject) => {
-        api.createMigrationBundle(get(seed), inputAddressIndexes, mine, MINING_TIMEOUT_SECONDS, offset, LOG_FILE_NAME, {
-            onSuccess(response) {
-                assignBundleHash(inputAddressIndexes, response.payload, mine)
-                resolve(response.payload)
-            },
-            onError(error) {
-                reject(error)
-            },
+    const prepareTransfers = createPrepareTransfers()
+
+    const transfers = [
+        {
+            value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+            address: removeAddressChecksum(migrationAddress.trytes),
+        },
+    ]
+    // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
+    // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
+    // Hardcode MINIMUM_MIGRATABLE_AMOUNT for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
+    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
+    const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
+        address: input.address,
+        keyIndex: input.index,
+        security: input.securityLevel,
+        balance: MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+    }))
+
+    try {
+        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+            inputs: inputsForTransfer,
         })
-    })
+
+        return bundleTrytes
+    } catch (err) {
+        throw new Error(err.message || 'Failed to prepare transfers')
+    }
 }
 
 export async function fetchOffLedgerRequest(request: string): Promise<void> {
@@ -787,7 +841,7 @@ export async function fetchOffLedgerRequest(request: string): Promise<void> {
     try {
         const response = await fetch(endpoint, requestOptions)
 
-        if (response.status === 400) {
+        if (response.status >= 400) {
             return response.json().then((err) => {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })
@@ -827,7 +881,7 @@ export async function fetchReceiptForRequest(requestId: string): Promise<any> {
     try {
         const response = await fetch(endpoint, requestOptions)
 
-        if (response.status === 400) {
+        if (response.status >= 400) {
             return response.json().then((err) => {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })
