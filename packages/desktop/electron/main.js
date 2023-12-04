@@ -186,7 +186,6 @@ function isUrlAllowed(targetUrl) {
         'iotatreasury.org',
         'govern.iota.org',
         'explorer.iota-alphanet.iotaledger.net',
-        'explorer.stardust-mainnet.iotaledger.net',
 
         // Assembly / Shimmer
         'assembly.sc',

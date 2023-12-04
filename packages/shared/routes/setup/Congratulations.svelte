@@ -135,7 +135,7 @@
         if ($activeProfile.isDeveloperProfile) {
             urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$depositAddressMigration}`
         } else {
-            urlToOpen = `https://explorer.stardust-mainnet.iotaledger.net/mainnet/addr/${$depositAddressMigration}`
+            urlToOpen = `https://explorer.iota.org/mainnet/addr/${$depositAddressMigration}`
         }
         Platform.openUrl(urlToOpen)
     }
