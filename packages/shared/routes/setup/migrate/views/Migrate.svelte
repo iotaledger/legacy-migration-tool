@@ -15,7 +15,6 @@
         migration,
         migrationAddress,
         prepareMigrationLog,
-        removeAddressChecksum,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
     } from 'shared/lib/migration'
@@ -29,9 +28,6 @@
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
-    import { MigrationAddress } from '@lib/typings/migration'
-    import { createPrepareTransfers } from '@iota/core'
-    import { appRouter } from '@core/router'
 
     export let locale: Locale
 
@@ -64,7 +60,7 @@
 
     const unsubscribe = confirmedBundles.subscribe((newConfirmedBundles) => {
         newConfirmedBundles.forEach((bundle) => {
-            if (bundle.bundleHash && bundle.bundleHash === singleMigrationBundleHash && bundle.confirmed) {
+            if ($hasSingleBundle && bundle.confirmed) {
                 didComplete.set(true)
                 loading = false
                 dispatch('next')
@@ -128,7 +124,7 @@
                         // TODO: Check the bundlehash with software profiles
                         const reverseTrytesSoftware = trytes.reverse()
                         prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
-                        sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
+                        return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
                         // todo: handle receipt data
