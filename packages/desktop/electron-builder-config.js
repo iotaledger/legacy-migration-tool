@@ -3,7 +3,7 @@ const merge = require('lodash.merge')
 
 const baseConfig = () => ({
     productName: 'IOTA Legacy Migration Tool',
-    artifactName: 'iota-legacy-migration-tool-${version}.${ext}',
+    artifactName: 'iota-legacy-migration-tool-desktop-${version}.${ext}',
     copyright: 'IOTA Foundation',
     directories: { buildResources: './public', output: './out' },
     files: ['public/', 'package.json', '!node_modules/firefly-actor-system-nodejs-bindings/native/*'],
@@ -55,11 +55,6 @@ const baseConfig = () => ({
         hardenedRuntime: true,
         gatekeeperAssess: false,
         asarUnpack: ['**/*.node'],
-    },
-    publish: {
-        provider: 'generic',
-        url: 'https://dl.firefly.iota.org/',
-        channel: 'latest',
     },
 })
 
