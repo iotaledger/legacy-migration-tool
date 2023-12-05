@@ -1,4 +1,4 @@
-# Firefly - Shared
+# Legacy Migration Tool - Shared
 
 ## `components`
 
@@ -8,7 +8,7 @@ Contains all of the common and reusable Svelte components
 ## `lib`
 
 Contains all of the business logic for the different features
-in Firefly (e.g. handling migrations, transferring funds). Wrapper 
+in Legacy Migration Tool (e.g. handling migrations, transferring funds). Wrapper 
 functions for the API (wallet.rs) or functions that use those are 
 defined here.
 
@@ -21,4 +21,4 @@ Please do __NOT__ modify any files besides `en.json` as the others are synced fr
 ## `routes`
 
 Contains Svelte source files that assemble smaller components together
-with business logic to form the main views of Firefly.
+with business logic to form the main views of Legacy Migration Tool.

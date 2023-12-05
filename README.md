@@ -1,19 +1,9 @@
-<h1 align="center">
-  <br>
-  <a href=""><img src="header.png"></a>
-</h1>
-
-<h2 align="center">IOTA's wallet</h2>
+<h2 align="center">Legacy Migration Tool</h2>
 
 <p align="center">
   <a href="https://discord.iota.org/" style="text-decoration:none;"><img src="https://img.shields.io/badge/Discord-9cf.svg?logo=discord" alt="Discord"></a>
   <a href="https://iota.stackexchange.com/" style="text-decoration:none;"><img src="https://img.shields.io/badge/StackExchange-9cf.svg?logo=stackexchange" alt="StackExchange"></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/iotaledger/firefly/actions/workflows/ci.test.yml" style="text-decoration:none;"><img src="https://github.com/iotaledger/firefly/actions/workflows/ci.test.yml/badge.svg?branch=develop&event=push" alt="Firefly test CI"></a>
-  <a href="https://github.com/iotaledger/firefly/blob/develop/LICENSE" style="text-decoration:none;"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="Apache 2.0 license"></a>
-  <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fiotaledger%2Ffirefly?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fiotaledger%2Ffirefly.svg?type=shield"/></a>
+  <a href="https://github.com/iotaledger/legacy-migration-tool/blob/main/LICENSE" style="text-decoration:none;"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="Apache 2.0 license"></a>
 </p>
 
 <p align="center">
@@ -27,19 +17,19 @@
 
 ## About
 
-Firefly is IOTA's new official wallet for Chrysalis.
+Legacy Migration Tool is IOTA's tool to migrate funds from legacy to stardust protocol.
 
 ## Installation
 
-There are a few options to install Firefly:
+There are a few options to install Legacy Migration Tool:
 
-- Download from [official Firefly website](https://firefly.iota.org)
-- Build from source code (see [desktop README](https://github.com/iotaledger/firefly/blob/develop/packages/desktop/README.md))
+- Download from [official Legacy Migration Tool repository](https://github.com/iotaledger/legacy-migration-tool/releases)
+- Build from source code (see [desktop README](https://github.com/iotaledger/legacy-migration-tool/blob/main/packages/desktop/README.md))
 
 ## Contributing
 
-Help out the Firefly project by filing a [bug report](https://github.com/iotaledger/firefly/issues/new?assignees=&labels=bug&template=bug_report.yml), making a [feature request](https://github.com/iotaledger/firefly/issues/new?assignees=&labels=feat&template=feature_request.md) or opening a [pull request](https://github.com/iotaledger/firefly/pulls/).
-See the [contribution guidelines](https://github.com/iotaledger/firefly/blob/develop/.github/CONTRIBUTING.md) for more.
+Help out the Legacy Migration Tool project by filing a [bug report](https://github.com/iotaledger/legacy-migration-tool/issues/new?assignees=&labels=bug&template=bug_report.yml), making a [feature request](https://github.com/iotaledger/legacy-migration-tool/issues/new?assignees=&labels=feat&template=feature_request.md) or opening a [pull request](https://github.com/iotaledger/legacy-migration-tool/pulls/).
+See the [contribution guidelines](https://github.com/iotaledger/legacy-migration-tool/blob/main/.github/CONTRIBUTING.md) for more.
 
 ## Joining the discussion
 
