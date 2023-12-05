@@ -192,8 +192,8 @@ function isUrlAllowed(targetUrl) {
         'shimmer.network',
 
         // GitHub
-        'github.com/iotaledger/firefly/issues',
-        'github.com/iotaledger/firefly/issues/new/choose',
+        'github.com/iotaledger/legacy-migration-tool/issues',
+        'github.com/iotaledger/legacy-migration-tool/issues/new/choose',
 
         // Other
         'support.ledger.com',
