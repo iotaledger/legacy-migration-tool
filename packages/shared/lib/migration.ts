@@ -706,10 +706,15 @@ export const createLedgerMigrationBundle = (
     const transfers = [
         {
             address: migrationAddress.trytes,
-            value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+            value: bundle.inputs.reduce(
+                (acc, input) =>
+                    acc + (input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance),
+                0
+            ),
             tag: 'U'.repeat(27),
         },
     ]
+
     // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
     // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
     // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
@@ -719,8 +724,9 @@ export const createLedgerMigrationBundle = (
         address: input.address,
         keyIndex: input.index,
         security: input.securityLevel,
-        balance: MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+        balance: input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance, // hardcoded amount
     }))
+
     return prepareTransfersFn(transfers, inputsForTransfer).then((trytes) => {
         updateLedgerBundleState(bundleIndex, trytes, false)
         callback()

@@ -845,7 +845,9 @@
             },
             "transaction": {
                 "title": "Confirm transaction",
-                "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted."
+                "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted.",
+                "warning": "The transaction information displayed on your Ledger device won't match the information displayed below. The amounts displayed on the leger will differ as a result of minimum migratable amount limit on legacy network, press both buttons on your Ledger as prompted.",
+                "inputWarning": "Amount displayed on ledger:"
             }
         },
         "ledgerAddress": {
