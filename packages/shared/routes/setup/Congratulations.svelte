@@ -56,11 +56,7 @@
     function exportMigrationLog(): void {
         exportMigrationLogBusy = true
         getProfileDataPath($activeProfile.id)
-            .then((source) =>
-                $walletSetupType === SetupType.TrinityLedger
-                    ? Platform.exportLedgerMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-                    : Platform.exportMigrationLog(`${source}/${LOG_FILE_NAME}`, `${$activeProfile.id}-${LOG_FILE_NAME}`)
-            )
+            .then(() => Platform.exportMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`))
             .catch((error) => {
                 console.error(error)
                 showAppNotification({
@@ -135,7 +131,7 @@
         if ($activeProfile.isDeveloperProfile) {
             urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$migrationAddress.bech32}`
         } else {
-            urlToOpen = `https://explorer.stardust-mainnet.iotaledger.net/mainnet/addr/${$migrationAddress.bech32}`
+            urlToOpen = `https://explorer.iota.org/mainnet/addr/${$migrationAddress.bech32}`
         }
         Platform.openUrl(urlToOpen)
     }
