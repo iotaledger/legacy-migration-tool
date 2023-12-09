@@ -845,7 +845,9 @@
             },
             "transaction": {
                 "title": "Confirm transaction",
-                "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted."
+                "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted.",
+                "warning": "Due to constraints in the legacy network, addresses with amounts below the minimum migratable threshold will show 1 IOTA as the input amount.",
+                "inputAmount": "Amount that will be migrated: {amount}"
             }
         },
         "ledgerAddress": {
