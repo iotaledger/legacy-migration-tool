@@ -1,7 +1,7 @@
 <script lang="typescript" xmlns="http://www.w3.org/1999/html">
     import { Animation, Text } from 'shared/components'
     import { formatAddressForLedger } from 'shared/lib/ledger'
-    import { asyncGetAddressChecksum } from 'shared/lib/migration'
+    import { MINIMUM_MIGRATABLE_AMOUNT, asyncGetAddressChecksum } from 'shared/lib/migration'
     import { Input, Transfer } from 'shared/lib/typings/migration'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { Locale } from '@core/i18n'
@@ -11,6 +11,11 @@
     export let transfer: Transfer
     export let inputs: Input[]
 
+    const outputAmount: number = inputs.reduce(
+        (acc, input) => acc + (input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance),
+        0
+    )
+
     // Hardcoded strings because Ledger does not translate them
     const checksumString = (checksum): string => `Chk: ${checksum}`
     const inputString = (index): string => `Input [${index}]`
@@ -19,6 +24,9 @@
 
 <Text type="h4" classes="mb-6">{locale('popups.ledgerTransaction.transaction.title')}</Text>
 <Text type="p" classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.info')}</Text>
+{#if outputAmount !== transfer.value}
+    <Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning')}</Text>
+{/if}
 
 <div class="relative w-full h-1/2 bg-white dark:bg-gray-900 flex justify-center content-center">
     <Animation
@@ -32,7 +40,14 @@
 <div class="transaction flex flex-col space-y-4 scrollable-y">
     <div class="rounded-lg bg-gray-50 dark:bg-gray-800 p-5 text-center">
         <Text type="h5" highlighted classes="mb-2">{outputString}</Text>
-        <Text type="pre">{formatUnitBestMatch(transfer.value)}</Text>
+        <Text type="pre">{formatUnitBestMatch(outputAmount)}</Text>
+        {#if outputAmount !== transfer.value}
+            <Text error type="pre">
+                {locale('popups.ledgerTransaction.transaction.inputAmount', {
+                    values: { amount: formatUnitBestMatch(transfer.value) },
+                })}
+            </Text>
+        {/if}
         <Text type="pre">{formatAddressForLedger(transfer.address, true)}</Text>
         <Text type="pre">
             {#await asyncGetAddressChecksum(transfer.address)}...{:then checksum}{checksumString(checksum)}{/await}
@@ -41,7 +56,16 @@
     {#each inputs as { address, balance, index }}
         <div class="rounded-lg bg-gray-50 dark:bg-gray-800 p-5 text-center">
             <Text type="h5" highlighted classes="mb-2">{inputString(index)}</Text>
-            <Text type="pre">{formatUnitBestMatch(balance)}</Text>
+            <Text type="pre"
+                >{formatUnitBestMatch(balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : balance)}</Text
+            >
+            {#if balance < MINIMUM_MIGRATABLE_AMOUNT}
+                <Text error type="pre"
+                    >{locale('popups.ledgerTransaction.transaction.inputAmount', {
+                        values: { amount: formatUnitBestMatch(balance) },
+                    })}
+                </Text>
+            {/if}
             <Text type="pre">{formatAddressForLedger(address)}</Text>
             <Text type="pre">
                 {#await asyncGetAddressChecksum(address, true)}...{:then checksum}{checksumString(checksum)}{/await}
