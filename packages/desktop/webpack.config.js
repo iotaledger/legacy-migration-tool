@@ -20,7 +20,7 @@ const appName =
     stage === 'prod'
         ? 'IOTA Legacy Migration Tool'
         : `IOTA Legacy Migration Tool ${stage.replace(/^\w/, (c) => c.toUpperCase())}`
-const appId = stage === 'prod' ? 'org.iota.firefly' : `org.iota.firefly.${stage}`
+const appId = stage === 'prod' ? 'org.iota.legacy-migration-tool' : `org.iota.legacy-migration-tool.${stage}`
 
 // / ------------------------ Resolve ------------------------
 
