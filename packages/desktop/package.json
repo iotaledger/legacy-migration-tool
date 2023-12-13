@@ -1,8 +1,8 @@
 {
     "name": "desktop",
     "productName": "IOTA Legacy Migration Tool",
-    "version": "1.7.5",
-    "description": "Official IOTA wallet on desktop",
+    "version": "0.0.1",
+    "description": "Official IOTA Legacy Migration Tool on desktop",
     "main": "public/build/main.js",
     "repository": "git@github.com:iotaledger/legacy-migration-tool.git",
     "author": "IOTA Foundation <contact@iota.org>",
