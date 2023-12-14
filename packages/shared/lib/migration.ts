@@ -404,7 +404,7 @@ async function fetchMigratableBalance(hexAddress: string): Promise<number> {
  *
  * @returns {void}
  */
-export const prepareMigrationLog = (bundleHash: string, trytes: string[], balance: number): void => {
+export const prepareMigrationLog = (bundleHash: string, trytes: string[], balance: number, depositAddress: string): void => {
     const transactionObjects = trytes.map((tryteString) => asTransactionObject(tryteString))
     const { bundles } = get(migration)
 
@@ -431,6 +431,7 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
             spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
             mine: bundle?.miningRuns > 0,
             crackability: bundle?.crackability || null,
+            depositAddress
         },
     ])
 }

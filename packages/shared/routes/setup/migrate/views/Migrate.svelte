@@ -14,6 +14,7 @@
         hasSingleBundle,
         migration,
         migrationAddress,
+        migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
@@ -89,11 +90,20 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
+                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance, get(migrationAddress).bech32)
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
                             // todo: handle receipt data
+                            console.log("receipt", receipt);
+                            migrationLog.update((_migrationLog) =>
+                                _migrationLog.map((log) => {
+                                    return {
+                                        ...log,
+                                        requestsId: [...log.requestsId, receipt?.request?.requestId || '']
+                                    }
+                                })
+                            )
                             loading = false
                             if ($newProfile) {
                                 // Save profile
@@ -123,11 +133,19 @@
                     .then((trytes: string[]) => {
                         // TODO: Check the bundlehash with software profiles
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
+                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance, get(migrationAddress).bech32)
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        // todo: handle receipt data
+                        console.log("receipt", receipt);
+                        migrationLog.update((_migrationLog) =>
+                            _migrationLog.map((log) => {
+                                return {
+                                    ...log,
+                                    requestsId: [...log.requestsId, receipt?.request?.requestId || '']
+                                }
+                            })
+                        )
                         loading = false
                         if ($newProfile) {
                             // Save profile
