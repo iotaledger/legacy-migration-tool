@@ -16,6 +16,7 @@
         generateMigrationAddress,
         hardwareIndexes,
         hasMigratedAndConfirmedAllSelectedBundles,
+        hasMigratedAndConfirmedSomeSelectedBundles,
         hasMigratedAnyBundle,
         migration,
         migrationAddress,
@@ -38,6 +39,7 @@
     let migrated = false
     let migratingFundsMessage = ''
     let fullSuccess = $hasMigratedAndConfirmedAllSelectedBundles
+    let someSuccess = $hasMigratedAndConfirmedSomeSelectedBundles
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
     $: animation = legacyLedger ? 'ledger-migrate-desktop' : 'migrate-desktop'
@@ -66,7 +68,7 @@
         busy = false
     }
 
-    const unsubscribe = hasMigratedAndConfirmedAllSelectedBundles.subscribe(
+    const hasMigratedAndConfirmedAllSelectedBundlesUnsubscribe = hasMigratedAndConfirmedAllSelectedBundles.subscribe(
         (_hasMigratedAndConfirmedAllSelectedBundles) => {
             fullSuccess = _hasMigratedAndConfirmedAllSelectedBundles
 
@@ -79,10 +81,15 @@
         }
     )
 
+    const hasMigratedAndConfirmedSomeSelectedBundlesUnsubscribe = hasMigratedAndConfirmedSomeSelectedBundles.subscribe(
+        (_hasMigratedAndConfirmedSomeSelectedBundles) => {
+            someSuccess = _hasMigratedAndConfirmedSomeSelectedBundles
+        }
+    )
+
     let migratedAndUnconfirmedBundles = []
 
-    // TODO: add missing unsubscribe to onDestroy
-    confirmedBundles.subscribe((newConfirmedBundles) => {
+    const confirmedBundlesUnsubscribe = confirmedBundles.subscribe((newConfirmedBundles) => {
         newConfirmedBundles.forEach((bundle) => {
             if (bundle.confirmed) {
                 migratedAndUnconfirmedBundles = migratedAndUnconfirmedBundles.filter(
@@ -173,7 +180,11 @@
         }
     })
 
-    onDestroy(unsubscribe)
+    onDestroy(() => {
+        hasMigratedAndConfirmedAllSelectedBundlesUnsubscribe()
+        confirmedBundlesUnsubscribe()
+        hasMigratedAndConfirmedSomeSelectedBundlesUnsubscribe()
+    })
 
     function handleMigrateClick() {
         if (legacyLedger) {
@@ -319,6 +330,15 @@
                     <Spinner {busy} message={migratingFundsMessage} classes="justify-center" />
                 {/if}
             </Button>
+        {:else if someSuccess}
+            <div class="flex flex-row justify-center items-center py-3 mt-2 w-full space-x-2">
+                <Button classes="w-1/2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
+                    {locale('views.transferFragmentedFunds.rerun')}
+                </Button>
+                <Button classes="w-1/2" onClick={() => handleContinueClick()}>
+                    {locale('actions.continue')}
+                </Button>
+            </div>
         {:else if fullSuccess}
             <Button classes="w-full py-3 mt-2" onClick={() => handleContinueClick()}
                 >{locale('actions.continue')}</Button
