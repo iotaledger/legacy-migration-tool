@@ -11,7 +11,7 @@
         },
         "crashReporting": {
             "title": "Crash Reporting",
-            "body": "Help the developers improve Firefly by automatically sending diagnostic data when an error or crash occurs.",
+            "body": "Help the developers improve IOTA Legacy Migration Tool by automatically sending diagnostic data when an error or crash occurs.",
             "checkbox": "Send crash reports to the IOTA Foundation"
         },
         "appearance": {
@@ -136,16 +136,16 @@
             "migrateAnotherProfile": "Migrate another profile"
         },
         "import": {
-            "title": "Recover or migrate funds",
-            "body": "If you have an existing seed or wallet back up file, you can import it here. If you hold older network funds, you will be taken through the migration steps to move to the Stardust network.",
+            "title": "Migrate funds",
+            "body": "If you hold older network funds, you will be taken through the migration steps to move to the Stardust network.",
             "importSeed": "I have an 81 character seed",
             "importSeedDescription": "Enter a seed and migrate funds to Stardust",
             "importMnemonic": "I have a Firefly recovery phrase",
             "importMnemonicDescription": "Enter your recovery phrase to recover your wallets",
             "importFile": "I have a file backup",
-            "importFileDescription": "Upload a Seedvault or Stronghold file",
+            "importFileDescription": "Upload a Seedvault file",
             "importLedger": "I have a Ledger backup",
-            "importLedgerDescription": "Restore or migrate a Ledger profile"
+            "importLedgerDescription": "Migrate a Ledger profile"
         },
         "importFromText": {
             "seed": {
@@ -164,7 +164,7 @@
         },
         "importFromFile": {
             "title": "Restore your wallets using a backup file",
-            "body": "Import a backup file to restore your wallets. Backups can either be a Stronghold (.stronghold) or a Trinity SeedVault (.kdbx)."
+            "body": "Import a Trinity SeedVault (.kdbx) backup file to restore your wallets."
         },
         "importFromLedger": {
             "title": "Migrate your Ledger",
@@ -175,8 +175,8 @@
             "haveTrinityLedgerDescription": "Migrate a Trinity profile"
         },
         "connectLedger": {
-            "title": "Connect your Ledger to Firefly",
-            "body": "For your Ledger device to be found by Firefly, please ensure that the official Ledger Live application is closed.",
+            "title": "Connect your Ledger to IOTA Legacy Migration Tool",
+            "body": "For your Ledger device to be found by IOTA Legacy Migration Tool, please ensure that the official Ledger Live application is closed.",
             "trafficLight1": "Connect and unlock your Ledger with your PIN",
             "trafficLight2": "Open the new IOTA app on your Ledger",
             "tips": "Tips if your Ledger isn’t connecting"
@@ -187,18 +187,18 @@
             "restoring": "Restoring from Ledger..."
         },
         "legacyLedgerIntro": {
-            "title": "Start your Ledger migration using Firefly",
-            "body1": "Firefly will help you to transfer your tokens to the new Chrysalis network.",
+            "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
+            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Sturdust network.",
             "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly.",
             "readMore": "What to expect from the migration process"
         },
         "generateNewLedgerAddress": {
             "title": "Generate new address",
-            "body": "You need to generate a new address to migrate your tokens with Firefly. Click the button below to continue.",
+            "body": "You need to generate a new address to migrate your tokens with IOTA Legacy Migration Tool. Click the button below to continue.",
             "confirmTitle": "Confirm the new address",
             "confirmBody": "For security, please compare the address generated on your Ledger device with the one displayed below. If they match, press both buttons on your Ledger as prompted.",
             "confirmedTitle": "Address confirmed",
-            "confirmedBody": "You have confirmed that the address in Firefly matches the one on your Ledger device.",
+            "confirmedBody": "You have confirmed that the address in IOTA Legacy Migration Tool matches the one on your Ledger device.",
             "generating": "Generating address"
         },
         "switchLedgerApps": {
@@ -275,7 +275,7 @@
             "body2": "Your computer will run at full capacity, you may wish to do something else while you wait for this to complete."
         },
         "transferFragmentedFunds": {
-            "body1": "Firefly will now proceed to migrate your funds. This may take a while.",
+            "body1": "IOTA Legacy Migration Tool will now proceed to migrate your funds. This may take a while.",
             "body2": "Ensure your Ledger is connected and the {legacy} app is open at all times during migration.",
             "migrate": "Migrate funds",
             "transaction": "Transaction {number}",
@@ -321,7 +321,7 @@
             "theme": {
                 "title": "Theme",
                 "description": "",
-                "advice": "If you change your system theme, you may need to restart Firefly to see the effects"
+                "advice": "If you change your system theme, you may need to restart IOTA Legacy Migration Tool to see the effects"
             },
             "language": {
                 "title": "Language",
@@ -823,7 +823,7 @@
                 "1": "Ensure that your Ledger is connected",
                 "2": "Search for apps: {legacy} and IOTA (MIOTA)",
                 "3": "Install both apps: {legacy} and IOTA (MIOTA)",
-                "4": "Remember that it's important to close Ledger Live before returning to Firefly"
+                "4": "Remember that it's important to close Ledger Live before returning to IOTA Legacy Migration Tool"
             }
         },
         "ledgerConnectionGuide": {
@@ -998,7 +998,7 @@
         "tryAgain": "Try again",
         "visitDiscord": "Visit Discord",
         "dragDrop": "Drag & Drop",
-        "importExtentions": ".kdbx or .stronghold file",
+        "importExtentions": ".kdbx",
         "chooseFile": "Choose a File",
         "dropHere": "Drop your file here",
         "syncAll": "Sync all",
