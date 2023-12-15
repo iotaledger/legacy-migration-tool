@@ -90,19 +90,20 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance, get(migrationAddress).bech32)
+                            prepareMigrationLog(
+                                bundleHash,
+                                reverseTrytesLedger,
+                                migratableBalance,
+                                get(migrationAddress).bech32
+                            )
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
-                            // todo: handle receipt data
-                            console.log("receipt", receipt);
                             migrationLog.update((_migrationLog) =>
-                                _migrationLog.map((log) => {
-                                    return {
+                                _migrationLog.map((log) => ({
                                         ...log,
-                                        requestsId: [...log.requestsId, receipt?.request?.requestId || '']
-                                    }
-                                })
+                                        requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                                    }))
                             )
                             loading = false
                             if ($newProfile) {
@@ -137,14 +138,11 @@
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        console.log("receipt", receipt);
                         migrationLog.update((_migrationLog) =>
-                            _migrationLog.map((log) => {
-                                return {
+                            _migrationLog.map((log) => ({
                                     ...log,
-                                    requestsId: [...log.requestsId, receipt?.request?.requestId || '']
-                                }
-                            })
+                                    requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                                }))
                         )
                         loading = false
                         if ($newProfile) {

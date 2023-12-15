@@ -220,21 +220,26 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance, get(migrationAddress).bech32)
+                                          prepareMigrationLog(
+                                              bundleHash,
+                                              reverseTrytesLedger,
+                                              transaction.balance,
+                                              get(migrationAddress).bech32
+                                          )
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          // todo: handle receipt
-                                          console.log("receipt", receipt);
-                                          migrationLog.update((_migrationLog) =>
-                                            _migrationLog.map((log) => {
-                                                return {
-                                                    ...log,
-                                                    requestsId: [...log.requestsId, receipt?.request?.requestId || '']
-                                                }
-                                            })
-                                        )
-                                          
+                                          migrationLog.update((_migrationLog) => [
+                                              ..._migrationLog,
+                                              (_migrationLog[idx] = {
+                                                  ..._migrationLog[idx],
+                                                  requestsId: [
+                                                      ..._migrationLog[idx].requestsId,
+                                                      receipt?.request?.requestId || '',
+                                                  ],
+                                              }),
+                                          ])
+
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
                                               persistProfile()
@@ -246,19 +251,25 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog('', reverseTrytesSoftware, transaction.balance, get(migrationAddress).bech32)
+                                          prepareMigrationLog(
+                                              '',
+                                              reverseTrytesSoftware,
+                                              transaction.balance,
+                                              get(migrationAddress).bech32
+                                          )
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {
-                                        console.log("receipt", receipt);
-                                        migrationLog.update((_migrationLog) =>
-                                            _migrationLog.map((log) => {
-                                                return {
-                                                    ...log,
-                                                    requestsId: [...log.requestsId, receipt?.request?.requestId || '']
-                                                }
-                                            })
-                                        )
+                                          migrationLog.update((_migrationLog) => [
+                                              ..._migrationLog,
+                                              (_migrationLog[idx] = {
+                                                  ..._migrationLog[idx],
+                                                  requestsId: [
+                                                      ..._migrationLog[idx].requestsId,
+                                                      receipt?.request?.requestId || '',
+                                                  ],
+                                              }),
+                                          ])
                                           // todo: handle receipt data
                                           // is this needed?
                                           if (!hasBroadcastAnyBundle) {
