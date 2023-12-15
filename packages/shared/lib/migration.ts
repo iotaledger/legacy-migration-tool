@@ -123,7 +123,7 @@ export const hardwareIndexes = writable<HardwareIndexes>({
 
 export const migrationLog = writable<MigrationLog[]>([])
 
-export const migrationAddress = writable<MigrationAddress>()
+export const migrationAddress = writable<MigrationAddress | null>(null)
 
 export const createUnsignedBundle = (
     outputAddress: string,
@@ -274,7 +274,6 @@ export const generateMigrationAddress = async (ledger: boolean = false): Promise
             })
         } else {
             const { accounts } = get(wallet)
-
             api.getMigrationAddress(false, get(accounts)[0].id, {
                 onSuccess: (response) => {
                     resolve(response.payload as unknown as MigrationAddress)
@@ -1345,6 +1344,7 @@ export const selectAllAddressesForMining = (): void => {
  */
 export const resetMigrationState = (): void => {
     const { didComplete, data, seed, bundles } = get(migration)
+    const { accounts } = get(wallet)
     didComplete.set(false)
     data.set({
         lastCheckedAddressIndex: 0,
@@ -1353,6 +1353,8 @@ export const resetMigrationState = (): void => {
     })
     seed.set(null)
     bundles.set([])
+    migrationAddress.set(null)
+    accounts.set([])
 }
 
 /**
