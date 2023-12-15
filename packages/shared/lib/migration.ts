@@ -1406,6 +1406,18 @@ export const hasMigratedAndConfirmedAllSelectedBundles = derived(get(migration).
 })
 
 /**
+ * Determines if some migrated bundles are confirmed
+ */
+export const hasMigratedAndConfirmedSomeSelectedBundles = derived(get(migration).bundles, (_bundles) => {
+    const selectedBundles = _bundles.filter((bundle) => bundle.selected === true)
+
+    return (
+        selectedBundles.length &&
+        selectedBundles.some((bundle) => bundle.migrated === true && bundle.confirmed === true)
+    )
+})
+
+/**
  * Total migration balance
  */
 export const totalMigratedBalance = derived(get(migration).data, (data) => data.balance)
