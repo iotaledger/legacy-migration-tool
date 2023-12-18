@@ -61,14 +61,11 @@ export class ImportRouter extends Subrouter<ImportRoute> {
                 break
             }
             case ImportRoute.FileImport: {
-                const strongholdRegex = /\.(stronghold)$/i
                 const seedvaultRegex = /\.(kdbx)$/i
                 const { file, fileName, filePath } = params
 
                 if (seedvaultRegex.test(fileName)) {
                     this.importType.set(ImportType.SeedVault)
-                } else if (strongholdRegex.test(fileName)) {
-                    this.importType.set(ImportType.Stronghold)
                 }
 
                 this.importFile = file

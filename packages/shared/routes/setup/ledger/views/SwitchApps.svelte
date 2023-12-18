@@ -21,7 +21,7 @@
         const _onCancel = () => {
             busy = false
 
-            displayNotificationForLedgerProfile('error', true, true, false, true)
+            displayNotificationForLedgerProfile('error', true, true, true, true)
         }
         const _onConnected = () => {
             if ($ledgerDeviceState !== LedgerDeviceState.LegacyConnected) _onCancel()
