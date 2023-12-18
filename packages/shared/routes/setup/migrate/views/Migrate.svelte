@@ -101,9 +101,9 @@
                         .then((receipt) => {
                             migrationLog.update((_migrationLog) =>
                                 _migrationLog.map((log) => ({
-                                        ...log,
-                                        requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
-                                    }))
+                                    ...log,
+                                    requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                                }))
                             )
                             loading = false
                             if ($newProfile) {
@@ -140,9 +140,9 @@
                     .then((receipt) => {
                         migrationLog.update((_migrationLog) =>
                             _migrationLog.map((log) => ({
-                                    ...log,
-                                    requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
-                                }))
+                                ...log,
+                                requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                            }))
                         )
                         loading = false
                         if ($newProfile) {
