@@ -97,7 +97,7 @@
                             migrationLog.update((_migrationLog) =>
                                 _migrationLog.map((log) => ({
                                     ...log,
-                                    requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                                    requestId: receipt?.request?.requestId || '',
                                 }))
                             )
                             loading = false
@@ -136,7 +136,7 @@
                         migrationLog.update((_migrationLog) =>
                             _migrationLog.map((log) => ({
                                 ...log,
-                                requestsId: [...log.requestsId, receipt?.request?.requestId || ''],
+                                requestId: receipt?.request?.requestId || '',
                             }))
                         )
                         loading = false

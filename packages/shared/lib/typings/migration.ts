@@ -65,7 +65,7 @@ export interface MigrationLog {
     mine: boolean
     crackability: number | null
     depositAddress?: string
-    requestsId?: string[]
+    requestId?: string
 }
 
 export interface Bundle {
