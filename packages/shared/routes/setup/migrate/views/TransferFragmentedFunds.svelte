@@ -231,12 +231,7 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(
-                                              bundleHash,
-                                              reverseTrytesLedger,
-                                              transaction.balance,
-                                              get(migrationAddress).bech32
-                                          )
+                                          prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
@@ -262,12 +257,7 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(
-                                              '',
-                                              reverseTrytesSoftware,
-                                              transaction.balance,
-                                              get(migrationAddress).bech32
-                                          )
+                                          prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {

@@ -90,12 +90,7 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(
-                                bundleHash,
-                                reverseTrytesLedger,
-                                migratableBalance,
-                                get(migrationAddress).bech32
-                            )
+                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
@@ -134,7 +129,7 @@
                     .then((trytes: string[]) => {
                         // TODO: Check the bundlehash with software profiles
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance, get(migrationAddress).bech32)
+                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
