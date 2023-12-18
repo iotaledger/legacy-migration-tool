@@ -1356,6 +1356,7 @@ export const resetMigrationState = (): void => {
     bundles.set([])
     migrationAddress.set(null)
     accounts.set([])
+    migrationLog.set([])
 }
 
 /**
