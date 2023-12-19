@@ -20,6 +20,7 @@
         hasMigratedAnyBundle,
         migration,
         migrationAddress,
+        migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unmigratedBundles,
@@ -234,7 +235,14 @@
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          // todo: handle receipt
+                                          migrationLog.update((_migrationLog) => [
+                                              ..._migrationLog,
+                                              (_migrationLog[idx] = {
+                                                  ..._migrationLog[idx],
+                                                  requestId: receipt?.request?.requestId || '',
+                                              }),
+                                          ])
+
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
                                               persistProfile()
@@ -250,6 +258,13 @@
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {
+                                          migrationLog.update((_migrationLog) => [
+                                              ..._migrationLog,
+                                              (_migrationLog[idx] = {
+                                                  ..._migrationLog[idx],
+                                                  requestId: receipt?.request?.requestId || '',
+                                              }),
+                                          ])
                                           // todo: handle receipt data
                                           // is this needed?
                                           if (!hasBroadcastAnyBundle) {
@@ -330,6 +345,10 @@
                     <Spinner {busy} message={migratingFundsMessage} classes="justify-center" />
                 {/if}
             </Button>
+        {:else if fullSuccess}
+            <Button classes="w-full py-3 mt-2" onClick={() => handleContinueClick()}
+                >{locale('actions.continue')}</Button
+            >
         {:else if someSuccess}
             <div class="flex flex-row justify-center items-center py-3 mt-2 w-full space-x-2">
                 <Button classes="w-1/2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
@@ -339,10 +358,6 @@
                     {locale('actions.continue')}
                 </Button>
             </div>
-        {:else if fullSuccess}
-            <Button classes="w-full py-3 mt-2" onClick={() => handleContinueClick()}
-                >{locale('actions.continue')}</Button
-            >
         {:else}
             <Button classes="w-full py-3 mt-2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
                 {locale('views.transferFragmentedFunds.rerun')}

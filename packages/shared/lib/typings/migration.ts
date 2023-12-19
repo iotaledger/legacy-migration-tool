@@ -64,6 +64,8 @@ export interface MigrationLog {
     spentBundleHashes: string[]
     mine: boolean
     crackability: number | null
+    depositAddress?: string
+    requestId?: string
 }
 
 export interface Bundle {

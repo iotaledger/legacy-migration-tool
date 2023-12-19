@@ -14,6 +14,7 @@
         hasSingleBundle,
         migration,
         migrationAddress,
+        migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
@@ -93,7 +94,12 @@
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
-                            // todo: handle receipt data
+                            migrationLog.update((_migrationLog) =>
+                                _migrationLog.map((log) => ({
+                                    ...log,
+                                    requestId: receipt?.request?.requestId || '',
+                                }))
+                            )
                             loading = false
                             if ($newProfile) {
                                 // Save profile
@@ -127,7 +133,12 @@
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        // todo: handle receipt data
+                        migrationLog.update((_migrationLog) =>
+                            _migrationLog.map((log) => ({
+                                ...log,
+                                requestId: receipt?.request?.requestId || '',
+                            }))
+                        )
                         loading = false
                         if ($newProfile) {
                             // Save profile

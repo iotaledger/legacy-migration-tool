@@ -430,6 +430,7 @@ export const prepareMigrationLog = (bundleHash: string, trytes: string[], balanc
             spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
             mine: bundle?.miningRuns > 0,
             crackability: bundle?.crackability || null,
+            depositAddress: get(migrationAddress)?.bech32 ?? '',
         },
     ])
 }
@@ -1355,6 +1356,7 @@ export const resetMigrationState = (): void => {
     bundles.set([])
     migrationAddress.set(null)
     accounts.set([])
+    migrationLog.set([])
 }
 
 /**
