@@ -13,6 +13,7 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        exportMigrationLog,
         generateMigrationAddress,
         hardwareIndexes,
         hasMigratedAndConfirmedAllSelectedBundles,
@@ -20,10 +21,11 @@
         hasMigratedAnyBundle,
         migration,
         migrationAddress,
-        migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unmigratedBundles,
+        updateErrorInMigrationLog,
+        updateRequestInMigrationLog,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
     import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
@@ -231,22 +233,19 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
+                                          prepareMigrationLog(reverseTrytesLedger, transaction.balance, bundleHash)
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          migrationLog.update((_migrationLog) => [
-                                              ..._migrationLog,
-                                              (_migrationLog[idx] = {
-                                                  ..._migrationLog[idx],
-                                                  requestId: receipt?.request?.requestId || '',
-                                              }),
-                                          ])
-
+                                          updateRequestInMigrationLog(receipt?.request, idx)
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
                                               persistProfile()
                                           }
+                                      })
+                                      .catch((error) => {
+                                          updateErrorInMigrationLog(error, idx)
+                                          throw new Error(error)
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
@@ -254,24 +253,21 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
+                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          migrationLog.update((_migrationLog) => [
-                                              ..._migrationLog,
-                                              (_migrationLog[idx] = {
-                                                  ..._migrationLog[idx],
-                                                  requestId: receipt?.request?.requestId || '',
-                                              }),
-                                          ])
-                                          // todo: handle receipt data
+                                          updateRequestInMigrationLog(receipt?.request, idx)
                                           // is this needed?
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
 
                                               persistProfile()
                                           }
+                                      })
+                                      .catch((error) => {
+                                          updateErrorInMigrationLog(error, idx)
+                                          throw new Error(error)
                                       })
                               }
                           })
@@ -349,19 +345,20 @@
             <Button classes="w-full py-3 mt-2" onClick={() => handleContinueClick()}
                 >{locale('actions.continue')}</Button
             >
-        {:else if someSuccess}
-            <div class="flex flex-row justify-center items-center py-3 mt-2 w-full space-x-2">
-                <Button classes="w-1/2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
+        {:else}
+            <div class="flex flex-row gap-2 w-full items-strech justify-center h-full">
+                <Button classes={$popupState.active && 'opacity-20'} onClick={() => handleRerunClick()}>
                     {locale('views.transferFragmentedFunds.rerun')}
                 </Button>
-                <Button classes="w-1/2" onClick={() => handleContinueClick()}>
-                    {locale('actions.continue')}
+                {#if someSuccess}
+                    <Button onClick={() => handleContinueClick()}>
+                        {locale('actions.continue')}
+                    </Button>
+                {/if}
+                <Button onClick={exportMigrationLog}>
+                    {locale('views.congratulations.exportMigration')}
                 </Button>
             </div>
-        {:else}
-            <Button classes="w-full py-3 mt-2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
-                {locale('views.transferFragmentedFunds.rerun')}
-            </Button>
         {/if}
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">

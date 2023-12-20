@@ -55,17 +55,13 @@ export enum RiskLevel {
 }
 
 export interface MigrationLog {
-    bundleHash: string
+    bundleHash?: string
     trytes: string[]
-    receiveAddressTrytes: string
+    depositAddress: string
     balance: number
     timestamp: string
-    spentAddresses: string[]
-    spentBundleHashes: string[]
-    mine: boolean
-    crackability: number | null
-    depositAddress?: string
-    requestId?: string
+    requestData?: string
+    errorMessage?: string
 }
 
 export interface Bundle {

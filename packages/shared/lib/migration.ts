@@ -32,6 +32,7 @@ import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
 import { blake2b } from 'blakejs'
 import { SimpleBufferCursor } from './simpleBufferCursor'
+import { Platform } from './platform'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -395,44 +396,74 @@ async function fetchMigratableBalance(hexAddress: string): Promise<number> {
  *
  * @method prepareMigrationLog
  *
- * @param {string} bundleHash
  * @param {string[]} trytes
  * @param {number} balance
- * @param [boolean] mine
- * @param [number] crackability
+ * @param [string] bundleHash
  *
  * @returns {void}
  */
-export const prepareMigrationLog = (bundleHash: string, trytes: string[], balance: number): void => {
-    const transactionObjects = trytes.map((tryteString) => asTransactionObject(tryteString))
-    const { bundles } = get(migration)
-
-    const bundle = get(bundles).find((bundle) => bundle.bundleHash === bundleHash)
-    const spentInputs = bundle?.inputs?.filter((input) => input.spent === true) || []
-
-    const spentBundleHashes = []
-
-    spentInputs.forEach((input) => {
-        input.spentBundleHashes.forEach((bundleHash) => {
-            spentBundleHashes.push(bundleHash)
-        })
-    })
+export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string): void => {
 
     migrationLog.update((_log) => [
         ..._log,
         {
-            bundleHash: transactionObjects[0].bundle,
+            bundleHash,
             timestamp: new Date().toISOString(),
             trytes,
-            receiveAddressTrytes: transactionObjects.find((tx) => tx.address.startsWith('TRANSFER')).address,
+            depositAddress: JSON.stringify(get(migrationAddress), null, 2),
             balance,
-            spentBundleHashes,
-            spentAddresses: bundle?.inputs?.filter((input) => input.spent === true).map((input) => input.address) || [],
-            mine: bundle?.miningRuns > 0,
-            crackability: bundle?.crackability || null,
-            depositAddress: get(migrationAddress)?.bech32 ?? '',
         },
     ])
+}
+
+/**
+ * Update migration log with request data
+ *
+ * @method updateRequestInMigrationLog
+ *
+ * @param {any} request
+ * @param {number} index
+ *
+ * @returns {void}
+ */
+
+// eslint-disable-next-line
+export const updateRequestInMigrationLog = (request: any, index: number): void => {
+    migrationLog.update((logs) =>
+        logs.map((log, idx) => idx === index ? { ...log, requestData: JSON.stringify(request, null, 2) } : log)
+    )
+}
+
+/**
+ * Update migration log with error message
+ *
+ * @method updateErrorInMigrationLog
+ *
+ * @param {any} error
+ * @param {number} index
+ *
+ * @returns {void}
+ */
+
+// eslint-disable-next-line
+export const updateErrorInMigrationLog = (error: any, index: number): void => {
+    const errorMessage = error.message ?? error.toString()
+
+    migrationLog.update((logs) =>
+        logs.map((log, idx) => idx === index ? { ...log, errorMessage } : log)
+    )
+}
+
+/**
+ * Export migration log
+ *
+ * @method exportMigrationLog
+ *
+ * @returns {void}
+ */
+export function exportMigrationLog(): void {
+    const profileId = get(activeProfile).id
+    Platform.exportMigrationLog(get(migrationLog), `${profileId}-${LOG_FILE_NAME}`)
 }
 
 /**
@@ -748,7 +779,7 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
         api.sendLedgerMigrationBundle(MIGRATION_NODES, trytes, MINIMUM_WEIGHT_MAGNITUDE, {
             onSuccess(response) {
                 // Store migration log so that we can export it later
-                prepareMigrationLog(bundleHash, trytes, response.payload.value)
+                prepareMigrationLog(trytes, response.payload.value, bundleHash)
 
                 _sendMigrationBundle(bundleHash, response.payload)
 

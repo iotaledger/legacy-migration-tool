@@ -8,6 +8,7 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        exportMigrationLog,
         generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
@@ -18,6 +19,8 @@
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         unselectedInputs,
+        updateErrorInMigrationLog,
+        updateRequestInMigrationLog,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
@@ -53,6 +56,8 @@
     let timeout
 
     let singleMigrationBundleHash
+
+    let hasError: boolean = false
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
     $: animation = legacyLedger ? 'ledger-migrate-desktop' : 'migrate-desktop'
@@ -90,16 +95,11 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
+                            prepareMigrationLog(reverseTrytesLedger, migratableBalance, bundleHash)
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
-                            migrationLog.update((_migrationLog) =>
-                                _migrationLog.map((log) => ({
-                                    ...log,
-                                    requestId: receipt?.request?.requestId || '',
-                                }))
-                            )
+                            updateRequestInMigrationLog(receipt?.request, 0)
                             loading = false
                             if ($newProfile) {
                                 // Save profile
@@ -118,6 +118,8 @@
                                 message: locale(getLegacyErrorMessage(error)),
                             })
                             console.error(error)
+                            updateErrorInMigrationLog(error, 0)
+                            hasError = true
                         })
                 }
                 const _onCancel = () => {
@@ -127,18 +129,12 @@
             } else {
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
-                        // TODO: Check the bundlehash with software profiles
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
+                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        migrationLog.update((_migrationLog) =>
-                            _migrationLog.map((log) => ({
-                                ...log,
-                                requestId: receipt?.request?.requestId || '',
-                            }))
-                        )
+                        updateRequestInMigrationLog(receipt?.request, 0)
                         loading = false
                         if ($newProfile) {
                             // Save profile
@@ -155,6 +151,8 @@
                             message: error.message || 'Failed to prepare transfers',
                         })
                         console.error(error)
+                        updateErrorInMigrationLog(error, 0)
+                        hasError = true
                     })
             }
         } else {
@@ -212,6 +210,11 @@
                 <Spinner busy={loading} message={locale('views.migrate.migrating')} classes="justify-center" />
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
+        {#if hasError}
+            <Button classes="w-full" onClick={exportMigrationLog}>
+                {locale('views.congratulations.exportMigration')}
+            </Button>
+        {/if}
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" {animation} />
