@@ -17,6 +17,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        totalMigratedBalance,
         unselectedInputs,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
@@ -100,6 +101,7 @@
                                     requestId: receipt?.request?.requestId || '',
                                 }))
                             )
+                            totalMigratedBalance.set(migratableBalance)
                             loading = false
                             if ($newProfile) {
                                 // Save profile
@@ -139,6 +141,7 @@
                                 requestId: receipt?.request?.requestId || '',
                             }))
                         )
+                        totalMigratedBalance.set(migratableBalance)
                         loading = false
                         if ($newProfile) {
                             // Save profile
