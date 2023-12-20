@@ -32,6 +32,7 @@
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { addMigrationError } from '@lib/errors'
 
     export let locale: Locale
 
@@ -109,7 +110,8 @@
                                 newProfile.set(null)
                             }
                         })
-                        .catch((error) => {
+                        .catch((err) => {
+                            const error = err?.message ? err?.message : err?.toString()
                             loading = false
                             closePopup(true) // close transaction popup
                             closeTransport()
@@ -120,6 +122,7 @@
                             console.error(error)
                             updateErrorInMigrationLog(error, 0)
                             hasError = true
+                            addMigrationError(error)
                         })
                 }
                 const _onCancel = () => {
@@ -144,7 +147,8 @@
                             newProfile.set(null)
                         }
                     })
-                    .catch((error) => {
+                    .catch((err) => {
+                        const error = err?.message ? err?.message : err?.toString()
                         loading = false
                         showAppNotification({
                             type: 'error',
@@ -153,6 +157,7 @@
                         console.error(error)
                         updateErrorInMigrationLog(error, 0)
                         hasError = true
+                        addMigrationError(error)
                     })
             }
         } else {

@@ -445,10 +445,11 @@ export const updateRequestInMigrationLog = (request: any, index: number): void =
  */
 
 // eslint-disable-next-line
-export const updateErrorInMigrationLog = (error: any, index: number): void => {
-    const errorMessage = error.message ?? error.toString()
-
-    migrationLog.update((logs) => logs.map((log, idx) => (idx === index ? { ...log, errorMessage } : log)))
+export const updateErrorInMigrationLog = (error: string, index: number): void => {
+    if (get(migrationLog).length <= index) {
+        prepareMigrationLog([], 0)
+    }
+    migrationLog.update((logs) => logs.map((log, idx) => (idx === index ? { ...log, errorMessage: error } : log)))
 }
 
 /**

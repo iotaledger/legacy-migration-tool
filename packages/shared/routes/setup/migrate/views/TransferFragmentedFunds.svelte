@@ -35,6 +35,7 @@
     import { Locale } from '@core/i18n'
     import { Bundle } from '@lib/typings/migration'
     import { showAppNotification } from '@lib/notifications'
+    import { addMigrationError } from '@lib/errors'
 
     export let locale: Locale
 
@@ -243,8 +244,10 @@
                                               persistProfile()
                                           }
                                       })
-                                      .catch((error) => {
+                                      .catch((err) => {
+                                          const error = err?.message ? err?.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
+                                          addMigrationError(error)
                                           throw new Error(error)
                                       })
                               } else {
@@ -265,8 +268,10 @@
                                               persistProfile()
                                           }
                                       })
-                                      .catch((error) => {
+                                      .catch((err) => {
+                                          const error = err?.message ? err?.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
+                                          addMigrationError(error)
                                           throw new Error(error)
                                       })
                               }

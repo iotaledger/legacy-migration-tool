@@ -23,6 +23,7 @@
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { appRouter } from '@core/router'
+    import { addMigrationError } from '@lib/errors'
 
     export let locale: Locale
 
@@ -139,12 +140,14 @@
                     .then(() => {
                         isCheckingForBalance = false
                     })
-                    .catch((error) => {
+                    .catch((err) => {
+                        const error = err?.message ? err?.message : err?.toString()
                         isCheckingForBalance = false
 
                         console.error(error)
 
                         displayNotificationForLedgerProfile('error', true, true, false, true, error)
+                        addMigrationError(error)
                     })
             }
             const _onCancel = () => (isCheckingForBalance = false)
@@ -154,9 +157,11 @@
                 .then(() => {
                     isCheckingForBalance = false
                 })
-                .catch((error) => {
+                .catch((err) => {
+                    const error = err?.message ? err?.message : err?.toString()
                     isCheckingForBalance = false
                     console.error(error)
+                    addMigrationError(error)
                 })
         }
     }

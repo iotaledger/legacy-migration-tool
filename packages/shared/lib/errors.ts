@@ -13,6 +13,15 @@ export const addError = (err: Error): void => {
     errorLog.update((log) => [err, ...log])
 }
 
+export const addMigrationError = (err: string): void => {
+    const error: Error = {
+        message: err,
+        time: Date.now(),
+        type: 'migration error',
+    }
+    errorLog.update((log) => [error, ...log])
+}
+
 export function displayErrorEventToUser(error: ErrorEventPayload): void {
     if (get(isLedgerProfile)) {
         displayNotificationForLedgerProfile('error', true, true, false, false, error)
