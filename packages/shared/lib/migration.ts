@@ -403,7 +403,6 @@ async function fetchMigratableBalance(hexAddress: string): Promise<number> {
  * @returns {void}
  */
 export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string): void => {
-
     migrationLog.update((_log) => [
         ..._log,
         {
@@ -430,7 +429,7 @@ export const prepareMigrationLog = (trytes: string[], balance: number, bundleHas
 // eslint-disable-next-line
 export const updateRequestInMigrationLog = (request: any, index: number): void => {
     migrationLog.update((logs) =>
-        logs.map((log, idx) => idx === index ? { ...log, requestData: JSON.stringify(request, null, 2) } : log)
+        logs.map((log, idx) => (idx === index ? { ...log, requestData: JSON.stringify(request, null, 2) } : log))
     )
 }
 
@@ -449,9 +448,7 @@ export const updateRequestInMigrationLog = (request: any, index: number): void =
 export const updateErrorInMigrationLog = (error: any, index: number): void => {
     const errorMessage = error.message ?? error.toString()
 
-    migrationLog.update((logs) =>
-        logs.map((log, idx) => idx === index ? { ...log, errorMessage } : log)
-    )
+    migrationLog.update((logs) => logs.map((log, idx) => (idx === index ? { ...log, errorMessage } : log)))
 }
 
 /**
