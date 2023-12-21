@@ -157,7 +157,7 @@
             return item
         })
 
-        migrateFunds()
+        migrateFunds(true)
     }
 
     function persistProfile() {
@@ -200,7 +200,7 @@
         }
     }
 
-    function migrateFunds() {
+    function migrateFunds(isRerun?: boolean) {
         migratingFundsMessage = locale('views.migrate.migrating')
 
         transactions.reduce(
@@ -235,7 +235,12 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesLedger, transaction.balance, bundleHash)
+                                          prepareMigrationLog(
+                                              reverseTrytesLedger,
+                                              transaction.balance,
+                                              bundleHash,
+                                              isRerun ? idx : undefined
+                                          )
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
@@ -259,7 +264,12 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
+                                          prepareMigrationLog(
+                                              reverseTrytesSoftware,
+                                              transaction.balance,
+                                              undefined,
+                                              isRerun ? idx : undefined
+                                          )
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {

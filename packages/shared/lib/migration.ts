@@ -402,17 +402,32 @@ async function fetchMigratableBalance(hexAddress: string): Promise<number> {
  *
  * @returns {void}
  */
-export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string): void => {
-    migrationLog.update((_log) => [
-        ..._log,
-        {
-            bundleHash,
-            timestamp: new Date().toISOString(),
-            trytes,
-            depositAddress: JSON.stringify(get(migrationAddress), null, 2),
-            balance,
-        },
-    ])
+export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string, index?: number): void => {
+    if (index === undefined) {
+        migrationLog.update((_logs) => [
+            ..._logs,
+            {
+                bundleHash,
+                timestamp: new Date().toISOString(),
+                trytes,
+                depositAddress: JSON.stringify(get(migrationAddress), null, 2),
+                balance,
+            },
+        ])
+    } else {
+        migrationLog.update((_logs) =>
+            _logs.map((log, idx) => {
+                if (index === idx) {
+                    return {
+                        ...log,
+                        errorMessage: '', // Reset error message for new attempt
+                    }
+                } else {
+                    return log
+                }
+            })
+        )
+    }
 }
 
 /**

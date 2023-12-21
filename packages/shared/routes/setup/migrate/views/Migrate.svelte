@@ -97,7 +97,12 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(reverseTrytesLedger, migratableBalance, bundleHash)
+                            prepareMigrationLog(
+                                reverseTrytesLedger,
+                                migratableBalance,
+                                bundleHash,
+                                hasError ? 0 : undefined
+                            )
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
@@ -135,7 +140,12 @@
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
+                        prepareMigrationLog(
+                            reverseTrytesSoftware,
+                            migratableBalance,
+                            undefined,
+                            hasError ? 0 : undefined
+                        )
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
