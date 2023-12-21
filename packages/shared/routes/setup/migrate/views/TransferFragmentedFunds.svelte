@@ -23,6 +23,7 @@
         migrationAddress,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        totalMigratedBalance,
         unmigratedBundles,
         updateErrorInMigrationLog,
         updateRequestInMigrationLog,
@@ -239,6 +240,8 @@
                                       })
                                       .then((receipt) => {
                                           updateRequestInMigrationLog(receipt?.request, idx)
+                                          totalMigratedBalance.update((value) => (value += transaction.balance))
+
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
                                               persistProfile()
@@ -261,7 +264,8 @@
                                       })
                                       .then((receipt) => {
                                           updateRequestInMigrationLog(receipt?.request, idx)
-                                          // is this needed?
+                                          totalMigratedBalance.update((value) => (value += transaction.balance))
+
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
 

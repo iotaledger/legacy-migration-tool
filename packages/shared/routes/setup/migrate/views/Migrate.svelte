@@ -18,6 +18,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        totalMigratedBalance,
         unselectedInputs,
         updateErrorInMigrationLog,
         updateRequestInMigrationLog,
@@ -101,6 +102,7 @@
                         })
                         .then((receipt) => {
                             updateRequestInMigrationLog(receipt?.request, 0)
+                            totalMigratedBalance.set(migratableBalance)
                             loading = false
                             if ($newProfile) {
                                 // Save profile
@@ -138,6 +140,7 @@
                     })
                     .then((receipt) => {
                         updateRequestInMigrationLog(receipt?.request, 0)
+                        totalMigratedBalance.set(migratableBalance)
                         loading = false
                         if ($newProfile) {
                             // Save profile
