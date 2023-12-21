@@ -141,7 +141,7 @@
                         isCheckingForBalance = false
                     })
                     .catch((err) => {
-                        const error = err?.message ? err?.message : err?.toString()
+                        const error = err?.message ? err.message : err?.toString()
                         isCheckingForBalance = false
 
                         console.error(error)
@@ -158,7 +158,7 @@
                     isCheckingForBalance = false
                 })
                 .catch((err) => {
-                    const error = err?.message ? err?.message : err?.toString()
+                    const error = err?.message ? err.message : err?.toString()
                     isCheckingForBalance = false
                     console.error(error)
                     addMigrationError(error)

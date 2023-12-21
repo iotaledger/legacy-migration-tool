@@ -248,7 +248,7 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ? err?.message : err?.toString()
+                                          const error = err?.message ? err.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
                                           addMigrationError(error)
                                           throw new Error(error)
@@ -273,7 +273,7 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ? err?.message : err?.toString()
+                                          const error = err?.message ? err.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
                                           addMigrationError(error)
                                           throw new Error(error)

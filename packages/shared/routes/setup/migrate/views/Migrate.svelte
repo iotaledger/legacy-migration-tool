@@ -113,7 +113,7 @@
                             }
                         })
                         .catch((err) => {
-                            const error = err?.message ? err?.message : err?.toString()
+                            const error = err?.message ? err.message : err?.toString()
                             loading = false
                             closePopup(true) // close transaction popup
                             closeTransport()
@@ -151,11 +151,11 @@
                         }
                     })
                     .catch((err) => {
-                        const error = err?.message ? err?.message : err?.toString()
+                        const error = err?.message ? err.message : err?.toString()
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error.message || 'Failed to prepare transfers',
+                            message: error || 'Failed to prepare transfers',
                         })
                         console.error(error)
                         updateErrorInMigrationLog(error, 0)
