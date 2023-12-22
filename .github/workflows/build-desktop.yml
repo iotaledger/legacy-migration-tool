@@ -274,19 +274,19 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Downloading artifacts
+            - name: Downloading artifacts windows
               uses: actions/download-artifact@v2
               with:
                   name: iota-legacy-migration-tool-desktop-windows-latest
                   path: assets
 
-            - name: Downloading artifacts
+            - name: Downloading artifacts mac
               uses: actions/download-artifact@v2
               with:
                   name: iota-legacy-migration-tool-desktop-macos-13
                   path: assets
 
-            - name: Downloading artifacts
+            - name: Downloading artifacts linux
               uses: actions/download-artifact@v2
               with:
                   name: iota-legacy-migration-tool-desktop-ubuntu-20.04
