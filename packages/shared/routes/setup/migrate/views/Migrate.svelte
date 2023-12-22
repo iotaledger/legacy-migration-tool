@@ -8,6 +8,7 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        exportMigrationLog,
         generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
@@ -19,6 +20,7 @@
         sendOffLedgerMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
+        updateMigrationLog,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
@@ -30,6 +32,7 @@
     import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
+    import { addMigrationError } from '@lib/errors'
 
     export let locale: Locale
 
@@ -54,6 +57,8 @@
     let timeout
 
     let singleMigrationBundleHash
+
+    let hasError: boolean = false
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
     $: animation = legacyLedger ? 'ledger-migrate-desktop' : 'migrate-desktop'
@@ -91,16 +96,13 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(bundleHash, reverseTrytesLedger, migratableBalance)
+                            prepareMigrationLog(reverseTrytesLedger, migratableBalance, bundleHash)
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
-                            migrationLog.update((_migrationLog) =>
-                                _migrationLog.map((log) => ({
-                                    ...log,
-                                    requestId: receipt?.request?.requestId || '',
-                                }))
-                            )
+                            updateMigrationLog(get(migrationLog).length - 1, {
+                                requestData: JSON.stringify(receipt?.request),
+                            })
                             totalMigratedBalance.set(migratableBalance)
                             loading = false
                             if ($newProfile) {
@@ -111,15 +113,19 @@
                                 newProfile.set(null)
                             }
                         })
-                        .catch((error) => {
+                        .catch((err) => {
+                            const error = err?.message ? err.message : err?.toString()
                             loading = false
                             closePopup(true) // close transaction popup
                             closeTransport()
                             showAppNotification({
                                 type: 'error',
-                                message: locale(getLegacyErrorMessage(error)),
+                                message: locale(getLegacyErrorMessage(err)),
                             })
-                            console.error(error)
+                            console.error(err)
+                            updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                            hasError = true
+                            addMigrationError(error)
                         })
                 }
                 const _onCancel = () => {
@@ -129,18 +135,14 @@
             } else {
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
-                        // TODO: Check the bundlehash with software profiles
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog('', reverseTrytesSoftware, migratableBalance)
+                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        migrationLog.update((_migrationLog) =>
-                            _migrationLog.map((log) => ({
-                                ...log,
-                                requestId: receipt?.request?.requestId || '',
-                            }))
-                        )
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            requestData: JSON.stringify(receipt?.request),
+                        })
                         totalMigratedBalance.set(migratableBalance)
                         loading = false
                         if ($newProfile) {
@@ -151,13 +153,17 @@
                             newProfile.set(null)
                         }
                     })
-                    .catch((error) => {
+                    .catch((err) => {
+                        const error = err?.message ? err.message : err.toString()
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error.message || 'Failed to prepare transfers',
+                            message: error || 'Failed to prepare transfers',
                         })
                         console.error(error)
+                        updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                        hasError = true
+                        addMigrationError(error)
                     })
             }
         } else {
@@ -215,6 +221,11 @@
                 <Spinner busy={loading} message={locale('views.migrate.migrating')} classes="justify-center" />
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
+        {#if hasError}
+            <Button classes="w-full" onClick={exportMigrationLog}>
+                {locale('views.congratulations.exportMigration')}
+            </Button>
+        {/if}
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
         <Animation classes="setup-anim-aspect-ratio" {animation} />

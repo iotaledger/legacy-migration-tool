@@ -7,11 +7,10 @@
     import { cleanupSignup } from 'shared/lib/app'
     import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import {
-        LOG_FILE_NAME,
-        migrationLog,
         resetMigrationState,
         totalMigratedBalance,
         migrationAddress,
+        exportMigrationLog,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
@@ -20,7 +19,7 @@
     import { LedgerAppName } from 'shared/lib/typings/ledger'
     import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
-    import { api, getProfileDataPath, walletSetupType } from 'shared/lib/wallet'
+    import { api, walletSetupType } from 'shared/lib/wallet'
     import { onMount } from 'svelte'
     import { get } from 'svelte/store'
 
@@ -30,7 +29,6 @@
     let localizedValues = {}
 
     let exportStrongholdBusy = false
-    let exportMigrationLogBusy = false
 
     $: isLedgerProfile = $walletSetupType === SetupType.TrinityLedger
     $: fiatBalance = formatCurrency(
@@ -52,22 +50,6 @@
             localizedBody = 'softwareMigratedBody'
         }
     })
-
-    function exportMigrationLog(): void {
-        exportMigrationLogBusy = true
-        getProfileDataPath($activeProfile.id)
-            .then(() => Platform.exportMigrationLog($migrationLog, `${$activeProfile.id}-${LOG_FILE_NAME}`))
-            .catch((error) => {
-                console.error(error)
-                showAppNotification({
-                    type: 'error',
-                    message: locale('error.ledger.generateAddress'),
-                })
-            })
-            .finally(() => {
-                exportMigrationLogBusy = false
-            })
-    }
 
     function exportStronghold(): void {
         function onPasswordSuccess(password: string, callback?: (cancelled: boolean, err?: string) => void): void {
@@ -167,7 +149,7 @@
             classes="w-full"
             secondary
             onClick={migrateAnotherProfile}
-            disabled={exportMigrationLogBusy || exportStrongholdBusy}
+            disabled={exportStrongholdBusy}
         >
             {locale('views.congratulations.migrateAnotherProfile')}
         </Button>
@@ -176,7 +158,7 @@
                 {locale('views.congratulations.exportStronghold')}
             </Button>
         {/if}
-        <Button classes="w-full" onClick={exportMigrationLog} disabled={exportMigrationLogBusy}>
+        <Button classes="w-full" onClick={exportMigrationLog}>
             {locale('views.congratulations.exportMigration')}
         </Button>
     </div>

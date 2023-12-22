@@ -13,6 +13,7 @@
         confirmedBundles,
         createLedgerMigrationBundle,
         createMigrationBundle,
+        exportMigrationLog,
         generateMigrationAddress,
         hardwareIndexes,
         hasMigratedAndConfirmedAllSelectedBundles,
@@ -25,6 +26,7 @@
         sendOffLedgerMigrationRequest,
         totalMigratedBalance,
         unmigratedBundles,
+        updateMigrationLog,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
     import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
@@ -34,6 +36,7 @@
     import { Locale } from '@core/i18n'
     import { Bundle } from '@lib/typings/migration'
     import { showAppNotification } from '@lib/notifications'
+    import { addMigrationError } from '@lib/errors'
 
     export let locale: Locale
 
@@ -154,7 +157,7 @@
             return item
         })
 
-        migrateFunds()
+        migrateFunds(true)
     }
 
     function persistProfile() {
@@ -197,7 +200,7 @@
         }
     }
 
-    function migrateFunds() {
+    function migrateFunds(isRerun?: boolean) {
         migratingFundsMessage = locale('views.migrate.migrating')
 
         transactions.reduce(
@@ -232,23 +235,25 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(bundleHash, reverseTrytesLedger, transaction.balance)
+                                          prepareMigrationLog(reverseTrytesLedger, transaction.balance, bundleHash)
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          migrationLog.update((_migrationLog) => [
-                                              ..._migrationLog,
-                                              (_migrationLog[idx] = {
-                                                  ..._migrationLog[idx],
-                                                  requestId: receipt?.request?.requestId || '',
-                                              }),
-                                          ])
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              requestData: JSON.stringify(receipt?.request),
+                                          })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
                                               persistProfile()
                                           }
+                                      })
+                                      .catch((err) => {
+                                          const error = err?.message ? err.message : err?.toString()
+                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                                          addMigrationError(error)
+                                          throw new Error(err)
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
@@ -256,25 +261,25 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog('', reverseTrytesSoftware, transaction.balance)
+                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          migrationLog.update((_migrationLog) => [
-                                              ..._migrationLog,
-                                              (_migrationLog[idx] = {
-                                                  ..._migrationLog[idx],
-                                                  requestId: receipt?.request?.requestId || '',
-                                              }),
-                                          ])
-                                          // todo: handle receipt data
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              requestData: JSON.stringify(receipt?.request),
+                                          })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
-                                          // is this needed?
+
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
-
                                               persistProfile()
                                           }
+                                      })
+                                      .catch((err) => {
+                                          const error = err?.message ? err.message : err?.toString()
+                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                                          addMigrationError(error)
+                                          throw new Error(err)
                                       })
                               }
                           })
@@ -352,19 +357,20 @@
             <Button classes="w-full py-3 mt-2" onClick={() => handleContinueClick()}
                 >{locale('actions.continue')}</Button
             >
-        {:else if someSuccess}
-            <div class="flex flex-row justify-center items-center py-3 mt-2 w-full space-x-2">
-                <Button classes="w-1/2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
+        {:else}
+            <div class="flex flex-row gap-2 w-full items-strech justify-center h-full">
+                <Button classes={$popupState.active && 'opacity-20'} onClick={() => handleRerunClick()}>
                     {locale('views.transferFragmentedFunds.rerun')}
                 </Button>
-                <Button classes="w-1/2" onClick={() => handleContinueClick()}>
-                    {locale('actions.continue')}
+                {#if someSuccess}
+                    <Button onClick={() => handleContinueClick()}>
+                        {locale('actions.continue')}
+                    </Button>
+                {/if}
+                <Button onClick={exportMigrationLog}>
+                    {locale('views.congratulations.exportMigration')}
                 </Button>
             </div>
-        {:else}
-            <Button classes="w-full py-3 mt-2 {$popupState.active && 'opacity-20'}" onClick={() => handleRerunClick()}>
-                {locale('views.transferFragmentedFunds.rerun')}
-            </Button>
         {/if}
     </div>
     <div slot="rightpane" class="w-full h-full flex justify-center bg-pastel-blue dark:bg-gray-900">
