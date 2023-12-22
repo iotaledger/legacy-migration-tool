@@ -712,36 +712,44 @@ export const createLedgerMigrationBundle = (
 ): Promise<MigrationBundle> => {
     const bundle = findMigrationBundle(bundleIndex)
 
+    let totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
+    let balanceToAdd: number = 0
+    let smallestBalanceItem: Input | undefined
+
     const transferForConfirmation = {
         address: migrationAddress.trytes,
-        value: bundle.inputs.reduce((acc, input) => acc + input.balance, 0),
+        value: totalBalance,
         tag: 'U'.repeat(27),
     }
 
     openLedgerLegacyTransactionPopup(transferForConfirmation, bundle.inputs)
 
+    // Adjust totalBalance if its less than MINIMUM_MIGRATABLE_AMOUNT to bypass legacy validation tool in smart contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
+    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the balances sent by migration tool.
+    // If the amount for migration, resolved by ISC, is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
+    if (totalBalance < MINIMUM_MIGRATABLE_AMOUNT) {
+        balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - totalBalance
+        totalBalance += balanceToAdd
+
+        smallestBalanceItem = bundle.inputs.reduce((minItem, currentItem) =>
+            currentItem.balance < minItem.balance ? currentItem : minItem
+        )
+    }
+
     const transfers = [
         {
             address: migrationAddress.trytes,
-            value: bundle.inputs.reduce(
-                (acc, input) =>
-                    acc + (input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance),
-                0
-            ),
+            value: totalBalance,
             tag: 'U'.repeat(27),
         },
     ]
 
-    // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
-    // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
-    // Hardcode MINIMUM_MIGRATABLE_AMOUNT for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
-    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
     const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
         address: input.address,
         keyIndex: input.index,
         security: input.securityLevel,
-        balance: input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance, // hardcoded amount
+        balance: smallestBalanceItem?.index === input.index ? input.balance + balanceToAdd : input.balance,
     }))
 
     return prepareTransfersFn(transfers, inputsForTransfer).then((trytes) => {
@@ -828,22 +836,34 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
 
     const prepareTransfers = createPrepareTransfers()
 
+    let totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
+    let balanceToAdd: number = 0
+    let smallestBalanceItem: Input | undefined
+
+    // Adjust totalBalance if its less than MINIMUM_MIGRATABLE_AMOUNT to bypass legacy validation tool in smart contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
+    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the balances sent by migration tool.
+    // If the amount for migration, resolved by ISC, is less than the Min required storage deposit on stardust the receipt will contain the error messgage
+    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
+    if (totalBalance < MINIMUM_MIGRATABLE_AMOUNT) {
+        balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - totalBalance
+        totalBalance += balanceToAdd
+
+        smallestBalanceItem = bundle.inputs.reduce((minItem, currentItem) =>
+            currentItem.balance < minItem.balance ? currentItem : minItem
+        )
+    }
     const transfers = [
         {
-            value: bundle.inputs.length * MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+            value: totalBalance,
             address: removeAddressChecksum(migrationAddress.trytes),
         },
     ]
-    // The correct amount for migration is tracked in totalBalance and is diplayed to the user.
-    // If the totalBalance is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
-    // Hardcode MINIMUM_MIGRATABLE_AMOUNT for every input so we bypass legacy validation tool in contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
-    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the amounts hardcoded here.
+
     const inputsForTransfer: any[] = bundle.inputs.map((input) => ({
         address: input.address,
         keyIndex: input.index,
         security: input.securityLevel,
-        balance: MINIMUM_MIGRATABLE_AMOUNT, // hardcoded amount
+        balance: smallestBalanceItem?.index === input.index ? input.balance + balanceToAdd : input.balance,
     }))
 
     try {

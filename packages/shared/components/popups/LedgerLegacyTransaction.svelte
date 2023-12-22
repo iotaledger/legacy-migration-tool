@@ -10,11 +10,16 @@
 
     export let transfer: Transfer
     export let inputs: Input[]
+    let balanceToAdd: number = 0
+    let smallestBalanceItem: Input | undefined
 
-    const outputAmount: number = inputs.reduce(
-        (acc, input) => acc + (input.balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : input.balance),
-        0
-    )
+    if (transfer.value < MINIMUM_MIGRATABLE_AMOUNT) {
+        balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - transfer.value
+
+        smallestBalanceItem = inputs.reduce((minItem, currentItem) =>
+            currentItem.balance < minItem.balance ? currentItem : minItem
+        )
+    }
 
     // Hardcoded strings because Ledger does not translate them
     const checksumString = (checksum): string => `Chk: ${checksum}`
@@ -24,7 +29,7 @@
 
 <Text type="h4" classes="mb-6">{locale('popups.ledgerTransaction.transaction.title')}</Text>
 <Text type="p" classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.info')}</Text>
-{#if outputAmount !== transfer.value}
+{#if smallestBalanceItem}
     <Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning')}</Text>
 {/if}
 
@@ -40,8 +45,8 @@
 <div class="transaction flex flex-col space-y-4 scrollable-y">
     <div class="rounded-lg bg-gray-50 dark:bg-gray-800 p-5 text-center">
         <Text type="h5" highlighted classes="mb-2">{outputString}</Text>
-        <Text type="pre">{formatUnitBestMatch(outputAmount)}</Text>
-        {#if outputAmount !== transfer.value}
+        <Text type="pre">{formatUnitBestMatch(transfer.value + balanceToAdd)}</Text>
+        {#if smallestBalanceItem}
             <Text error type="pre">
                 {locale('popups.ledgerTransaction.transaction.inputAmount', {
                     values: { amount: formatUnitBestMatch(transfer.value) },
@@ -57,9 +62,9 @@
         <div class="rounded-lg bg-gray-50 dark:bg-gray-800 p-5 text-center">
             <Text type="h5" highlighted classes="mb-2">{inputString(index)}</Text>
             <Text type="pre"
-                >{formatUnitBestMatch(balance < MINIMUM_MIGRATABLE_AMOUNT ? MINIMUM_MIGRATABLE_AMOUNT : balance)}</Text
+                >{formatUnitBestMatch(smallestBalanceItem?.index === index ? balance + balanceToAdd : balance)}</Text
             >
-            {#if balance < MINIMUM_MIGRATABLE_AMOUNT}
+            {#if smallestBalanceItem?.index === index}
                 <Text error type="pre"
                     >{locale('popups.ledgerTransaction.transaction.inputAmount', {
                         values: { amount: formatUnitBestMatch(balance) },
