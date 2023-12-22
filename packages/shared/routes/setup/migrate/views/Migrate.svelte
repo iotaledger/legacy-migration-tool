@@ -20,8 +20,7 @@
         sendOffLedgerMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
-        updateErrorInMigrationLog,
-        updateRequestInMigrationLog,
+        updateMigrationLog,
     } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { closePopup } from 'shared/lib/popup'
@@ -97,16 +96,13 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(
-                                reverseTrytesLedger,
-                                migratableBalance,
-                                bundleHash,
-                                hasError ? 0 : undefined
-                            )
+                            prepareMigrationLog(reverseTrytesLedger, migratableBalance, bundleHash)
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
-                            updateRequestInMigrationLog(receipt?.request, 0)
+                            updateMigrationLog(get(migrationLog).length - 1, {
+                                requestData: JSON.stringify(receipt?.request),
+                            })
                             totalMigratedBalance.set(migratableBalance)
                             loading = false
                             if ($newProfile) {
@@ -127,7 +123,7 @@
                                 message: locale(getLegacyErrorMessage(err)),
                             })
                             console.error(err)
-                            updateErrorInMigrationLog(error, 0)
+                            updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                             hasError = true
                             addMigrationError(error)
                         })
@@ -140,16 +136,13 @@
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog(
-                            reverseTrytesSoftware,
-                            migratableBalance,
-                            undefined,
-                            hasError ? 0 : undefined
-                        )
+                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
                         return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((receipt) => {
-                        updateRequestInMigrationLog(receipt?.request, 0)
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            requestData: JSON.stringify(receipt?.request),
+                        })
                         totalMigratedBalance.set(migratableBalance)
                         loading = false
                         if ($newProfile) {
@@ -161,14 +154,14 @@
                         }
                     })
                     .catch((err) => {
-                        const error = err?.message ? err.message : err?.toString()
+                        const error = err?.message ? err.message : err.toString()
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: err || 'Failed to prepare transfers',
+                            message: error || 'Failed to prepare transfers',
                         })
-                        console.error(err)
-                        updateErrorInMigrationLog(error, 0)
+                        console.error(error)
+                        updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                         hasError = true
                         addMigrationError(error)
                     })

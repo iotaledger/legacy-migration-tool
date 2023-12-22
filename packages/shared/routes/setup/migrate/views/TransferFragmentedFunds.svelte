@@ -21,12 +21,12 @@
         hasMigratedAnyBundle,
         migration,
         migrationAddress,
+        migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
         totalMigratedBalance,
         unmigratedBundles,
-        updateErrorInMigrationLog,
-        updateRequestInMigrationLog,
+        updateMigrationLog,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
     import { newProfile, saveProfile, setActiveProfile } from 'shared/lib/profile'
@@ -235,16 +235,13 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(
-                                              reverseTrytesLedger,
-                                              transaction.balance,
-                                              bundleHash,
-                                              isRerun ? idx : undefined
-                                          )
+                                          prepareMigrationLog(reverseTrytesLedger, transaction.balance, bundleHash)
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          updateRequestInMigrationLog(receipt?.request, idx)
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              requestData: JSON.stringify(receipt?.request),
+                                          })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
                                           if (!hasBroadcastAnyBundle) {
@@ -254,7 +251,7 @@
                                       })
                                       .catch((err) => {
                                           const error = err?.message ? err.message : err?.toString()
-                                          updateErrorInMigrationLog(error, idx)
+                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                                           addMigrationError(error)
                                           throw new Error(err)
                                       })
@@ -264,27 +261,23 @@
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(
-                                              reverseTrytesSoftware,
-                                              transaction.balance,
-                                              undefined,
-                                              isRerun ? idx : undefined
-                                          )
+                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
                                           return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((receipt) => {
-                                          updateRequestInMigrationLog(receipt?.request, idx)
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              requestData: JSON.stringify(receipt?.request),
+                                          })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
-
                                               persistProfile()
                                           }
                                       })
                                       .catch((err) => {
                                           const error = err?.message ? err.message : err?.toString()
-                                          updateErrorInMigrationLog(error, idx)
+                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                                           addMigrationError(error)
                                           throw new Error(err)
                                       })

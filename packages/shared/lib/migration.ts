@@ -402,69 +402,42 @@ async function fetchMigratableBalance(hexAddress: string): Promise<number> {
  *
  * @returns {void}
  */
-export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string, index?: number): void => {
-    if (index === undefined) {
-        migrationLog.update((_logs) => [
-            ..._logs,
-            {
-                bundleHash,
-                timestamp: new Date().toISOString(),
-                trytes,
-                depositAddress: JSON.stringify(get(migrationAddress), null, 2),
-                balance,
-            },
-        ])
-    } else {
-        migrationLog.update((_logs) =>
-            _logs.map((log, idx) => {
-                if (index === idx) {
-                    return {
-                        ...log,
-                        errorMessage: '', // Reset error message for new attempt
-                    }
-                } else {
-                    return log
-                }
-            })
-        )
-    }
+export const prepareMigrationLog = (trytes: string[], balance: number, bundleHash?: string): void => {
+    migrationLog.update((_logs) => [
+        ..._logs,
+        {
+            bundleHash,
+            timestamp: new Date().toISOString(),
+            trytes,
+            depositAddress: JSON.stringify(get(migrationAddress), null, 2),
+            balance,
+        },
+    ])
 }
 
 /**
- * Update migration log with request data
+ * Update migration log
  *
- * @method updateRequestInMigrationLog
+ * @method updateMigrationLog
  *
- * @param {any} request
  * @param {number} index
+ * @param {Partial<MigrationLog>} updatedProperties
  *
  * @returns {void}
  */
+export function updateMigrationLog(index: number, updatedProperties: Partial<MigrationLog>): void {
+    migrationLog.update((logs) => {
+        const updatedLogs = [...logs]
 
-// eslint-disable-next-line
-export const updateRequestInMigrationLog = (request: any, index: number): void => {
-    migrationLog.update((logs) =>
-        logs.map((log, idx) => (idx === index ? { ...log, requestData: JSON.stringify(request, null, 2) } : log))
-    )
-}
+        if (updatedLogs[index]) {
+            updatedLogs[index] = {
+                ...updatedLogs[index],
+                ...updatedProperties,
+            }
+        }
 
-/**
- * Update migration log with error message
- *
- * @method updateErrorInMigrationLog
- *
- * @param {any} error
- * @param {number} index
- *
- * @returns {void}
- */
-
-// eslint-disable-next-line
-export const updateErrorInMigrationLog = (error: string, index: number): void => {
-    if (get(migrationLog).length <= index) {
-        prepareMigrationLog([], 0)
-    }
-    migrationLog.update((logs) => logs.map((log, idx) => (idx === index ? { ...log, errorMessage: error } : log)))
+        return updatedLogs
+    })
 }
 
 /**
