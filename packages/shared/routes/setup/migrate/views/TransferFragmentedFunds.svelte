@@ -256,7 +256,7 @@
                                           const error = err?.message ? err.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
                                           addMigrationError(error)
-                                          throw new Error(error)
+                                          throw new Error(err)
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
@@ -286,7 +286,7 @@
                                           const error = err?.message ? err.message : err?.toString()
                                           updateErrorInMigrationLog(error, idx)
                                           addMigrationError(error)
-                                          throw new Error(error)
+                                          throw new Error(err)
                                       })
                               }
                           })

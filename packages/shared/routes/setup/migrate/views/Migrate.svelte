@@ -124,9 +124,9 @@
                             closeTransport()
                             showAppNotification({
                                 type: 'error',
-                                message: locale(getLegacyErrorMessage(error)),
+                                message: locale(getLegacyErrorMessage(err)),
                             })
-                            console.error(error)
+                            console.error(err)
                             updateErrorInMigrationLog(error, 0)
                             hasError = true
                             addMigrationError(error)
@@ -165,9 +165,9 @@
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error || 'Failed to prepare transfers',
+                            message: err || 'Failed to prepare transfers',
                         })
-                        console.error(error)
+                        console.error(err)
                         updateErrorInMigrationLog(error, 0)
                         hasError = true
                         addMigrationError(error)
