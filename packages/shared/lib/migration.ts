@@ -1377,6 +1377,7 @@ export const resetMigrationState = (): void => {
     migrationAddress.set(null)
     accounts.set([])
     migrationLog.set([])
+    totalMigratedBalance.set(0)
 }
 
 /**
@@ -1444,7 +1445,7 @@ export const hasMigratedAndConfirmedSomeSelectedBundles = derived(get(migration)
 /**
  * Total migration balance
  */
-export const totalMigratedBalance = derived(get(migration).data, (data) => data.balance)
+export const totalMigratedBalance = writable<number>(0)
 
 /**
  * Determines if all spent addresses have low (less than MINIMUM MIGRATION) balance

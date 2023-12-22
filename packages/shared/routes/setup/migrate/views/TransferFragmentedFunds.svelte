@@ -23,6 +23,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        totalMigratedBalance,
         unmigratedBundles,
     } from 'shared/lib/migration'
     import { closePopup, popupState } from 'shared/lib/popup'
@@ -242,6 +243,7 @@
                                                   requestId: receipt?.request?.requestId || '',
                                               }),
                                           ])
+                                          totalMigratedBalance.update((value) => (value += transaction.balance))
 
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
@@ -266,6 +268,7 @@
                                               }),
                                           ])
                                           // todo: handle receipt data
+                                          totalMigratedBalance.update((value) => (value += transaction.balance))
                                           // is this needed?
                                           if (!hasBroadcastAnyBundle) {
                                               hasBroadcastAnyBundle = true
