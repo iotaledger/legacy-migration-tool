@@ -1,7 +1,7 @@
 <script lang="typescript">
-    import { Button, Link, OnboardingLayout, Text, Video } from 'shared/components'
+    import { Button, OnboardingLayout, Text, Animation, Illustration } from 'shared/components'
     import { Platform } from 'shared/lib/platform'
-    import { initialiseMigrationListeners, LEDGER_MIGRATION_VIDEO } from 'shared/lib/migration'
+    import { initialiseMigrationListeners } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { api, isBackgroundSyncing } from 'shared/lib/wallet'
     import { createEventDispatcher, onMount } from 'svelte'
@@ -52,13 +52,13 @@
     <div slot="leftpane__action">
         <Button classes="w-full" onClick={handleNextClick}>{locale('actions.continue')}</Button>
     </div>
-    <div
-        slot="rightpane"
-        class="w-full h-full px-32 flex flex-col flex-wrap justify-center items-center bg-gray-50 dark:bg-gray-900"
-    >
-        <Video video={LEDGER_MIGRATION_VIDEO} />
-        <Link onClick={handleReadMoreClick} classes="mt-7" icon="info"
-            >{locale('views.legacyLedgerIntro.readMore')}</Link
-        >
+    <!-- TODO: modify this temp animation -->
+    <div slot="rightpane" class="w-full h-full flex justify-center items-center bg-gray-50 dark:bg-gray-900">
+        <Animation
+            width="100%"
+            animation="ledger-bg-desktop"
+            classes="absolute z-0 transform left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        />
+        <Illustration width="100%" illustration="ledger-install-new-app-desktop" classes="z-0" />
     </div>
 </OnboardingLayout>
