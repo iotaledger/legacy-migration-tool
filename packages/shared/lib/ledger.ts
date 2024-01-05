@@ -22,7 +22,7 @@ const LEGACY_ADDRESS_WITH_CHECKSUM_LENGTH = 90
 
 let intervalTimer
 
-export const ledgerSimulator = false
+export const ledgerSimulator = true
 export const ledgerDeviceState = writable<LedgerDeviceState>(LedgerDeviceState.NotDetected)
 export const isLedgerLegacyConnected = writable<boolean>(false)
 
@@ -65,6 +65,11 @@ export function calculateLedgerDeviceState(status: LedgerStatus): LedgerDeviceSt
     if (locked) {
         return LedgerDeviceState.Locked
     } else {
+        if (app?.version === '0.8.6') {
+            return LedgerDeviceState.Connected
+        } else if (app?.version === '0.5.9') {
+            return LedgerDeviceState.LegacyConnected
+        }
         switch (app?.name) {
             default:
                 if (connected) {
@@ -244,7 +249,7 @@ export function stopPollingLedgerStatus(): void {
     }
 }
 
-export function getLegacyErrorMessage(error: { name; statusCode }, shouldLocalize: boolean = false): string {
+export function getLegacyErrorMessage(error: { name; statusCode; message }, shouldLocalize: boolean = false): string {
     let errorMessage = 'error.global.generic'
     switch (error?.name) {
         case LegacyLedgerErrorName.TransportStatusError:
@@ -260,6 +265,8 @@ export function getLegacyErrorMessage(error: { name; statusCode }, shouldLocaliz
         case LegacyLedgerErrorName.DisconnectedDeviceDuringOperation:
             errorMessage = 'error.ledger.disconnected'
             break
+        default:
+            errorMessage = error?.message
     }
 
     return shouldLocalize ? localize(errorMessage) : errorMessage
