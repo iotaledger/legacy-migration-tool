@@ -42,7 +42,7 @@
                 classes="ml-0.5 inline-block text-13 leading-160"
                 onClick={() =>
                     Platform.openUrl(
-                        'https://support.ledger.com/hc/en-us/articles/360019868977-Fix-USB-connection-issues-with-Ledger-Live?support=true'
+                        'https://support.ledger.com/hc/en-us/articles/115005165269-Fix-USB-connection-issues-with-Ledger-Live?support=true'
                     )}
             >
                 {locale(`popups.ledgerConnectionGuide.steps.${stepIndex}.link`)}

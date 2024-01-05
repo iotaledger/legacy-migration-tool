@@ -1,6 +1,5 @@
 <script lang="typescript">
-    import { Button, Link, OnboardingLayout, Text, Video } from 'shared/components'
-    import { Platform } from 'shared/lib/platform'
+    import { Button, OnboardingLayout, Text, Video } from 'shared/components'
     import { initialiseMigrationListeners, LEDGER_MIGRATION_VIDEO } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { api, isBackgroundSyncing } from 'shared/lib/wallet'
@@ -11,10 +10,6 @@
     export let locale: Locale
 
     const dispatch = createEventDispatcher()
-
-    function handleReadMoreClick() {
-        Platform.openUrl('https://firefly.iota.org/faq#migration')
-    }
 
     function handleNextClick() {
         dispatch('next')
@@ -57,8 +52,5 @@
         class="w-full h-full px-32 flex flex-col flex-wrap justify-center items-center bg-gray-50 dark:bg-gray-900"
     >
         <Video video={LEDGER_MIGRATION_VIDEO} />
-        <Link onClick={handleReadMoreClick} classes="mt-7" icon="info"
-            >{locale('views.legacyLedgerIntro.readMore')}</Link
-        >
     </div>
 </OnboardingLayout>
