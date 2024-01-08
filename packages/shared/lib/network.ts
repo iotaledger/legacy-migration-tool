@@ -297,9 +297,9 @@ export const updateClientOptions = (config: NetworkConfig): void => {
 }
 
 export const buildClientOptions = (config: NetworkConfig): ClientOptions => ({
-        ...config,
-        network: config.network.id.includes('mainnet') ? 'mainnet' : 'testnet',
-    })
+    ...config,
+    network: config.network.id.includes('mainnet') ? 'mainnet' : 'testnet',
+})
 
 export const getDefaultClientOptions = (): ClientOptions => {
     const { id, type } =
