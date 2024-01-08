@@ -296,15 +296,10 @@ export const updateClientOptions = (config: NetworkConfig): void => {
     })
 }
 
-export const buildClientOptions = (config: NetworkConfig): ClientOptions => {
-    const nodeCandidates = getNodeCandidates(config).map((n) => ({ ...n, network: config.network }))
-    return {
-        ...config,
-        node: nodeCandidates.find((n) => n.isPrimary),
-        nodes: nodeCandidates,
-        network: config.network.id,
-    }
-}
+export const buildClientOptions = (config: NetworkConfig): ClientOptions => ({
+    ...config,
+    network: config.network.id.includes('mainnet') ? 'mainnet' : 'testnet',
+})
 
 export const getDefaultClientOptions = (): ClientOptions => {
     const { id, type } =
