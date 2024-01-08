@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Button, OnboardingLayout, Text, Animation, Illustration } from 'shared/components'
-    import { Platform } from 'shared/lib/platform'
     import { initialiseMigrationListeners } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { api, isBackgroundSyncing } from 'shared/lib/wallet'
@@ -11,10 +10,6 @@
     export let locale: Locale
 
     const dispatch = createEventDispatcher()
-
-    function handleReadMoreClick() {
-        Platform.openUrl('https://firefly.iota.org/faq#migration')
-    }
 
     function handleNextClick() {
         dispatch('next')

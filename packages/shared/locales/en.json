@@ -187,8 +187,7 @@
         "legacyLedgerIntro": {
             "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
             "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Stardust network.",
-            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly.",
-            "readMore": "What to expect from the migration process"
+            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly."
         },
         "generateNewLedgerAddress": {
             "title": "Generate new address",
@@ -798,7 +797,6 @@
         "missingBundle": {
             "title": "Warning: funds at risk during migration",
             "body": "You have funds on spent addresses, but the information needed to secure them was not found. This can happen if you made transactions a long time ago. You can proceed but {value} are at risk during migration.",
-            "learnMore": "Learn more about spent addresses",
             "proceed": "I understand the risk"
         },
         "snapshot": {
