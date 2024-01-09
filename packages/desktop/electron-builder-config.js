@@ -54,7 +54,6 @@ const baseConfig = () => ({
         entitlementsInherit: './entitlements.mac.plist',
         hardenedRuntime: true,
         gatekeeperAssess: false,
-        // notarize: false, // Disable notarize in electron builder as we use @electron/notarize instead
         asarUnpack: ['**/*.node'],
     },
 })
