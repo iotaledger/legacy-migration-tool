@@ -11,7 +11,7 @@ const baseConfig = () => ({
     afterSign: async () => {
         // eslint-disable-next-line no-useless-catch
         try {
-            await notarize(getAppId(process.env.STAGE || 'alpha'), getAppName(process.env.STAGE || 'alpha'))
+            await notarize(getAppName(process.env.STAGE || 'alpha'))
         } catch (error) {
             // This catch is necessary or the promise rejection is swallowed
             throw error
@@ -54,6 +54,7 @@ const baseConfig = () => ({
         entitlementsInherit: './entitlements.mac.plist',
         hardenedRuntime: true,
         gatekeeperAssess: false,
+        notarize: false, // Disable notarize in electron builder as we use @electron/notarize instead
         asarUnpack: ['**/*.node'],
     },
 })

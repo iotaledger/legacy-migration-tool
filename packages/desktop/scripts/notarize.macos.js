@@ -1,4 +1,4 @@
-const { notarize } = require('electron-notarize')
+const { notarize } = require('@electron/notarize')
 const path = require('path')
 
 /**
@@ -6,8 +6,8 @@ const path = require('path')
  * @param {string} appName
  * @returns void
  */
-module.exports = async (appBundleId, appName) => {
-    if (process.platform !== 'darwin' || process.env.MACOS_SKIP_NOTARIZATION) {
+module.exports = async (appName) => {
+    if (process.platform !== 'darwin' || process.env.MACOS_SKIP_NOTARIZATION === 'true') {
         return true
     }
 
@@ -25,10 +25,10 @@ module.exports = async (appBundleId, appName) => {
     }
 
     await notarize({
-        appBundleId: appBundleId,
+        tool: 'notarytool',
         appPath: path.resolve(__dirname, `../out/mac/${appName}.app`),
         appleId: APPLE_ID,
         appleIdPassword: APPLE_ID_PASSWORD,
-        ascProvider: 'UG77RJKZHH',
+        teamId: 'UG77RJKZHH',
     })
 }
