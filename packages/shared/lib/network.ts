@@ -302,19 +302,11 @@ export const buildClientOptions = (config: NetworkConfig): ClientOptions => ({
 })
 
 export const getDefaultClientOptions = (): ClientOptions => {
-    const { id, type } =
+    const { id } =
         get(activeProfile)?.settings?.networkConfig.network || getOfficialNetwork(NetworkType.ChrysalisMainnet)
 
-    const node = getOfficialNodes(type)[0]
-    node.isPrimary = true
-
     return {
-        node,
-        nodes: getOfficialNodes(type).map((n) => ({ ...n, isPrimary: n.url === node.url })),
-        network: id,
-        automaticNodeSelection: true,
-        includeOfficialNodes: true,
-        localPow: true,
+        network: id.includes('mainnet') ? 'mainnet' : 'testnet',
     }
 }
 

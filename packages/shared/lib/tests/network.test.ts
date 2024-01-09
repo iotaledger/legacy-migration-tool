@@ -84,16 +84,7 @@ describe('File: network.ts', () => {
         it('should return the client options of the active profile if present', () => {
             const clientOpts = getDefaultClientOptions()
             expect(clientOpts).toEqual(<ClientOptions>{
-                network: 'chrysalis-mainnet',
-                automaticNodeSelection: true,
-                includeOfficialNodes: true,
-                localPow: true,
-                node: _buildNode(MAINNET_URLS[0], MAINNET, true, false),
-                nodes: [
-                    _buildNode(MAINNET_URLS[0], MAINNET, true, false),
-                    _buildNode(MAINNET_URLS[1], MAINNET),
-                    _buildNode(MAINNET_URLS[2], MAINNET),
-                ],
+                network: 'mainnet',
             })
         })
     })
