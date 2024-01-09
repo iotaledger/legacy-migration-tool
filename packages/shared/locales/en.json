@@ -60,9 +60,7 @@
             "progress1": "Connect your Ledger",
             "progress2": "Generate address",
             "progress3": "Switch Ledger app",
-            "progress4": "Transfer funds",
-            "watchVideo": "Watch video guide",
-            "videoGuide": "Ledger migration video guide"
+            "progress4": "Transfer funds"
         },
         "ledgerInstallationGuide": {
             "title": "Have you installed the necessary Ledger apps?",
@@ -188,7 +186,7 @@
         },
         "legacyLedgerIntro": {
             "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
-            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Sturdust network.",
+            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Stardust network.",
             "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly."
         },
         "generateNewLedgerAddress": {
