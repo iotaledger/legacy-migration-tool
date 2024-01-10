@@ -85,6 +85,7 @@
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
+                            prepareMigrationLog([], migratableBalance)
                             return createLedgerMigrationBundle(
                                 0,
                                 get(migrationAddress),
@@ -96,7 +97,10 @@
                             closePopup(true) // close transaction popup
                             singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
-                            prepareMigrationLog(reverseTrytesLedger, migratableBalance, bundleHash)
+                            updateMigrationLog(get(migrationLog).length - 1, {
+                                trytes: reverseTrytesLedger,
+                                bundleHash,
+                            })
                             return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
                         })
                         .then((receipt) => {
@@ -114,7 +118,7 @@
                             }
                         })
                         .catch((err) => {
-                            const error = err?.message ? err.message : err?.toString()
+                            const error = err?.message ?? err?.toString()
                             loading = false
                             closePopup(true) // close transaction popup
                             closeTransport()
@@ -154,7 +158,7 @@
                         }
                     })
                     .catch((err) => {
-                        const error = err?.message ? err.message : err.toString()
+                        const error = err?.message ?? err?.toString()
                         loading = false
                         showAppNotification({
                             type: 'error',

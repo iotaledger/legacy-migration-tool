@@ -5,6 +5,7 @@
     import { Platform } from 'shared/lib/platform'
     import {
         displayNotificationForLedgerProfile,
+        getLegacyErrorMessage,
         ledgerDeviceState,
         promptUserToConnectLedger,
     } from 'shared/lib/ledger'
@@ -218,6 +219,7 @@
                                       )
                                       .then(({ iota, callback }) => {
                                           closeTransport = callback
+                                          prepareMigrationLog([], transaction.balance)
                                           return createLedgerMigrationBundle(
                                               transaction.index,
                                               get(migrationAddress),
@@ -235,7 +237,10 @@
                                               return _transaction
                                           })
                                           const reverseTrytesLedger = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesLedger, transaction.balance, bundleHash)
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              trytes: reverseTrytesLedger,
+                                              bundleHash,
+                                          })
                                           return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
                                       .then((receipt) => {
@@ -250,10 +255,20 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ? err.message : err?.toString()
+                                          const error = err?.message ?? err?.toString()
                                           updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                                           addMigrationError(error)
-                                          throw new Error(err)
+
+                                          closePopup(true) // close transaction popup
+                                          closeTransport()
+                                          displayNotificationForLedgerProfile('error', false, true, false, true, err)
+
+                                          const legacyErrorMessage = getLegacyErrorMessage(err)
+                                          throw new Error(
+                                              legacyErrorMessage === 'error.global.generic'
+                                                  ? error
+                                                  : locale(legacyErrorMessage)
+                                          )
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
@@ -276,7 +291,7 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ? err.message : err?.toString()
+                                          const error = err?.message ?? err?.toString()
                                           updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                                           addMigrationError(error)
                                           throw new Error(err)
@@ -286,11 +301,6 @@
                           .catch((error) => {
                               console.error(error)
 
-                              if (legacyLedger) {
-                                  closePopup(true) // close transaction popup
-                                  closeTransport()
-                                  displayNotificationForLedgerProfile('error', false, true, false, true, error)
-                              }
                               showAppNotification({
                                   type: 'error',
                                   message: error.message || 'Failed to prepare transfers',
