@@ -119,13 +119,18 @@
                         })
                         .catch((err) => {
                             const error = err?.message ?? err?.toString()
+
                             loading = false
                             closePopup(true) // close transaction popup
                             closeTransport()
+
+                            const legacyErrorMessage = getLegacyErrorMessage(err)
                             showAppNotification({
                                 type: 'error',
-                                message: locale(getLegacyErrorMessage(err)),
+                                message:
+                                    legacyErrorMessage === 'error.global.generic' ? error : locale(legacyErrorMessage),
                             })
+
                             console.error(err)
                             updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
                             hasError = true
