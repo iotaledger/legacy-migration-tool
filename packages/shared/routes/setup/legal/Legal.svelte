@@ -31,7 +31,7 @@
         <Text type="p" secondary classes="mb-8">{locale('views.legal.body')}</Text>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-8">
-        <Checkbox label="I've read and I accept the Privacy Policy & Terms of Service" bind:checked />
+        <Checkbox label="I've read and I accept the Terms of Service" bind:checked />
         <Button classes="w-full" disabled={!termsAccepted} onClick={() => handleContinueClick()}
             >{locale('actions.continue')}</Button
         >
