@@ -44,7 +44,7 @@ export class AppRouter extends Router<AppRoute> {
         switch (currentRoute) {
             case AppRoute.Welcome:
                 {
-                    const showLegalPage = needsToAcceptLatestPrivacyPolicy() || needsToAcceptLatestTos()
+                    const showLegalPage = needsToAcceptLatestTos()
                     if (showLegalPage) {
                         nextRoute = AppRoute.Legal
                     } else {

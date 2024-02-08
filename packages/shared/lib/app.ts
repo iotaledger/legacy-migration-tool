@@ -148,7 +148,7 @@ export const PRIVACY_POLICY_VERSION = 1
 /**
  * The Terms of Service packaged with the current version of IOTA Legacy Migration Tool
  */
-export const TOS_VERSION = 1
+export const TOS_VERSION = 2
 
 // Note: we dont have privacy policy
 export const needsToAcceptLatestPrivacyPolicy = (): boolean => false
