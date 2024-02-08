@@ -8,24 +8,6 @@ const { machineIdSync } = require('node-machine-id')
 const Keychain = require('./lib/keychain')
 const { initMenu, contextMenu } = require('./lib/menu')
 
-const canSendCrashReports = () => {
-    let sendCrashReports = loadJsonConfig('settings.json')?.sendCrashReports
-    if (typeof sendCrashReports === 'undefined') {
-        sendCrashReports = false
-        updateSettings({ sendCrashReports })
-    }
-
-    return sendCrashReports
-}
-
-const CAN_LOAD_SENTRY = app.isPackaged
-const SEND_CRASH_REPORTS = CAN_LOAD_SENTRY && canSendCrashReports()
-
-let captureException = (..._) => {}
-if (SEND_CRASH_REPORTS) {
-    captureException = require('../sentry')(true).captureException
-}
-
 /**
  * Set AppUserModelID for Windows notifications functionality
  */
@@ -86,18 +68,6 @@ const handleError = (errorType, error, isRenderProcessError) => {
             errorType,
         }
 
-        /**
-         * NOTE: We do NOT need to capture the exception unless it is from
-         * the main process.
-         */
-        if (SEND_CRASH_REPORTS) {
-            const sentryError = new Error(`${errorType} - ${errorMessage}`)
-            if (error.stack) {
-                sentryError.stack = error.stack
-            }
-            captureException(sentryError)
-        }
-
         openErrorWindow()
     } else {
         // In dev mode there is no need to log errors from the render
@@ -148,7 +118,7 @@ const defaultWebPreferences = {
     webviewTag: false,
     enableWebSQL: false,
     devTools: !app.isPackaged,
-    additionalArguments: [`--send-crash-reports=${SEND_CRASH_REPORTS}`],
+    additionalArguments: [],
 }
 
 if (app.isPackaged) {

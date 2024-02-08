@@ -15,7 +15,6 @@
         Backup,
         Balance,
         Congratulations,
-        CrashReporting,
         Import,
         Ledger,
         Legal,
@@ -32,10 +31,6 @@
 
     stage.set(Stage[process.env.STAGE.toUpperCase()] ?? Stage.ALPHA)
 
-    const handleCrashReporting = async (sendCrashReports: boolean): Promise<void> =>
-        Electron.updateAppSettings({ sendCrashReports })
-
-    $: void handleCrashReporting($appSettings.sendCrashReports)
     $: $appSettings.darkMode
         ? document.body.classList.add('scheme-dark')
         : document.body.classList.remove('scheme-dark')
@@ -107,9 +102,6 @@
         </Route>
         <Route route={AppRoute.Legal}>
             <Legal locale={$_} />
-        </Route>
-        <Route route={AppRoute.CrashReporting}>
-            <CrashReporting locale={$_} />
         </Route>
         <Route route={AppRoute.Setup}>
             <Setup locale={$_} />

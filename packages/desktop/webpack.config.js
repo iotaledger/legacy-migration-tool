@@ -3,14 +3,12 @@ const CopyPlugin = require('copy-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 const path = require('path')
 const sveltePreprocess = require('svelte-preprocess')
-const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const { version } = require('./package.json')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 
 const mode = process.env.NODE_ENV || 'development'
 const prod = mode === 'production'
 const hardcodeNodeEnv = typeof process.env.HARDCODE_NODE_ENV !== 'undefined'
-const SENTRY = process.env.SENTRY === 'true'
 const stage = process.env.STAGE || 'alpha'
 /**
  * If stage = 'prod' -> 'IOTA Legacy Migration Tool'
@@ -119,9 +117,6 @@ const rendererRules = [
 const mainPlugins = [
     new DefinePlugin({
         PLATFORM_LINUX: JSON.stringify(process.platform === 'linux'),
-        SENTRY_DSN: JSON.stringify(process.env.SENTRY_DSN || ''),
-        SENTRY_MAIN_PROCESS: JSON.stringify(true),
-        SENTRY_ENVIRONMENT: JSON.stringify(stage),
         PRELOAD_SCRIPT: JSON.stringify(false),
         APP_NAME: JSON.stringify(appName),
         APP_ID: JSON.stringify(appId),
@@ -155,9 +150,6 @@ const rendererPlugins = [
         devMode: JSON.stringify(mode === 'development'),
         'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM || 'desktop'),
         'process.env.STAGE': JSON.stringify(stage),
-        SENTRY_DSN: JSON.stringify(process.env.SENTRY_DSN || ''),
-        SENTRY_MAIN_PROCESS: JSON.stringify(false),
-        SENTRY_ENVIRONMENT: JSON.stringify(stage),
         PRELOAD_SCRIPT: JSON.stringify(false),
     }),
 ]
@@ -165,27 +157,9 @@ const rendererPlugins = [
 const preloadPlugins = [
     new DefinePlugin({
         PLATFORM_LINUX: JSON.stringify(process.platform === 'linux'),
-        SENTRY_DSN: JSON.stringify(process.env.SENTRY_DSN || ''),
-        SENTRY_MAIN_PROCESS: JSON.stringify(false),
-        SENTRY_ENVIRONMENT: JSON.stringify(stage),
         PRELOAD_SCRIPT: JSON.stringify(true),
         APP_NAME: JSON.stringify(appName),
         'process.env.STAGE': JSON.stringify(stage),
-    }),
-]
-
-const sentryPlugins = [
-    new SentryWebpackPlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        include: '.',
-        release: `IOTALegacyMigrationTool@${version}`,
-        ignoreFile: '.sentrycliignore',
-        org: 'iota-foundation-h4',
-        project: 'firefly-desktop',
-        finalize: false,
-        deploy: {
-            env: stage,
-        },
     }),
 ]
 
@@ -202,8 +176,8 @@ module.exports = [
             rules: rendererRules,
         },
         mode,
-        plugins: [...rendererPlugins, ...(SENTRY ? sentryPlugins : [])],
-        devtool: prod ? (SENTRY ? 'source-map' : false) : 'cheap-module-source-map',
+        plugins: [...rendererPlugins],
+        devtool: prod ? false : 'cheap-module-source-map',
         devServer: {
             hot: true,
         },
@@ -219,8 +193,8 @@ module.exports = [
             rules: mainRules,
         },
         mode,
-        plugins: [...mainPlugins, ...(SENTRY ? sentryPlugins : [])],
-        devtool: prod ? (SENTRY ? 'source-map' : false) : 'cheap-module-source-map',
+        plugins: [...mainPlugins],
+        devtool: prod ? false : 'cheap-module-source-map',
         optimization: {
             nodeEnv: hardcodeNodeEnv ? mode : false,
             minimize: true,
@@ -242,8 +216,8 @@ module.exports = [
             rules: mainRules,
         },
         mode,
-        plugins: [...preloadPlugins, ...(SENTRY ? sentryPlugins : [])],
-        devtool: prod ? (SENTRY ? 'source-map' : false) : 'cheap-module-source-map',
+        plugins: [...preloadPlugins],
+        devtool: prod ? false : 'cheap-module-source-map',
         optimization: {
             nodeEnv: hardcodeNodeEnv ? mode : false,
             minimize: true,
