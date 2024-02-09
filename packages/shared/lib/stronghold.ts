@@ -80,9 +80,8 @@ export async function migrateStrongholdForLogin(): Promise<void> {
     updateProfile('strongholdVersion', STRONGHOLD_VERSION)
 
     const profileStoragePath = await getProfileDataPath(activeProfileId)
-    const { sendCrashReports } = get(initAppSettings) ?? { sendCrashReports: false }
     const machineId = await Platform.getMachineId()
-    initialise(activeProfileId, profileStoragePath, sendCrashReports, machineId)
+    initialise(activeProfileId, profileStoragePath, false, machineId)
 }
 
 export async function migrateStrongholdForRecovery(): Promise<void> {
@@ -102,9 +101,8 @@ export async function migrateStrongholdForRecovery(): Promise<void> {
     updateProfile('strongholdVersion', STRONGHOLD_VERSION)
 
     const profileStoragePath = await getProfileDataPath(newProfileId)
-    const { sendCrashReports } = get(initAppSettings) ?? { sendCrashReports: false }
     const machineId = await Platform.getMachineId()
-    initialise(newProfileId, profileStoragePath, sendCrashReports, machineId)
+    initialise(newProfileId, profileStoragePath, false, machineId)
 
     await asyncRestoreBackup(migrationFilePath, _strongholdPassword)
     await Platform.deleteFile(migrationFilePath)
