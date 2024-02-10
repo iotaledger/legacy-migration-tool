@@ -5,7 +5,6 @@
     import { Locale } from '@core/i18n'
     import { onMount } from 'svelte'
     import { fade } from 'svelte/transition'
-    import CrashReporting from './CrashReporting.svelte'
     import Diagnostics from './Diagnostics.svelte'
     import ErrorLog from './ErrorLog.svelte'
     import LedgerAddress from './LedgerAddress.svelte'
@@ -73,7 +72,6 @@
         ledgerLegacyTransaction: LedgerLegacyTransaction,
         ledgerAddress: LedgerAddress,
         errorLog: ErrorLog,
-        crashReporting: CrashReporting,
         diagnostics: Diagnostics,
         transaction: Transaction,
         riskFunds: RiskFunds,

@@ -59,8 +59,7 @@
 
                 const path = await getProfileDataPath($newProfile.id)
                 const machineId = await Platform.getMachineId()
-                const { sendCrashReports } = $initAppSettings ?? { sendCrashReports: false }
-                initialise($newProfile.id, path, sendCrashReports, machineId)
+                initialise($newProfile.id, path, false, machineId)
                 initialiseMigrationListeners()
             }
 

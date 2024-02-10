@@ -30,7 +30,6 @@
     "dependencies": {
         "@ledgerhq/hw-transport-node-hid": "^5.13.0",
         "@ledgerhq/hw-transport-node-speculos": "^6.1.0",
-        "@sentry/electron": "^2.5.4",
         "argon2": "^0.27.1",
         "electron-log": "^4.3.1",
         "electron-updater": "^4.3.5",
@@ -42,7 +41,6 @@
         "firefly-actor-system-nodejs-bindings": "0.1.0"
     },
     "devDependencies": {
-        "@sentry/webpack-plugin": "^1.18.5",
         "@tsconfig/svelte": "^1.0.10",
         "@types/node": "^14.11.1",
         "copy-webpack-plugin": "^7.0.0",

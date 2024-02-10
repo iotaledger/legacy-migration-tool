@@ -48,14 +48,12 @@ export class AppRouter extends Router<AppRoute> {
                     if (showLegalPage) {
                         nextRoute = AppRoute.Legal
                     } else {
-                        nextRoute = AppRoute.CrashReporting
+                        walletSetupType.set(SetupType.Import)
+                        nextRoute = AppRoute.Import
                     }
                 }
                 break
             case AppRoute.Legal:
-                nextRoute = AppRoute.CrashReporting
-                break
-            case AppRoute.CrashReporting:
                 walletSetupType.set(SetupType.Import)
                 nextRoute = AppRoute.Import
                 break
