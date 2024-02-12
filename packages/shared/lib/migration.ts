@@ -456,7 +456,7 @@ export function exportMigrationLog(): void {
  *
  * @returns {Promise<void>}
  */
-export const getLedgerMigrationData = (
+export const getLedgerMigrationData = async (
     getAddressFn: (index: number) => Promise<string>,
     callback: () => void,
     initialAddressIndex: number = 0
