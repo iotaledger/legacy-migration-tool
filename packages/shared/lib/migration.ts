@@ -697,9 +697,11 @@ export const createMinedLedgerMigrationBundle = (
  * @method createLedgerMigrationBundle
  *
  * @param {number} bundleIndex
+ * @param {MigrationAddress} migrationAddress
  * @param {function} prepareTransfersFn
+ * @param {function} callback
  *
- * @returns {Promise}
+ * @returns {Promise<MigrationBundle>}
  */
 export const createLedgerMigrationBundle = (
     bundleIndex: number,
