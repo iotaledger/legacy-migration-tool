@@ -1015,8 +1015,9 @@ const _sendMigrationBundle = (hash: string, data: SendMigrationBundleResponse): 
  *
  * @method assignBundleHash
  *
- * @param inputAddressIndexes
- * @param migrationBundle
+ * @param {number[]} inputAddressIndexes
+ * @param {MigrationBundle} migrationBundle
+ * @param {boolean} didMine
  *
  * @returns {void}
  */
