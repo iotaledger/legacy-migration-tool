@@ -867,11 +867,9 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
     }))
 
     try {
-        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+        return await prepareTransfers(get(seed), transfers, {
             inputs: inputsForTransfer,
         })
-
-        return bundleTrytes
     } catch (err) {
         throw new Error(err.message || 'Failed to prepare transfers')
     }
