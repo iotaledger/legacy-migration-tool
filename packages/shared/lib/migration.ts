@@ -944,9 +944,7 @@ export async function fetchReceiptForRequest(requestId: string): Promise<any> {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })
         }
-        const receipt = await response.json()
-
-        return receipt
+        return await response.json()
     } catch (error) {
         console.error(error)
         throw new Error(error.message)
