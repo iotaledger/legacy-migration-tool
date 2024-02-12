@@ -17,7 +17,7 @@ export const CHRYSALIS_MAINNET_EXPLORER = 'https://explorer.iota.org/mainnet'
 export const CHRYSALIS_DEVNET_ID = 'chrysalis-devnet'
 export const CHRYSALIS_DEVNET_NAME = 'Chrysalis Devnet'
 export const CHRYSALIS_DEVNET_BECH32_HRP = 'atoi'
-export const CHRYSALIS_DEVNET_EXPLORER = 'https://explorer.iota.org/devnet'
+export const CHRYSALIS_DEVNET_EXPLORER = 'https://explorer.iota-alphanet.iotaledger.net/devnet'
 
 /**
  * Given the type of IOTA network, construct the default official network
