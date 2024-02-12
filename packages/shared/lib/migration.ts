@@ -1068,7 +1068,7 @@ export const assignBundleHash = (
  * @param {number} bundleIndex
  * @param {string[]} trytes
  * @param {boolean} didMine
- * @param [number] migrationBundleCrackability
+ * @param {number} migrationBundleCrackability
  *
  * @returns {void}
  */
