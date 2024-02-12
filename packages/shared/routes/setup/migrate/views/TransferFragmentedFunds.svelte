@@ -201,7 +201,7 @@
         }
     }
 
-    function migrateFunds(isRerun?: boolean) {
+    function migrateFunds() {
         migratingFundsMessage = locale('views.migrate.migrating')
 
         transactions.reduce(
