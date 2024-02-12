@@ -826,10 +826,10 @@ export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleInde
  *
  * @method createMigrationBundle
  *
- * @param {number} bundleIndex
+ * @param {Bundle} bundle
  * @param {MigrationAddress} migrationAddress
  *
- * @returns {Promise}
+ * @returns {Promise<string[]>}
  */
 export const createMigrationBundle = async (bundle: Bundle, migrationAddress: MigrationAddress): Promise<string[]> => {
     const { seed } = get(migration)
