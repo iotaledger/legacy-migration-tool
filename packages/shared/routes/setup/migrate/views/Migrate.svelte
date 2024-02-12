@@ -56,8 +56,6 @@
 
     let timeout
 
-    let singleMigrationBundleHash
-
     let hasError: boolean = false
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
@@ -95,7 +93,6 @@
                         })
                         .then(({ trytes, bundleHash }) => {
                             closePopup(true) // close transaction popup
-                            singleMigrationBundleHash = bundleHash
                             const reverseTrytesLedger = trytes.reverse()
                             updateMigrationLog(get(migrationLog).length - 1, {
                                 trytes: reverseTrytesLedger,
