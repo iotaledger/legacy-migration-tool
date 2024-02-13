@@ -790,7 +790,7 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
  * @method sendOffLedgerMigrationRequest
  *
  * @param {string[]} trytes
- * @param {bundleIndex} trytes
+ * @param {number} bundleIndex
  *
  * @returns {Promise<Receipt>}
  */
