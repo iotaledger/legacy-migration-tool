@@ -110,9 +110,9 @@ const getOfficialNode = (type: NetworkType, url: string): Node => ({
 export const getOfficialExplorer = (networkId: NetworkId): string => {
     switch (networkId) {
         case CHRYSALIS_MAINNET_ID:
-            return CHRYSALIS_MAINNET_EXPLORER
+            return MAINNET_EXPLORER
         case CHRYSALIS_DEVNET_ID:
-            return CHRYSALIS_DEVNET_EXPLORER
+            return DEVNET_EXPLORER
         default:
             return ''
     }
