@@ -20,7 +20,7 @@
     import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { api, walletSetupType } from 'shared/lib/wallet'
-    import { CHRYSALIS_MAINNET_EXPLORER, CHRYSALIS_DEVNET_EXPLORER } from 'shared/lib/network'
+    import { MAINNET_EXPLORER, DEVNET_EXPLORER } from 'shared/lib/network'
     import { onMount } from 'svelte'
     import { get } from 'svelte/store'
 
@@ -110,7 +110,7 @@
     }
 
     function consultExplorerClick() {
-        const baseUrl = $activeProfile.isDeveloperProfile ? CHRYSALIS_DEVNET_EXPLORER : CHRYSALIS_MAINNET_EXPLORER
+        const baseUrl = $activeProfile.isDeveloperProfile ? DEVNET_EXPLORER : MAINNET_EXPLORER
         Platform.openUrl(`${baseUrl}/addr/${$migrationAddress.bech32}`)
     }
 
