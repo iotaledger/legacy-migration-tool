@@ -456,7 +456,7 @@ export function exportMigrationLog(): void {
  *
  * @returns {Promise<void>}
  */
-export const getLedgerMigrationData = (
+export const getLedgerMigrationData = async (
     getAddressFn: (index: number) => Promise<string>,
     callback: () => void,
     initialAddressIndex: number = 0
@@ -697,9 +697,11 @@ export const createMinedLedgerMigrationBundle = (
  * @method createLedgerMigrationBundle
  *
  * @param {number} bundleIndex
+ * @param {MigrationAddress} migrationAddress
  * @param {function} prepareTransfersFn
+ * @param {function} callback
  *
- * @returns {Promise}
+ * @returns {Promise<MigrationBundle>}
  */
 export const createLedgerMigrationBundle = (
     bundleIndex: number,
@@ -788,6 +790,7 @@ export const sendLedgerMigrationBundle = (bundleHash: string, trytes: string[]):
  * @method sendOffLedgerMigrationRequest
  *
  * @param {string[]} trytes
+ * @param {number} bundleIndex
  *
  * @returns {Promise<Receipt>}
  */
@@ -823,10 +826,10 @@ export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleInde
  *
  * @method createMigrationBundle
  *
- * @param {number} bundleIndex
+ * @param {Bundle} bundle
  * @param {MigrationAddress} migrationAddress
  *
- * @returns {Promise}
+ * @returns {Promise<string[]>}
  */
 export const createMigrationBundle = async (bundle: Bundle, migrationAddress: MigrationAddress): Promise<string[]> => {
     const { seed } = get(migration)
@@ -864,11 +867,9 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
     }))
 
     try {
-        const bundleTrytes: string[] = await prepareTransfers(get(seed), transfers, {
+        return await prepareTransfers(get(seed), transfers, {
             inputs: inputsForTransfer,
         })
-
-        return bundleTrytes
     } catch (err) {
         throw new Error(err.message || 'Failed to prepare transfers')
     }
@@ -941,9 +942,7 @@ export async function fetchReceiptForRequest(requestId: string): Promise<any> {
                 throw new Error(`Message: ${err.Message}, Error: ${err.Error}`)
             })
         }
-        const receipt = await response.json()
-
-        return receipt
+        return await response.json()
     } catch (error) {
         console.error(error)
         throw new Error(error.message)
@@ -1014,8 +1013,9 @@ const _sendMigrationBundle = (hash: string, data: SendMigrationBundleResponse): 
  *
  * @method assignBundleHash
  *
- * @param inputAddressIndexes
- * @param migrationBundle
+ * @param {number[]} inputAddressIndexes
+ * @param {MigrationBundle} migrationBundle
+ * @param {boolean} didMine
  *
  * @returns {void}
  */
@@ -1066,7 +1066,7 @@ export const assignBundleHash = (
  * @param {number} bundleIndex
  * @param {string[]} trytes
  * @param {boolean} didMine
- * @param [number] migrationBundleCrackability
+ * @param {number} migrationBundleCrackability
  *
  * @returns {void}
  */
