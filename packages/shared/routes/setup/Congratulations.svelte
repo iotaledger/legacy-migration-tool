@@ -20,6 +20,7 @@
     import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { api, walletSetupType } from 'shared/lib/wallet'
+    import { MAINNET_EXPLORER, DEVNET_EXPLORER } from 'shared/lib/network'
     import { onMount } from 'svelte'
     import { get } from 'svelte/store'
 
@@ -109,13 +110,8 @@
     }
 
     function consultExplorerClick() {
-        let urlToOpen = ''
-        if ($activeProfile.isDeveloperProfile) {
-            urlToOpen = `https://explorer.iota-alphanet.iotaledger.net/devnet/addr/${$migrationAddress.bech32}`
-        } else {
-            urlToOpen = `https://explorer.iota.org/mainnet/addr/${$migrationAddress.bech32}`
-        }
-        Platform.openUrl(urlToOpen)
+        const baseUrl = $activeProfile.isDeveloperProfile ? DEVNET_EXPLORER : MAINNET_EXPLORER
+        Platform.openUrl(`${baseUrl}/addr/${$migrationAddress.bech32}`)
     }
 
     function migrateAnotherProfile(): void {

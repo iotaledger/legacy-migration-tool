@@ -11,7 +11,6 @@
         Text,
     } from 'shared/components'
     import { stage } from 'shared/lib/app'
-    import { initAppSettings } from 'shared/lib/appSettings'
     import { initialiseMigrationListeners } from 'shared/lib/migration'
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
@@ -22,9 +21,6 @@
     import { get } from 'svelte/store'
 
     export let locale: Locale
-
-    let error = ''
-    let busy = false
 
     const TMP_PROFILE_NAME = 'MigrationProfile'
     let isDeveloperProfile = $newProfile?.isDeveloperProfile ?? get(stage) !== Stage.PROD
@@ -38,7 +34,7 @@
         try {
             validateProfileName(trimmedProfileName)
         } catch (err) {
-            return (error = err.message)
+            return
         }
         cleanUpIfPreviouslyInitialized()
         await initialiseProfileAndContinue(trimmedProfileName)
@@ -53,7 +49,6 @@
 
     async function initialiseProfileAndContinue(name: string): Promise<void> {
         try {
-            busy = true
             if (hasDeveloperProfileChanged) {
                 storeProfile(name, isDeveloperProfile)
 
@@ -78,8 +73,6 @@
                 type: 'error',
                 message: locale(err.error ? err.error : 'error.global.generic'),
             })
-        } finally {
-            busy = false
         }
     }
 </script>

@@ -55,13 +55,11 @@
     let error = getError(balance)
     let formattedBalance = formatUnitBestMatch(balance, true)
 
-    // TODO: add missing unsubscribe to onDestroy
     bundles.subscribe((updatedBundles) => {
         _bundles = updatedBundles
         error = getError(_data.balance)
     })
 
-    // TODO: add missing unsubscribe to onDestroy
     unselectedInputs.subscribe(() => {
         error = getError(_data.balance)
     })
@@ -130,7 +128,6 @@
     function checkAgain(): void {
         isCheckingForBalance = true
         if (legacyLedger) {
-            // TODO: add ledger legacy popup when PR merged
             const _onConnected = () => {
                 Platform.ledger
                     .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
