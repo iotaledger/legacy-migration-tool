@@ -158,7 +158,7 @@
             return item
         })
 
-        migrateFunds(true)
+        migrateFunds()
     }
 
     function persistProfile() {
