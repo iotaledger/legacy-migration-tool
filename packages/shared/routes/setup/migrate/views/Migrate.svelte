@@ -182,8 +182,7 @@
 
     // TODO: complete function functionality
     function learnAboutMigrationsClick() {
-        // TODO: modify link with the new blog entry
-        Platform.openUrl('https://blog.iota.org/firefly-token-migration/')
+        Platform.openUrl('https://blog.iota.org/iota-legacy-migration-tool/')
     }
 
     onMount(async () => {
