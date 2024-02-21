@@ -63,10 +63,10 @@ const HARDWARE_ADDRESS_GAP = 3
 const CHECKSUM_LENGTH = 9
 
 const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
-const PRODUCTION_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
-// TODO: Update these constants with the real production values
+const PRODUCTION_BASE_URL = 'https://migrator-api.stardust-mainnet.iotaledger.net'
+
 const DEVELOP_CHAIN_ID = 'atoi1ppvjyr3nz8mwd6h7pahtgf4emcd3z9kpgys6hn2w5mnahmxu4t2gwvgxd92'
-const PRODUCTION_CHAIN_ID = 'atoi1ppvjyr3nz8mwd6h7pahtgf4emcd3z9kpgys6hn2w5mnahmxu4t2gwvgxd92'
+const PRODUCTION_CHAIN_ID = 'iota1pphx6hnmxqdqd2u4m59e7nvmcyulm3lfm58yex5gmud9qlt3v9crs9sah6m'
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
