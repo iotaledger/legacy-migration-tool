@@ -150,3 +150,41 @@ const buildTemplate = () => {
     })
     return template
 }
+
+/**
+ * Creates context menu
+ * @returns {Menu} Context menu
+ */
+export const contextMenu = () =>
+    Menu.buildFromTemplate([
+        {
+            label: state.strings.undo,
+            role: 'undo',
+        },
+        {
+            label: state.strings.redo,
+            role: 'redo',
+        },
+        {
+            type: 'separator',
+        },
+        {
+            label: state.strings.cut,
+            role: 'cut',
+        },
+        {
+            label: state.strings.copy,
+            role: 'copy',
+        },
+        {
+            label: state.strings.paste,
+            role: 'paste',
+        },
+        {
+            type: 'separator',
+        },
+        {
+            label: state.strings.selectAll,
+            role: 'selectAll',
+        },
+    ])
