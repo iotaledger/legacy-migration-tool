@@ -62,7 +62,7 @@ const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
 
-const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+const DEVELOP_BASE_URL = 'https://migration-api-dnyf5n-911810.iota.lmoe.dev'
 const PRODUCTION_BASE_URL = 'https://migrator-api.stardust-mainnet.iotaledger.net'
 
 const DEVELOP_CHAIN_ID = 'atoi1ppvjyr3nz8mwd6h7pahtgf4emcd3z9kpgys6hn2w5mnahmxu4t2gwvgxd92'
@@ -301,8 +301,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
 
     for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
         const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-        const hexAddress = '0x' + convertToHex(legacyAddress)
-        const balance = await fetchMigratableBalance(hexAddress)
+        const balance = await fetchMigratableBalance(legacyAddress)
 
         totalBalance += balance
         if (balance > 0) {
@@ -346,42 +345,28 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 }
 
-async function fetchMigratableBalance(hexAddress: string): Promise<number> {
-    const body = {
-        functionName: 'getMigratableBalance',
-        contractName: 'legacymigration',
-        arguments: {
-            Items: [
-                {
-                    value: hexAddress,
-                    key: '0x61', // convertToHex("a")
-                },
-            ],
-        },
-    }
+async function fetchMigratableBalance(legacyAddress: string): Promise<number> {
     const requestOptions: RequestInit = {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
         },
-        body: JSON.stringify(body),
     }
 
     const _activeProfile = get(activeProfile)
     let endpoint: string = ''
     if (_activeProfile.isDeveloperProfile) {
-        endpoint = `${DEVELOP_BASE_URL}/v1/chains/${DEVELOP_CHAIN_ID}/callview`
+        endpoint = `${DEVELOP_BASE_URL}/migratable_balance/${legacyAddress}`
     } else {
-        endpoint = `${PRODUCTION_BASE_URL}/v1/chains/${PRODUCTION_CHAIN_ID}/callview`
+        endpoint = `${PRODUCTION_BASE_URL}/migratable_balance/${legacyAddress}`
     }
 
     let balance = 0
     try {
         const response = await fetch(endpoint, requestOptions)
-        const migrationData: { Items: { key: string; value: string }[] } = await response.json()
-        const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
-        balance = decodeUint64(binaryBalance)
+        const migrationData: { balance: string } = await response.json()
+        balance = parseInt(migrationData.balance, 10)
     } catch (error) {
         console.error('error', error)
     }
