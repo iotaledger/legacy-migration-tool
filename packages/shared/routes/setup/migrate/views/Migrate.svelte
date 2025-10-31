@@ -18,6 +18,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        sendRebasedMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
         updateMigrationLog,
@@ -33,6 +34,7 @@
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { addMigrationError } from '@lib/errors'
+    import { RebasedMigrationResponse } from 'shared/lib/typings/rebasedMigration'
 
     export let locale: Locale
 
@@ -143,11 +145,11 @@
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
                         prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
-                        return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
+                        return sendRebasedMigrationRequest(reverseTrytesSoftware, 0)
                     })
-                    .then((receipt) => {
+                    .then((response: RebasedMigrationResponse) => {
                         updateMigrationLog(get(migrationLog).length - 1, {
-                            requestData: JSON.stringify(receipt?.request),
+                            requestData: JSON.stringify(response),
                         })
                         totalMigratedBalance.set(migratableBalance)
                         loading = false
