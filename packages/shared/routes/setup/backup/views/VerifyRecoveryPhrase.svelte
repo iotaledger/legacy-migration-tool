@@ -50,7 +50,8 @@
     const dispatch = createEventDispatcher()
 
     function handleContinue() {
-        dispatch('next')
+        // skip the Backup to file step
+        dispatch('next', { skip: true })
     }
     function handleBackClick() {
         dispatch('previous')
