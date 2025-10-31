@@ -25,6 +25,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        sendRebasedMigrationRequest,
         totalMigratedBalance,
         unmigratedBundles,
         updateMigrationLog,
@@ -38,6 +39,7 @@
     import { Bundle } from '@lib/typings/migration'
     import { showAppNotification } from '@lib/notifications'
     import { addMigrationError } from '@lib/errors'
+    import { RebasedMigrationResponse } from '../../../../lib/typings/rebasedMigration'
 
     export let locale: Locale
 
@@ -277,11 +279,11 @@
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
                                           prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
-                                          return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
+                                          return sendRebasedMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
-                                      .then((receipt) => {
+                                      .then((response: RebasedMigrationResponse) => {
                                           updateMigrationLog(get(migrationLog).length - 1, {
-                                              requestData: JSON.stringify(receipt?.request),
+                                              requestData: JSON.stringify(response),
                                           })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
