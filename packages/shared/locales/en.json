@@ -2,7 +2,7 @@
     "views": {
         "onboarding1": {
             "title": "Welcome to IOTA Legacy Migration Tool",
-            "body": "This tool will help you migrate your data to be compatible with the Stardust protocol."
+            "body": "This tool will help you migrate your data to be compatible with the Rebased protocol."
         },
         "legal": {
             "title": "Privacy Policy & Terms of Service",
@@ -135,9 +135,9 @@
         },
         "import": {
             "title": "Migrate funds",
-            "body": "If you hold older network funds, you will be taken through the migration steps to move to the Stardust network.",
+            "body": "If you hold older network funds, you will be taken through the migration steps to move to the Rebased network.",
             "importSeed": "I have an 81 character seed",
-            "importSeedDescription": "Enter a seed and migrate funds to Stardust",
+            "importSeedDescription": "Enter a seed and migrate funds to Rebased network",
             "importMnemonic": "I have a Firefly recovery phrase",
             "importMnemonicDescription": "Enter your recovery phrase to recover your wallets",
             "importFile": "I have a file backup",
@@ -186,7 +186,7 @@
         },
         "legacyLedgerIntro": {
             "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
-            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Stardust network.",
+            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Rebased network.",
             "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly."
         },
         "generateNewLedgerAddress": {

@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
@@ -30,7 +29,6 @@
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { addMigrationError } from '@lib/errors'
@@ -44,15 +42,6 @@
     const { balance } = $data
 
     const migratableBalance = balance - $unselectedInputs.reduce((acc, input) => acc + input.balance, 0)
-
-    const fiatbalance = formatCurrency(
-        convertToFiat(
-            migratableBalance,
-            get(currencies)?.[CurrencyTypes.USD],
-            get(exchangeRates)?.[AvailableExchangeRates.USD]
-        ),
-        AvailableExchangeRates.USD
-    )
 
     let loading = false
 
@@ -217,7 +206,6 @@
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
         >
             <Text type="h2">{formatUnitBestMatch(migratableBalance, true)}</Text>
-            <Text type="p" highlighted classes="py-1 uppercase">{fiatbalance}</Text>
         </Box>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-7">

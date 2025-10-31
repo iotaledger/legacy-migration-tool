@@ -18,8 +18,9 @@
     import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { api, walletSetupType } from 'shared/lib/wallet'
-    import { MAINNET_EXPLORER, DEVNET_EXPLORER } from 'shared/lib/network'
+    import { getRebasedAddressUrl } from 'shared/lib/network'
     import { onMount } from 'svelte'
+    import { convertBech32AddressToEd25519Address } from '../../lib/ed25519'
 
     export let locale: Locale
 
@@ -96,8 +97,10 @@
     }
 
     function consultExplorerClick() {
-        const baseUrl = $activeProfile.isDeveloperProfile ? DEVNET_EXPLORER : MAINNET_EXPLORER
-        Platform.openUrl(`${baseUrl}/addr/${$migrationAddress.bech32}`)
+        const network = $activeProfile.isDeveloperProfile ? 'devnet' : 'mainnet'
+        const address = `0x${convertBech32AddressToEd25519Address($migrationAddress.bech32)}`
+        const url = getRebasedAddressUrl(address, network)
+        Platform.openUrl(url)
     }
 
     function migrateAnotherProfile(): void {
