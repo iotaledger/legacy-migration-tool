@@ -5,7 +5,6 @@
     import { getDefaultStrongholdName } from '@lib/utils'
     import { Animation, Button, Icon, OnboardingLayout, Text } from 'shared/components'
     import { cleanupSignup } from 'shared/lib/app'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import {
         resetMigrationState,
         totalMigratedBalance,
@@ -15,14 +14,12 @@
     import { showAppNotification } from 'shared/lib/notifications'
     import { Platform } from 'shared/lib/platform'
     import { activeProfile, updateProfile } from 'shared/lib/profile'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { LedgerAppName } from 'shared/lib/typings/ledger'
     import { SetupType } from 'shared/lib/typings/setup'
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { api, walletSetupType } from 'shared/lib/wallet'
     import { MAINNET_EXPLORER, DEVNET_EXPLORER } from 'shared/lib/network'
     import { onMount } from 'svelte'
-    import { get } from 'svelte/store'
 
     export let locale: Locale
 
@@ -30,17 +27,6 @@
     let localizedValues = {}
 
     let exportStrongholdBusy = false
-
-    $: isLedgerProfile = $walletSetupType === SetupType.TrinityLedger
-    $: fiatBalance = formatCurrency(
-        convertToFiat(
-            // Only show actually migrated balance to user
-            $totalMigratedBalance,
-            get(currencies)?.[CurrencyTypes.USD],
-            get(exchangeRates)?.[AvailableExchangeRates.USD]
-        ),
-        AvailableExchangeRates.USD
-    )
 
     onMount(() => {
         if ($walletSetupType === SetupType.TrinityLedger) {
@@ -133,7 +119,6 @@
                 {locale(`views.congratulations.${localizedBody}`, { values: localizedValues })}
             </Text>
             <Text type="h2">{formatUnitBestMatch($totalMigratedBalance, true)}</Text>
-            <Text type="p" highlighted classes="py-1 uppercase">{fiatBalance}</Text>
         </div>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-4">
@@ -149,11 +134,6 @@
         >
             {locale('views.congratulations.migrateAnotherProfile')}
         </Button>
-        {#if !isLedgerProfile}
-            <Button icon="export" classes="w-full" secondary onClick={exportStronghold} disabled={exportStrongholdBusy}>
-                {locale('views.congratulations.exportStronghold')}
-            </Button>
-        {/if}
         <Button classes="w-full" onClick={exportMigrationLog}>
             {locale('views.congratulations.exportMigration')}
         </Button>
