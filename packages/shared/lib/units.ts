@@ -28,7 +28,7 @@ export const MAX_NUM_IOTAS = 2_779_530_283_277_761
  * @returns {string}
  */
 export const formatUnitBestMatch = (value: number, includeUnits: boolean = true): string =>
-    formatUnitPrecision(value, getUnit(value), includeUnits, false)
+    formatUnitPrecision(value, getUnit(value), includeUnits, true)
 
 /**
  * Format a value with the provided value precision
