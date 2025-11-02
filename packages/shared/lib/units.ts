@@ -3,10 +3,10 @@ import { getCurrencyPosition, formatNumber } from 'shared/lib/currency'
 
 export enum Unit {
     iota = 'IOTA',
-    micro = 'micro',
+    nano = 'nano',
 }
 
-export const IOTA_DECIMALS = 6
+export const IOTA_DECIMALS = 9
 export const IOTA_VALUE = 10 ** IOTA_DECIMALS
 
 // Set this to avoid small numbers switching to exponential format
@@ -52,9 +52,9 @@ export function formatUnitPrecision(
         return includeUnits ? (currencyPosition === 'left' ? `0 ${unit}` : `0 ${unit}`) : '0'
     }
 
-    const converted = changeUnits(valueRaw, Unit.micro, unit)
+    const converted = changeUnits(valueRaw, Unit.nano, unit)
 
-    const formatted = formatNumber(converted, 0, unit === Unit.micro ? 0 : IOTA_DECIMALS, 0, grouped)
+    const formatted = formatNumber(converted, 0, unit === Unit.nano ? 0 : IOTA_DECIMALS, 0, grouped)
 
     if (includeUnits) {
         return currencyPosition === 'left' ? `${formatted} ${unit}` : `${formatted} ${unit}`
@@ -76,12 +76,12 @@ const getUnit = (value: number): Unit => {
     let bestUnits: Unit = Unit.iota
 
     if (!value || value === 0) {
-        return Unit.micro
+        return Unit.nano
     }
 
     const checkLength = Math.abs(value).toString().length
     if (checkLength <= IOTA_DECIMALS) {
-        bestUnits = Unit.micro
+        bestUnits = Unit.nano
     }
 
     return bestUnits
@@ -104,5 +104,5 @@ export const changeUnits = (value: number, fromUnit: Unit, toUnit: Unit): number
     }
 
     const scaledValue = Number(new Big(value).div(IOTA_VALUE))
-    return toUnit === Unit.micro ? Math.round(scaledValue) : scaledValue
+    return toUnit === Unit.nano ? Math.round(scaledValue) : scaledValue
 }

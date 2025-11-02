@@ -56,7 +56,7 @@
         if (amount.length > 0) {
             if (!isFiatCurrency(unit)) {
                 const amountAsFloat = parseCurrency(amount)
-                const rawAmount = changeUnits(Number.isNaN(amountAsFloat) ? 0 : amountAsFloat, unit as Unit, Unit.micro)
+                const rawAmount = changeUnits(Number.isNaN(amountAsFloat) ? 0 : amountAsFloat, unit as Unit, Unit.nano)
                 if (rawAmount > MAX_NUM_IOTAS) {
                     amount = formatUnitPrecision(MAX_NUM_IOTAS, unit as Unit, false)
                 }
@@ -79,7 +79,7 @@
         if (isFiatCurrency(unit)) return _amount
 
         const _convert = (amountAsFloat) => {
-            const rawAmount = changeUnits(amountAsFloat, unit as Unit, Unit.micro)
+            const rawAmount = changeUnits(amountAsFloat, unit as Unit, Unit.nano)
             const fiatAmount = convertToFiat(rawAmount, $currencies[CurrencyTypes.USD], $exchangeRates[currency])
 
             return fiatAmount === 0
@@ -192,8 +192,8 @@
         {disabled}
         {autofocus}
         maxDecimals={getMaxDecimals(unit)}
-        integer={unit === Unit.micro}
-        float={unit !== Unit.micro}
+        integer={unit === Unit.nano}
+        float={unit !== Unit.nano}
         style={showDropdown ? 'border-bottom-right-radius: 0' : ''}
         isFocused={showDropdown}
     />
