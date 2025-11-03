@@ -114,7 +114,7 @@ export class AppRouter extends Router<AppRoute> {
                 if (get(walletSetupType) === SetupType.TrinityLedger) {
                     nextRoute = AppRoute.Migrate
                 } else {
-                    nextRoute = AppRoute.Password
+                    nextRoute = AppRoute.Backup
                 }
                 break
             case AppRoute.Migrate:
