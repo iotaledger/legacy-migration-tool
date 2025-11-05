@@ -72,6 +72,10 @@ const rendererRules = [
         exclude: /node_modules/,
     },
     {
+        test: /\.json$/,
+        loader: 'json-loader',
+    },
+    {
         test: /\.svelte$/,
         use: {
             loader: 'svelte-loader',
