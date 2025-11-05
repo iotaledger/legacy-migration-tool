@@ -33,10 +33,7 @@ const resolve = {
     extensions: ['.mjs', '.js', '.ts', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main'],
     fallback: {
-        path: require.resolve('path-browserify'),
-        crypto: require.resolve('crypto-browserify'),
-        stream: require.resolve('stream-browserify'),
-        vm: require.resolve('vm-browserify'),
+        path: false,
         fs: false,
     },
     plugins: [new TsconfigPathsPlugin(tsConfigOptions)],
@@ -73,6 +70,10 @@ const rendererRules = [
         test: /\.ts$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
+    },
+    {
+        test: /\.json$/,
+        loader: 'json-loader',
     },
     {
         test: /\.svelte$/,
