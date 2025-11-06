@@ -400,7 +400,6 @@ export const prepareMigrationLog = (trytes: string[], balance: number, bundleHas
             timestamp: new Date().toISOString(),
             trytes,
             depositAddress: JSON.stringify(get(migrationAddress), null, 2),
-            rebasedDepositAddress: `0x${convertBech32AddressToEd25519Address(get(migrationAddress)?.bech32 || '')}`,
             balance,
         },
     ])
@@ -933,7 +932,7 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
     const transfers = [
         {
             value: totalBalance,
-            address: removeAddressChecksum(migrationAddress.trytes),
+            address: migrationAddress.trytes,
         },
     ]
 
