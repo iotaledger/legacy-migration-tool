@@ -32,12 +32,6 @@ export class BackupRouter extends Subrouter<BackupRoute> {
                 break
 
             case BackupRoute.Verify:
-                if (event?.skip) {
-                    await asyncStoreMnemonic(get(mnemonic).join(' '))
-                    await asyncCreateAccount()
-                    get(appRouter).next(event) // Navigate to the next step after skipping Backup
-                    return
-                }
                 nextRoute = BackupRoute.Backup
                 break
 

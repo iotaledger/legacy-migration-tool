@@ -146,7 +146,7 @@
             "info": {
                 "title": "Address Format",
                 "description": "IOTA rebased addresses are 32-byte addresses that start with '0x' followed by 64 hexadecimal characters.",
-                "example": "Example address:",
+                "example": "Example address:"
             }
         },
         "congratulations": {

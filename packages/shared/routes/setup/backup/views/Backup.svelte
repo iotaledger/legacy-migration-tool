@@ -1,14 +1,10 @@
 <script lang="typescript">
     import { Animation, Button, OnboardingLayout, Text } from 'shared/components'
-    import { createEventDispatcher, onMount } from 'svelte'
+    import { createEventDispatcher } from 'svelte'
     import { Locale } from '@core/i18n'
-    import { strongholdPassword } from 'shared/lib/app'
-    import { asyncSetStrongholdPassword, asyncChangeStrongholdPassword } from 'shared/lib/wallet'
 
     export let locale: Locale
     export let busy
-
-    const existingPassword = $strongholdPassword
 
     const dispatch = createEventDispatcher()
 
@@ -18,15 +14,6 @@
     function handleBackClick() {
         dispatch('previous')
     }
-    onMount(async () => {
-        const password = Math.random().toString(36).slice(-8)
-        if (existingPassword) {
-            await asyncChangeStrongholdPassword(existingPassword, password)
-        } else {
-            await asyncSetStrongholdPassword(password)
-        }
-        strongholdPassword.set(password)
-    })
 </script>
 
 <OnboardingLayout onBackClick={handleBackClick} {busy}>
