@@ -121,6 +121,34 @@
             "title": "Successfully backed up",
             "body": "You have backed up your wallets to a Stronghold."
         },
+        "rebasedAddress": {
+            "title": "Enter Your IOTA Rebased Address",
+            "description": "To migrate your funds, you'll need your IOTA rebased address. This is where your migrated tokens will be sent on the new network.",
+            "placeholder": "0x...",
+            "error": {
+                "addressRequired": "Address is required",
+                "invalidAddress": "Please enter a valid IOTA rebased address"
+            },
+            "howTo": {
+                "title": "How to Get Your IOTA Rebased Address",
+                "description": "You can get your rebased address from any IOTA wallet that supports the new network:",
+                "steps": {
+                    "step1": "1. Install the official IOTA Wallet browser extension",
+                    "step2": "2. Create a new wallet or import your existing one",
+                    "step3": "3. Navigate to the 'Home' tab in your wallet",
+                    "step4": "4. Look for your wallet address (starts with '0x')",
+                    "step5": "5. Click to copy your address and paste it here"
+                },
+                "walletGuide": "Need help setting up an IOTA wallet?",
+                "guideLink": "View the official IOTA wallet guide",
+                "alternativeWallets": "You can also use other IOTA-compatible wallets like Nightly or Cosmostation."
+            },
+            "info": {
+                "title": "Address Format",
+                "description": "IOTA rebased addresses are 32-byte addresses that start with '0x' followed by 64 hexadecimal characters.",
+                "example": "Example address:",
+            }
+        },
         "congratulations": {
             "title": "Wallet migration completed",
             "fundsMigrated": "Funds migrated",

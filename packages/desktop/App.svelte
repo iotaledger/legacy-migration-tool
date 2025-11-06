@@ -20,6 +20,7 @@
         Legal,
         Migrate,
         Password,
+        RebasedAddress,
         Protect,
         Secure,
         Setup,
@@ -115,6 +116,9 @@
         </Route>
         <Route route={AppRoute.Password}>
             <Password locale={$_} />
+        </Route>
+        <Route route={AppRoute.RebasedAddress}>
+            <RebasedAddress locale={$_} />
         </Route>
         <Route route={AppRoute.Protect} transition={false}>
             <Protect locale={$_} />

@@ -8,6 +8,7 @@ export enum AppRoute {
     Create = 'create',
     Secure = 'secure',
     Password = 'password',
+    RebasedAddress = 'rebasedAddress',
     LedgerSetup = 'ledgerSetup',
     Protect = 'protect',
     Backup = 'backup',

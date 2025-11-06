@@ -20,14 +20,13 @@
     import { api, walletSetupType } from 'shared/lib/wallet'
     import { getRebasedAddressUrl } from 'shared/lib/network'
     import { onMount } from 'svelte'
-    import { convertBech32AddressToEd25519Address } from '../../lib/ed25519'
 
     export let locale: Locale
 
     let localizedBody = 'body'
     let localizedValues = {}
 
-    let exportStrongholdBusy = false
+    const exportStrongholdBusy = false
 
     onMount(() => {
         if ($walletSetupType === SetupType.TrinityLedger) {
@@ -39,67 +38,9 @@
         }
     })
 
-    function exportStronghold(): void {
-        function onPasswordSuccess(password: string, callback?: (cancelled: boolean, err?: string) => void): void {
-            Platform.getStrongholdBackupDestination(getDefaultStrongholdName())
-                .then((result) => {
-                    if (result) {
-                        Platform.saveStrongholdBackup({ allowAccess: true })
-                        api.backup(result, password, {
-                            onSuccess() {
-                                Platform.saveStrongholdBackup({ allowAccess: false })
-                                updateProfile('lastStrongholdBackupTime', new Date())
-                                callback(false)
-                                _finally()
-                            },
-                            onError(err) {
-                                callback(false, err.error)
-                                _finally()
-                            },
-                        })
-                    } else {
-                        callback(true)
-                    }
-                })
-                .catch((err) => {
-                    callback(false, err.error)
-                    _finally()
-                })
-        }
-        function _callback(cancelled, err): void {
-            if (!cancelled) {
-                if (err) {
-                    showAppNotification({
-                        type: 'error',
-                        message: localize(err),
-                    })
-                    _finally()
-                }
-            }
-        }
-        function _finally(): void {
-            exportStrongholdBusy = false
-        }
-
-        exportStrongholdBusy = true
-        openPopup({
-            type: 'password',
-            props: {
-                onSuccess: (password) => {
-                    onPasswordSuccess(password, _callback)
-                },
-                onError: _finally,
-                onCancelled: _finally,
-                returnPassword: true,
-                subtitle: localize('popups.password.backup'),
-            },
-        })
-    }
-
     function consultExplorerClick() {
         const network = $activeProfile.isDeveloperProfile ? 'devnet' : 'mainnet'
-        const address = `0x${convertBech32AddressToEd25519Address($migrationAddress.bech32)}`
-        const url = getRebasedAddressUrl(address, network)
+        const url = getRebasedAddressUrl($migrationAddress.ed25519, network)
         Platform.openUrl(url)
     }
 

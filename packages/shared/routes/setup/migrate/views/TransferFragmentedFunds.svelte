@@ -15,7 +15,6 @@
         createLedgerMigrationBundle,
         createMigrationBundle,
         exportMigrationLog,
-        generateMigrationAddress,
         hardwareIndexes,
         hasMigratedAndConfirmedAllSelectedBundles,
         hasMigratedAndConfirmedSomeSelectedBundles,
@@ -175,16 +174,12 @@
         newProfile.set(null)
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!get(migrationAddress)) {
-            try {
-                migrationAddress.set(await generateMigrationAddress(legacyLedger))
-            } catch (error) {
-                showAppNotification({
-                    type: 'error',
-                    message: error.error || 'Error generating migration address',
-                })
-            }
+            showAppNotification({
+                type: 'error',
+                message: 'Error getting migration address',
+            })
         }
     })
 
@@ -345,6 +340,14 @@
             <Text type="p" secondary classes="mb-4">
                 {locale('views.transferFragmentedFunds.body2', { values: { legacy: LedgerAppName.IOTALegacy } })}
             </Text>
+        {/if}
+        {#if $migrationAddress?.ed25519}
+            <div
+                class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+                <Text type="p" secondary classes="text-xs mb-2">Migration Address:</Text>
+                <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
+            </div>
         {/if}
         <div class="flex-auto overflow-y-auto h-1 space-y-4 w-full scrollable-y scroll-secondary">
             {#each transactions as transaction}

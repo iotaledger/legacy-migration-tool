@@ -8,7 +8,6 @@
         createLedgerMigrationBundle,
         createMigrationBundle,
         exportMigrationLog,
-        generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
@@ -171,21 +170,16 @@
         }
     }
 
-    // TODO: complete function functionality
     function learnAboutMigrationsClick() {
         Platform.openUrl('https://blog.iota.org/iota-legacy-migration-tool/')
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!get(migrationAddress)) {
-            try {
-                migrationAddress.set(await generateMigrationAddress(legacyLedger))
-            } catch (error) {
-                showAppNotification({
-                    type: 'error',
-                    message: error.error || 'Error generating migration address',
-                })
-            }
+            showAppNotification({
+                type: 'error',
+                message: 'Error getting migration address',
+            })
         }
     })
 
@@ -201,6 +195,16 @@
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
+
+        {#if $migrationAddress?.ed25519}
+            <div
+                class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+                <Text type="p" secondary classes="text-xs mb-2">Migration Address:</Text>
+                <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
+            </div>
+        {/if}
+
         <Text type="p" secondary highlighted classes="mb-8 font-bold">{locale('views.migrate.body2')}</Text>
         <Box
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
