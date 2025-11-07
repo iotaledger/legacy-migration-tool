@@ -3,15 +3,13 @@
     import {
         getLedgerDeviceStatus,
         ledgerDeviceState,
-        ledgerSimulator,
         displayNotificationForLedgerProfile,
         pollLedgerDeviceStatus,
         stopPollingLedgerStatus,
     } from 'shared/lib/ledger'
-    import { getDefaultClientOptions } from 'shared/lib/network'
     import { openPopup } from 'shared/lib/popup'
     import { LedgerDeviceState } from 'shared/lib/typings/ledger'
-    import { api, walletSetupType } from 'shared/lib/wallet'
+    import { walletSetupType } from 'shared/lib/wallet'
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { Locale } from '@core/i18n'
     import { SetupType } from 'shared/lib/typings/setup'
@@ -22,9 +20,6 @@
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
 
-    // const newLedgerProfile = $walletSetupType === SetupType.New
-    console.log("Current wallet setup type:", $walletSetupType, legacyLedger)
-    console.log("Current wallet setup ledgerSimulator:", ledgerSimulator)
     let creatingAccount = false
 
     const LEDGER_STATUS_POLL_INTERVAL = 1500
@@ -34,7 +29,6 @@
 
     $: isConnected = $ledgerDeviceState !== LedgerDeviceState.NotDetected
     $: isAppOpen = $ledgerDeviceState === LedgerDeviceState.LegacyConnected
-    console.log("Ledger device status Connect:", $ledgerDeviceState, isConnected, isAppOpen)
     $: animation = !isConnected
         ? 'ledger-disconnected-desktop'
         : isAppOpen
@@ -49,32 +43,6 @@
     })
 
     onDestroy(stopPollingLedgerStatus)
-
-    function createAccount() {
-        creatingAccount = true
-
-        api.createAccount(
-            {
-                clientOptions: getDefaultClientOptions(),
-                alias: `${locale('general.account')} 1`,
-                signerType: { type: ledgerSimulator ? 'LedgerNanoSimulator' : 'LedgerNano' },
-            },
-            {
-                onSuccess() {
-                    creatingAccount = false
-
-                    dispatch('next')
-                },
-                onError(error) {
-                    creatingAccount = false
-
-                    console.error(error)
-
-                    displayNotificationForLedgerProfile('error', true, true, false, false, error)
-                },
-            }
-        )
-    }
 
     function handleGuidePopup() {
         openPopup({

@@ -454,17 +454,14 @@ export const getLedgerMigrationData = async (
     callback: () => void,
     initialAddressIndex: number = 0
 ): Promise<unknown> => {
-    console.log(`[getLedgerMigrationData] Initial Address Index: ${initialAddressIndex}`)
     const _get = async (addresses: AddressInput[]): Promise<MigrationData> => {
         let totalBalance = 0
         const inputs: Input[] = []
         const { lastCheckedAddressIndex } = get(get(migration).data)
-        console.log(`[getLedgerMigrationData] in _get Last Checked Address Index: ${lastCheckedAddressIndex}`)
+
         for (let index = 0; index < addresses.length; index++) {
             const legacyAddress = addresses[index]
-            console.log(`Legacy Address: ${legacyAddress}`)
             const balance = await fetchMigratableBalance(legacyAddress.address)
-            console.log(`Legacy Address: ${legacyAddress.address}, Balance: ${balance}`)
             totalBalance += balance
             if (balance > 0) {
                 inputs.push({
@@ -489,38 +486,25 @@ export const getLedgerMigrationData = async (
     }
 
     const _generate = () => {
-        const { data, seed } = get(migration)
-        if (!getAddressFn || typeof getAddressFn !== 'function') {
-        throw new Error('getAddressFn is required and must be a function')
-    } else{
-        console.log(`[getLedgerMigrationData] getAddressFn: ${getAddressFn}`)
-    }
-        console.log(`[getLedgerMigrationData] Generating addresses`)
+        const { data } = get(migration)
+
         return Array.from(Array(HARDWARE_ADDRESS_GAP), (_, i) => i).reduce((promise, index) => {
             let idx = 0
             const { lastCheckedAddressIndex } = get(data)
-            console.log(`[getLedgerMigrationData] Last Checked Address Index: ${lastCheckedAddressIndex}`,  get(data), get(seed), get(migration))
             if (lastCheckedAddressIndex === 0) {
                 idx = index + lastCheckedAddressIndex
             } else {
                 idx = index + lastCheckedAddressIndex + 1
             }
-            console.log(`[getLedgerMigrationData] Generating Address: ${idx}`)
-            return promise.then((acc) => getAddressFn(idx).then((address) => {
-                console.log(`Generated address at index ${idx}:`, address)
-                return acc.concat({ address, index: idx })
-            }))
+            return promise.then((acc) => getAddressFn(idx).then((address) => acc.concat({ address, index: idx })))
         }, Promise.resolve([]))
     }
 
     const _process = () =>
         _generate()
-            .then((addresses) => {
-                console.log(`[getLedgerMigrationData] Generated Addresses:`, addresses)
-                return _get(addresses)})
+            .then((addresses) => _get(addresses))
             /* eslint-disable @typescript-eslint/no-explicit-any */
             .then((response: any) => {
-                console.log(`[getLedgerMigrationData] _process Response:`, response)
                 const { data } = get(migration)
 
                 if (initialAddressIndex === 0) {

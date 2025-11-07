@@ -88,11 +88,11 @@
                                 trytes: reverseTrytesLedger,
                                 bundleHash,
                             })
-                            return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
+                            return sendRebasedMigrationRequest(reverseTrytesLedger, 0)
                         })
-                        .then((receipt) => {
+                        .then((response: RebasedMigrationResponse) => {
                             updateMigrationLog(get(migrationLog).length - 1, {
-                                requestData: JSON.stringify(receipt?.request),
+                                requestData: JSON.stringify(response),
                             })
                             totalMigratedBalance.set(migratableBalance)
                             loading = false
