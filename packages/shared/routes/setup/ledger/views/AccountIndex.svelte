@@ -57,25 +57,32 @@
 
     function handleContinueClick() {
         busy = true
+        console.log(`Account index: ${index}, Account page: ${page}`)
         const _onConnected = () => {
             infoTimeout = setTimeout(() => (showInfo = true), 180000)
             Platform.ledger
                 .selectSeed(index, page, ADDRESS_SECURITY_LEVEL)
-                .then(({ iota, callback }) => getLedgerMigrationData(iota.getAddress, callback))
+                .then(({ iota, callback }) =>{ console.log(`IOTA Instance: ${JSON.stringify(iota, null, 2)}, GETADDRESS:`, JSON.stringify(iota.getAddress(), null, 2))
+                    getLedgerMigrationData(iota.getAddress, callback)})
                 .then((data) => {
                     busy = false
-
+                    console.log(`Migration Data: ${JSON.stringify(data)}`)
                     hardwareIndexes.update((_indexes) =>
                         Object.assign({}, _indexes, { accountIndex: index, pageIndex: page })
                     )
                     dispatch('next', { balance: data.balance })
                 })
                 .catch((error) => {
+                    console.log(`Error: ${error}`)
                     busy = false
                     displayNotificationForLedgerProfile('error', true, true, false, true, error)
                     showInfo = false
                     clearTimeout(infoTimeout)
-                    console.error(error)
+                    console.error(error)    
+                })
+                .finally(() => {
+                    console.log(`Ledger device status FINALY:`)
+                    busy = false
                 })
         }
         const _onCancel = () => (busy = false)

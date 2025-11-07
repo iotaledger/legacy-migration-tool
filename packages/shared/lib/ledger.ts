@@ -22,7 +22,7 @@ const LEGACY_ADDRESS_WITH_CHECKSUM_LENGTH = 90
 
 let intervalTimer
 
-export const ledgerSimulator = false
+export const ledgerSimulator = true
 export const ledgerDeviceState = writable<LedgerDeviceState>(LedgerDeviceState.NotDetected)
 export const isLedgerLegacyConnected = writable<boolean>(false)
 
@@ -34,12 +34,14 @@ export function getLedgerDeviceStatus(
 ): void {
     api.getLedgerDeviceStatus(ledgerSimulator, {
         onSuccess(response: Event<LedgerStatus>) {
+            console.log(`Ledger device status: ${JSON.stringify(response.payload)}`)
             ledgerDeviceState.set(calculateLedgerDeviceState(response.payload))
-
+            console.log(`Ledger device state: ${calculateLedgerDeviceState(response.payload)}`)
             const state = get(ledgerDeviceState)
             const isConnected =
                 (legacy && state === LedgerDeviceState.LegacyConnected) ||
                 (!legacy && state === LedgerDeviceState.Connected)
+                console.log(`Ledger device isConnected: ${isConnected}`)
             if (isConnected) {
                 if (get(popupState).active && get(popupState).type === 'ledgerNotConnected') {
                     closePopup()
@@ -113,6 +115,7 @@ export function promptUserToConnectLedger(
     }
     const _onDisconnected = () => {
         if (!get(popupState).active || overridePopup) {
+            console.log(`Ledger disconnected`)
             openLedgerNotConnectedPopup(
                 legacy,
                 onCancel,
@@ -260,6 +263,8 @@ export function getLegacyErrorMessage(error: { name; statusCode }, shouldLocaliz
         case LegacyLedgerErrorName.DisconnectedDeviceDuringOperation:
             errorMessage = 'error.ledger.disconnected'
             break
+        default:
+            errorMessage = error.name
     }
 
     return shouldLocalize ? localize(errorMessage) : errorMessage

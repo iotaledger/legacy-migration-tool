@@ -22,7 +22,9 @@
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
 
-    const newLedgerProfile = $walletSetupType === SetupType.New
+    // const newLedgerProfile = $walletSetupType === SetupType.New
+    console.log("Current wallet setup type:", $walletSetupType, legacyLedger)
+    console.log("Current wallet setup ledgerSimulator:", ledgerSimulator)
     let creatingAccount = false
 
     const LEDGER_STATUS_POLL_INTERVAL = 1500
@@ -31,8 +33,8 @@
     let isAppOpen = false
 
     $: isConnected = $ledgerDeviceState !== LedgerDeviceState.NotDetected
-    $: isAppOpen = $ledgerDeviceState === LedgerDeviceState.Connected
-
+    $: isAppOpen = $ledgerDeviceState === LedgerDeviceState.LegacyConnected
+    console.log("Ledger device status Connect:", $ledgerDeviceState, isConnected, isAppOpen)
     $: animation = !isConnected
         ? 'ledger-disconnected-desktop'
         : isAppOpen
@@ -42,7 +44,7 @@
     const dispatch = createEventDispatcher()
 
     onMount(() => {
-        pollLedgerDeviceStatus(false, LEDGER_STATUS_POLL_INTERVAL)
+        pollLedgerDeviceStatus(true, LEDGER_STATUS_POLL_INTERVAL)
         polling = true
     })
 
@@ -81,23 +83,17 @@
     }
 
     function handleContinueClick() {
-        creatingAccount = true
+        const _onCancel = () => {
+            creatingAccount = false
 
-        if (newLedgerProfile) {
-            createAccount()
-        } else {
-            const _onCancel = () => {
-                creatingAccount = false
-
-                displayNotificationForLedgerProfile('error', true)
-            }
-            const _onConnected = () => {
-                if ($ledgerDeviceState !== LedgerDeviceState.Connected) _onCancel()
-                else dispatch('next')
-            }
-
-            getLedgerDeviceStatus(false, _onConnected, _onCancel, _onCancel)
+            displayNotificationForLedgerProfile('error', true, true, true, true)
         }
+        const _onConnected = () => {
+            if ($ledgerDeviceState !== LedgerDeviceState.LegacyConnected) _onCancel()
+            else dispatch('next')
+        }
+
+        getLedgerDeviceStatus(true, _onConnected, _onCancel, _onCancel)
     }
 
     function handleBackClick() {

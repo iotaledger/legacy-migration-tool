@@ -32,7 +32,7 @@ export class LedgerRouter extends Subrouter<LedgerRoute> {
         let nextRoute: LedgerRoute
         const currentRoute = get(this.routeStore)
         const setupType = get(walletSetupType)
-
+        console.log('Current Route:', currentRoute)
         switch (currentRoute) {
             case LedgerRoute.Connect:
                 if (setupType === SetupType.New) {
@@ -40,7 +40,7 @@ export class LedgerRouter extends Subrouter<LedgerRoute> {
                 } else if (setupType === SetupType.FireflyLedger) {
                     nextRoute = LedgerRoute.RestoreFromLedger
                 } else if (setupType === SetupType.TrinityLedger) {
-                    nextRoute = LedgerRoute.GenerateAddress
+                    nextRoute = LedgerRoute.AccountIndex
                 }
                 break
             case LedgerRoute.RestoreFromLedger:

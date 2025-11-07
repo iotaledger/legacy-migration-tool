@@ -104,18 +104,18 @@ export class AppRouter extends Router<AppRoute> {
                 break
             }
             case AppRoute.Balance:
-                if (get(walletSetupType) === SetupType.TrinityLedger) {
-                    nextRoute = AppRoute.Migrate
-                } else {
+                // if (get(walletSetupType) === SetupType.TrinityLedger) {
+                //     nextRoute = AppRoute.Migrate
+                // } else {
                     nextRoute = AppRoute.RebasedAddress
-                }
+                // }
                 break
             case AppRoute.RebasedAddress:
-                if (get(walletSetupType) === SetupType.Seed || get(walletSetupType) === SetupType.Seedvault) {
+                // if (get(walletSetupType) === SetupType.Seed || get(walletSetupType) === SetupType.Seedvault) {
                     nextRoute = AppRoute.Migrate
-                } else {
-                    nextRoute = AppRoute.Congratulations
-                }
+                // } else {
+                //     nextRoute = AppRoute.Congratulations
+                // }
                 break
             case AppRoute.Migrate:
                 nextRoute = AppRoute.Congratulations
