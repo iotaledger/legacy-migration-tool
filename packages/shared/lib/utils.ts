@@ -580,3 +580,11 @@ export function decodeUint64(bytes: Uint8Array): number {
     }
     return result
 }
+
+export function isHex(value: string): boolean {
+    return /^(0x|0X)?[a-fA-F0-9]+$/.test(value) && value.length % 2 === 0
+}
+
+export function getHexByteLength(value: string): number {
+    return /^(0x|0X)/.test(value) ? (value.length - 2) / 2 : value.length / 2
+}

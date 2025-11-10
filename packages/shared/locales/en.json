@@ -127,7 +127,8 @@
             "placeholder": "0x...",
             "error": {
                 "addressRequired": "Address is required",
-                "invalidAddress": "Please enter a valid IOTA rebased address"
+                "invalidAddress": "Please enter a valid IOTA rebased address",
+                "exampleAddress": "Please enter your own address, not the example address"
             },
             "howTo": {
                 "title": "How to Get Your IOTA Rebased Address",

@@ -1,9 +1,10 @@
 <script lang="typescript">
     import { Button, Input, OnboardingLayout, Text } from 'shared/components'
     import { appRouter } from '@core/router'
-    import { migrationAddress } from '../../lib/migration'
-    import { ed25519HexToTernary } from '../../lib/ed25519'
+    import { migrationAddress } from 'shared/lib/migration'
+    import { ed25519HexToTernary } from 'shared/lib/ed25519'
     import { Platform } from 'shared/lib/platform'
+    import { isValidIotaAddress } from 'shared/lib/address'
 
     export let locale
     export let busy = false
@@ -12,29 +13,25 @@
     let error = ''
 
     const IOTA_WALLET_GUIDE_URL = 'https://wiki.iota.org/get-started/wallets'
-    const IOTA_ADDRESS_LENGTH = 32
+    const EXAMPLE_ADDRESS = '0x7ad1aee6262b8823aa74177692d917f2603c30587df6916f666eeb692f22b38d'
 
-    function isHex(value: string): boolean {
-        return /^(0x|0X)?[a-fA-F0-9]+$/.test(value) && value.length % 2 === 0
-    }
-
-    function getHexByteLength(value: string): number {
-        return /^(0x|0X)/.test(value) ? (value.length - 2) / 2 : value.length / 2
-    }
-
-    function isValidIotaAddress(value: string): boolean {
-        return isHex(value) && getHexByteLength(value) === IOTA_ADDRESS_LENGTH
-    }
-
-    $: {
-        if (!rebasedAddress) {
-            error = ''
-        } else if (!isValidIotaAddress(rebasedAddress)) {
-            error = locale('views.rebasedAddress.error.invalidAddress')
-        } else {
-            error = ''
+    function validateAddress(address: string): string {
+        if (!address) {
+            return ''
         }
+
+        if (address.toLowerCase() === EXAMPLE_ADDRESS.toLowerCase()) {
+            return locale('views.rebasedAddress.error.exampleAddress')
+        }
+
+        if (!isValidIotaAddress(address)) {
+            return locale('views.rebasedAddress.error.invalidAddress')
+        }
+
+        return ''
     }
+
+    $: error = validateAddress(rebasedAddress)
 
     function handleContinue() {
         if (!rebasedAddress) {
@@ -42,8 +39,10 @@
             return
         }
 
-        if (!isValidIotaAddress(rebasedAddress)) {
-            error = locale('views.rebasedAddress.error.invalidAddress')
+        // Validate one more time in case of any edge cases
+        const validationError = validateAddress(rebasedAddress)
+        if (validationError) {
+            error = validationError
             return
         }
 
@@ -138,7 +137,7 @@
                         secondary
                         classes="bg-white dark:bg-gray-800 rounded-lg p-3 text-xs break-all border text-xs"
                     >
-                        0x7ad1aee6262b8823aa74177692d917f2603c30587df6916f666eeb692f22b38d
+                        {EXAMPLE_ADDRESS}
                     </Text>
                 </div>
             </div>
