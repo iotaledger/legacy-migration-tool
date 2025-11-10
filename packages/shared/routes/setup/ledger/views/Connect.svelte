@@ -8,7 +8,7 @@
         stopPollingLedgerStatus,
     } from 'shared/lib/ledger'
     import { openPopup } from 'shared/lib/popup'
-    import { LedgerDeviceState } from 'shared/lib/typings/ledger'
+    import { LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
     import { walletSetupType } from 'shared/lib/wallet'
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { Locale } from '@core/i18n'
@@ -69,12 +69,7 @@
     }
 </script>
 
-<OnboardingLayout
-    onBackClick={handleBackClick}
-    {locale}
-    showLedgerProgress={legacyLedger}
-    showLedgerVideoButton={legacyLedger}
->
+<OnboardingLayout onBackClick={handleBackClick} {locale} showLedgerVideoButton={legacyLedger}>
     <div slot="leftpane__content">
         <Text type="h2" classes="mb-5">{locale('views.connectLedger.title')}</Text>
         <Text type="p" secondary classes="mb-5">{locale('views.connectLedger.body')}</Text>
@@ -91,7 +86,11 @@
                     icon={`status-${isAppOpen ? 'success' : 'error'}`}
                     classes={`text-white bg-${isAppOpen ? 'green' : 'red'}-600 rounded-full`}
                 />
-                <Text type="p" secondary>{locale('views.connectLedger.trafficLight2')}</Text>
+                <Text type="p" secondary
+                    >{locale('views.connectLedger.trafficLight2', {
+                        values: { legacy: LedgerAppName.IOTALegacy },
+                    })}</Text
+                >
             </div>
         </div>
     </div>

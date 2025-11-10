@@ -189,7 +189,7 @@
     })
 </script>
 
-<OnboardingLayout allowBack={false} {locale} showLedgerProgress={legacyLedger} showLedgerVideoButton={legacyLedger}>
+<OnboardingLayout allowBack={false} {locale} showLedgerVideoButton={legacyLedger}>
     <div slot="title">
         <Text on:click={() => learnAboutMigrationsClick()} type="h2">{locale('views.migrate.title')}</Text>
     </div>

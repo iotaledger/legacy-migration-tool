@@ -328,7 +328,6 @@
     {locale}
     onBackClick={handleBackClick}
     class=""
-    showLedgerProgress={legacyLedger}
     showLedgerVideoButton={legacyLedger}
 >
     <div slot="title">
