@@ -15,7 +15,6 @@
         migrationAddress,
         migrationLog,
         prepareMigrationLog,
-        sendOffLedgerMigrationRequest,
         sendRebasedMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
@@ -247,6 +246,11 @@
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
         {#if hasError}
+            <div class="rounded-lg border-2 border-red-500 bg-red-50 dark:bg-red-900 dark:bg-opacity-20 p-6 space-y-3">
+                <Text error secondary classes="text-center">
+                    {locale('views.migrate.errorInstructions')}
+                </Text>
+            </div>
             <Button classes="w-full" onClick={exportMigrationLog}>
                 {locale('views.congratulations.exportMigration')}
             </Button>
