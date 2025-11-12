@@ -817,15 +817,14 @@ export const dryRunRebasedMigrationRequest = async (trytes: string[]): Promise<D
         const response = await fetch(endpoint, requestOptions)
         if (!response.ok) {
             const errorResponse: RebasedErrorModel = await response.json()
-            const errorMessages = errorResponse.errors?.map((err) => err.message).join(', ') || errorResponse.detail
-            throw new Error(`${errorResponse.title} (${errorResponse.status}): ${errorMessages}`)
+            throw errorResponse
         }
 
         const migrationResponse: DryRunRebasedMigrationResponse = await response.json()
         return migrationResponse
     } catch (error) {
-        console.error('Error in sendRebasedMigrationRequest:', error)
-        throw new Error(error.message || 'Failed to validate migration bundle')
+        console.error('Error in dryRunRebasedMigrationRequest:', error)
+        throw error
     }
 }
 
@@ -855,8 +854,7 @@ export const sendRebasedMigrationRequest = async (
         const response = await fetch(endpoint, requestOptions)
         if (!response.ok) {
             const errorResponse: RebasedErrorModel = await response.json()
-            const errorMessages = errorResponse.errors?.map((err) => err.message).join(', ') || errorResponse.detail
-            throw new Error(`${errorResponse.title} (${errorResponse.status}): ${errorMessages}`)
+            throw errorResponse
         }
 
         const migrationResponse: RebasedMigrationResponse = await response.json()
@@ -874,7 +872,7 @@ export const sendRebasedMigrationRequest = async (
         return migrationResponse
     } catch (error) {
         console.error('Error in sendRebasedMigrationRequest:', error)
-        throw new Error(error.message || 'Failed to validate migration bundle')
+        throw error
     }
 }
 

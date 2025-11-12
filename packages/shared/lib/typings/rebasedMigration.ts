@@ -19,7 +19,12 @@ export interface RebasedErrorModel {
     title: string
     status: number
     detail: string
-    errors: {
-        message: string
-    }[]
+    instance: string
+    type: string
+    errors: RebasedErrorDetail[]
+}
+export interface RebasedErrorDetail {
+    message: string
+    location: string
+    value: string
 }

@@ -62,6 +62,7 @@ export interface MigrationLog {
     timestamp: string
     requestData?: string
     errorMessage?: string
+    error?: string
 }
 
 export interface Bundle {

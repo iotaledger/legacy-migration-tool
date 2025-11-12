@@ -57,6 +57,18 @@
 
     const { didComplete } = $migration
 
+    function isRebasedErrorModel(error: any): boolean {
+        return error && typeof error === 'object' && 'status' in error && 'title' in error && 'errors' in error
+    }
+
+    function getErrorMessage(err: any): string {
+        if (isRebasedErrorModel(err)) {
+            const errorMessages = err.errors?.map((e) => e.message).join(', ') || err.detail
+            return `${err.title} (${err.status}): ${errorMessages}`
+        }
+        return err?.message ?? err?.toString()
+    }
+
     let transactions = get(unmigratedBundles).map((_bundle, index) => ({
         ..._bundle,
         name: locale('views.transferFragmentedFunds.transaction', { values: { number: index + 1 } }),
@@ -252,9 +264,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
 
                                           closePopup(true) // close transaction popup
                                           closeTransport()
@@ -263,7 +280,7 @@
                                           const legacyErrorMessage = getLegacyErrorMessage(err)
                                           throw new Error(
                                               legacyErrorMessage === 'error.global.generic'
-                                                  ? error
+                                                  ? errorMessage
                                                   : locale(legacyErrorMessage)
                                           )
                                       })
@@ -288,9 +305,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
                                           throw new Error(err)
                                       })
                               }
