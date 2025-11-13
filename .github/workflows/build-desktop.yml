@@ -105,11 +105,11 @@ jobs:
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\openssl_fips.patch
               if: matrix.os == 'windows-latest'
 
-            - name: Install cargo-patch with Rust 1.77 (Windows)
+            - name: Install cargo-patch with Rust 1.67 (Windows)
               run: |
-                # cargo-patch doesn't compile with Rust 1.90, so install with 1.77
-                rustup toolchain install 1.77.0
-                rustup run 1.77.0 cargo install cargo-patch --version 0.3.1
+                # Use original Rust version that was working before
+                rustup toolchain install 1.67.0
+                rustup run 1.67.0 cargo install cargo-patch --version 0.3.1 --locked
                 # Verify we're still on 1.90 for the build
                 rustc --version
                 cargo --version
@@ -118,9 +118,12 @@ jobs:
             - name: Apply neon-sys patch (Windows)
               run: |
                 cp ${{ github.workspace }}\manual-patches\neon_temp_buf.patch .
-                git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
+                # Manually add cargo-patch configuration to Cargo.toml
+                # The file already has [patch.crates-io] for time, so insert before it
+                $content = Get-Content Cargo.toml -Raw
+                $newContent = $content -replace '(\[patch\.crates-io\])', "[package.metadata.patch.neon-sys]`nversion = `"0.10.1`"`npatches = [`n    { path = `"neon_temp_buf.patch`", source = `"GithubPrDiff`" },`n]`n`n[patch.crates-io]`nneon-sys = { path = './target/patch/neon-sys-0.10.1' }`n`n`$1"
+                $newContent | Set-Content Cargo.toml
                 cat Cargo.toml
-                # Run cargo-patch - it should be in PATH from the 1.77 installation
                 cargo patch
               working-directory: packages/backend/bindings/node/native
               if: matrix.os == 'windows-latest'
