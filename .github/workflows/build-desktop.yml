@@ -105,12 +105,23 @@ jobs:
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\openssl_fips.patch
               if: matrix.os == 'windows-latest'
 
-            - name: Skip neon-sys patch (Windows)
+            - name: Install cargo-patch with Rust 1.77 (Windows)
               run: |
-                # Skip neon patches - cargo-patch doesn't compile with Rust 1.90
-                # Testing if build works without the neon patch (Electron 12.2.3 compatibility)
-                echo "Skipping neon-sys patch - will test if build succeeds without it"
+                # cargo-patch doesn't compile with Rust 1.90, so install with 1.77
+                rustup toolchain install 1.77.0
+                rustup run 1.77.0 cargo install cargo-patch --version 0.3.1
+                # Verify we're still on 1.90 for the build
+                rustc --version
+                cargo --version
+              if: matrix.os == 'windows-latest'
+
+            - name: Apply neon-sys patch (Windows)
+              run: |
+                cp ${{ github.workspace }}\manual-patches\neon_temp_buf.patch .
+                git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
                 cat Cargo.toml
+                # Run cargo-patch - it should be in PATH from the 1.77 installation
+                cargo patch
               working-directory: packages/backend/bindings/node/native
               if: matrix.os == 'windows-latest'
 
