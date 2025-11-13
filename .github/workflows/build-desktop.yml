@@ -135,8 +135,22 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
+            - name: Verify Rust/Cargo versions before build
+              run: |
+                echo "Rust version:"
+                rustc --version
+                echo "Cargo version:"
+                cargo --version
+                echo "Cargo location:"
+                which cargo
+              shell: bash
+
             - name: Rebuild backend actor system
-              run: yarn build:binding
+              run: |
+                # Ensure the correct cargo is in PATH
+                export PATH="$HOME/.cargo/bin:$PATH"
+                yarn build:binding
+              shell: bash
               working-directory: packages/backend/bindings/node
 
             - name: Set productName
