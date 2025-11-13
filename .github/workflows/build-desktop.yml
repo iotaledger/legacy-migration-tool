@@ -200,10 +200,9 @@ jobs:
               env:
                 SIGNING_API_URL: ${{ secrets.SIGNING_API_URL }}
                 SIGNING_API_KEY: ${{ secrets.SIGNING_API_KEY }}
-                NETWORK_CODE:    ${{ env.NETWORK_CODE }}
                 VERSION:         ${{ env.VERSION }}
               run: |
-                unsigned="./out/firefly-${NETWORK_CODE}-desktop-${VERSION}.exe"
+                unsigned="./out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
                 signed="$unsigned"   # overwrite so downstream steps see the signed file
 
                 echo "🖊️  Signing $unsigned ..."
@@ -221,7 +220,7 @@ jobs:
             - name: Update latest.yml with signed file details
               shell: bash
               run: |
-                FILE="packages/desktop/out/firefly-${{ env.NETWORK_CODE }}-desktop-${{ env.VERSION }}.exe"
+                FILE="packages/desktop/out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
 
                 # Dynamically determine the correct latest.yml file name
                 if [[ "${{ env.STAGE }}" == "alpha" ]]; then
