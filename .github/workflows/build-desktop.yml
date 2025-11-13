@@ -105,12 +105,11 @@ jobs:
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\openssl_fips.patch
               if: matrix.os == 'windows-latest'
 
-            - name: Apply neon-sys patch (Windows)
+            - name: Skip neon-sys patch (Windows)
               run: |
-                # Skip neon patch - cargo-patch doesn't compile with Rust 1.90
-                # The patch was for Electron/Node version compatibility
-                # Will test if build works without it
-                git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
+                # Skip neon patches - cargo-patch doesn't compile with Rust 1.90
+                # Testing if build works without the neon patch (Electron 12.2.3 compatibility)
+                echo "Skipping neon-sys patch - will test if build succeeds without it"
                 cat Cargo.toml
               working-directory: packages/backend/bindings/node/native
               if: matrix.os == 'windows-latest'
