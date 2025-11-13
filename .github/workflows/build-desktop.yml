@@ -53,10 +53,10 @@ jobs:
             STAGE: ${{ needs.setup.outputs.stage || github.event.inputs.stage }}
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Set up Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
                   node-version: 14.x
 
@@ -217,7 +217,7 @@ jobs:
               if: matrix.os == 'windows-latest'
 
             - name: Upload artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-${{ matrix.os }}
                   path: |
@@ -237,22 +237,22 @@ jobs:
             - run: echo ${{ github.ref }}
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Downloading artifacts windows
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-windows-latest
                   path: assets
 
             - name: Downloading artifacts mac
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-macos-13
                   path: assets
 
             - name: Downloading artifacts linux
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-ubuntu-20.04
                   path: assets
