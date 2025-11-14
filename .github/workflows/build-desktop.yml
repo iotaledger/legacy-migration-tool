@@ -197,7 +197,7 @@ jobs:
                                -inkey client.key -in client.crt \
                                -passout pass:
               working-directory: packages/desktop
-              if: matrix.os == 'windows-2019'
+              if: matrix.os == 'windows-latest'
 
             - name: Code-sign Windows binary
               shell: bash
@@ -219,7 +219,7 @@ jobs:
                      "${SIGNING_API_URL}/sign"
                 echo "✅  Signing complete"
               working-directory: packages/desktop
-              if: matrix.os == 'windows-2019'
+              if: matrix.os == 'windows-latest'
 
             - name: Update latest.yml with signed file details
               shell: bash
@@ -266,7 +266,7 @@ jobs:
                 yq e ".sha512 = \"$HASH\"" -i "$LATEST_YML"
                 yq e -i ".files[0].sha512 |= . | .sha512 |= ." "$LATEST_YML"
                 echo "Updated $LATEST_YML with size=$SIZE and sha512=$HASH"
-              if: matrix.os == 'windows-2019'
+              if: matrix.os == 'windows-latest'
 
             - name: Build Electron app (Linux)
               run: yarn compile:${STAGE}:linux
@@ -347,6 +347,9 @@ jobs:
 
             - name: Preparing release body
               run: |
+                  # Debug: List all files in assets
+                  echo "Files in assets directory:"
+                  ls -la ../../assets/
                   sed -i 's/\r$//' ../../assets/*.sha256 && sed -i '/^$/d' ../../assets/*.sha256 && sed -i -e 's/\(.*\)/\L\1/' ../../assets/*.sha256
                   WIN_SHA256=$(cat ../../assets/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe.sha256)
                   LIN_SHA256=$(cat ../../assets/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.AppImage.sha256)
