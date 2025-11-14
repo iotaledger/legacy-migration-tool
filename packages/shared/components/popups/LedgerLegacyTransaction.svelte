@@ -19,7 +19,7 @@
 
 <Text type="h4" classes="mb-6">{locale('popups.ledgerTransaction.transaction.title')}</Text>
 <Text type="p" classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.info')}</Text>
-
+<Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning')}</Text>
 <div class="relative w-full h-1/2 bg-white dark:bg-gray-900 flex justify-center content-center">
     <Animation
         width="100%"

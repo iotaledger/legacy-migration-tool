@@ -79,11 +79,11 @@
 
             if (legacyLedger) {
                 const _onConnected = () => {
+                    prepareMigrationLog([], migratableBalance)
                     Platform.ledger
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            prepareMigrationLog([], migratableBalance)
                             return createLedgerMigrationBundle(
                                 0,
                                 get(migrationAddress),
@@ -147,10 +147,13 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
+                prepareMigrationLog([], migratableBalance)
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            trytes: reverseTrytesSoftware,
+                        })
                         return sendRebasedMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((response: RebasedMigrationResponse) => {
@@ -175,8 +178,6 @@
                             message: errorMessage || 'Failed to prepare transfers',
                         })
                         console.error(err)
-
-                        // Update migration log with stringified error object and message
                         updateMigrationLog(get(migrationLog).length - 1, {
                             error: JSON.stringify(err, null, 2),
                             errorMessage,

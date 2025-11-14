@@ -220,6 +220,7 @@
                       promise
                           .then((acc) => {
                               if (legacyLedger) {
+                                  prepareMigrationLog([], transaction.balance)
                                   return Platform.ledger
                                       .selectSeed(
                                           $hardwareIndexes.accountIndex,
@@ -228,7 +229,6 @@
                                       )
                                       .then(({ iota, callback }) => {
                                           closeTransport = callback
-                                          prepareMigrationLog([], transaction.balance)
                                           return createLedgerMigrationBundle(
                                               transaction.index,
                                               get(migrationAddress),
@@ -286,11 +286,14 @@
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
+                                  prepareMigrationLog([], transaction.balance)
 
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              trytes: reverseTrytesSoftware,
+                                          })
                                           return sendRebasedMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((response: RebasedMigrationResponse) => {
