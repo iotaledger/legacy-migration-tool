@@ -118,11 +118,7 @@ jobs:
             - name: Apply neon-sys patch (Windows)
               run: |
                 cp ${{ github.workspace }}\manual-patches\neon_temp_buf.patch .
-                # Manually add cargo-patch configuration to Cargo.toml
-                # The file already has [patch.crates-io] for time, so insert before it
-                $content = Get-Content Cargo.toml -Raw
-                $newContent = $content -replace '(\[patch\.crates-io\])', "[package.metadata.patch.neon-sys]`nversion = `"0.10.1`"`npatches = [`n    { path = `"neon_temp_buf.patch`", source = `"GithubPrDiff`" },`n]`n`n[patch.crates-io]`nneon-sys = { path = './target/patch/neon-sys-0.10.1' }`n`n`$1"
-                $newContent | Set-Content Cargo.toml
+                git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
                 cat Cargo.toml
                 cargo patch
               working-directory: packages/backend/bindings/node/native
