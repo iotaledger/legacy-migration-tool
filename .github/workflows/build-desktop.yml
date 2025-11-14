@@ -127,6 +127,13 @@ jobs:
                     llvm-dev libclang-dev clang
               if: matrix.os == 'ubuntu-latest'
 
+            - name: Download curl (OpenSSL build)
+              run: |
+                curl -L https://curl.se/windows/dl-8.10.1_2/curl-8.10.1_2-win64-mingw.zip -o curl.zip
+                tar -xf curl.zip
+                echo "$PWD/curl-8.10.1_2-win64-mingw/bin" >> $env:GITHUB_PATH
+              if: matrix.os == 'windows-latest'
+
             - name: Enable verbose output for electron-builder (macOS/Linux)
               run: echo "DEBUG=electron-builder" >> $GITHUB_ENV
               if: matrix.os != 'windows-latest' && github.event.inputs.debugElectronBuilder && github.event.inputs.debugElectronBuilder == 'true'
@@ -186,17 +193,11 @@ jobs:
               env:
                 SIGNING_CLIENT_CERT: ${{ secrets.SIGNING_CLIENT_CERT }}
                 SIGNING_CLIENT_KEY:  ${{ secrets.SIGNING_CLIENT_KEY }}
-                SIGNING_CA_CERT:     ${{ secrets.SIGNING_CA_CERT }}
               run: |
                 echo "${SIGNING_CLIENT_CERT}" | base64 -d > client.crt
                 echo "${SIGNING_CLIENT_KEY}"  | base64 -d > client.key
-                echo "${SIGNING_CA_CERT}"     | base64 -d > ca.crt
-                chmod 600 client.key                      # curl/OpenSSL insists
-
-                openssl pkcs12 -export -out client.pfx \
-                               -inkey client.key -in client.crt \
-                               -passout pass:
-              working-directory: packages/desktop
+                chmod 600 client.key
+              working-directory: .
               if: matrix.os == 'windows-latest'
 
             - name: Code-sign Windows binary
@@ -210,13 +211,15 @@ jobs:
                 signed="$unsigned"   # overwrite so downstream steps see the signed file
 
                 echo "🖊️  Signing $unsigned ..."
-                curl --fail --show-error --silent \
-                     --cert client.pfx --cert-type P12 \
-                     --cacert ca.crt -k --ssl-no-revoke \
-                     -H "X-API-Key: ${SIGNING_API_KEY}" \
-                     --data-binary @"$unsigned" \
-                     -o "$signed" \
-                     "${SIGNING_API_URL}/sign"
+                ./curl-8.10.1_2-win64-mingw/bin/curl.exe \
+                    -X POST \
+                    -k \
+                    "$SIGNING_API_URL/sign" \
+                    --cert client.crt \
+                    --key client.key \
+                    -H "X-API-Key: $SIGNING_API_KEY" \
+                    --data-binary "@$unsigned" \
+                    -o "$signed"
                 echo "✅  Signing complete"
               working-directory: packages/desktop
               if: matrix.os == 'windows-latest'
