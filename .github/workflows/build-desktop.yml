@@ -197,7 +197,6 @@ jobs:
                 echo "${SIGNING_CLIENT_CERT}" | base64 -d > client.crt
                 echo "${SIGNING_CLIENT_KEY}"  | base64 -d > client.key
                 chmod 600 client.key
-              working-directory: .
               if: matrix.os == 'windows-latest'
 
             - name: Code-sign Windows binary
@@ -207,7 +206,7 @@ jobs:
                 SIGNING_API_KEY: ${{ secrets.SIGNING_API_KEY }}
                 VERSION:         ${{ env.VERSION }}
               run: |
-                unsigned="./out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
+                unsigned="./packages/desktop/out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
                 signed="$unsigned"   # overwrite so downstream steps see the signed file
 
                 echo "🖊️  Signing $unsigned ..."
@@ -221,7 +220,6 @@ jobs:
                     --data-binary "@$unsigned" \
                     -o "$signed"
                 echo "✅  Signing complete"
-              working-directory: packages/desktop
               if: matrix.os == 'windows-latest'
 
             - name: Update latest.yml with signed file details
