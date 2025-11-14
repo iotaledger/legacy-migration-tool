@@ -78,10 +78,6 @@ jobs:
                 profile: minimal
                 override: true
 
-            - name: Ensure Rust 1.90.0 is in PATH
-              run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-              shell: bash
-
             - name: Install LLVM and Clang (Windows) # required for bindgen to work, see https://github.com/rust-lang/rust-bindgen/issues/1797
               uses: KyleMayes/install-llvm-action@32c4866ebb71e0949e8833eb49beeebed48532bd
               if: matrix.os == 'windows-latest'
@@ -105,20 +101,15 @@ jobs:
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\openssl_fips.patch
               if: matrix.os == 'windows-latest'
 
-            - name: Install cargo-patch with Rust 1.67 (Windows)
-              run: |
-                # Use original Rust version that was working before
-                rustup toolchain install 1.67.0
-                rustup run 1.67.0 cargo install cargo-patch --version 0.3.1 --locked
-                # Verify we're still on 1.90 for the build
-                rustc --version
-                cargo --version
-              if: matrix.os == 'windows-latest'
-
             - name: Apply neon-sys patch (Windows)
               run: |
+                # Install cargo-patch using Rust 1.67 (0.3.1 won't compile with 1.90)
+                rustup toolchain install 1.67.0
+                rustup run 1.67.0 cargo install cargo-patch --version 0.3.1 --locked
                 cp ${{ github.workspace }}\manual-patches\neon_temp_buf.patch .
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
+                # Temporarily change Cargo.lock from v4 to v3 for cargo-patch
+                (Get-Content Cargo.lock -Raw) -replace 'version = 4', 'version = 3' | Set-Content Cargo.lock
                 cat Cargo.toml
                 cargo patch
               working-directory: packages/backend/bindings/node/native
@@ -148,30 +139,8 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
-            - name: Verify Rust/Cargo versions before build
-              run: |
-                echo "Rust version:"
-                rustc --version
-                echo "Cargo version:"
-                cargo --version
-                echo "Cargo location:"
-                which cargo
-                echo "Full PATH:"
-                echo $PATH
-              shell: bash
-
             - name: Rebuild backend actor system
-              run: |
-                # Create a wrapper script to ensure correct cargo is used
-                cat > /tmp/cargo-wrapper.sh << 'EOF'
-                #!/bin/bash
-                exec $HOME/.cargo/bin/cargo "$@"
-                EOF
-                chmod +x /tmp/cargo-wrapper.sh
-                export CARGO=/tmp/cargo-wrapper.sh
-                export PATH="$HOME/.cargo/bin:$PATH"
-                yarn build:binding
-              shell: bash
+              run: yarn build:binding
               working-directory: packages/backend/bindings/node
 
             - name: Set productName
