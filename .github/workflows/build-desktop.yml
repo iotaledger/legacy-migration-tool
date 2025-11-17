@@ -340,9 +340,6 @@ jobs:
 
             - name: Preparing release body
               run: |
-                  # Debug: List all files in assets
-                  echo "Files in assets directory:"
-                  ls -la ../../assets/
                   sed -i 's/\r$//' ../../assets/*.sha256 && sed -i '/^$/d' ../../assets/*.sha256 && sed -i -e 's/\(.*\)/\L\1/' ../../assets/*.sha256
                   WIN_SHA256=$(cat ../../assets/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe.sha256)
                   LIN_SHA256=$(cat ../../assets/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.AppImage.sha256)
