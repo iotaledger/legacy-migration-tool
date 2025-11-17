@@ -226,15 +226,7 @@ jobs:
               shell: bash
               run: |
                 FILE="packages/desktop/out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
-
-                # Dynamically determine the correct latest.yml file name
-                if [[ "${{ env.STAGE }}" == "alpha" ]]; then
-                    LATEST_YML="packages/desktop/out/latest-alpha.yml"
-                elif [[ "${{ env.STAGE }}" == "beta" ]]; then
-                    LATEST_YML="packages/desktop/out/latest-beta.yml"
-                else
-                    LATEST_YML="packages/desktop/out/latest.yml"
-                fi
+                LATEST_YML="packages/desktop/out/latest.yml"
 
                 # Get the file size in bytes
                 SIZE=$(stat -c%s "$FILE")
