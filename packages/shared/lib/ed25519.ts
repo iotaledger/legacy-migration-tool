@@ -46,11 +46,6 @@ const B1T6_VALUE_TO_CHAR: string[] = B1T6_TRYTE_VALUE_TO_TRITS.map((pattern) => 
     return TRYTE_ALPHABET.charAt(idx)
 })
 
-const B1T6_CHAR_TO_VALUE: Record<string, number> = {}
-for (let i = 0; i < B1T6_VALUE_TO_CHAR.length; i++) {
-    B1T6_CHAR_TO_VALUE[B1T6_VALUE_TO_CHAR[i]] = i
-}
-
 const TRANSFER_PREFIX = 'TRANSFER'
 const TRANSFER_SUFFIX = '9'
 const ED25519_ADDRESS_SIZE = 32
