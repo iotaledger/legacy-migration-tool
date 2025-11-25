@@ -63,10 +63,10 @@
             "progress4": "Transfer funds"
         },
         "ledgerInstallationGuide": {
-            "title": "Have you installed the necessary Ledger apps?",
-            "body1": "Before you proceed, you must find and install both the {legacy} app and the new IOTA app through Ledger Live.",
-            "body2": "Make sure your Ledger firmware is up-to-date. Any pre-installed apps should be updated to their latest versions.",
-            "action": "Yes, I've installed these apps"
+            "title": "Have you installed the necessary Ledger app?",
+            "body1": "Before you proceed, you must find and install the {legacy} app through Ledger Live.",
+            "body2": "Make sure your Ledger firmware is up-to-date.",
+            "action": "Yes, I've installed this app"
         },
         "password": {
             "title": "Create a password",
@@ -127,7 +127,8 @@
             "placeholder": "0x...",
             "error": {
                 "addressRequired": "Address is required",
-                "invalidAddress": "Please enter a valid IOTA rebased address"
+                "invalidAddress": "Please enter a valid IOTA rebased address",
+                "exampleAddress": "Please enter your own address, not the example address"
             },
             "howTo": {
                 "title": "How to Get Your IOTA Rebased Address",
@@ -204,7 +205,7 @@
             "title": "Connect your Ledger to IOTA Legacy Migration Tool",
             "body": "For your Ledger device to be found by IOTA Legacy Migration Tool, please ensure that the official Ledger Live application is closed.",
             "trafficLight1": "Connect and unlock your Ledger with your PIN",
-            "trafficLight2": "Open the new IOTA app on your Ledger",
+            "trafficLight2": "Open the {legacy} app on your Ledger",
             "tips": "Tips if your Ledger isn’t connecting"
         },
         "restoreFromFireflyLedger": {
@@ -215,7 +216,7 @@
         "legacyLedgerIntro": {
             "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
             "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Rebased network.",
-            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly."
+            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with IOTA Rebased."
         },
         "generateNewLedgerAddress": {
             "title": "Generate new address",
@@ -841,13 +842,13 @@
             "confirm": "To proceed, confirm the prompt displayed on your Ledger device"
         },
         "ledgerAppGuide": {
-            "title": "Guide to installing the Ledger apps",
+            "title": "Guide to installing the Ledger app",
             "steps": {
                 "0": "Install and open the Ledger Live application",
                 "1": "Ensure that your Ledger is connected",
-                "2": "Search for apps: {legacy} and IOTA (MIOTA)",
-                "3": "Install both apps: {legacy} and IOTA (MIOTA)",
-                "4": "Remember that it's important to close Ledger Live before returning to IOTA Legacy Migration Tool"
+                "2": "Search for app: {legacy}",
+                "3": "Install app: {legacy}",
+                "4": "Remember that it's important to close Ledger Live before returning to Migration Tool"
             }
         },
         "ledgerConnectionGuide": {

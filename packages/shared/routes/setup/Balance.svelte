@@ -148,7 +148,6 @@
     busy={isCheckingForBalance}
     onBackClick={handleBackClick}
     {locale}
-    showLedgerProgress={legacyLedger}
     showLedgerVideoButton={legacyLedger}
 >
     <div slot="title">

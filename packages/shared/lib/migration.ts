@@ -51,9 +51,6 @@ export const ADDRESS_SECURITY_LEVEL = 2
 /** Minimum migration balance */
 export const MINIMUM_MIGRATION_BALANCE = 0
 
-/** Amount to hardcode in the inputs to bypass legacy validation in ISC */
-export const MINIMUM_MIGRATABLE_AMOUNT = 1000000
-
 /** Bundle mining timeout for each bundle */
 export const MINING_TIMEOUT_SECONDS = 10 * 60
 
@@ -461,9 +458,7 @@ export const getLedgerMigrationData = async (
 
         for (let index = 0; index < addresses.length; index++) {
             const legacyAddress = addresses[index]
-            const hexAddress = '0x' + convertToHex(legacyAddress.address)
-            const balance = await fetchMigratableBalance(hexAddress)
-
+            const balance = await fetchMigratableBalance(legacyAddress.address)
             totalBalance += balance
             if (balance > 0) {
                 inputs.push({
@@ -704,9 +699,7 @@ export const createLedgerMigrationBundle = (
 ): Promise<MigrationBundle> => {
     const bundle = findMigrationBundle(bundleIndex)
 
-    let totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
-    let balanceToAdd: number = 0
-    let smallestBalanceItem: Input | undefined
+    const totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
 
     const transferForConfirmation = {
         address: migrationAddress.trytes,
@@ -715,19 +708,6 @@ export const createLedgerMigrationBundle = (
     }
 
     openLedgerLegacyTransactionPopup(transferForConfirmation, bundle.inputs)
-
-    // Adjust totalBalance if its less than MINIMUM_MIGRATABLE_AMOUNT to bypass legacy validation tool in smart contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
-    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the balances sent by migration tool.
-    // If the amount for migration, resolved by ISC, is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
-    if (totalBalance < MINIMUM_MIGRATABLE_AMOUNT) {
-        balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - totalBalance
-        totalBalance += balanceToAdd
-
-        smallestBalanceItem = bundle.inputs.reduce((minItem, currentItem) =>
-            currentItem.balance < minItem.balance ? currentItem : minItem
-        )
-    }
 
     const transfers = [
         {
@@ -741,7 +721,7 @@ export const createLedgerMigrationBundle = (
         address: input.address,
         keyIndex: input.index,
         security: input.securityLevel,
-        balance: smallestBalanceItem?.index === input.index ? input.balance + balanceToAdd : input.balance,
+        balance: input.balance,
     }))
 
     return prepareTransfersFn(transfers, inputsForTransfer).then((trytes) => {
@@ -913,22 +893,8 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
 
     const prepareTransfers = createPrepareTransfers()
 
-    let totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
-    let balanceToAdd: number = 0
-    let smallestBalanceItem: Input | undefined
+    const totalBalance = bundle.inputs.reduce((acc, input) => acc + input.balance, 0)
 
-    // Adjust totalBalance if its less than MINIMUM_MIGRATABLE_AMOUNT to bypass legacy validation tool in smart contract which doesnt allow migrating less than MINIMUM_MIGRATABLE_AMOUNT.
-    // The ISC only cares about the addresses in the bundle, it internaly resolves the balances and does NOT depend on the balances sent by migration tool.
-    // If the amount for migration, resolved by ISC, is less than the Min required storage deposit on stardust the receipt will contain the error messgage
-    // ex. "not enough base tokens for storage deposit: available 211188 < required 239500 base tokens"
-    if (totalBalance < MINIMUM_MIGRATABLE_AMOUNT) {
-        balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - totalBalance
-        totalBalance += balanceToAdd
-
-        smallestBalanceItem = bundle.inputs.reduce((minItem, currentItem) =>
-            currentItem.balance < minItem.balance ? currentItem : minItem
-        )
-    }
     const transfers = [
         {
             value: totalBalance,
@@ -940,7 +906,7 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
         address: input.address,
         keyIndex: input.index,
         security: input.securityLevel,
-        balance: smallestBalanceItem?.index === input.index ? input.balance + balanceToAdd : input.balance,
+        balance: input.balance,
     }))
 
     try {

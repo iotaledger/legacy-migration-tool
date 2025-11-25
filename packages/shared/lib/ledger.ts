@@ -260,6 +260,8 @@ export function getLegacyErrorMessage(error: { name; statusCode }, shouldLocaliz
         case LegacyLedgerErrorName.DisconnectedDeviceDuringOperation:
             errorMessage = 'error.ledger.disconnected'
             break
+        default:
+            errorMessage = error.name
     }
 
     return shouldLocalize ? localize(errorMessage) : errorMessage

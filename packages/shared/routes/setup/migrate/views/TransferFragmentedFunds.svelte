@@ -238,11 +238,11 @@
                                               trytes: reverseTrytesLedger,
                                               bundleHash,
                                           })
-                                          return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
+                                          return sendRebasedMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
-                                      .then((receipt) => {
+                                      .then((response: RebasedMigrationResponse) => {
                                           updateMigrationLog(get(migrationLog).length - 1, {
-                                              requestData: JSON.stringify(receipt?.request),
+                                              requestData: JSON.stringify(response),
                                           })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
@@ -328,7 +328,6 @@
     {locale}
     onBackClick={handleBackClick}
     class=""
-    showLedgerProgress={legacyLedger}
     showLedgerVideoButton={legacyLedger}
 >
     <div slot="title">

@@ -40,7 +40,7 @@ export class LedgerRouter extends Subrouter<LedgerRoute> {
                 } else if (setupType === SetupType.FireflyLedger) {
                     nextRoute = LedgerRoute.RestoreFromLedger
                 } else if (setupType === SetupType.TrinityLedger) {
-                    nextRoute = LedgerRoute.GenerateAddress
+                    nextRoute = LedgerRoute.AccountIndex
                 }
                 break
             case LedgerRoute.RestoreFromLedger:
