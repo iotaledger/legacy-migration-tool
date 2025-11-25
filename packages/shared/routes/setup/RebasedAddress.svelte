@@ -3,6 +3,7 @@
     import { appRouter } from '@core/router'
     import { migrationAddress } from 'shared/lib/migration'
     import { ed25519HexToTernary } from 'shared/lib/ed25519'
+    import { hexAddressToTernary } from '../../lib/ed25519'
     import { Platform } from 'shared/lib/platform'
     import { isValidIotaAddress } from 'shared/lib/address'
 
@@ -12,7 +13,7 @@
     let rebasedAddress = ''
     let error = ''
 
-    const IOTA_WALLET_GUIDE_URL = 'https://wiki.iota.org/get-started/wallets'
+    const IOTA_WALLET_GUIDE_URL = 'https://docs.iota.org/users'
     const EXAMPLE_ADDRESS = '0x7ad1aee6262b8823aa74177692d917f2603c30587df6916f666eeb692f22b38d'
 
     function validateAddress(address: string): string {
@@ -48,7 +49,7 @@
 
         try {
             busy = true
-            const trytes = ed25519HexToTernary(rebasedAddress)
+            const trytes = hexAddressToTernary(rebasedAddress)
             migrationAddress.set({ ed25519: rebasedAddress, trytes })
             $appRouter.next()
         } catch (err) {
