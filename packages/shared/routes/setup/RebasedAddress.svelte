@@ -11,7 +11,7 @@
     let rebasedAddress = ''
     let error = ''
 
-    const IOTA_WALLET_GUIDE_URL = 'https://wiki.iota.org/get-started/wallets'
+    const IOTA_WALLET_GUIDE_URL = 'https://docs.iota.org/users'
     const IOTA_ADDRESS_LENGTH = 32
 
     function isHex(value: string): boolean {
