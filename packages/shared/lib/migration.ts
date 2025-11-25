@@ -26,13 +26,19 @@ import { localize } from '@core/i18n'
 import { showAppNotification } from './notifications'
 import { LedgerMigrationProgress } from 'shared/lib/typings/migration'
 import { SetupType } from 'shared/lib/typings/setup'
-import { convertToHex, decodeUint64, getJsonRequestOptions, hexToBytes } from '@lib/utils'
+import { convertToHex, getJsonRequestOptions } from '@lib/utils'
 import { createPrepareTransfers, generateAddress } from '@iota/core'
 import { convertBech32AddressToEd25519Address } from './ed25519'
 import { Buffer } from 'buffer'
 import { blake2b } from 'blakejs'
 import { SimpleBufferCursor } from './simpleBufferCursor'
 import { Platform } from './platform'
+import {
+    DryRunRebasedMigrationResponse,
+    RebasedErrorModel,
+    RebasedMigrationRequest,
+    RebasedMigrationResponse,
+} from './typings/rebasedMigration'
 
 const LEGACY_ADDRESS_WITHOUT_CHECKSUM_LENGTH = 81
 
@@ -62,11 +68,16 @@ const HARDWARE_ADDRESS_GAP = 3
 
 const CHECKSUM_LENGTH = 9
 
-const DEVELOP_BASE_URL = 'https://migrator-api.iota-alphanet.iotaledger.net'
+const DEVELOP_BASE_URL = 'https://migration-api-dnyf5n-911810.iota.lmoe.dev'
 const PRODUCTION_BASE_URL = 'https://migrator-api.stardust-mainnet.iotaledger.net'
 
 const DEVELOP_CHAIN_ID = 'atoi1ppvjyr3nz8mwd6h7pahtgf4emcd3z9kpgys6hn2w5mnahmxu4t2gwvgxd92'
 const PRODUCTION_CHAIN_ID = 'iota1pphx6hnmxqdqd2u4m59e7nvmcyulm3lfm58yex5gmud9qlt3v9crs9sah6m'
+
+const REQUEST_HEADERS = {
+    'Content-Type': 'application/json',
+    accept: 'application/json',
+}
 
 export const removeAddressChecksum = (address: string = ''): string => address.slice(0, -CHECKSUM_LENGTH)
 
@@ -301,8 +312,7 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
 
     for (let index = initialAddressIndex; index < initialAddressIndex + FIXED_ADDRESSES_GENERATED; index++) {
         const legacyAddress = generateAddress(migrationSeed, index, ADDRESS_SECURITY_LEVEL)
-        const hexAddress = '0x' + convertToHex(legacyAddress)
-        const balance = await fetchMigratableBalance(hexAddress)
+        const balance = await fetchMigratableBalance(legacyAddress)
 
         totalBalance += balance
         if (balance > 0) {
@@ -346,42 +356,25 @@ export const getMigrationData = async (migrationSeed: string, initialAddressInde
     }
 }
 
-async function fetchMigratableBalance(hexAddress: string): Promise<number> {
-    const body = {
-        functionName: 'getMigratableBalance',
-        contractName: 'legacymigration',
-        arguments: {
-            Items: [
-                {
-                    value: hexAddress,
-                    key: '0x61', // convertToHex("a")
-                },
-            ],
-        },
-    }
+async function fetchMigratableBalance(legacyAddress: string): Promise<number> {
     const requestOptions: RequestInit = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
-        },
-        body: JSON.stringify(body),
+        method: 'GET',
+        headers: REQUEST_HEADERS,
     }
 
     const _activeProfile = get(activeProfile)
     let endpoint: string = ''
     if (_activeProfile.isDeveloperProfile) {
-        endpoint = `${DEVELOP_BASE_URL}/v1/chains/${DEVELOP_CHAIN_ID}/callview`
+        endpoint = `${DEVELOP_BASE_URL}/migratable_balance/${legacyAddress}`
     } else {
-        endpoint = `${PRODUCTION_BASE_URL}/v1/chains/${PRODUCTION_CHAIN_ID}/callview`
+        endpoint = `${PRODUCTION_BASE_URL}/migratable_balance/${legacyAddress}`
     }
 
     let balance = 0
     try {
         const response = await fetch(endpoint, requestOptions)
-        const migrationData: { Items: { key: string; value: string }[] } = await response.json()
-        const binaryBalance = hexToBytes(migrationData?.Items[0]?.value)
-        balance = decodeUint64(binaryBalance)
+        const migrationData: { balance: string } = await response.json()
+        balance = parseInt(migrationData.balance, 10)
     } catch (error) {
         console.error('error', error)
     }
@@ -821,6 +814,90 @@ export const sendOffLedgerMigrationRequest = async (trytes: string[], bundleInde
         throw new Error(err.message || 'Failed to send migration request')
     }
 }
+
+export const dryRunRebasedMigrationRequest = async (trytes: string[]): Promise<DryRunRebasedMigrationResponse> => {
+    const body: RebasedMigrationRequest = {
+        BundleTrytes: trytes,
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: REQUEST_HEADERS,
+        body: JSON.stringify(body),
+    }
+
+    const _activeProfile = get(activeProfile)
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/can_migrate`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/can_migrate`
+    }
+
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        if (!response.ok) {
+            const errorResponse: RebasedErrorModel = await response.json()
+            const errorMessages = errorResponse.errors?.map((err) => err.message).join(', ') || errorResponse.detail
+            throw new Error(`${errorResponse.title} (${errorResponse.status}): ${errorMessages}`)
+        }
+
+        const migrationResponse: DryRunRebasedMigrationResponse = await response.json()
+        return migrationResponse
+    } catch (error) {
+        console.error('Error in sendRebasedMigrationRequest:', error)
+        throw new Error(error.message || 'Failed to validate migration bundle')
+    }
+}
+
+export const sendRebasedMigrationRequest = async (
+    trytes: string[],
+    bundleIndex: number
+): Promise<RebasedMigrationResponse> => {
+    const { bundles } = get(migration)
+    const body: RebasedMigrationRequest = {
+        BundleTrytes: trytes,
+    }
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: REQUEST_HEADERS,
+        body: JSON.stringify(body),
+    }
+
+    const _activeProfile = get(activeProfile)
+    let endpoint: string = ''
+    if (_activeProfile.isDeveloperProfile) {
+        endpoint = `${DEVELOP_BASE_URL}/migrate`
+    } else {
+        endpoint = `${PRODUCTION_BASE_URL}/migrate`
+    }
+
+    try {
+        const response = await fetch(endpoint, requestOptions)
+        if (!response.ok) {
+            const errorResponse: RebasedErrorModel = await response.json()
+            const errorMessages = errorResponse.errors?.map((err) => err.message).join(', ') || errorResponse.detail
+            throw new Error(`${errorResponse.title} (${errorResponse.status}): ${errorMessages}`)
+        }
+
+        const migrationResponse: RebasedMigrationResponse = await response.json()
+
+        // Update bundle and mark it as migrated
+        bundles.update((_bundles) =>
+            _bundles.map((bundle) => {
+                if (bundle.index === bundleIndex) {
+                    return Object.assign({}, bundle, { migrated: true, confirmed: true })
+                }
+
+                return bundle
+            })
+        )
+        return migrationResponse
+    } catch (error) {
+        console.error('Error in sendRebasedMigrationRequest:', error)
+        throw new Error(error.message || 'Failed to validate migration bundle')
+    }
+}
+
 /**
  * Creates migration bundle
  *
@@ -855,7 +932,7 @@ export const createMigrationBundle = async (bundle: Bundle, migrationAddress: Mi
     const transfers = [
         {
             value: totalBalance,
-            address: removeAddressChecksum(migrationAddress.trytes),
+            address: migrationAddress.trytes,
         },
     ]
 

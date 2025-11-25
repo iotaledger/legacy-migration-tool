@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
@@ -9,7 +8,6 @@
         createLedgerMigrationBundle,
         createMigrationBundle,
         exportMigrationLog,
-        generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
@@ -18,6 +16,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        sendRebasedMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
         updateMigrationLog,
@@ -29,10 +28,10 @@
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { addMigrationError } from '@lib/errors'
+    import { RebasedMigrationResponse } from 'shared/lib/typings/rebasedMigration'
 
     export let locale: Locale
 
@@ -42,15 +41,6 @@
     const { balance } = $data
 
     const migratableBalance = balance - $unselectedInputs.reduce((acc, input) => acc + input.balance, 0)
-
-    const fiatbalance = formatCurrency(
-        convertToFiat(
-            migratableBalance,
-            get(currencies)?.[CurrencyTypes.USD],
-            get(exchangeRates)?.[AvailableExchangeRates.USD]
-        ),
-        AvailableExchangeRates.USD
-    )
 
     let loading = false
 
@@ -143,11 +133,11 @@
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
                         prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
-                        return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
+                        return sendRebasedMigrationRequest(reverseTrytesSoftware, 0)
                     })
-                    .then((receipt) => {
+                    .then((response: RebasedMigrationResponse) => {
                         updateMigrationLog(get(migrationLog).length - 1, {
-                            requestData: JSON.stringify(receipt?.request),
+                            requestData: JSON.stringify(response),
                         })
                         totalMigratedBalance.set(migratableBalance)
                         loading = false
@@ -180,21 +170,16 @@
         }
     }
 
-    // TODO: complete function functionality
     function learnAboutMigrationsClick() {
         Platform.openUrl('https://blog.iota.org/iota-legacy-migration-tool/')
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!get(migrationAddress)) {
-            try {
-                migrationAddress.set(await generateMigrationAddress(legacyLedger))
-            } catch (error) {
-                showAppNotification({
-                    type: 'error',
-                    message: error.error || 'Error generating migration address',
-                })
-            }
+            showAppNotification({
+                type: 'error',
+                message: 'Error getting migration address',
+            })
         }
     })
 
@@ -210,12 +195,21 @@
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
+
+        {#if $migrationAddress?.ed25519}
+            <div
+                class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+                <Text type="p" secondary classes="text-xs mb-2">Migration Address:</Text>
+                <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
+            </div>
+        {/if}
+
         <Text type="p" secondary highlighted classes="mb-8 font-bold">{locale('views.migrate.body2')}</Text>
         <Box
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
         >
             <Text type="h2">{formatUnitBestMatch(migratableBalance, true)}</Text>
-            <Text type="p" highlighted classes="py-1 uppercase">{fiatbalance}</Text>
         </Box>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-7">

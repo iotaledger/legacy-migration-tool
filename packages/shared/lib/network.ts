@@ -382,3 +382,22 @@ const setRandomPrimaryNode = (nodes: Node[]): Node[] => {
     const randIdx = Math.floor(Math.random() * nodes.length)
     return nodes.map((n, idx) => ({ ...n, isPrimary: idx === randIdx }))
 }
+
+export function getRebasedExplorerUrl(
+    path: string,
+    network: NetworkId,
+    getUrlWithDeviceId: (url: URL) => URL = (url) => url
+): string {
+    const explorer = 'https://explorer.iota.org'
+
+    const url = getUrlWithDeviceId(new URL(path, explorer))
+    if (explorer) {
+        url.searchParams.append('network', network)
+    }
+
+    return url.href
+}
+
+export function getRebasedAddressUrl(address: string, network: NetworkId): string {
+    return getRebasedExplorerUrl(`/address/${address}`, network)
+}

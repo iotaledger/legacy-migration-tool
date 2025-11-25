@@ -3,7 +3,7 @@ import { Writable } from 'svelte/store'
 import { AccountIdentifier } from './account'
 
 export interface MigrationAddress {
-    bech32: string
+    ed25519: string
     trytes: string
 }
 
