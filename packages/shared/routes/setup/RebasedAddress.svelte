@@ -2,7 +2,7 @@
     import { Button, Input, OnboardingLayout, Text } from 'shared/components'
     import { appRouter } from '@core/router'
     import { migrationAddress } from '../../lib/migration'
-    import { ed25519HexToTernary } from '../../lib/ed25519'
+    import { hexAddressToTernary } from '../../lib/ed25519'
     import { Platform } from 'shared/lib/platform'
 
     export let locale
@@ -49,7 +49,7 @@
 
         try {
             busy = true
-            const trytes = ed25519HexToTernary(rebasedAddress)
+            const trytes = hexAddressToTernary(rebasedAddress)
             migrationAddress.set({ ed25519: rebasedAddress, trytes })
             $appRouter.next()
         } catch (err) {
