@@ -17,6 +17,8 @@ export const CHRYSALIS_DEVNET_ID = 'chrysalis-devnet'
 export const CHRYSALIS_DEVNET_NAME = 'Chrysalis Devnet'
 export const CHRYSALIS_DEVNET_BECH32_HRP = 'atoi'
 
+export const EXPLORER_BASE_URL = 'https://explorer.iota.org'
+
 export const MAINNET_EXPLORER = 'https://explorer.iota.org/mainnet'
 export const DEVNET_EXPLORER = 'https://explorer.iota-alphanet.iotaledger.net/devnet'
 
@@ -388,13 +390,8 @@ export function getRebasedExplorerUrl(
     network: NetworkId,
     getUrlWithDeviceId: (url: URL) => URL = (url) => url
 ): string {
-    const explorer = 'https://explorer.iota.org'
-
-    const url = getUrlWithDeviceId(new URL(path, explorer))
-    if (explorer) {
-        url.searchParams.append('network', network)
-    }
-
+    const url = getUrlWithDeviceId(new URL(path, EXPLORER_BASE_URL))
+    url.searchParams.append('network', network)
     return url.href
 }
 

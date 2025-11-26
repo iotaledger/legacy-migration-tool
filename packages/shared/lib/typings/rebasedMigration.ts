@@ -10,6 +10,7 @@ export interface DryRunRebasedMigrationResponse {
 
 export interface RebasedMigrationResponse {
     migratedAddresses: Record<string, number>
+    operationID: string
     targetAddress: string
     tokenMigrated: string
     txDigest: string
