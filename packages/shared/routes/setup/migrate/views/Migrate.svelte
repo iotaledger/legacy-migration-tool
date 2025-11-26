@@ -15,7 +15,6 @@
         migrationAddress,
         migrationLog,
         prepareMigrationLog,
-        sendOffLedgerMigrationRequest,
         sendRebasedMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
@@ -53,6 +52,17 @@
 
     let closeTransport = () => {}
 
+    function isRebasedErrorModel(error: any): boolean {
+        return error && typeof error === 'object' && 'status' in error && 'title' in error && 'errors' in error
+    }
+
+    function getErrorMessage(err: any): string {
+        if (isRebasedErrorModel(err)) {
+            const errorMessages = err.errors?.map((e) => e.message).join(', ') || err.detail
+            return `${err.title} (${err.status}): ${errorMessages}`
+        }
+        return err?.message ?? err?.toString()
+    }
     const unsubscribe = confirmedBundles.subscribe((newConfirmedBundles) => {
         newConfirmedBundles.forEach((bundle) => {
             if ($hasSingleBundle && bundle.confirmed) {
@@ -69,11 +79,11 @@
 
             if (legacyLedger) {
                 const _onConnected = () => {
+                    prepareMigrationLog([], migratableBalance)
                     Platform.ledger
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            prepareMigrationLog([], migratableBalance)
                             return createLedgerMigrationBundle(
                                 0,
                                 get(migrationAddress),
@@ -105,7 +115,7 @@
                             }
                         })
                         .catch((err) => {
-                            const error = err?.message ?? err?.toString()
+                            const errorMessage = getErrorMessage(err)
 
                             loading = false
                             closePopup(true) // close transaction popup
@@ -115,13 +125,21 @@
                             showAppNotification({
                                 type: 'error',
                                 message:
-                                    legacyErrorMessage === 'error.global.generic' ? error : locale(legacyErrorMessage),
+                                    legacyErrorMessage === 'error.global.generic'
+                                        ? errorMessage
+                                        : locale(legacyErrorMessage),
                             })
 
                             console.error(err)
-                            updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+
+                            // Update migration log with stringified error object and message
+                            updateMigrationLog(get(migrationLog).length - 1, {
+                                error: JSON.stringify(err, null, 2),
+                                errorMessage,
+                            })
+
                             hasError = true
-                            addMigrationError(error)
+                            addMigrationError(errorMessage)
                         })
                 }
                 const _onCancel = () => {
@@ -129,10 +147,13 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
+                prepareMigrationLog([], migratableBalance)
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            trytes: reverseTrytesSoftware,
+                        })
                         return sendRebasedMigrationRequest(reverseTrytesSoftware, 0)
                     })
                     .then((response: RebasedMigrationResponse) => {
@@ -150,16 +171,20 @@
                         }
                     })
                     .catch((err) => {
-                        const error = err?.message ?? err?.toString()
+                        const errorMessage = getErrorMessage(err)
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error || 'Failed to prepare transfers',
+                            message: errorMessage || 'Failed to prepare transfers',
                         })
-                        console.error(error)
-                        updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                        console.error(err)
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            error: JSON.stringify(err, null, 2),
+                            errorMessage,
+                        })
+
                         hasError = true
-                        addMigrationError(error)
+                        addMigrationError(errorMessage)
                     })
             }
         } else {
@@ -222,6 +247,11 @@
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
         {#if hasError}
+            <div class="rounded-lg border-2 border-red-500 bg-red-50 dark:bg-red-900 dark:bg-opacity-20 p-6 space-y-3">
+                <Text error secondary classes="text-center">
+                    {locale('views.migrate.errorInstructions')}
+                </Text>
+            </div>
             <Button classes="w-full" onClick={exportMigrationLog}>
                 {locale('views.congratulations.exportMigration')}
             </Button>

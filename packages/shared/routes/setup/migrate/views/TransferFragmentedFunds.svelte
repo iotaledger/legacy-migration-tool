@@ -57,6 +57,18 @@
 
     const { didComplete } = $migration
 
+    function isRebasedErrorModel(error: any): boolean {
+        return error && typeof error === 'object' && 'status' in error && 'title' in error && 'errors' in error
+    }
+
+    function getErrorMessage(err: any): string {
+        if (isRebasedErrorModel(err)) {
+            const errorMessages = err.errors?.map((e) => e.message).join(', ') || err.detail
+            return `${err.title} (${err.status}): ${errorMessages}`
+        }
+        return err?.message ?? err?.toString()
+    }
+
     let transactions = get(unmigratedBundles).map((_bundle, index) => ({
         ..._bundle,
         name: locale('views.transferFragmentedFunds.transaction', { values: { number: index + 1 } }),
@@ -208,6 +220,7 @@
                       promise
                           .then((acc) => {
                               if (legacyLedger) {
+                                  prepareMigrationLog([], transaction.balance)
                                   return Platform.ledger
                                       .selectSeed(
                                           $hardwareIndexes.accountIndex,
@@ -216,7 +229,6 @@
                                       )
                                       .then(({ iota, callback }) => {
                                           closeTransport = callback
-                                          prepareMigrationLog([], transaction.balance)
                                           return createLedgerMigrationBundle(
                                               transaction.index,
                                               get(migrationAddress),
@@ -252,9 +264,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
 
                                           closePopup(true) // close transaction popup
                                           closeTransport()
@@ -263,17 +280,20 @@
                                           const legacyErrorMessage = getLegacyErrorMessage(err)
                                           throw new Error(
                                               legacyErrorMessage === 'error.global.generic'
-                                                  ? error
+                                                  ? errorMessage
                                                   : locale(legacyErrorMessage)
                                           )
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
+                                  prepareMigrationLog([], transaction.balance)
 
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              trytes: reverseTrytesSoftware,
+                                          })
                                           return sendRebasedMigrationRequest(reverseTrytesSoftware, transaction.index)
                                       })
                                       .then((response: RebasedMigrationResponse) => {
@@ -288,9 +308,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
                                           throw new Error(err)
                                       })
                               }

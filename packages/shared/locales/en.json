@@ -273,7 +273,8 @@
             "minimumMigrationAmountSpentAddresses": "The minimum migration amount for each spent address is 1 Mi. Check again if your balance doesn't look right.",
             "tooManyAddressesToMigrate": "You have too many addresses with a low balance to migrate. Check again if your total balance doesn't look right.",
             "cannotMigrateAllYourFunds": "We cannot migrate all of your funds because some addresses are too low in value. You can proceed anyway. {value} will be lost.",
-            "error": "There was an error migrating your funds. Please try again."
+            "error": "There was an error migrating your funds. Please try again.",
+            "errorInstructions": "Please export your migration log and try again later. If the problem persists, contact us on Discord for support."
         },
         "bundleMiningWarning": {
             "title": "Warning",
@@ -871,7 +872,7 @@
             "transaction": {
                 "title": "Confirm transaction",
                 "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted.",
-                "warning": "Due to constraints in the legacy network, addresses with amounts below the minimum migratable threshold will show 1 IOTA as the input amount.",
+                "warning": "⚠️ Important: Your Ledger displays amounts in the old unit format. MIOTA is now called IOTA, and decimal places have changed. Unit conversion: 1Gi → 1IOTA | 1Mi → 1,000,000nano. Verify the numeric value matches.",
                 "inputAmount": "Amount that will be migrated: {amount}"
             }
         },
