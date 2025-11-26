@@ -1,0 +1,873 @@
+2025-11-25 13:02:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:02:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:02:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:21 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:02:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:02:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:02:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:02:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:02:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:02:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:02:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:02:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:02:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:02:51 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:03:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:03:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:03:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:51 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:03:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:03:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:03:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:51 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:03:54 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:03:54 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:54 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:03:54 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:03:54 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:01 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:01 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:01 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:01 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:01 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:09 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:11 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:14 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:14 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:14 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:14 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:14 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:16 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:16 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:16 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:18 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:18 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:18 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:18 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:18 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:20 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:24 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:24 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:24 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:24 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:24 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:26 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:28 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:28 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:28 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:30 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:31 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:32 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:32 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:32 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:04:59 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:04:59 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:59 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:04:59 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:04:59 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:05:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:05:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:05:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:05:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:05:08 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:07:00 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:07:00 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:07:00 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:07:00 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:07:00 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:20 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:20 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:21 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:26 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:26 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:32 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:32 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:32 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:35 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:35 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:35 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:37 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:37 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:37 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:37 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:37 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:37 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:41 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:41 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:41 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:41 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:41 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:46 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:46 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:46 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:51 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:55 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:55 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:55 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:55 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:56 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:56 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:56 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:56 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:56 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:08:58 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:08:58 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:58 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:08:58 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:08:58 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:21 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:21 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:25 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:25 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:25 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:28 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:28 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:28 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:28 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:32 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:32 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:32 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:32 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:35:44 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:35:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:44 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:35:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:35:44 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:37:30 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:37:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:37:30 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:37:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:37:30 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:39:46 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:39:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:39:46 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:39:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:39:46 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:13 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:13 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:13 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:13 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:14 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:14 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:14 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:14 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:14 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:16 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:16 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:16 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:16 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:19 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:19 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:19 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:19 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:19 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:22 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:25 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:25 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:25 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:25 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:27 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:27 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:27 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:27 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:29 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:29 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:29 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:29 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:31 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:31 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:31 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:33 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:33 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:33 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:33 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:33 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:35 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:35 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:35 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:35 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:37 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:37 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:37 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:37 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:38 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:38 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:38 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:38 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:38 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:40 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:40 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:40 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:40 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:40 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:42 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:42 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:42 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:42 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:42 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:44 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:44 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:44 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:46 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:46 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:46 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:46 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:48 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:48 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:48 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:48 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:48 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:42:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:42:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:42:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:42:50 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:43:07 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:43:07 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:43:07 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:43:07 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:43:07 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:44:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:44:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:44:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:44:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:44:50 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:46:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:46:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:46:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:46:34 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:46:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:48:17 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:48:17 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:48:17 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:48:17 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:48:17 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:50:00 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:50:00 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:50:00 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:50:00 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:50:00 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:51:43 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:51:43 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:51:43 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:51:43 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:51:43 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:52:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:52:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:52:08 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:08 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:52:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:52:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:52:09 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:09 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:52:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:52:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:52:11 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:11 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-25 13:52:30 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-25 13:52:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:30 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-25 13:52:30 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-25 13:52:30 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:03:42 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:03:42 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:42 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:03:42 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:42 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:03:43 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:03:43 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:43 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:03:43 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:43 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:03:44 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:03:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:44 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:03:44 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:44 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:03:47 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:03:47 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:47 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:03:47 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:47 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:03:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:03:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:03:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:03:50 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:04:07 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:04:07 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:04:07 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:04:07 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:04:07 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:40:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:40:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:40:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:50 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:40:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:40:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:50 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:40:50 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:50 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:40:51 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:40:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:40:51 iota_ledger::transport::transport_tcp      [94mDEBUG[0m successfully connected to server 127.0.0.1:9999
+2025-11-26 09:40:51 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:56:57 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:56:57 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:56:57 ledger                                     [92mINFO [0m [ 15] << 0105424f4c4f5305312e352e309000
+2025-11-26 09:56:57 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:56:57 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:56:57 ledger                                     [92mINFO [0m [  2] << 6e01
+2025-11-26 09:56:57 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 09:56:59 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:56:59 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:56:59 ledger                                     [92mINFO [0m [ 15] << 0105424f4c4f5305312e352e309000
+2025-11-26 09:56:59 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:56:59 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:56:59 ledger                                     [92mINFO [0m [  2] << 6e01
+2025-11-26 09:56:59 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 09:57:00 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:00 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:00 ledger                                     [92mINFO [0m [ 15] << 0105424f4c4f5305312e352e309000
+2025-11-26 09:57:00 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:00 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:00 ledger                                     [92mINFO [0m [  2] << 6e01
+2025-11-26 09:57:00 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 09:57:02 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:02 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:02 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:02 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:02 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:02 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:02 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:03 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:03 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:03 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:03 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:03 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:04 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:04 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:04 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:04 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:04 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:04 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:04 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:11 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:11 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:11 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:11 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:11 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:11 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:11 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:19 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:19 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:19 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:19 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:19 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:19 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:19 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:25 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:25 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:25 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:25 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:25 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:25 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:25 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:33 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:33 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:33 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:33 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:33 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:33 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:33 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:42 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:42 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:42 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:42 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:42 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:42 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:42 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:49 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:49 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:49 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:49 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:49 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:49 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:49 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:57:56 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:57:56 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:56 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:57:56 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:57:56 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:57:56 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:57:56 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:58:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:58:03 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:58:03 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:58:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:58:03 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:58:03 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:58:03 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 09:58:31 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 09:58:31 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:58:31 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 09:58:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 09:58:31 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 09:58:31 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 09:58:31 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:10:19 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:19 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:19 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:19 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:19 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:19 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:19 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:21 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:21 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:21 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:21 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:21 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:21 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:21 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:22 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:22 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:22 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:22 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:22 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:24 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:24 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:24 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:24 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:24 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:24 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:24 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:25 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:25 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:25 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:25 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:25 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:25 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:25 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:27 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:27 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:27 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:27 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:27 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:27 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:27 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:28 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:28 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:28 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:28 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:28 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:28 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:28 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:30 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:30 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:30 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:30 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:30 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:30 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:30 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:31 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:31 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:31 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:31 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:31 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:31 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:31 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:33 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:33 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:33 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:33 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:33 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:33 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:10:33 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:10:34 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:34 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:34 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:10:34 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:34 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:34 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:10:34 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:10:36 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:36 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:36 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:10:36 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:36 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:36 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:10:36 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:10:40 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:10:40 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:40 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:10:40 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:10:40 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:10:40 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:10:40 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:11:22 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:11:22 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:11:22 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:11:22 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:11:22 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:11:22 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:11:22 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:15:58 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:15:58 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:15:58 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:15:58 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:15:58 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:15:58 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:15:58 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:00 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:00 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:00 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:00 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:00 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:00 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:00 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:01 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:01 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:01 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:01 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:01 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:01 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:01 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:03 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:03 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:03 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:03 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:03 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:04 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:04 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:04 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:04 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:04 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:04 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:04 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:06 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:06 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:06 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:06 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:06 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:06 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:16:06 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:16:07 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:07 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:07 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:07 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:07 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:07 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:07 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:16:08 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:08 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:08 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:08 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:08 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:08 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:08 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:16:10 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:10 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:10 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:10 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:11 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:11 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:11 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:16:38 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:38 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:38 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:38 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:38 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:38 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:38 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:16:52 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:52 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:52 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:52 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:52 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:52 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:52 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:16:59 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:16:59 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:59 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:16:59 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:16:59 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:16:59 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:16:59 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:17:16 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:17:16 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:16 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:17:16 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:17:16 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:16 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:17:16 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:17:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:17:26 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:26 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:17:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:17:26 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:26 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:17:26 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:17:35 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:17:35 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:35 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:17:35 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:17:35 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:35 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:17:35 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:17:43 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:17:43 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:43 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:17:43 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:17:43 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:43 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:17:43 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:17:49 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:17:49 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:49 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:17:49 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:17:49 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:17:49 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:17:49 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:19:47 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:47 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:47 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:47 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:47 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:47 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:47 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:47 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:47 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:48 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:48 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:48 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:48 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:48 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:49 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:49 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:49 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:49 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:49 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:49 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:49 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:50 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:50 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:51 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:51 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:51 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:51 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:51 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:52 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:52 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:52 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:52 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:52 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:52 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:52 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:53 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:54 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:54 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:54 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:54 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:54 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:54 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:55 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:55 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:55 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:55 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:55 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:55 ledger                                     [92mINFO [0m [  2] << 5515
+2025-11-26 10:19:55 iota_wallet::error                         [92mINFO [0m ledger error: unknown
+2025-11-26 10:19:56 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:19:57 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:57 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:19:57 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:19:57 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:19:57 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:19:57 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:03 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:03 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:03 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:03 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:03 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:03 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:03 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:10 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:10 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:10 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:10 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:10 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:10 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:10 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:20 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:20 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:20 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:20 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:20 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:20 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:20 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:27 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:27 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:27 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:27 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:27 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:27 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:27 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:45 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:45 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:45 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:45 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:45 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:45 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:45 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:52 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:52 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:52 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:52 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:52 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:52 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:52 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:20:58 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:20:58 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:58 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:20:58 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:20:59 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:20:59 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:20:59 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:21:26 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:21:26 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:21:26 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:21:26 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:21:26 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:21:26 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:21:26 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:23:09 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:23:09 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:23:09 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:23:09 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:23:09 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:23:09 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:23:09 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
+2025-11-26 10:24:53 iota_wallet::signing::ledger               [92mINFO [0m ledger get_opened_app
+2025-11-26 10:24:53 ledger                                     [92mINFO [0m [ 64] << 01010500000005b00100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:24:53 ledger                                     [92mINFO [0m [ 23] << 010b494f5441204c656761637905302e352e3901029000
+2025-11-26 10:24:53 iota_wallet::signing::ledger               [92mINFO [0m get_ledger
+2025-11-26 10:24:53 ledger                                     [92mINFO [0m [ 64] << 010105000000057bff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2025-11-26 10:24:53 ledger                                     [92mINFO [0m [  2] << 6e00
+2025-11-26 10:24:53 iota_wallet::error                         [92mINFO [0m ledger error: Class not supported
