@@ -58,7 +58,19 @@
 
     function getErrorMessage(err: any): string {
         if (isRebasedErrorModel(err)) {
-            const errorMessages = err.errors?.map((e) => e.message).join(', ') || err.detail
+            const errorMessages =
+                err.errors
+                    ?.map((e) => {
+                        let msg = e.message
+                        if (e.location) {
+                            msg += ` (at ${e.location})`
+                        }
+                        if (e.value) {
+                            msg += `: ${e.value}`
+                        }
+                        return msg
+                    })
+                    .join(', ') || err.detail
             return `${err.title} (${err.status}): ${errorMessages}`
         }
         return err?.message ?? err?.toString()
