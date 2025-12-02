@@ -146,6 +146,24 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
+            - name: Apply OpenSSL FIPS patch to node-gyp (Linux)
+              run: |
+                  # Patch npm's bundled node-gyp used by electron-builder
+                  NODE_GYP_PATH=$(npm root -g)/npm/node_modules/node-gyp
+                  echo "Patching node-gyp at: $NODE_GYP_PATH"
+                  if [ -d "$NODE_GYP_PATH" ]; then
+                    cd "$NODE_GYP_PATH"
+                    git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}/manual-patches/openssl_fips.patch || echo "Patch may already be applied"
+                  else
+                    echo "Global node-gyp not found at $NODE_GYP_PATH"
+                  fi
+                  # Also patch local node-gyp if it exists
+                  if [ -d "${{ github.workspace }}/node_modules/node-gyp" ]; then
+                    cd "${{ github.workspace }}/node_modules/node-gyp"
+                    git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}/manual-patches/openssl_fips.patch || echo "Local patch may already be applied"
+                  fi
+              if: matrix.os == 'ubuntu-latest'
+
             - name: Rebuild backend actor system
               run: yarn build:binding
               working-directory: packages/backend/bindings/node
@@ -160,12 +178,6 @@ jobs:
               shell: bash
               env:
                   HARDCODE_NODE_ENV: true
-            - name: Apply node-hid patch (Linux)
-              run: |
-                  # This patches the binding.gyp of node-hid to define the
-                  # 'openssl_fips' variable, preventing the gyp error.
-                  sed -i 's/\x27openssl_fips\x27 != \x27\x27/\x27openssl_fips\x27/' node_modules/node-hid/binding.gyp
-              if: matrix.os == 'ubuntu-latest'
 
             - name: Set up Python 2.x (macOS)
               if: matrix.os == 'macos-13'
