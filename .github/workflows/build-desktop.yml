@@ -160,6 +160,12 @@ jobs:
               shell: bash
               env:
                   HARDCODE_NODE_ENV: true
+            - name: Apply node-hid patch (Linux)
+              run: |
+                  # This patches the binding.gyp of node-hid to define the
+                  # 'openssl_fips' variable, preventing the gyp error.
+                  sed -i 's/\x27openssl_fips\x27 != \x27\x27/\x27openssl_fips\x27/' node_modules/node-hid/binding.gyp
+              if: matrix.os == 'ubuntu-latest'
 
             - name: Set up Python 2.x (macOS)
               if: matrix.os == 'macos-13'
