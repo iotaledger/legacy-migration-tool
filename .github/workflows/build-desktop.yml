@@ -90,9 +90,6 @@ jobs:
               if: matrix.os == 'windows-latest'
 
             - name: Update node-gyp to 9.3.1 and apply patch (Windows)
-              # The node-gyp bundled with Node 14.x does not support VS 2022
-              # https://github.com/nodejs/node-gyp/blob/main/docs/Updating-npm-bundled-node-gyp.md#windows
-              # We also need to patch this issue https://github.com/nodejs/node-gyp/issues/2673#issuecomment-1239619438
               run: |
                 $NODE_DIR = (Get-Item $((gcm node).Path)).DirectoryName
                 $NODE_GYP_PATH = "$NODE_DIR\node_modules\npm\node_modules\node-gyp"
@@ -168,6 +165,23 @@ jobs:
                     git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}/manual-patches/openssl_fips.patch || echo "Local patch may already be applied"
                   fi
               if: matrix.os == 'ubuntu-latest'
+
+            - name: Apply OpenSSL FIPS patch to node-gyp (macOS)
+              run: |
+                  # Patch npm's bundled node-gyp used by electron-builder
+                  NODE_GYP_PATH=$(npm root -g)/npm/node_modules/node-gyp
+                  echo "Patching node-gyp at: $NODE_GYP_PATH"
+                  if [ -d "$NODE_GYP_PATH" ]; then
+                    cd "$NODE_GYP_PATH"
+                    if patch -p1 --forward < ${{ github.workspace }}/manual-patches/openssl_fips.patch; then
+                      echo "✓ Patch applied successfully to global node-gyp"
+                    else
+                      echo "⚠ Patch may already be applied or failed"
+                    fi
+                  else
+                    echo "✗ Global node-gyp not found at $NODE_GYP_PATH"
+                  fi
+              if: matrix.os == 'macos-13'
 
             - name: Rebuild backend actor system
               run: yarn build:binding
