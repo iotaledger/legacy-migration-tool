@@ -210,6 +210,14 @@ jobs:
                 which python2
                 python2 --version
 
+            - name: Rebuild Native Modules for Electron
+              working-directory: ./packages/desktop
+              run: |
+                # Ensure dependencies are installed first
+                yarn install
+                # Force rebuild of native modules (node-hid, keytar, etc.) for Electron
+                ./node_modules/.bin/electron-builder install-app-deps
+
             - name: Build Electron app (macOS)
               run: yarn compile:${STAGE}:mac
               env:
