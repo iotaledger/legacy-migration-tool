@@ -151,6 +151,23 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
+            - name: Apply OpenSSL FIPS patch to node-gyp (macOS)
+              run: |
+                  # Patch npm's bundled node-gyp used by electron-builder
+                  NODE_GYP_PATH=$(npm root -g)/npm/node_modules/node-gyp
+                  echo "Patching node-gyp at: $NODE_GYP_PATH"
+                  if [ -d "$NODE_GYP_PATH" ]; then
+                    cd "$NODE_GYP_PATH"
+                    if patch -p1 --forward < ${{ github.workspace }}/manual-patches/openssl_fips.patch; then
+                      echo "✓ Patch applied successfully to global node-gyp"
+                    else
+                      echo "⚠ Patch may already be applied or failed"
+                    fi
+                  else
+                    echo "✗ Global node-gyp not found at $NODE_GYP_PATH"
+                  fi
+              if: matrix.os == 'macos-15'
+
             - name: Rebuild backend actor system
               run: PYTHON=$(which python3.10) yarn build:binding
               shell: bash
