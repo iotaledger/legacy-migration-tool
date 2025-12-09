@@ -46,7 +46,7 @@ jobs:
         needs: [setup]
         strategy:
             matrix:
-                os: [ubuntu-22.04, macos-13, windows-latest]
+                os: [ubuntu-22.04, macos-15, windows-latest]
             fail-fast: false
         env:
             VERSION: ${{ needs.setup.outputs.version }}
@@ -67,7 +67,7 @@ jobs:
 
             - name: Select Xcode
               uses: maxim-lobanov/setup-xcode@v1
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
               with:
                 xcode-version: 'latest-stable'
 
@@ -113,7 +113,7 @@ jobs:
 
             - name: Set deployment target (macOS)
               run: echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> $GITHUB_ENV
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
 
             - name: Check rustc version
               run: rustc --version
@@ -162,13 +162,13 @@ jobs:
                   HARDCODE_NODE_ENV: true
 
             - name: Set up Python 2.x (macOS)
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
               run: |
                 wget https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg -O ${{ runner.temp }}/python.pkg
                 sudo installer -pkg ${{ runner.temp }}/python.pkg -target / -verbose
 
             - name: Test Python 2.x (macOS)
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
               run: |
                 which python2
                 python2 --version
@@ -181,7 +181,7 @@ jobs:
                   LEGACY_MIGRATION_TOOL_APPLE_ID: ${{ secrets.APPLE_ID }}
                   LEGACY_MIGRATION_TOOL_APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
               working-directory: packages/desktop
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
 
             - name: Build Electron app (Windows)
               run: yarn compile:${env:STAGE}:win
@@ -291,7 +291,7 @@ jobs:
             - name: Compute checksums (macOS)
               run: for i in `ls | grep 'iota-legacy-migration-tool-desktop*'` ; do shasum -a 256 $i | awk {'print $1'} > $i.sha256 ; done
               working-directory: packages/desktop/out
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15'
 
             - name: Compute checksums (Windows)
               run: Get-ChildItem "." -Filter iota-legacy-migration-tool-desktop* | Foreach-Object { $(Get-FileHash -Path $_.FullName -Algorithm SHA256).Hash | Set-Content ($_.FullName + '.sha256') }
@@ -330,7 +330,7 @@ jobs:
             - name: Downloading artifacts mac
               uses: actions/download-artifact@v4
               with:
-                  name: iota-legacy-migration-tool-desktop-macos-13
+                  name: iota-legacy-migration-tool-desktop-macos-15
                   path: assets
 
             - name: Downloading artifacts linux
