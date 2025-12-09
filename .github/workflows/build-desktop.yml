@@ -119,6 +119,9 @@ jobs:
               run: echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> $GITHUB_ENV
               if: matrix.os == 'macos-13'
 
+            - name: Check rustc version
+              run: rustc --version
+
             - name: Install required packages (Linux)
               run: |
                   sudo apt update
