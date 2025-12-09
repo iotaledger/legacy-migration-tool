@@ -46,7 +46,13 @@ jobs:
         needs: [setup]
         strategy:
             matrix:
-                os: [ubuntu-22.04, macos-15, windows-latest]
+                include:
+                  - os: ubuntu-22.04
+                    node-version: 14.21.1
+                  - os: macos-15
+                    node-version: 16.15.0
+                  - os: windows-latest
+                    node-version: 14.21.1
             fail-fast: false
         env:
             VERSION: ${{ needs.setup.outputs.version }}
@@ -58,7 +64,7 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: 16.15.0
+                  node-version: ${{ matrix.node-version }}
 
             - name: Set up Python 3.10
               uses: actions/setup-python@v4
