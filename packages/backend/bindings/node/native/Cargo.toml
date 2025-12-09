@@ -23,9 +23,6 @@ tokio = { version = "1.28.0", default-features = false }
 once_cell = { version = "1.8.0", default-features = false }
 firefly-actor-system = { path = "../../.." }
 
-[patch.crates-io]
-time = { git = "https://github.com/time-rs/time", tag = "v0.3.44" }
-
 [profile.release]
 # Build with debug symbols included
 debug = true
