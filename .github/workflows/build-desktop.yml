@@ -46,7 +46,7 @@ jobs:
         needs: [setup]
         strategy:
             matrix:
-                os: [ubuntu-22.04, ubuntu-latest, macos-13, windows-latest]
+                os: [ubuntu-22.04, macos-13, windows-latest]
             fail-fast: false
         env:
             VERSION: ${{ needs.setup.outputs.version }}
@@ -103,13 +103,9 @@ jobs:
 
             - name: Apply neon-sys patch (Windows)
               run: |
-                # Install cargo-patch using Rust 1.67 (0.3.1 won't compile with 1.90)
-                rustup toolchain install 1.67.0
-                rustup run 1.67.0 cargo install cargo-patch --version 0.3.1 --locked
+                cargo install cargo-patch --version 0.3.1 --locked
                 cp ${{ github.workspace }}\manual-patches\neon_temp_buf.patch .
                 git apply --ignore-space-change --ignore-whitespace ${{ github.workspace }}\manual-patches\windows_cargo_toml.patch
-                # Temporarily change Cargo.lock from v4 to v3 for cargo-patch
-                (Get-Content Cargo.lock -Raw) -replace 'version = 4', 'version = 3' | Set-Content Cargo.lock
                 cat Cargo.toml
                 cargo patch
               working-directory: packages/backend/bindings/node/native
@@ -128,7 +124,7 @@ jobs:
                   sudo apt install -y gcc-multilib g++-multilib build-essential libssl-dev rpm libsecret-1-dev \
                     software-properties-common apt-transport-https libudev-dev libusb-1.0-0-dev \
                     llvm-dev libclang-dev clang
-              if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Download curl (OpenSSL build)
               run: |
@@ -269,7 +265,7 @@ jobs:
               run: PYTHON=$(which python3.10) yarn compile:${STAGE}:linux
               working-directory: packages/desktop
               shell: bash
-              if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Import GPG key (Linux)
               run: |
@@ -278,19 +274,19 @@ jobs:
               env:
                   GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
                   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-              if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Sign AppImage (Linux)
               run: echo $GPG_PASSPHRASE | gpg --pinentry-mode loopback --batch --passphrase-fd 0 --armor --detach-sign --default-key contact@iota.org iota-legacy-migration-tool-desktop*.AppImage
               working-directory: packages/desktop/out
               env:
                   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-              if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Compute checksums (Linux)
               run: for i in `ls | grep 'iota-legacy-migration-tool-desktop*'` ; do sha256sum $i | awk {'print $1'} > $i.sha256 ; done
               working-directory: packages/desktop/out
-              if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-22.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Compute checksums (macOS)
               run: for i in `ls | grep 'iota-legacy-migration-tool-desktop*'` ; do shasum -a 256 $i | awk {'print $1'} > $i.sha256 ; done
