@@ -164,12 +164,15 @@ jobs:
             - name: Rebuild native modules for x64 (macOS)
               if: matrix.os == 'macos-15'
               run: |
-                # 1. Install the package explicitly since it is missing
-                yarn add -D @electron/rebuild
+                # 1. Install tool to ROOT workspace (-W is mandatory for workspaces)
+                yarn add -D -W @electron/rebuild
 
-                # 2. Force rebuild all native modules for x64 architecture
-                # This ensures they match the Electron target, not the CI runner's arch
-                npx electron-rebuild --arch x64 --force
+                # 2. Enter the desktop directory
+                cd packages/desktop
+
+                # 3. Force rebuild dependencies found in packages/desktop/package.json
+                # We point back to the root node_modules to find the executable
+                ../../node_modules/.bin/electron-rebuild --arch x64 --force
 
             - name: Apply OpenSSL FIPS patch to node-gyp (macOS)
               run: |
