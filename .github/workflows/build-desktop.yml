@@ -161,19 +161,6 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
-            - name: Rebuild native modules for x64 (macOS)
-              if: matrix.os == 'macos-15'
-              run: |
-                # 1. Install tool to ROOT workspace (-W is mandatory for workspaces)
-                yarn add -D -W @electron/rebuild
-
-                # 2. Enter the desktop directory
-                cd packages/desktop
-
-                # 3. Force rebuild dependencies found in packages/desktop/package.json
-                # We point back to the root node_modules to find the executable
-                ../../node_modules/.bin/electron-rebuild --arch x64 --force
-
             - name: Apply OpenSSL FIPS patch to node-gyp (macOS)
               run: |
                   # Patch npm's bundled node-gyp used by electron-builder
@@ -190,6 +177,19 @@ jobs:
                     echo "✗ Global node-gyp not found at $NODE_GYP_PATH"
                   fi
               if: matrix.os == 'macos-15'
+
+            - name: Rebuild native modules for x64 (macOS)
+              if: matrix.os == 'macos-15'
+              run: |
+                # 1. Install tool to ROOT workspace (-W is mandatory for workspaces)
+                yarn add -D -W @electron/rebuild@3.2.9
+
+                # 2. Enter the desktop directory
+                cd packages/desktop
+
+                # 3. Force rebuild dependencies found in packages/desktop/package.json
+                # We point back to the root node_modules to find the executable
+                ../../node_modules/.bin/electron-rebuild --arch x64 --force
 
             - name: Rebuild backend actor system
               run: |
