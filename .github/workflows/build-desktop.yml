@@ -192,6 +192,17 @@ jobs:
               env:
                   HARDCODE_NODE_ENV: true
 
+            - name: Set up Python 2.x (macOS)
+              if: matrix.os == 'macos-15'
+              run: |
+                wget https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg -O ${{ runner.temp }}/python.pkg
+                sudo installer -pkg ${{ runner.temp }}/python.pkg -target / -verbose
+
+            - name: Test Python 2.x (macOS)
+              if: matrix.os == 'macos-15'
+              run: |
+                which python2
+                python2 --version
 
             - name: Build Electron app (macOS)
               run: yarn compile:${STAGE}:mac
