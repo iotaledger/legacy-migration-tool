@@ -61,6 +61,14 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            # Force x64 architecture for macOS builds to avoid arm64/x86_64 mismatch for native modules
+            - name: Set x64 architecture env (macOS)
+              if: matrix.os == 'macos-15'
+              run: |
+                echo "ARCH=x64" >> $GITHUB_ENV
+                echo "npm_config_arch=x64" >> $GITHUB_ENV
+                echo "npm_config_target_arch=x64" >> $GITHUB_ENV
+
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
@@ -184,17 +192,6 @@ jobs:
               env:
                   HARDCODE_NODE_ENV: true
 
-            - name: Set up Python 2.x (macOS)
-              if: matrix.os == 'macos-15'
-              run: |
-                wget https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg -O ${{ runner.temp }}/python.pkg
-                sudo installer -pkg ${{ runner.temp }}/python.pkg -target / -verbose
-
-            - name: Test Python 2.x (macOS)
-              if: matrix.os == 'macos-15'
-              run: |
-                which python2
-                python2 --version
 
             - name: Build Electron app (macOS)
               run: yarn compile:${STAGE}:mac
@@ -359,7 +356,7 @@ jobs:
             - name: Downloading artifacts linux
               uses: actions/download-artifact@v4
               with:
-                  name: iota-legacy-migration-tool-desktop-ubuntu-latest
+                  name: iota-legacy-migration-tool-desktop-ubuntu-22.04
                   path: assets
 
             - name: Preparing release body
