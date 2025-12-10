@@ -182,7 +182,7 @@ jobs:
               if: matrix.os == 'macos-15'
               run: |
                 # 1. Install tool to ROOT workspace (-W is mandatory for workspaces)
-                yarn add -D -W @electron/rebuild@3.2.9
+                yarn add -D -W electron/rebuild@3.2.9
 
                 # 2. Enter the desktop directory
                 cd packages/desktop
