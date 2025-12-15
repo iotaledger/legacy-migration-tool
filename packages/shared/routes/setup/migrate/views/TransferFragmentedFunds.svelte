@@ -371,7 +371,7 @@
         <Text type="h2">{locale('views.migrate.title')}</Text>
     </div>
     <div slot="leftpane__content" class="h-full flex flex-col flex-wrap">
-        <Text type="p" secondary classes="mb-4">{locale('views.transferFragmentedFunds.body1')}</Text>
+        <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
         {#if legacyLedger}
             <Text type="p" secondary classes="mb-4">
                 {locale('views.transferFragmentedFunds.body2', { values: { legacy: LedgerAppName.IOTALegacy } })}
@@ -381,10 +381,11 @@
             <div
                 class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
             >
-                <Text type="p" secondary classes="text-xs mb-2">Migration Address:</Text>
+                <Text type="p" secondary classes="text-xs mb-2">{locale('views.migrate.addressTitle')}</Text>
                 <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
             </div>
         {/if}
+        <Text type="p" secondary highlighted classes="mb-4 font-bold">{locale('views.migrate.body2')}</Text>
         <div class="flex-auto overflow-y-auto h-1 space-y-4 w-full scrollable-y scroll-secondary">
             {#each transactions as transaction}
                 <TransactionItem {...transaction} {locale} />
