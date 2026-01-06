@@ -2,7 +2,7 @@ const TransportHid = require('@ledgerhq/hw-transport-node-hid').default
 const TransportSpeculos = require('@ledgerhq/hw-transport-node-speculos').default
 const Iota = require('hw-app-iota').default
 
-const USE_SIMULATOR = false
+const USE_SIMULATOR = true
 const SIMULATOR_PORT = 9999
 
 async function createTransport() {
@@ -94,7 +94,7 @@ class Ledger {
 
                     this.iota = new Iota(this.transport)
 
-                    await this.iota.setActiveSeed(`44'/4218'/${index}'/${page}'`, security || 2)
+                    await this.iota.setActiveSeed(`44'/4218'/${508396330 + index}'/${page}'`, security || 2)
 
                     clearTimeout(timeout)
 
