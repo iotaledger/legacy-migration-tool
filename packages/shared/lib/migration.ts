@@ -48,8 +48,11 @@ export const MIGRATION_NODES = ['https://nodes.iota.org', 'https://nodes.iota.ca
 
 export const ADDRESS_SECURITY_LEVEL = 2
 
-/** Amount to hardcode in the inputs to bypass legacy validation in the bundle library */
-export const MINIMUM_MIGRATABLE_AMOUNT = 1000000000
+/**
+ * Amount to hardcode in the inputs to bypass legacy validation in the bundle library
+ * Note: it has to be 6 decimals and not 9 because the legacy network was with 6 decimals
+ * */
+export const MINIMUM_MIGRATABLE_AMOUNT = 1000000
 
 /** Minimum migration balance */
 export const MINIMUM_MIGRATION_BALANCE = 0
