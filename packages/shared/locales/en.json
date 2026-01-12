@@ -254,6 +254,7 @@
             "title": "Migrate your funds",
             "body1": "This is an automated process to transfer your funds to your new wallet.",
             "body2": "It may take some time. Do not turn off your device during the migration.",
+            "addressTitle": "Migration Address:",
             "existing": "Your old wallet",
             "new": "Your new wallet",
             "learn": "Learn about the migration",

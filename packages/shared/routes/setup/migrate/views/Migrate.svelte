@@ -237,7 +237,7 @@
             <div
                 class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
             >
-                <Text type="p" secondary classes="text-xs mb-2">Migration Address:</Text>
+                <Text type="p" secondary classes="text-xs mb-2">{locale('views.migrate.addressTitle')}</Text>
                 <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
             </div>
         {/if}
