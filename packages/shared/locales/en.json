@@ -873,6 +873,7 @@
                 "title": "Confirm transaction",
                 "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted.",
                 "warning": "⚠️ Important: Your Ledger displays amounts in the old unit format. MIOTA is now called IOTA, and decimal places have changed. Unit conversion: 1Gi → 1IOTA | 1Mi → 1,000,000nano. Verify the numeric value matches.",
+                "warning-amount": "Due to constraints in the legacy network, addresses with amounts below the minimum migratable threshold will show 1,000,000 nano as the input amount.",
                 "inputAmount": "Amount that will be migrated: {amount}"
             }
         },
