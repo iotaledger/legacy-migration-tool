@@ -72,7 +72,7 @@ const HARDWARE_ADDRESS_GAP = 3
 const CHECKSUM_LENGTH = 9
 
 const DEVELOP_BASE_URL = 'https://migration-api-dnyf5n-911810.iota.lmoe.dev'
-const PRODUCTION_BASE_URL = 'https://migrator-api.stardust-mainnet.iotaledger.net'
+const PRODUCTION_BASE_URL = 'https://api.legacy-migrator.iota.cafe'
 
 const DEVELOP_CHAIN_ID = 'atoi1ppvjyr3nz8mwd6h7pahtgf4emcd3z9kpgys6hn2w5mnahmxu4t2gwvgxd92'
 const PRODUCTION_CHAIN_ID = 'iota1pphx6hnmxqdqd2u4m59e7nvmcyulm3lfm58yex5gmud9qlt3v9crs9sah6m'
