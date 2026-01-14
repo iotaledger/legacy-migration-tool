@@ -10,14 +10,13 @@
   <a href="#about">About</a> ◈
   <a href="#installation">Installation</a> ◈
   <a href="#getting-started">Contributing</a> ◈
-  <a href="#joining-the-discussion">Joining the discussion</a> 
 </p>
 
 ---
 
 ## About
 
-Legacy Migration Tool is IOTA's tool to migrate funds from legacy to stardust protocol.
+The Legacy Migration Tool allows users to migrate IOTA funds from the legacy protocol to the latest version.
 
 ## Installation
 
@@ -30,7 +29,3 @@ There are a few options to install Legacy Migration Tool:
 
 Help out the Legacy Migration Tool project by filing a [bug report](https://github.com/iotaledger/legacy-migration-tool/issues/new?assignees=&labels=bug&template=bug_report.yml), making a [feature request](https://github.com/iotaledger/legacy-migration-tool/issues/new?assignees=&labels=feat&template=feature_request.md) or opening a [pull request](https://github.com/iotaledger/legacy-migration-tool/pulls/).
 See the [contribution guidelines](https://github.com/iotaledger/legacy-migration-tool/blob/main/.github/CONTRIBUTING.md) for more.
-
-## Joining the discussion
-
-If you have any questions for the developers or ideas you want to discuss, join the #firefly-discussion channel on our [Discord](https://discord.iota.org/).
