@@ -20,6 +20,7 @@
         Legal,
         Migrate,
         Password,
+        RebasedAddress,
         Protect,
         Secure,
         Setup,
@@ -61,8 +62,6 @@
         await renameOldProfileFoldersToId()
 
         initAppSettings.set($appSettings)
-
-        await pollMarketData()
 
         // @ts-ignore: This value is replaced by Webpack DefinePlugin
         /* eslint-disable no-undef */
@@ -115,6 +114,9 @@
         </Route>
         <Route route={AppRoute.Password}>
             <Password locale={$_} />
+        </Route>
+        <Route route={AppRoute.RebasedAddress}>
+            <RebasedAddress locale={$_} />
         </Route>
         <Route route={AppRoute.Protect} transition={false}>
             <Protect locale={$_} />

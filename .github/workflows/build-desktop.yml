@@ -46,37 +46,43 @@ jobs:
         needs: [setup]
         strategy:
             matrix:
-                os: [ubuntu-20.04, macos-13, windows-latest]
+                include:
+                  - os: ubuntu-22.04
+                    node-version: 14.21.1
+                  - os: macos-15-intel
+                    node-version: 16.15.0
+                  - os: windows-latest
+                    node-version: 14.21.1
             fail-fast: false
         env:
             VERSION: ${{ needs.setup.outputs.version }}
             STAGE: ${{ needs.setup.outputs.stage || github.event.inputs.stage }}
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Set up Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
-                  node-version: 14.x
+                  node-version: ${{ matrix.node-version }}
 
             - name: Set up Python 3.10
               uses: actions/setup-python@v4
               with:
-                python-version: '3.10'
+                  python-version: '3.10'
 
             - name: Select Xcode
               uses: maxim-lobanov/setup-xcode@v1
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
               with:
                 xcode-version: 'latest-stable'
 
             - name: Install Rust toolchain
               uses: actions-rs/toolchain@v1
               with:
-                toolchain: "1.67.0"
-                profile: minimal
-                override: true
+                  toolchain: '1.75.0'
+                  profile: minimal
+                  override: true
 
             - name: Install LLVM and Clang (Windows) # required for bindgen to work, see https://github.com/rust-lang/rust-bindgen/issues/1797
               uses: KyleMayes/install-llvm-action@32c4866ebb71e0949e8833eb49beeebed48532bd
@@ -113,7 +119,7 @@ jobs:
 
             - name: Set deployment target (macOS)
               run: echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> $GITHUB_ENV
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
 
             - name: Install required packages (Linux)
               run: |
@@ -121,7 +127,14 @@ jobs:
                   sudo apt install -y gcc-multilib g++-multilib build-essential libssl-dev rpm libsecret-1-dev \
                     software-properties-common apt-transport-https libudev-dev libusb-1.0-0-dev \
                     llvm-dev libclang-dev clang
-              if: matrix.os == 'ubuntu-20.04'
+              if: matrix.os == 'ubuntu-22.04'
+
+            - name: Download curl (OpenSSL build)
+              run: |
+                curl -L https://curl.se/windows/dl-8.10.1_2/curl-8.10.1_2-win64-mingw.zip -o curl.zip
+                tar -xf curl.zip
+                echo "$PWD/curl-8.10.1_2-win64-mingw/bin" >> $env:GITHUB_PATH
+              if: matrix.os == 'windows-latest'
 
             - name: Enable verbose output for electron-builder (macOS/Linux)
               run: echo "DEBUG=electron-builder" >> $GITHUB_ENV
@@ -135,6 +148,23 @@ jobs:
               # Increase network timeout threshold to reduce build failures on Windows
               run: yarn --network-timeout 1000000
 
+            - name: Apply OpenSSL FIPS patch to node-gyp (macOS)
+              run: |
+                  # Patch npm's bundled node-gyp used by electron-builder
+                  NODE_GYP_PATH=$(npm root -g)/npm/node_modules/node-gyp
+                  echo "Patching node-gyp at: $NODE_GYP_PATH"
+                  if [ -d "$NODE_GYP_PATH" ]; then
+                    cd "$NODE_GYP_PATH"
+                    if patch -p1 --forward < ${{ github.workspace }}/manual-patches/openssl_fips.patch; then
+                      echo "✓ Patch applied successfully to global node-gyp"
+                    else
+                      echo "⚠ Patch may already be applied or failed"
+                    fi
+                  else
+                    echo "✗ Global node-gyp not found at $NODE_GYP_PATH"
+                  fi
+              if: matrix.os == 'macos-15-intel'
+
             - name: Rebuild backend actor system
               run: yarn build:binding
               working-directory: packages/backend/bindings/node
@@ -144,20 +174,20 @@ jobs:
               working-directory: packages/desktop
 
             - name: Bundle desktop JS
-              run: yarn build:${STAGE}
+              run: PYTHON=$(which python3.10) yarn build:${STAGE}
               working-directory: packages/desktop
               shell: bash
               env:
                   HARDCODE_NODE_ENV: true
 
             - name: Set up Python 2.x (macOS)
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
               run: |
                 wget https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg -O ${{ runner.temp }}/python.pkg
                 sudo installer -pkg ${{ runner.temp }}/python.pkg -target / -verbose
-            
+
             - name: Test Python 2.x (macOS)
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
               run: |
                 which python2
                 python2 --version
@@ -170,20 +200,91 @@ jobs:
                   LEGACY_MIGRATION_TOOL_APPLE_ID: ${{ secrets.APPLE_ID }}
                   LEGACY_MIGRATION_TOOL_APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
               working-directory: packages/desktop
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
 
             - name: Build Electron app (Windows)
               run: yarn compile:${env:STAGE}:win
-              env:
-                  CSC_LINK: ${{ secrets.WIN_CERT_BASE64 }}
-                  CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PASSWORD }}
               working-directory: packages/desktop
               if: matrix.os == 'windows-latest'
 
+            - name: Restore client certificates for signing
+              shell: bash
+              env:
+                SIGNING_CLIENT_CERT: ${{ secrets.SIGNING_CLIENT_CERT }}
+                SIGNING_CLIENT_KEY:  ${{ secrets.SIGNING_CLIENT_KEY }}
+              run: |
+                echo "${SIGNING_CLIENT_CERT}" | base64 -d > client.crt
+                echo "${SIGNING_CLIENT_KEY}"  | base64 -d > client.key
+                chmod 600 client.key
+              if: matrix.os == 'windows-latest'
+
+            - name: Code-sign Windows binary
+              shell: bash
+              env:
+                SIGNING_API_URL: ${{ secrets.SIGNING_API_URL }}
+                SIGNING_API_KEY: ${{ secrets.SIGNING_API_KEY }}
+                VERSION:         ${{ env.VERSION }}
+              run: |
+                unsigned="./packages/desktop/out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
+                signed="$unsigned"   # overwrite so downstream steps see the signed file
+
+                echo "🖊️  Signing $unsigned ..."
+                ./curl-8.10.1_2-win64-mingw/bin/curl.exe \
+                    -X POST \
+                    -k \
+                    "$SIGNING_API_URL/sign" \
+                    --cert client.crt \
+                    --key client.key \
+                    -H "X-API-Key: $SIGNING_API_KEY" \
+                    --data-binary "@$unsigned" \
+                    -o "$signed"
+                echo "✅  Signing complete"
+              if: matrix.os == 'windows-latest'
+
+            - name: Update latest.yml with signed file details
+              shell: bash
+              run: |
+                FILE="packages/desktop/out/iota-legacy-migration-tool-desktop-${{ env.VERSION }}.exe"
+                LATEST_YML="packages/desktop/out/latest.yml"
+
+                # Get the file size in bytes
+                SIZE=$(stat -c%s "$FILE")
+
+                # Calculate Base64-encoded SHA-512 hash using CertUtil
+                HASH=$(certutil -hashfile "$FILE" SHA512 | tail -n +2 | head -n -1 | tr -d '\r\n' | xxd -r -p | base64)
+                # Remove any newlines from the HASH
+                HASH=$(echo "$HASH" | tr -d '\n')
+
+                # Log the calculated hash and file size
+                echo "Calculated SHA-512 hash (Base64): $HASH"
+                echo "File size (bytes): $SIZE"
+
+                # Install Chocolatey and yq (for Windows)
+                if ! command -v yq &> /dev/null; then
+                    echo "yq not found. Installing yq..."
+                    powershell -Command "
+                        Set-ExecutionPolicy Bypass -Scope Process -Force;
+                        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+                        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'));
+                        choco install yq -y
+                    "
+                else
+                    echo "yq is already installed."
+                fi
+
+                # Update the YAML file using yq
+                yq e ".files[0].sha512 = \"$HASH\"" -i "$LATEST_YML"
+                yq e ".files[0].size = $SIZE" -i "$LATEST_YML"
+                yq e ".sha512 = \"$HASH\"" -i "$LATEST_YML"
+                yq e -i ".files[0].sha512 |= . | .sha512 |= ." "$LATEST_YML"
+                echo "Updated $LATEST_YML with size=$SIZE and sha512=$HASH"
+              if: matrix.os == 'windows-latest'
+
             - name: Build Electron app (Linux)
-              run: yarn compile:${STAGE}:linux
+              run: PYTHON=$(which python3.10) yarn compile:${STAGE}:linux
               working-directory: packages/desktop
-              if: matrix.os == 'ubuntu-20.04'
+              shell: bash
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Import GPG key (Linux)
               run: |
@@ -192,24 +293,24 @@ jobs:
               env:
                   GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
                   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-              if: matrix.os == 'ubuntu-20.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Sign AppImage (Linux)
               run: echo $GPG_PASSPHRASE | gpg --pinentry-mode loopback --batch --passphrase-fd 0 --armor --detach-sign --default-key contact@iota.org iota-legacy-migration-tool-desktop*.AppImage
               working-directory: packages/desktop/out
               env:
                   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-              if: matrix.os == 'ubuntu-20.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Compute checksums (Linux)
               run: for i in `ls | grep 'iota-legacy-migration-tool-desktop*'` ; do sha256sum $i | awk {'print $1'} > $i.sha256 ; done
               working-directory: packages/desktop/out
-              if: matrix.os == 'ubuntu-20.04'
+              if: matrix.os == 'ubuntu-22.04'
 
             - name: Compute checksums (macOS)
               run: for i in `ls | grep 'iota-legacy-migration-tool-desktop*'` ; do shasum -a 256 $i | awk {'print $1'} > $i.sha256 ; done
               working-directory: packages/desktop/out
-              if: matrix.os == 'macos-13'
+              if: matrix.os == 'macos-15-intel'
 
             - name: Compute checksums (Windows)
               run: Get-ChildItem "." -Filter iota-legacy-migration-tool-desktop* | Foreach-Object { $(Get-FileHash -Path $_.FullName -Algorithm SHA256).Hash | Set-Content ($_.FullName + '.sha256') }
@@ -217,7 +318,7 @@ jobs:
               if: matrix.os == 'windows-latest'
 
             - name: Upload artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-${{ matrix.os }}
                   path: |
@@ -237,24 +338,24 @@ jobs:
             - run: echo ${{ github.ref }}
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Downloading artifacts windows
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
                   name: iota-legacy-migration-tool-desktop-windows-latest
                   path: assets
 
             - name: Downloading artifacts mac
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
-                  name: iota-legacy-migration-tool-desktop-macos-13
+                  name: iota-legacy-migration-tool-desktop-macos-15-intel
                   path: assets
 
             - name: Downloading artifacts linux
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v4
               with:
-                  name: iota-legacy-migration-tool-desktop-ubuntu-20.04
+                  name: iota-legacy-migration-tool-desktop-ubuntu-22.04
                   path: assets
 
             - name: Preparing release body

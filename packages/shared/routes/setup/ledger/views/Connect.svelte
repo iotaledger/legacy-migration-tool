@@ -3,15 +3,13 @@
     import {
         getLedgerDeviceStatus,
         ledgerDeviceState,
-        ledgerSimulator,
         displayNotificationForLedgerProfile,
         pollLedgerDeviceStatus,
         stopPollingLedgerStatus,
     } from 'shared/lib/ledger'
-    import { getDefaultClientOptions } from 'shared/lib/network'
     import { openPopup } from 'shared/lib/popup'
-    import { LedgerDeviceState } from 'shared/lib/typings/ledger'
-    import { api, walletSetupType } from 'shared/lib/wallet'
+    import { LedgerAppName, LedgerDeviceState } from 'shared/lib/typings/ledger'
+    import { walletSetupType } from 'shared/lib/wallet'
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { Locale } from '@core/i18n'
     import { SetupType } from 'shared/lib/typings/setup'
@@ -22,7 +20,6 @@
 
     const legacyLedger = $walletSetupType === SetupType.TrinityLedger
 
-    const newLedgerProfile = $walletSetupType === SetupType.New
     let creatingAccount = false
 
     const LEDGER_STATUS_POLL_INTERVAL = 1500
@@ -31,8 +28,7 @@
     let isAppOpen = false
 
     $: isConnected = $ledgerDeviceState !== LedgerDeviceState.NotDetected
-    $: isAppOpen = $ledgerDeviceState === LedgerDeviceState.Connected
-
+    $: isAppOpen = $ledgerDeviceState === LedgerDeviceState.LegacyConnected
     $: animation = !isConnected
         ? 'ledger-disconnected-desktop'
         : isAppOpen
@@ -42,37 +38,11 @@
     const dispatch = createEventDispatcher()
 
     onMount(() => {
-        pollLedgerDeviceStatus(false, LEDGER_STATUS_POLL_INTERVAL)
+        pollLedgerDeviceStatus(true, LEDGER_STATUS_POLL_INTERVAL)
         polling = true
     })
 
     onDestroy(stopPollingLedgerStatus)
-
-    function createAccount() {
-        creatingAccount = true
-
-        api.createAccount(
-            {
-                clientOptions: getDefaultClientOptions(),
-                alias: `${locale('general.account')} 1`,
-                signerType: { type: ledgerSimulator ? 'LedgerNanoSimulator' : 'LedgerNano' },
-            },
-            {
-                onSuccess() {
-                    creatingAccount = false
-
-                    dispatch('next')
-                },
-                onError(error) {
-                    creatingAccount = false
-
-                    console.error(error)
-
-                    displayNotificationForLedgerProfile('error', true, true, false, false, error)
-                },
-            }
-        )
-    }
 
     function handleGuidePopup() {
         openPopup({
@@ -81,23 +51,17 @@
     }
 
     function handleContinueClick() {
-        creatingAccount = true
+        const _onCancel = () => {
+            creatingAccount = false
 
-        if (newLedgerProfile) {
-            createAccount()
-        } else {
-            const _onCancel = () => {
-                creatingAccount = false
-
-                displayNotificationForLedgerProfile('error', true)
-            }
-            const _onConnected = () => {
-                if ($ledgerDeviceState !== LedgerDeviceState.Connected) _onCancel()
-                else dispatch('next')
-            }
-
-            getLedgerDeviceStatus(false, _onConnected, _onCancel, _onCancel)
+            displayNotificationForLedgerProfile('error', true, true, true, true)
         }
+        const _onConnected = () => {
+            if ($ledgerDeviceState !== LedgerDeviceState.LegacyConnected) _onCancel()
+            else dispatch('next')
+        }
+
+        getLedgerDeviceStatus(true, _onConnected, _onCancel, _onCancel)
     }
 
     function handleBackClick() {
@@ -105,12 +69,7 @@
     }
 </script>
 
-<OnboardingLayout
-    onBackClick={handleBackClick}
-    {locale}
-    showLedgerProgress={legacyLedger}
-    showLedgerVideoButton={legacyLedger}
->
+<OnboardingLayout onBackClick={handleBackClick} {locale} showLedgerVideoButton={legacyLedger}>
     <div slot="leftpane__content">
         <Text type="h2" classes="mb-5">{locale('views.connectLedger.title')}</Text>
         <Text type="p" secondary classes="mb-5">{locale('views.connectLedger.body')}</Text>
@@ -127,7 +86,11 @@
                     icon={`status-${isAppOpen ? 'success' : 'error'}`}
                     classes={`text-white bg-${isAppOpen ? 'green' : 'red'}-600 rounded-full`}
                 />
-                <Text type="p" secondary>{locale('views.connectLedger.trafficLight2')}</Text>
+                <Text type="p" secondary
+                    >{locale('views.connectLedger.trafficLight2', {
+                        values: { legacy: LedgerAppName.IOTALegacy },
+                    })}</Text
+                >
             </div>
         </div>
     </div>

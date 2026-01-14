@@ -1,6 +1,5 @@
 <script lang="typescript">
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text } from 'shared/components'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { getLegacyErrorMessage, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
@@ -9,7 +8,6 @@
         createLedgerMigrationBundle,
         createMigrationBundle,
         exportMigrationLog,
-        generateMigrationAddress,
         hardwareIndexes,
         hasBundlesWithSpentAddresses,
         hasSingleBundle,
@@ -17,7 +15,7 @@
         migrationAddress,
         migrationLog,
         prepareMigrationLog,
-        sendOffLedgerMigrationRequest,
+        sendRebasedMigrationRequest,
         totalMigratedBalance,
         unselectedInputs,
         updateMigrationLog,
@@ -29,10 +27,10 @@
     import { createEventDispatcher, onDestroy, onMount } from 'svelte'
     import { get } from 'svelte/store'
     import { Locale } from '@core/i18n'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { addMigrationError } from '@lib/errors'
+    import { RebasedMigrationResponse } from 'shared/lib/typings/rebasedMigration'
 
     export let locale: Locale
 
@@ -42,15 +40,6 @@
     const { balance } = $data
 
     const migratableBalance = balance - $unselectedInputs.reduce((acc, input) => acc + input.balance, 0)
-
-    const fiatbalance = formatCurrency(
-        convertToFiat(
-            migratableBalance,
-            get(currencies)?.[CurrencyTypes.USD],
-            get(exchangeRates)?.[AvailableExchangeRates.USD]
-        ),
-        AvailableExchangeRates.USD
-    )
 
     let loading = false
 
@@ -63,6 +52,29 @@
 
     let closeTransport = () => {}
 
+    function isRebasedErrorModel(error: any): boolean {
+        return error && typeof error === 'object' && 'status' in error && 'title' in error && 'errors' in error
+    }
+
+    function getErrorMessage(err: any): string {
+        if (isRebasedErrorModel(err)) {
+            const errorMessages =
+                err.errors
+                    ?.map((e) => {
+                        let msg = e.message
+                        if (e.location) {
+                            msg += ` (at ${e.location})`
+                        }
+                        if (e.value) {
+                            msg += `: ${e.value}`
+                        }
+                        return msg
+                    })
+                    .join(', ') || err.detail
+            return `${err.title} (${err.status}): ${errorMessages}`
+        }
+        return err?.message ?? err?.toString()
+    }
     const unsubscribe = confirmedBundles.subscribe((newConfirmedBundles) => {
         newConfirmedBundles.forEach((bundle) => {
             if ($hasSingleBundle && bundle.confirmed) {
@@ -79,11 +91,11 @@
 
             if (legacyLedger) {
                 const _onConnected = () => {
+                    prepareMigrationLog([], migratableBalance)
                     Platform.ledger
                         .selectSeed($hardwareIndexes.accountIndex, $hardwareIndexes.pageIndex, ADDRESS_SECURITY_LEVEL)
                         .then(({ iota, callback }) => {
                             closeTransport = callback
-                            prepareMigrationLog([], migratableBalance)
                             return createLedgerMigrationBundle(
                                 0,
                                 get(migrationAddress),
@@ -98,11 +110,11 @@
                                 trytes: reverseTrytesLedger,
                                 bundleHash,
                             })
-                            return sendOffLedgerMigrationRequest(reverseTrytesLedger, 0)
+                            return sendRebasedMigrationRequest(reverseTrytesLedger, 0)
                         })
-                        .then((receipt) => {
+                        .then((response: RebasedMigrationResponse) => {
                             updateMigrationLog(get(migrationLog).length - 1, {
-                                requestData: JSON.stringify(receipt?.request),
+                                requestData: JSON.stringify(response),
                             })
                             totalMigratedBalance.set(migratableBalance)
                             loading = false
@@ -115,7 +127,7 @@
                             }
                         })
                         .catch((err) => {
-                            const error = err?.message ?? err?.toString()
+                            const errorMessage = getErrorMessage(err)
 
                             loading = false
                             closePopup(true) // close transaction popup
@@ -125,13 +137,21 @@
                             showAppNotification({
                                 type: 'error',
                                 message:
-                                    legacyErrorMessage === 'error.global.generic' ? error : locale(legacyErrorMessage),
+                                    legacyErrorMessage === 'error.global.generic'
+                                        ? errorMessage
+                                        : locale(legacyErrorMessage),
                             })
 
                             console.error(err)
-                            updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+
+                            // Update migration log with stringified error object and message
+                            updateMigrationLog(get(migrationLog).length - 1, {
+                                error: JSON.stringify(err, null, 2),
+                                errorMessage,
+                            })
+
                             hasError = true
-                            addMigrationError(error)
+                            addMigrationError(errorMessage)
                         })
                 }
                 const _onCancel = () => {
@@ -139,15 +159,18 @@
                 }
                 promptUserToConnectLedger(true, _onConnected, _onCancel)
             } else {
+                prepareMigrationLog([], migratableBalance)
                 createMigrationBundle($bundles[0], get(migrationAddress))
                     .then((trytes: string[]) => {
                         const reverseTrytesSoftware = trytes.reverse()
-                        prepareMigrationLog(reverseTrytesSoftware, migratableBalance)
-                        return sendOffLedgerMigrationRequest(reverseTrytesSoftware, 0)
-                    })
-                    .then((receipt) => {
                         updateMigrationLog(get(migrationLog).length - 1, {
-                            requestData: JSON.stringify(receipt?.request),
+                            trytes: reverseTrytesSoftware,
+                        })
+                        return sendRebasedMigrationRequest(reverseTrytesSoftware, 0)
+                    })
+                    .then((response: RebasedMigrationResponse) => {
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            requestData: JSON.stringify(response),
                         })
                         totalMigratedBalance.set(migratableBalance)
                         loading = false
@@ -160,16 +183,20 @@
                         }
                     })
                     .catch((err) => {
-                        const error = err?.message ?? err?.toString()
+                        const errorMessage = getErrorMessage(err)
                         loading = false
                         showAppNotification({
                             type: 'error',
-                            message: error || 'Failed to prepare transfers',
+                            message: errorMessage || 'Failed to prepare transfers',
                         })
-                        console.error(error)
-                        updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
+                        console.error(err)
+                        updateMigrationLog(get(migrationLog).length - 1, {
+                            error: JSON.stringify(err, null, 2),
+                            errorMessage,
+                        })
+
                         hasError = true
-                        addMigrationError(error)
+                        addMigrationError(errorMessage)
                     })
             }
         } else {
@@ -180,21 +207,16 @@
         }
     }
 
-    // TODO: complete function functionality
     function learnAboutMigrationsClick() {
-        Platform.openUrl('https://blog.iota.org/iota-legacy-migration-tool/')
+        Platform.openUrl('https://docs.iota.org/users/iota-wallet/how-to/import/legacy')
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!get(migrationAddress)) {
-            try {
-                migrationAddress.set(await generateMigrationAddress(legacyLedger))
-            } catch (error) {
-                showAppNotification({
-                    type: 'error',
-                    message: error.error || 'Error generating migration address',
-                })
-            }
+            showAppNotification({
+                type: 'error',
+                message: 'Error getting migration address',
+            })
         }
     })
 
@@ -204,18 +226,27 @@
     })
 </script>
 
-<OnboardingLayout allowBack={false} {locale} showLedgerProgress={legacyLedger} showLedgerVideoButton={legacyLedger}>
+<OnboardingLayout allowBack={false} {locale} showLedgerVideoButton={legacyLedger}>
     <div slot="title">
         <Text on:click={() => learnAboutMigrationsClick()} type="h2">{locale('views.migrate.title')}</Text>
     </div>
     <div slot="leftpane__content">
         <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
+
+        {#if $migrationAddress?.ed25519}
+            <div
+                class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+                <Text type="p" secondary classes="text-xs mb-2">{locale('views.migrate.addressTitle')}</Text>
+                <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
+            </div>
+        {/if}
+
         <Text type="p" secondary highlighted classes="mb-8 font-bold">{locale('views.migrate.body2')}</Text>
         <Box
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
         >
             <Text type="h2">{formatUnitBestMatch(migratableBalance, true)}</Text>
-            <Text type="p" highlighted classes="py-1 uppercase">{fiatbalance}</Text>
         </Box>
     </div>
     <div slot="leftpane__action" class="flex flex-col space-y-7">
@@ -228,6 +259,11 @@
             {:else}{locale('views.migrate.beginMigration')}{/if}
         </Button>
         {#if hasError}
+            <div class="rounded-lg border-2 border-red-500 bg-red-50 dark:bg-red-900 dark:bg-opacity-20 p-6 space-y-3">
+                <Text error secondary classes="text-center">
+                    {locale('views.migrate.errorInstructions')}
+                </Text>
+            </div>
             <Button classes="w-full" onClick={exportMigrationLog}>
                 {locale('views.congratulations.exportMigration')}
             </Button>

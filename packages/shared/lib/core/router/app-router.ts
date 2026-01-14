@@ -1,13 +1,6 @@
 import { get, writable } from 'svelte/store'
 
-import {
-    cleanupSignup,
-    login,
-    needsToAcceptLatestPrivacyPolicy,
-    needsToAcceptLatestTos,
-    strongholdPassword,
-    walletPin,
-} from '@lib/app'
+import { cleanupSignup, login, needsToAcceptLatestTos, strongholdPassword, walletPin } from '@lib/app'
 import { activeProfile } from '@lib/profile'
 import { ImportType, ProfileType } from '@lib/typings/profile'
 import { SetupType } from '@lib/typings/setup'
@@ -111,11 +104,10 @@ export class AppRouter extends Router<AppRoute> {
                 break
             }
             case AppRoute.Balance:
-                if (get(walletSetupType) === SetupType.TrinityLedger) {
-                    nextRoute = AppRoute.Migrate
-                } else {
-                    nextRoute = AppRoute.Password
-                }
+                nextRoute = AppRoute.RebasedAddress
+                break
+            case AppRoute.RebasedAddress:
+                nextRoute = AppRoute.Migrate
                 break
             case AppRoute.Migrate:
                 nextRoute = AppRoute.Congratulations

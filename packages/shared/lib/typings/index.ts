@@ -10,6 +10,7 @@ import * as events from './events'
 import * as ledger from './ledger'
 import * as message from './message'
 import * as migration from './migration'
+import * as rebasedMigration from './rebasedMigration'
 import * as network from './network'
 import * as notification from './notification'
 import * as utils from './utils'
@@ -28,6 +29,7 @@ export {
     ledger,
     message,
     migration,
+    rebasedMigration,
     network,
     notification,
     utils,

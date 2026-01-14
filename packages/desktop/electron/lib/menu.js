@@ -85,6 +85,7 @@ const buildTemplate = () => {
                 },
             ],
         },
+        { role: 'editMenu' },
     ]
 
     if (!app.isPackaged) {

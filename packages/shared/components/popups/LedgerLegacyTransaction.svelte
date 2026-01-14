@@ -12,10 +12,8 @@
     export let inputs: Input[]
     let balanceToAdd: number = 0
     let smallestBalanceItem: Input | undefined
-
     if (transfer.value < MINIMUM_MIGRATABLE_AMOUNT) {
         balanceToAdd = MINIMUM_MIGRATABLE_AMOUNT - transfer.value
-
         smallestBalanceItem = inputs.reduce((minItem, currentItem) =>
             currentItem.balance < minItem.balance ? currentItem : minItem
         )
@@ -30,9 +28,9 @@
 <Text type="h4" classes="mb-6">{locale('popups.ledgerTransaction.transaction.title')}</Text>
 <Text type="p" classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.info')}</Text>
 {#if smallestBalanceItem}
-    <Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning')}</Text>
+    <Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning-amount')}</Text>
 {/if}
-
+<Text type="p" error classes="mb-6" secondary>{locale('popups.ledgerTransaction.transaction.warning')}</Text>
 <div class="relative w-full h-1/2 bg-white dark:bg-gray-900 flex justify-center content-center">
     <Animation
         width="100%"

@@ -68,7 +68,7 @@
                     hardwareIndexes.update((_indexes) =>
                         Object.assign({}, _indexes, { accountIndex: index, pageIndex: page })
                     )
-                    dispatch('next', { balance: data.balance })
+                    dispatch('next', { balance: data?.balance })
                 })
                 .catch((error) => {
                     busy = false
@@ -87,7 +87,7 @@
     }
 </script>
 
-<OnboardingLayout {busy} onBackClick={handleBackClick} {locale} showLedgerProgress showLedgerVideoButton>
+<OnboardingLayout {busy} onBackClick={handleBackClick} {locale} showLedgerVideoButton>
     <div slot="leftpane__content">
         <Text type="h2" classes="mb-5">{locale('views.selectLedgerAccountIndex.title')}</Text>
         <Text type="p" secondary>{locale('views.selectLedgerAccountIndex.body')}</Text>

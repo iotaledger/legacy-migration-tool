@@ -1,7 +1,5 @@
 <script lang="typescript">
-    import { get } from 'svelte/store'
     import { Animation, Box, Button, OnboardingLayout, Spinner, Text, Toast } from 'shared/components'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { Platform } from 'shared/lib/platform'
     import { displayNotificationForLedgerProfile, promptUserToConnectLedger } from 'shared/lib/ledger'
     import {
@@ -19,7 +17,6 @@
     import { formatUnitBestMatch } from 'shared/lib/units'
     import { onDestroy } from 'svelte'
     import { Locale } from '@core/i18n'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
     import { walletSetupType } from 'shared/lib/wallet'
     import { SetupType } from 'shared/lib/typings/setup'
     import { appRouter } from '@core/router'
@@ -35,22 +32,7 @@
     let _data = $data
     let _bundles = $bundles
 
-    const getFiatBalance = (balance: number) => {
-        const balanceAsFiat = convertToFiat(
-            balance,
-            get(currencies)?.[CurrencyTypes.USD],
-            get(exchangeRates)?.[AvailableExchangeRates.USD]
-        )
-
-        if (balanceAsFiat === 0) {
-            return `< ${formatCurrency(0.01, AvailableExchangeRates.USD)}`
-        }
-        return formatCurrency(balanceAsFiat, AvailableExchangeRates.USD)
-    }
-
     const { balance } = _data
-
-    let fiatBalance = getFiatBalance(balance)
 
     let error = getError(balance)
     let formattedBalance = formatUnitBestMatch(balance, true)
@@ -67,7 +49,6 @@
     const unsubscribe = data.subscribe((updatedData) => {
         _data = updatedData
 
-        fiatBalance = getFiatBalance(_data.balance)
         formattedBalance = formatUnitBestMatch(_data.balance, true)
         error = getError(_data.balance)
     })
@@ -106,10 +87,7 @@
                         closePopup()
                         $appRouter.next()
                     },
-                    balance: `${formatUnitBestMatch(
-                        spentAddressesWithNoBundleHashesTotalBalance,
-                        true
-                    )} (${getFiatBalance(spentAddressesWithNoBundleHashesTotalBalance).toUpperCase()})`,
+                    balance: `${formatUnitBestMatch(spentAddressesWithNoBundleHashesTotalBalance, true)}`,
                 },
             })
         } else {
@@ -170,7 +148,6 @@
     busy={isCheckingForBalance}
     onBackClick={handleBackClick}
     {locale}
-    showLedgerProgress={legacyLedger}
     showLedgerVideoButton={legacyLedger}
 >
     <div slot="title">
@@ -182,7 +159,6 @@
             classes="flex flex-col flex-grow items-center py-12 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg "
         >
             <Text type="h2">{formattedBalance}</Text>
-            <Text type="p" highlighted classes="py-1 uppercase">{fiatBalance}</Text>
         </Box>
         {#if error.text}
             <Toast classes="mt-4" type="error" message={error.text} />

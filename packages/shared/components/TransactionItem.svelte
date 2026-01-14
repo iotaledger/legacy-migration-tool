@@ -1,11 +1,8 @@
 <script lang="typescript">
     import { Icon, Tooltip } from 'shared/components'
-    import { convertToFiat, currencies, exchangeRates, formatCurrency } from 'shared/lib/currency'
     import { formatUnitBestMatch } from 'shared/lib/units'
-    import { get } from 'svelte/store'
     import Text from './Text.svelte'
     import { Locale } from '@core/i18n'
-    import { AvailableExchangeRates, CurrencyTypes } from 'shared/lib/typings/currency'
 
     enum Status {
         ReadyToMigrate = 0,
@@ -21,12 +18,7 @@
     export let status = Status.ReadyToMigrate
     export let errorText = null
 
-    const fiatBalance = formatCurrency(
-        convertToFiat(balance, get(currencies)[CurrencyTypes.USD], get(exchangeRates)[AvailableExchangeRates.USD]),
-        AvailableExchangeRates.USD
-    )
-
-    const balanceString = `${formatUnitBestMatch(balance, true)} • ${fiatBalance}`
+    const balanceString = `${formatUnitBestMatch(balance, true)}`
 
     let showTooltip = false
     let tooltipAnchor

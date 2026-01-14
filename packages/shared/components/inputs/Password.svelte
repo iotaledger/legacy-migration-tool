@@ -56,7 +56,7 @@
             {disabled}
             placeholder={placeholder || locale('general.password')}
             {submitHandler}
-            disableContextMenu={true}
+            disableContextMenu={false}
             spellcheck="false"
             {locale}
             capsLockWarning={true}

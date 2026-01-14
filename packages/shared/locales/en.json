@@ -2,7 +2,7 @@
     "views": {
         "onboarding1": {
             "title": "Welcome to IOTA Legacy Migration Tool",
-            "body": "This tool will help you migrate your data to be compatible with the Stardust protocol."
+            "body": "This tool will help you migrate your data to be compatible with the Rebased protocol."
         },
         "legal": {
             "title": "Privacy Policy & Terms of Service",
@@ -63,10 +63,10 @@
             "progress4": "Transfer funds"
         },
         "ledgerInstallationGuide": {
-            "title": "Have you installed the necessary Ledger apps?",
-            "body1": "Before you proceed, you must find and install both the {legacy} app and the new IOTA app through Ledger Live.",
-            "body2": "Make sure your Ledger firmware is up-to-date. Any pre-installed apps should be updated to their latest versions.",
-            "action": "Yes, I've installed these apps"
+            "title": "Have you installed the necessary Ledger app?",
+            "body1": "Before you proceed, you must find and install the {legacy} app through Ledger Live.",
+            "body2": "Make sure your Ledger firmware is up-to-date.",
+            "action": "Yes, I've installed this app"
         },
         "password": {
             "title": "Create a password",
@@ -121,6 +121,35 @@
             "title": "Successfully backed up",
             "body": "You have backed up your wallets to a Stronghold."
         },
+        "rebasedAddress": {
+            "title": "Enter Your IOTA Rebased Address",
+            "description": "To migrate your funds, you'll need your IOTA rebased address. This is where your migrated tokens will be sent on the new network.",
+            "placeholder": "0x...",
+            "error": {
+                "addressRequired": "Address is required",
+                "invalidAddress": "Please enter a valid IOTA rebased address",
+                "exampleAddress": "Please enter your own address, not the example address"
+            },
+            "howTo": {
+                "title": "How to Get Your IOTA Rebased Address",
+                "description": "You can get your rebased address from any IOTA wallet that supports the new network:",
+                "steps": {
+                    "step1": "1. Install the official IOTA Wallet browser extension",
+                    "step2": "2. Create a new wallet or import your existing one",
+                    "step3": "3. Navigate to the 'Home' tab in your wallet",
+                    "step4": "4. Look for your wallet address (starts with '0x')",
+                    "step5": "5. Click to copy your address and paste it here"
+                },
+                "walletGuide": "Need help setting up an IOTA wallet?",
+                "guideLink": "View the official IOTA wallet guide",
+                "alternativeWallets": "You can also use other IOTA-compatible wallets like Nightly or Cosmostation."
+            },
+            "info": {
+                "title": "Address Format",
+                "description": "IOTA rebased addresses are 32-byte addresses that start with '0x' followed by 64 hexadecimal characters.",
+                "example": "Example address:"
+            }
+        },
         "congratulations": {
             "title": "Wallet migration completed",
             "fundsMigrated": "Funds migrated",
@@ -135,9 +164,9 @@
         },
         "import": {
             "title": "Migrate funds",
-            "body": "If you hold older network funds, you will be taken through the migration steps to move to the Stardust network.",
+            "body": "If you hold older network funds, you will be taken through the migration steps to move to the Rebased network.",
             "importSeed": "I have an 81 character seed",
-            "importSeedDescription": "Enter a seed and migrate funds to Stardust",
+            "importSeedDescription": "Enter a seed and migrate funds to Rebased network",
             "importMnemonic": "I have a Firefly recovery phrase",
             "importMnemonicDescription": "Enter your recovery phrase to recover your wallets",
             "importFile": "I have a file backup",
@@ -176,7 +205,7 @@
             "title": "Connect your Ledger to IOTA Legacy Migration Tool",
             "body": "For your Ledger device to be found by IOTA Legacy Migration Tool, please ensure that the official Ledger Live application is closed.",
             "trafficLight1": "Connect and unlock your Ledger with your PIN",
-            "trafficLight2": "Open the new IOTA app on your Ledger",
+            "trafficLight2": "Open the {legacy} app on your Ledger",
             "tips": "Tips if your Ledger isn’t connecting"
         },
         "restoreFromFireflyLedger": {
@@ -186,8 +215,8 @@
         },
         "legacyLedgerIntro": {
             "title": "Start your Ledger migration using IOTA Legacy Migration Tool",
-            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Stardust network.",
-            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with Firefly."
+            "body1": "IOTA Legacy Migration Tool will help you to transfer your tokens to the new Rebased network.",
+            "body2": "After the migration, you will be able to send and receive your tokens using your Ledger with IOTA Rebased."
         },
         "generateNewLedgerAddress": {
             "title": "Generate new address",
@@ -225,6 +254,7 @@
             "title": "Migrate your funds",
             "body1": "This is an automated process to transfer your funds to your new wallet.",
             "body2": "It may take some time. Do not turn off your device during the migration.",
+            "addressTitle": "Migration Address:",
             "existing": "Your old wallet",
             "new": "Your new wallet",
             "learn": "Learn about the migration",
@@ -244,7 +274,8 @@
             "minimumMigrationAmountSpentAddresses": "The minimum migration amount for each spent address is 1 Mi. Check again if your balance doesn't look right.",
             "tooManyAddressesToMigrate": "You have too many addresses with a low balance to migrate. Check again if your total balance doesn't look right.",
             "cannotMigrateAllYourFunds": "We cannot migrate all of your funds because some addresses are too low in value. You can proceed anyway. {value} will be lost.",
-            "error": "There was an error migrating your funds. Please try again."
+            "error": "There was an error migrating your funds. Please try again.",
+            "errorInstructions": "Please export your migration log and try again later. If the problem persists, contact us on Discord for support."
         },
         "bundleMiningWarning": {
             "title": "Warning",
@@ -813,13 +844,13 @@
             "confirm": "To proceed, confirm the prompt displayed on your Ledger device"
         },
         "ledgerAppGuide": {
-            "title": "Guide to installing the Ledger apps",
+            "title": "Guide to installing the Ledger app",
             "steps": {
                 "0": "Install and open the Ledger Live application",
                 "1": "Ensure that your Ledger is connected",
-                "2": "Search for apps: {legacy} and IOTA (MIOTA)",
-                "3": "Install both apps: {legacy} and IOTA (MIOTA)",
-                "4": "Remember that it's important to close Ledger Live before returning to IOTA Legacy Migration Tool"
+                "2": "Search for app: {legacy}",
+                "3": "Install app: {legacy}",
+                "4": "Remember that it's important to close Ledger Live before returning to Migration Tool"
             }
         },
         "ledgerConnectionGuide": {
@@ -842,7 +873,8 @@
             "transaction": {
                 "title": "Confirm transaction",
                 "info": "Confirm that the transaction information displayed on your Ledger device matches the information displayed below. If they match, press both buttons on your Ledger as prompted.",
-                "warning": "Due to constraints in the legacy network, addresses with amounts below the minimum migratable threshold will show 1 IOTA as the input amount.",
+                "warning": "⚠️ Important: Your Ledger displays amounts in the old unit format. MIOTA is now called IOTA, and decimal places have changed. Unit conversion: 1Gi → 1IOTA | 1Mi → 1,000,000nano. Verify the numeric value matches.",
+                "warning-amount": "Due to constraints in the legacy network, addresses with amounts below the minimum migratable threshold will show 1,000,000 nano as the input amount.",
                 "inputAmount": "Amount that will be migrated: {amount}"
             }
         },

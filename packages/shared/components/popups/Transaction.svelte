@@ -16,7 +16,7 @@
     export let internal = false
     export let to = ''
     export let amount = 0
-    export let unit = Unit.micro
+    export let unit = Unit.nano
 
     export let onConfirm = (..._: any[]): void => {}
 

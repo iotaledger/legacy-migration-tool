@@ -15,7 +15,6 @@
         createLedgerMigrationBundle,
         createMigrationBundle,
         exportMigrationLog,
-        generateMigrationAddress,
         hardwareIndexes,
         hasMigratedAndConfirmedAllSelectedBundles,
         hasMigratedAndConfirmedSomeSelectedBundles,
@@ -25,6 +24,7 @@
         migrationLog,
         prepareMigrationLog,
         sendOffLedgerMigrationRequest,
+        sendRebasedMigrationRequest,
         totalMigratedBalance,
         unmigratedBundles,
         updateMigrationLog,
@@ -38,6 +38,7 @@
     import { Bundle } from '@lib/typings/migration'
     import { showAppNotification } from '@lib/notifications'
     import { addMigrationError } from '@lib/errors'
+    import { RebasedMigrationResponse } from '../../../../lib/typings/rebasedMigration'
 
     export let locale: Locale
 
@@ -55,6 +56,30 @@
     let hasBroadcastAnyBundle = false
 
     const { didComplete } = $migration
+
+    function isRebasedErrorModel(error: any): boolean {
+        return error && typeof error === 'object' && 'status' in error && 'title' in error && 'errors' in error
+    }
+
+    function getErrorMessage(err: any): string {
+        if (isRebasedErrorModel(err)) {
+            const errorMessages =
+                err.errors
+                    ?.map((e) => {
+                        let msg = e.message
+                        if (e.location) {
+                            msg += ` (at ${e.location})`
+                        }
+                        if (e.value) {
+                            msg += `: ${e.value}`
+                        }
+                        return msg
+                    })
+                    .join(', ') || err.detail
+            return `${err.title} (${err.status}): ${errorMessages}`
+        }
+        return err?.message ?? err?.toString()
+    }
 
     let transactions = get(unmigratedBundles).map((_bundle, index) => ({
         ..._bundle,
@@ -173,16 +198,12 @@
         newProfile.set(null)
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!get(migrationAddress)) {
-            try {
-                migrationAddress.set(await generateMigrationAddress(legacyLedger))
-            } catch (error) {
-                showAppNotification({
-                    type: 'error',
-                    message: error.error || 'Error generating migration address',
-                })
-            }
+            showAppNotification({
+                type: 'error',
+                message: 'Error getting migration address',
+            })
         }
     })
 
@@ -211,6 +232,7 @@
                       promise
                           .then((acc) => {
                               if (legacyLedger) {
+                                  prepareMigrationLog([], transaction.balance)
                                   return Platform.ledger
                                       .selectSeed(
                                           $hardwareIndexes.accountIndex,
@@ -219,7 +241,6 @@
                                       )
                                       .then(({ iota, callback }) => {
                                           closeTransport = callback
-                                          prepareMigrationLog([], transaction.balance)
                                           return createLedgerMigrationBundle(
                                               transaction.index,
                                               get(migrationAddress),
@@ -241,11 +262,11 @@
                                               trytes: reverseTrytesLedger,
                                               bundleHash,
                                           })
-                                          return sendOffLedgerMigrationRequest(reverseTrytesLedger, transaction.index)
+                                          return sendRebasedMigrationRequest(reverseTrytesLedger, transaction.index)
                                       })
-                                      .then((receipt) => {
+                                      .then((response: RebasedMigrationResponse) => {
                                           updateMigrationLog(get(migrationLog).length - 1, {
-                                              requestData: JSON.stringify(receipt?.request),
+                                              requestData: JSON.stringify(response),
                                           })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
@@ -255,9 +276,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
 
                                           closePopup(true) // close transaction popup
                                           closeTransport()
@@ -266,22 +292,25 @@
                                           const legacyErrorMessage = getLegacyErrorMessage(err)
                                           throw new Error(
                                               legacyErrorMessage === 'error.global.generic'
-                                                  ? error
+                                                  ? errorMessage
                                                   : locale(legacyErrorMessage)
                                           )
                                       })
                               } else {
                                   setMigratingTransaction(transaction, 1)
+                                  prepareMigrationLog([], transaction.balance)
 
                                   return createMigrationBundle(transaction as Bundle, get(migrationAddress))
                                       .then((trytes: string[]) => {
                                           const reverseTrytesSoftware = trytes.reverse()
-                                          prepareMigrationLog(reverseTrytesSoftware, transaction.balance)
-                                          return sendOffLedgerMigrationRequest(reverseTrytesSoftware, transaction.index)
-                                      })
-                                      .then((receipt) => {
                                           updateMigrationLog(get(migrationLog).length - 1, {
-                                              requestData: JSON.stringify(receipt?.request),
+                                              trytes: reverseTrytesSoftware,
+                                          })
+                                          return sendRebasedMigrationRequest(reverseTrytesSoftware, transaction.index)
+                                      })
+                                      .then((response: RebasedMigrationResponse) => {
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              requestData: JSON.stringify(response),
                                           })
                                           totalMigratedBalance.update((value) => (value += transaction.balance))
 
@@ -291,9 +320,14 @@
                                           }
                                       })
                                       .catch((err) => {
-                                          const error = err?.message ?? err?.toString()
-                                          updateMigrationLog(get(migrationLog).length - 1, { errorMessage: error })
-                                          addMigrationError(error)
+                                          const errorMessage = getErrorMessage(err)
+
+                                          // Update migration log with stringified error object and message
+                                          updateMigrationLog(get(migrationLog).length - 1, {
+                                              error: JSON.stringify(err, null, 2),
+                                              errorMessage,
+                                          })
+                                          addMigrationError(errorMessage)
                                           throw new Error(err)
                                       })
                               }
@@ -331,19 +365,27 @@
     {locale}
     onBackClick={handleBackClick}
     class=""
-    showLedgerProgress={legacyLedger}
     showLedgerVideoButton={legacyLedger}
 >
     <div slot="title">
         <Text type="h2">{locale('views.migrate.title')}</Text>
     </div>
     <div slot="leftpane__content" class="h-full flex flex-col flex-wrap">
-        <Text type="p" secondary classes="mb-4">{locale('views.transferFragmentedFunds.body1')}</Text>
+        <Text type="p" secondary classes="mb-4">{locale('views.migrate.body1')}</Text>
         {#if legacyLedger}
             <Text type="p" secondary classes="mb-4">
                 {locale('views.transferFragmentedFunds.body2', { values: { legacy: LedgerAppName.IOTALegacy } })}
             </Text>
         {/if}
+        {#if $migrationAddress?.ed25519}
+            <div
+                class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 dark:bg-opacity-50 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+                <Text type="p" secondary classes="text-xs mb-2">{locale('views.migrate.addressTitle')}</Text>
+                <Text type="p" classes="font-mono text-xs break-all">{$migrationAddress.ed25519}</Text>
+            </div>
+        {/if}
+        <Text type="p" secondary highlighted classes="mb-4 font-bold">{locale('views.migrate.body2')}</Text>
         <div class="flex-auto overflow-y-auto h-1 space-y-4 w-full scrollable-y scroll-secondary">
             {#each transactions as transaction}
                 <TransactionItem {...transaction} {locale} />

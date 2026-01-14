@@ -17,6 +17,8 @@ export const CHRYSALIS_DEVNET_ID = 'chrysalis-devnet'
 export const CHRYSALIS_DEVNET_NAME = 'Chrysalis Devnet'
 export const CHRYSALIS_DEVNET_BECH32_HRP = 'atoi'
 
+export const EXPLORER_BASE_URL = 'https://explorer.iota.org'
+
 export const MAINNET_EXPLORER = 'https://explorer.iota.org/mainnet'
 export const DEVNET_EXPLORER = 'https://explorer.iota-alphanet.iotaledger.net/devnet'
 
@@ -381,4 +383,18 @@ export const ensureSinglePrimaryNode = (nodes: Node[]): Node[] => {
 const setRandomPrimaryNode = (nodes: Node[]): Node[] => {
     const randIdx = Math.floor(Math.random() * nodes.length)
     return nodes.map((n, idx) => ({ ...n, isPrimary: idx === randIdx }))
+}
+
+export function getRebasedExplorerUrl(
+    path: string,
+    network: NetworkId,
+    getUrlWithDeviceId: (url: URL) => URL = (url) => url
+): string {
+    const url = getUrlWithDeviceId(new URL(path, EXPLORER_BASE_URL))
+    url.searchParams.append('network', network)
+    return url.href
+}
+
+export function getRebasedAddressUrl(address: string, network: NetworkId): string {
+    return getRebasedExplorerUrl(`/address/${address}`, network)
 }
