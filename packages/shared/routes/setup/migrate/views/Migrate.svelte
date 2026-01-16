@@ -208,7 +208,7 @@
     }
 
     function learnAboutMigrationsClick() {
-        Platform.openUrl('https://docs.iota.org/users/iota-wallet/how-to/import/legacy')
+        Platform.openUrl('https://docs.iota.org/users/legacy-migration-tool')
     }
 
     onMount(() => {
